@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "jovylleportfolio",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,5 +15,8 @@
     "nuxt": "^3.8.0",
     "vue": "^3.3.6",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@sanity/image-url": "^1.0.2"
   }
 }

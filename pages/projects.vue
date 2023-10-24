@@ -1,25 +1,25 @@
 <script setup>
 import { ref } from 'vue';
-const query = `*[_type == "portfolioProject"] | order(publishedAt desc){
-  _id,
-  title,
-  subTitle,
-  slug,
-  mainImage,
-  body,
-  publishedAt
-} `;
+import imageUrlBuilder from '@sanity/image-url'
+//  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
+
+const builder = imageUrlBuilder({
+  projectId: 'x9czj6ra',
+  dataset: 'production',
+})
+const urlFor = (source) => builder.image(source)
+//  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
+//https://zp7mbokg.api.sanity.io/v2021-06-07/data/query/production?query=*[_id == $id]&$id="myId"
+// TODO: make a global varialbe, maybe global state, 
 const posts = ref([]);
-const fetchDataAsync = async () => {
-  try {
-    const response =  await useSanityQuery(query);
-    posts.value =  response.data._rawValue;
-    console.log("posts", posts);
-  } catch (error) {
-    console.error(error);
-  }
-};
-fetchDataAsync();
+try {
+  //  [sample data I have](https://x9czj6ra.api.sanity.io/v2021-06-07/data/query/production?query=*[_type == "portfolioProject" ]{_id,title,subTitle,slug,mainImage}url)
+  const response = await useFetch('https://'+'x9czj6ra'+'.api.sanity.io/v2021-06-07/data/query/'+'production'+'?query=*[_type == "portfolioProject" ]{_id,title,subTitle,slug,mainImage}')
+  posts.value =  response.data._rawValue.result;
+  console.log("posts", response.data._rawValue.result);
+} catch (error) {
+  console.error(error);
+}
 </script>
 <template>
   <div>
@@ -65,17 +65,17 @@ fetchDataAsync();
           >
             <!-- <div v-if="post.mainImage" class="bg-cover bg-center h-64 w-64" :style="`background-image: url(${post.mainImage?.asset._ref});`"></div> -->
             <div class="bg-cover bg-center aspect-video w-full overflow-hidden">
-              <SanityImage
+              <img
                 v-if="post.mainImage"
-                :asset-id="post.mainImage.asset._ref"
-                alt="project.title"
+                :src="urlFor(post.mainImage.asset._ref).auto('format').width(300).url()"
+                :alt="post.title"
                 class="bg-white"
                 auto="format"
               />
               <img
                 v-else
                 src="https://raw.githubusercontent.com/jovyllebermudez/static/d37ee2dee7175a22031457d711dae74922faf3be/placeholder.png"
-                alt="project.title"
+                :alt="post.title"
                 class=" bg-white"
               />
             </div>
@@ -83,7 +83,7 @@ fetchDataAsync();
               <div v-if="post.mainImage" class="bg-cover bg-center h-64 w-64">
                 <SanityImage
                   :asset-id="post.mainImage.asset._ref"
-                  alt="project.title"
+                  alt="post.title"
                   class=""
                   auto="format"
                 />
@@ -91,7 +91,7 @@ fetchDataAsync();
               <img
                 v-else
                 src="https://raw.githubusercontent.com/jovyllebermudez/static/d37ee2dee7175a22031457d711dae74922faf3be/placeholder.png"
-                alt="project.title"
+                alt="post.title"
                 class="rounded-t-xl border-none"
               />
             </div> -->
@@ -116,7 +116,7 @@ fetchDataAsync();
             <div>
               <img
                 src="https://nuxtjs-tailwindcss-portfolio.netlify.app/images/web-project-2.jpg"
-                alt="project.title"
+                alt="post.title"
                 class="rounded-t-xl border-none"
               />
             </div>

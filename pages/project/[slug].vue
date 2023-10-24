@@ -1,6 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import imageUrlBuilder from '@sanity/image-url'
 
+const builder = imageUrlBuilder({
+  projectId: 'x9czj6ra',
+  dataset: 'production',
+}) 
+// todo: SanityContent do alternative or make this work
+const urlFor = (source) => builder.image(source)
 const route = useRoute();
 const slug = route.params.slug;
 console.log('slug', slug);
@@ -16,22 +23,20 @@ const query = `*[_type == "portfolioProject" && slug.current == $slug][0]{
   publishedAt
 }`;
 const posts = ref({});
-const fetchDataAsync = async () => {
-  try {
-    const response =  await useSanityQuery(query, { slug });
-    console.log("response", response);
-    posts.value =  response.data._rawValue;
-  } catch (error) {
-    console.error(error);
-  }
-};
-fetchDataAsync();
+try {
+  const response = await useFetch('https://x9czj6ra.api.sanity.io/v2021-06-07/data/query/production?query=*[slug.current == "react-native-and-codeigniter-loadboards-mobile-app-jquery"][0]{_id,title,subTitle,slug,mainImage,body,description,techTag,publishedAt}')
+  console.log("response", response)
+  posts.value =  response.data._rawValue.result;
+  // const response =  await useSanityQuery(query, { slug });
+  console.log("response", response);
+  // posts.value =  response.data._rawValue;
+} catch (error) {
+  console.error(error);
+}
 // console.log("posts", posts);
 </script>
 
-
 <template>
-
   <div class="container mx-auto">
     <!-- Check if there are projects and then load -->
     <div v-if="true">
@@ -54,7 +59,7 @@ fetchDataAsync();
         </p>
         <div class="flex">
           <div v-if="posts.subTitle" class="flex items-center mr-10">
-            <i class='bx bxs-purchase-tag'></i>
+            <i class="bx bxs-purchase-tag"></i>
             <span
               class="
                 font-general-medium
@@ -63,12 +68,12 @@ fetchDataAsync();
                 text-primary-dark
                 dark:text-primary-light
               "
-              >
+            >
               {{posts.subTitle}}</span
             >
           </div>
           <div v-if="posts.publishedAt" class="flex items-center">
-            <i class='bx bxs-time'></i>
+            <i class="bx bxs-time"></i>
             <span
               class="
                 font-general-medium
@@ -85,12 +90,10 @@ fetchDataAsync();
 
       <!-- Project gallery -->
       <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-10 mt-12">
-        <div
-          class="mb-10 sm:mb-0"
-        >
-          <SanityImage
+        <div class="mb-10 sm:mb-0">
+          <img
             v-if="posts.mainImage"
-            :asset-id="posts.mainImage.asset._ref"
+             :src="urlFor(posts.mainImage.asset._ref).auto('format').width(300).url()"
             alt="project image"
             class=" rounded-xl cursor-pointer shadow-lg sm:shadow-none"
             auto="format"
@@ -99,7 +102,6 @@ fetchDataAsync();
             :src="'https://nuxtjs-tailwindcss-portfolio.netlify.app/images/web-project-2.jpg'"
             class="rounded-xl cursor-pointer shadow-lg sm:shadow-none"
           /> -->
-
         </div>
       </div>
 
@@ -229,7 +231,6 @@ fetchDataAsync();
             Details
           </p> -->
           <p
-           
             class="
               font-general-regular
               mb-5
@@ -237,9 +238,8 @@ fetchDataAsync();
               dark:text-ternary-light
             "
           >
-
-          <SanityContent :blocks="posts.body" />
-           <!-- {{posts.description}} -->
+            <SanityContent :blocks="posts.body" />
+            <!-- {{posts.description}} -->
           </p>
         </div>
       </div>
