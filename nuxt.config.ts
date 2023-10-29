@@ -1,15 +1,31 @@
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss","@nuxt/content"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
+  css: ["boxicons/css/boxicons.min.css"],
   content: {
-    // ... options
+    highlight: {
+      // Theme used in all color schemes.
+      theme: {
+        // Default theme (same as single string)
+        default: "github-dark",
+        // Theme used if `html.dark`
+        dark: "github-dark-dimmed",
+      },
+      // preload: [
+      //   "diff",
+      //   "json",
+      //   "js",
+      //   "ts",
+      //   "css",
+      //   "shell",
+      //   "html",
+      //   "md",
+      //   "javascript",
+      // ],
+    },
   },
-  // TODO: this is not working, make global
-  // alias: {
-  //   SANITY_PROJECT_ID: "x9czj6ra",
-  //   SANITY_DATASET: "production",
-  // },
   routeRules: {
     // Homepage pre-rendered at build time
     "/": { prerender: true },

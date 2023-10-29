@@ -9,7 +9,7 @@
             class="py-6 md:py-12 flex items-center justify-between flex-col sm:flex-row"
           >
             <div
-              class="font-bold flex text-3xl my_hover px-2 justify-between w-full sm:w-auto"
+              class="font-bold flex text-xl sm:text-3xl my_hover px-2 justify-between w-full sm:w-auto"
             >
               <div class="sm:hidden">
                 <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
