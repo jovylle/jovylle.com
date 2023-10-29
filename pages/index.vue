@@ -3,10 +3,10 @@
     <section class="md:min-h-[80vh] flex_center py-8 ">
       <div class="container mx-auto block lg:flex_center">
         <div class="px-10 md:px-10">
-          <LazySanityImage
+          <img
             class="rounded-2xl max-h-[500px] my_hover"
             style="margin: auto 0"
-            src="/me_face-500px-height-min.jpg"
+            src="/image-10.png"
             alt="programmer person"
           />
         </div>

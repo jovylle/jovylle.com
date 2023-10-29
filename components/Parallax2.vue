@@ -9,7 +9,7 @@ export default {
       const qs = (str) => this.$el.querySelector(str);
       // parallaxBackground.style.transform = `translateY(-${window.scrollY * 1}px)`;
       // Adjust the position of the div as the user scrolls
-      qs(".moving-bg2").style.backgroundPositionY = -scroll * 0.5 + "px";
+      qs(".moving-bg2").style.backgroundPositionY = -scroll * 1 + "px";
       qs(".moving").style.top = -scroll * 0.8 + "px";
       qs(".moving2").style.top = -scroll * 0.6 + "px";
     },
@@ -21,42 +21,33 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div class="parallax-container">
-      <p>11111</p>
-      <div class="parallax-background moving-bg2"></div>
-      <div class="parallax-content">
-        <p>asd</p>
+  <section class="py-20 sm:py-40">
+    <div>
+      <div class="moving-bg-style moving-bg2 aspect-square max-w-full w-80 mx-auto">
+        <p class=" h-full flex items-center justify-center "><span class="text-4xl drop-shadow-2xl">BG MOVING</span></p>
       </div>
-      <p>2222</p>
+      <img
+        class="moving-div moving2 relative left-20"
+        src="https://picsum.photos/100"
+        alt="image"
+      />
+      <div class="w-full">
+        <img
+          class="moving-div moving relative right-20 ml-auto"
+          src="https://picsum.photos/150"
+          alt="image"
+        />
+      </div>
     </div>
-    <div class="moving-div moving">moving-divmoving-div</div>
-    <img class="moving-div moving2" src="https://picsum.photos/100" alt="image" />
-  </div>
+  </section>
 </template>
 <style scoped>
-.parallax-container {
-  position: relative;
-  height: 50vh;
-  overflow: hidden;
-}
-
-.parallax-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('https://picsum.photos/400');
-  background-size: cover;
+.moving-bg-style {
+  background-image: url('https://picsum.photos/1000');
   background-position: center;
+  background-size: auto;
 }
 
-.parallax-content {
-  position: relative;
-  z-index: 1;
-  padding: 20px;
-}
 .moving-div {
   width: 200px;
   height: 200px;
