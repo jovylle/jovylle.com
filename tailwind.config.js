@@ -3,6 +3,13 @@ export default {
   darkMode: 'class',
   content: [],
   theme: {
+    // listStyleType: {
+    //   none: 'none',
+    //   disc: 'disc',
+    //   decimal: 'decimal',
+    //   square: 'square',
+    //   roman: 'upper-roman',
+    // },
     extend: {
       colors: {
         "primary-light": "#F7F8FC",
@@ -21,6 +28,9 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    // ...
+  ],
 }
 
