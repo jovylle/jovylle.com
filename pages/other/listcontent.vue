@@ -3,8 +3,8 @@
 
 //   return queryContent('/').findOne()
 // })
-  const projects = await queryContent('my-projects').find()
-  console.log("projects",projects)
+  const projects = await queryContent('post').find()
+  console.log("post",projects)
   // https://content.nuxt.com/composables/query-content
 </script>
 
