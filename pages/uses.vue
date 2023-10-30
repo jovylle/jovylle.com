@@ -78,7 +78,10 @@ useHead({
   title: 'Jovylle Bermudez - Uses',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
-  meta: [{ name: 'description', content: 'Genuinely addicted to coding.' }]
+  meta: [{ name: 'description', content: 'Genuinely addicted to coding.' }],
+  link: [
+    { rel: 'stylesheet', href: "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" }
+  ],
 });
 </script>
 <style></style>

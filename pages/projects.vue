@@ -1,4 +1,7 @@
 <script setup>
+useHead({
+  link: [{ rel: 'stylesheet', href: "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" }]
+})
 import { ref } from 'vue';
 import imageUrlBuilder from '@sanity/image-url'
 //  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
@@ -17,7 +20,9 @@ const projects = await queryContent('my-projects').find()
   <div>
     <div class="container mx-auto ">
       <section class="my-5 sm:my-14">
-        <div class="sm:space-x-10 text-center flex justify-center flex-col sm:block">
+        <div
+          class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
+        >
           <NuxtLink class="underline" to="/parallax">Parallax Effect</NuxtLink>
           <NuxtLink class="underline" to="https://quickchatgpt.netlify.app/"
             ><i class="bx bx-link-external"></i> Quick Chat Bot Tool</NuxtLink
@@ -66,8 +71,12 @@ const projects = await queryContent('my-projects').find()
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
               :style="'background-image: url(https://raw.githubusercontent.com/jovyllebermudez/static/d37ee2dee7175a22031457d711dae74922faf3be/placeholder.png)'"
             ></div>
-            <div class="text-center px-4 py-6 flex justify-center items-center flex-1">
-              <p class="font-general-semibold text-md sm:text-xl font-semibold p-0">
+            <div
+              class="text-center px-4 py-6 flex justify-center items-center flex-1"
+            >
+              <p
+                class="font-general-semibold text-md sm:text-xl font-semibold p-0"
+              >
                 {{ projectItem.title }}
               </p>
             </div>
