@@ -1,8 +1,4 @@
-<script setup>
-useHead({
-  link: [{ rel: 'stylesheet', href: "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" }]
-})
-</script>
+
 <template>
   <div class="container mx-auto py-10 sm:py-20">
     <ContentDoc>

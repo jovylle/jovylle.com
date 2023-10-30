@@ -6,7 +6,7 @@
           <img
             class="rounded-2xl max-h-[500px] my_hover"
             style="margin: auto 0"
-            src="/image-10.png"
+            src="/me_face-500px-height-min.jpg"
             alt="programmer person"
           />
         </div>
