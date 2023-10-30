@@ -21,10 +21,10 @@ const projects = await queryContent('my-projects').find()
           class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
         >
           <NuxtLink class="underline" to="/parallax">Parallax Effect</NuxtLink>
-          <NuxtLink class="underline" to="https://quickchatgpt.netlify.app/"
+          <NuxtLink class="underline" to="https://quickchatgpt.appcom.win/"
             ><i class="bx bx-link-external"></i> Quick Chat Bot Tool</NuxtLink
           >
-          <NuxtLink class="underline" to="https://theremnant.netlify.app/"
+          <NuxtLink class="underline" to="https://theremnant.appcom.win/"
             ><i class="bx bx-link-external"></i> Christian Blog Site
           </NuxtLink>
         </div>

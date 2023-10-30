@@ -98,10 +98,6 @@ try {
             class=" rounded-xl cursor-pointer shadow-lg sm:shadow-none"
             auto="format"
           />
-          <!-- <img
-            :src="'https://nuxtjs-tailwindcss-portfolio.netlify.app/images/web-project-2.jpg'"
-            class="rounded-xl cursor-pointer shadow-lg sm:shadow-none"
-          /> -->
         </div>
       </div>
 
