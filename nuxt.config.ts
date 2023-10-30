@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
-  css: ["boxicons/css/boxicons.min.css"],
+  css: ["boxicons/css/boxicons.css"],
   content: {
     highlight: {
       // Theme used in all color schemes.
