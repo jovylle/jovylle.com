@@ -1,7 +1,4 @@
 <script setup>
-useHead({
-  link: [{ rel: 'stylesheet', href: "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" }]
-})
 import { ref } from 'vue';
 import imageUrlBuilder from '@sanity/image-url'
 //  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
