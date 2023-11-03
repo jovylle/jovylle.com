@@ -1,3 +1,6 @@
+# Old React Native Version on Arm64 machines 
+
+
 
 On Ubuntu Arm64
 
