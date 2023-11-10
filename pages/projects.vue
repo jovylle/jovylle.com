@@ -109,7 +109,7 @@ const projects = await queryContent('my-projects').find()
             role="alert"
           >
             <span class="font-medium">Ey!</span> Rest of the projects are to be
-            added
+            added or not available
           </div>
         </div>
       </section>
