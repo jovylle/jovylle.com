@@ -199,9 +199,9 @@ sound.on('playerror', () => {
 
 
 useHead({
-  title: 'asdasdasd',
+  title: 'Rain Sound/Noise',
   meta: [
-    { name: 'description', content: 'My amazing site.' }
+    { hid: 'Rain Sound/Noise', name: 'Rain Sound/Noise', content: 'Ambience for focus studying or coding for work' }
   ],
   bodyAttrs: {
     class: 'test'
@@ -214,9 +214,5 @@ useHead({
 ::before,
 ::after {
   --tw-content: '';
-}
-
-svg {
-  /* fill: white; */
 }
 </style>
