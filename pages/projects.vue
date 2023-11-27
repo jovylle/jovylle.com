@@ -1,15 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-import imageUrlBuilder from '@sanity/image-url'
-//  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
-
-const builder = imageUrlBuilder({
-  projectId: 'x9czj6ra',
-  dataset: 'production',
-})
-const urlFor = (source) => builder.image(source)
-//  [the is the docs](https://www.sanity.io/docs/image-url#sanityimage-url)
-//https://zp7mbokg.api.sanity.io/v2021-06-07/data/query/production?query=*[_id == $id]&$id="myId"
 // TODO: make a global varialbe, maybe global state,
 const projects = await queryContent('my-projects').find()
 </script>
