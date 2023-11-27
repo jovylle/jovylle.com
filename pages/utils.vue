@@ -35,36 +35,3 @@
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-let ohName2 = ''
-//     SAMPLE GET THROUGH API
-// const {data}: {data:any} = await useFetch("/api/hello")
-// const { data } = await useAsyncData("asd", () =>
-//   $fetch("http://localhost:1337/api/items")
-// );
-// console.log(data);
-// console.log("data");
-
-// import type { Item } from "~/types";
-// import type { Strapi4Response } from "@nuxtjs/strapi";
-
-// const { find } = useStrapi4();
-
-// const res = await find<Strapi4Response<Item>>("items", {
-//   filters: {
-//     key: {
-//       $eq: "name",
-//     },
-//   },
-// });
-// const name = res.data[0].attributes.value;
-// console.log(name);
-</script>
-<!-- <script lang="ts">
-export default {
-  layout: "custom",
-};
-</script>  -->
-<style>
-</style>
