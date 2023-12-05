@@ -40,6 +40,30 @@ you should see the 5.7
 
 You can now install whats needed `sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*`
 
+It will then ask for the mysql's root password to be set.
+
+try connecting now to mysql
+
+`sudo mysql -p` then input the password
+mysql>`create database local_fitbox` to create the database ready.
+then
+mysql>`exit`
+![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/cf6e670e-1ff6-4e0a-9db6-e32c59d9a426)
+
+
+
+## Install NVM for node 10
+
+reference: https://github.com/nvm-sh/nvm
+
+`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.6/install.sh | bash`
+exit terminal and connect again to refresh
+do `nvm -v` and there its installed.
+do `nvm install 10` to install node 10
+
+![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/2333d230-e98d-4597-ade0-a50b75e2be71)
+![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/f890b9df-7f16-41de-a724-77484dbb610f)
+
 git clone https://github.com/again-faster/fitbox-web 
 
 
