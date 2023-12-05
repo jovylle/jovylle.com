@@ -11,6 +11,8 @@ description: 'Sudo mysql without needing password'
 - needed composer 1.x and not 2.x
 - worked on Ubuntu 22 and I tried on Ubuntu 18 it didn't not sure yet why.
 
+## Optional,
+- phpmyadmin 4.9.9 (not 5.0 or up due to its requirement of php 7)
 
 
 ## install multipass
