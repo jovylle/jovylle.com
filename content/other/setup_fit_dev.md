@@ -131,3 +131,8 @@ mysql -u root -p local_fitbox < pathtosql/fitbox.sql
 
 ## Do this to do migrations, but if you already have the database imported maybe not.
 `php artisan migrate`
+
+
+## If you want it in nginx
+`sudo apt install nginx`
+
