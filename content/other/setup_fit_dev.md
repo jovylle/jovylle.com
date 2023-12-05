@@ -138,3 +138,26 @@ mysql -u root -p local_fitbox < pathtosql/fitbox.sql
 ## If you want it in nginx
 `sudo apt install nginx`
 
+
+## For Phpmyadmin
+`wget https://files.phpmyadmin.net/phpMyAdmin/4.9.11/phpMyAdmin-4.9.11-english.tar.gz`
+`tar xzf phpMyAdmin-4.9.11-english.tar.gz`
+`sudo mv phpMyAdmin-4.9.11-english /var/www/phpmyadmin`
+`cd /var/www/phpmyadmin`
+cp config.sample.inc.php config.inc.php
+nano config.inc.php
+sudo service nginx restart
+
+
+`
+<?php
+$cfg['blowfish_secret'] = 'justrandom'; // Add a random string here
+$cfg['Servers'][1]['auth_type'] = 'cookie';
+$cfg['Servers'][1]['host'] = 'localhost'; // Your MySQL/MariaDB host
+$cfg['Servers'][1]['user'] = 'root'; // Your MySQL/MariaDB username
+$cfg['Servers'][1]['password'] = 'password'; // Your MySQL/MariaDB password
+$cfg['Servers'][1]['compress'] = false;
+$cfg['Servers'][1]['AllowNoPassword'] = false;
+$cfg['UploadDir'] = '';
+$cfg['SaveDir'] = '';
+`
