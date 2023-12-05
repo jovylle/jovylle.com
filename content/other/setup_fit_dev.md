@@ -92,6 +92,8 @@ https://phoenixnap.com/kb/how-to-install-composer-ubuntu#:~:text=Steps%20For%20I
 `npm install -g yarn`
 `npm install -g bower`
 
+## Install Redis I forgot.
+`sudo apt install redis-server`
 
 ## Download the project
 `git clone https://github.com/again-faster/fitbox-web`
@@ -112,11 +114,15 @@ if it says "Mcrypt PHP extension required."
 do `sudo apt install php5.6-mcrypt`
 ref: https://linux-packages.com/ubuntu-focal-fossa/package/php56-mcrypt
 
+## Ask for the database import to your local
+mysql -u root -p local_fitbox < pathtosql/fitbox.sql
+
+
+## Do this to do migrations, but if you already have the database imported maybe not.
+`php artisan migrate`
+
 ![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/2333d230-e98d-4597-ade0-a50b75e2be71)
 ![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/f890b9df-7f16-41de-a724-77484dbb610f)
-
-git clone https://github.com/again-faster/fitbox-web 
-
 
 
 
