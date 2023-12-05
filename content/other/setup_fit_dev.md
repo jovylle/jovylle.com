@@ -21,7 +21,7 @@ description: 'Sudo mysql without needing password'
 
 ## try to connect
 `multipass list` to show vm list
-`multipass shell fit` to got to fit vm shell
+`multipass shell fit` to got to fit vm shell (almost all of commands will be run inside the multipass shell)
 
 # Install needed
 
@@ -109,10 +109,21 @@ https://phoenixnap.com/kb/how-to-install-composer-ubuntu#:~:text=Steps%20For%20I
 put it on .env in project
 
 ## Test Run Project
-`php artisan serve` remember we are still inside multipass
+`php artisan serve --host 0.0.0.0` remember we are still inside multipass
 if it says "Mcrypt PHP extension required."
 do `sudo apt install php5.6-mcrypt`
 ref: https://linux-packages.com/ubuntu-focal-fossa/package/php56-mcrypt
+do `php artisan serve --host 0.0.0.0` --host 0.0.0.0 is needed here, I don't know whey 0.0.0.0 is not equal to localhost, you can Port Forward it if you want.
+open new terminal of the host computer not inside multipass shell,
+`multipass list`
+and it will show like below. you can see the Ipv4
+
+$ multipass list
+Name                    State             IPv4             Image
+fit                     Running           172.22.47.59     Ubuntu 22.04 LTS    
+
+access 172.22.47.59:8000 on your browser. tada.
+
 
 ## Ask for the database import to your local
 mysql -u root -p local_fitbox < pathtosql/fitbox.sql
@@ -120,29 +131,3 @@ mysql -u root -p local_fitbox < pathtosql/fitbox.sql
 
 ## Do this to do migrations, but if you already have the database imported maybe not.
 `php artisan migrate`
-
-![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/2333d230-e98d-4597-ade0-a50b75e2be71)
-![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/f890b9df-7f16-41de-a724-77484dbb610f)
-
-
-
-
-
-
-
-
-
-
-
-
-This command, `ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;`, is used to change the authentication method for the MySQL root user to use the `auth_socket` plugin. This plugin allows the operating system to authenticate the MySQL user, eliminating the need for a password.
-
-
-Here are the steps to achieve this:
-
-1. **Connect to MySQL:**
-   Open a terminal and log in to MySQL as the root user or any user with sufficient privileges.
-
-   ```bash
-   mysql -u root -p
-   ```
