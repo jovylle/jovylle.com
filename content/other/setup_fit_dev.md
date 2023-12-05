@@ -60,6 +60,21 @@ reference: https://github.com/nvm-sh/nvm
 exit terminal and connect again to refresh
 do `nvm -v` and there its installed.
 do `nvm install 10` to install node 10
+test `node -v` to see its v10.24.1 and its read
+
+## Install Php 5.6
+reference: https://vitux.com/how-to-install-php5-php8-on-ubuntu/
+
+`sudo add-apt-repository ppa:ondrej/php`
+`sudo apt update`
+`sudo apt install -y php5.6`
+Install commonly used php extension
+`sudo apt-get install php5.6-gd php5.6-mysql php5.6-imap php5.6-curl php5.6-intl php5.6-pspell php5.6-recode php5.6-sqlite3 php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-zip php5.6-mbstring php5.6-soap php5.6-opcache libicu65 php5.6-common php5.6-json php5.6-readline php5.6-xml`
+
+## Install Composer verion 1
+
+
+https://stackoverflow.com/questions/51324721/how-to-install-specified-version-of-composer
 
 ![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/2333d230-e98d-4597-ade0-a50b75e2be71)
 ![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/f890b9df-7f16-41de-a724-77484dbb610f)
