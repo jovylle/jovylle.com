@@ -153,8 +153,8 @@ const status = useState('status', ()=>'loading')
 const looping = useState('looping', ()=>false)
 var sound = new Howl({
   // src: ['/sample-3s.mp3']
-  src: ['https://cdn.pixabay.com/download/audio/2022/05/13/audio_257112ce99.mp3?filename=soft-rain-ambient-111154.mp3'],
-  src: ['https://cdn.pixabay.com/audio/2022/05/13/audio_257112ce99.mp3']
+  src: ['soft-rain-ambient-111154.mp3'],
+  src: ['audio_257112ce99.mp3']
 });
 
 // var id1 = "";
