@@ -41,12 +41,12 @@
               >
                 Projects
               </NuxtLink>
-              <!-- <NuxtLink
+              <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/posts"
               >
                 Posts
-              </NuxtLink> -->
+              </NuxtLink>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/uses"
