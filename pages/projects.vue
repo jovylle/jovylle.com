@@ -14,8 +14,8 @@ const projects = await queryContent('my-projects').find()
           <NuxtLink class="underline" to="https://quickchatgpt.appcom.win/"
             ><i class="bx bx-link-external"></i> Quick Chat Bot Tool</NuxtLink
           >
-          <NuxtLink class="underline" to="https://theremnant.appcom.win/"
-            ><i class="bx bx-link-external"></i> Christian Blog Site
+          <NuxtLink class="underline" to="https://vynsandtiney.atcebu.win/"
+            ><i class="bx bx-link-external"></i> Wedding Website
           </NuxtLink>
         </div>
       </section>
