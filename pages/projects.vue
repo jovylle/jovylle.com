@@ -11,6 +11,7 @@ const projects = await queryContent('my-projects').find()
         >
           <NuxtLink class="underline" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
           <NuxtLink class="underline" to="/parallax">Parallax Effect</NuxtLink>
+          <NuxtLink class="underline" to="/game">Games</NuxtLink>
           <NuxtLink class="underline" to="https://quickchatgpt.appcom.win/"
             ><i class="bx bx-link-external"></i> Quick Chat Bot Tool</NuxtLink
           >
