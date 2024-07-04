@@ -20,6 +20,7 @@
   "dependencies": {
     "@nuxt/content": "^2.9.0",
     "@sanity/image-url": "^1.0.2",
-    "howler": "^2.2.4"
+    "howler": "^2.2.4",
+    "vue-matomo": "^4.2.0"
   }
 }
