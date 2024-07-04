@@ -107,5 +107,18 @@ export default {
       this.darkMode = !this.darkMode;
     },
   },
+  head() {
+    return {
+      script: [
+        {
+          innerHTML: `
+            if (typeof window !== 'undefined' && window._paq) {
+              window._paq.push(['trackPageView'])
+            }
+          `
+        }
+      ]
+    }
+  }
 }
 </script>
