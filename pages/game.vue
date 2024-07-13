@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Welcome to Minesweeper</h1>
+    
     <MinesweeperGame />
   </div>
 </template>
