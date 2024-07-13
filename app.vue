@@ -11,3 +11,13 @@ useHead({
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      layout: 'default' // Example value, replace with your actual logic
+    }
+  }
+}
+</script>
