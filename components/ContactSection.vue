@@ -12,10 +12,10 @@
         <a aria-label="facebook link" href="https://www.facebook.com/twero">
           <i class="my_hover bx bxl-facebook-circle text-m4 dark:text-primary-light"></i>
         </a>
-        <a aria-label="mail me" href="mailto:jovyllebermudez@gmail.com">
+        <a aria-label="mail me" href="mailto:me@jovylle.com">
           <i class="my_hover bx bxl-gmail text-m4 dark:text-primary-light"></i>
         </a>
-        <a aria-label="github link" href="https://github.com/jovyllebermudez">
+        <a aria-label="github link" href="https://github.com/jovylle">
           <i class="my_hover bx bxl-github text-m4 dark:text-primary-light"></i>
         </a>
         <!-- <a href="">
@@ -23,7 +23,7 @@
           </a> -->
         <a
           aria-label="linkedin link"
-          href="https://www.linkedin.com/in/jovyllebermudez/"
+          href="https://www.linkedin.com/in/jovylle/"
         >
           <i class="my_hover bx bxl-linkedin text-m4 dark:text-primary-light"></i>
         </a>
