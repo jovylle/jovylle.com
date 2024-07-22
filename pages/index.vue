@@ -2,14 +2,14 @@
   <div class="space-y-10 lg:space-y-32 max-w-[1280px] mx-auto">
     <section class="md:min-h-[80vh] flex_center py-8 ">
       <div class="container mx-auto block lg:flex_center">
-        <div class="px-10 md:px-10">
+        <!-- <div class="px-10 md:px-10">
           <img
             class="rounded-2xl max-h-[500px] my_hover"
             style="margin: auto 0"
             src="/me_face-500px-height-min.jpg"
             alt="programmer person"
           />
-        </div>
+        </div> -->
         <div class=" lg:pr-0 p-5 sm:p-10 space-y-4 flex items-center flex-col text-center">
           <h1 class="text-3xl sm:text-4xl font-semibold uppercase my_hover">
             It's me, Jovylle
