@@ -72,11 +72,11 @@ Error: Command failed: ./gradlew app:installDebug -PreactNativeDevServerPort=808
 FAILURE: Build failed with an exception.
 
 * Where:
-Script '/Users/jovyllebermudez/projectname/node_modules/@react-native-community/cli-platform-android/native_modules.gradle' line: 170
+Script '/Users/jovylle/projectname/node_modules/@react-native-community/cli-platform-android/native_modules.gradle' line: 170
 
 * What went wrong:
 A problem occurred evaluating script.
-> internal/modules/cjs/loader.js:934  throw err;  ^Error: Cannot find module 'react-native/cli'Require stack:- /Users/jovyllebermudez/.gradle/daemon/6.4.1/[eval]    
+> internal/modules/cjs/loader.js:934  throw err;  ^Error: Cannot find module 'react-native/cli'Require stack:- /Users/jovylle/.gradle/daemon/6.4.1/[eval]    
 ```
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dgokgh2deynvpc9sik41.png)

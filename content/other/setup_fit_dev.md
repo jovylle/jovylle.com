@@ -37,7 +37,7 @@ go to home `cd ~` then
 
 choose "Ubuntu Bionic"
 and choose this.
-![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/e921c1b3-19a8-466b-b1ff-ad6e14c4e5cc)
+![image](https://github.com/jovylle/jovylle.com/assets/73716444/e921c1b3-19a8-466b-b1ff-ad6e14c4e5cc)
 
 do `sudo apt-get update`  and you will have error "E: The repository 'http://repo.mysql.com/apt/ubuntu bionic InRelease' is not signed."
 do `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29`
@@ -45,7 +45,7 @@ do `sudo apt-get update` again, error should gone
 
 check if its ready `apt-cache policy mysql-server` 
 you should see the 5.7
-![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/01795839-6a78-47e7-aa4d-1a36b64fd529)
+![image](https://github.com/jovylle/jovylle.com/assets/73716444/01795839-6a78-47e7-aa4d-1a36b64fd529)
 
 You can now install whats needed `sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*`
 
@@ -57,7 +57,7 @@ try connecting now to mysql
 mysql>`create database local_fitbox` to create the database ready.
 then
 mysql>`exit`
-![image](https://github.com/jovyllebermudez/jovylle.com/assets/73716444/cf6e670e-1ff6-4e0a-9db6-e32c59d9a426)
+![image](https://github.com/jovylle/jovylle.com/assets/73716444/cf6e670e-1ff6-4e0a-9db6-e32c59d9a426)
 
 
 

@@ -57,7 +57,7 @@ const projects = await queryContent('my-projects').find()
             <div
               v-else
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
-              :style="'background-image: url(https://raw.githubusercontent.com/jovyllebermudez/static/d37ee2dee7175a22031457d711dae74922faf3be/placeholder.png)'"
+              :style="'background-image: url(https://raw.githubusercontent.com/jovylle/static/d37ee2dee7175a22031457d711dae74922faf3be/placeholder.png)'"
             ></div>
             <div
               class="text-center px-4 py-6 flex justify-center items-center flex-1"
