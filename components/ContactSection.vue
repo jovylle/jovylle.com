@@ -9,9 +9,6 @@
       <div
         class="flex justify-center space-x-6 my-8 items-center text-4xl text-m1"
       >
-        <a aria-label="facebook link" href="https://www.facebook.com/twero">
-          <i class="my_hover bx bxl-facebook-circle text-m4 dark:text-primary-light"></i>
-        </a>
         <a aria-label="mail me" href="mailto:me@jovylle.com">
           <i class="my_hover bx bxl-gmail text-m4 dark:text-primary-light"></i>
         </a>
