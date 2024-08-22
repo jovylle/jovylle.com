@@ -15,6 +15,12 @@
         <a aria-label="github link" href="https://github.com/jovylle">
           <i class="my_hover bx bxl-github text-m4 dark:text-primary-light"></i>
         </a>
+        <a aria-label="facebook link" href="https://facebook.com/jov404">
+          <i class="my_hover bx bxl-facebook text-m4 dark:text-primary-light"></i>
+        </a>
+        <a aria-label="twitter link" href="https://x.com/jov404">
+          <i class="my_hover bx bxl-twitter text-m4 dark:text-primary-light"></i>
+        </a>
         <!-- <a href="">
             <i class='my_hover bx bxl-dev-to'></i>
           </a> -->
