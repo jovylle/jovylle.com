@@ -142,6 +142,7 @@
         </svg>
       </span>
     </div>
+    <giscus />
   </div>
 </template>
 <script setup>

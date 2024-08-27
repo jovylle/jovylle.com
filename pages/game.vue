@@ -3,6 +3,8 @@
     <h1>Welcome to Minesweeper</h1>
     
     <MinesweeperGame />
+    
+    <giscus />
   </div>
 </template>
 

@@ -51,34 +51,35 @@
 </template>
 <script setup>
 
-// const { data } = await $fetch(
-//   'https://jojostrapibackend.herokuapp.com/api/items'
-// );
+  // const { data } = await $fetch(
+  //   'https://jojostrapibackend.herokuapp.com/api/items'
+  // );
 
-// console.log(data);
-// console.log('data');
+  // console.log(data);
+  // console.log('data');
 
-// this one is gubot response
-// const { data: mymystrapi } = await useFetch('https://jojostrapibackend.herokuapp.com/api/items',{pick:['data']})
-// console.log(mymystrapi)
-// console.log("mymystrapi")
+  // this one is gubot response
+  // const { data: mymystrapi } = await useFetch('https://jojostrapibackend.herokuapp.com/api/items',{pick:['data']})
+  // console.log(mymystrapi)
+  // console.log("mymystrapi")
 
-let strapi = {};
-// data.forEach((item) => {
-//   strapi[item.attributes.key] = item.attributes.value;
-// });
+  let strapi = {};
+  // data.forEach((item) => {
+  //   strapi[item.attributes.key] = item.attributes.value;
+  // });
 
-// const ressmystrapi = await $fetch('/api/mystrapi');
-// const ress = await $fetch('/api/hello');
-// console.log(ressmystrapi);
-// console.log(ress);
-// console.log('server apis');
+  // const ressmystrapi = await $fetch('/api/mystrapi');
+  // const ress = await $fetch('/api/hello');
+  // console.log(ressmystrapi);
+  // console.log(ress);
+  // console.log('server apis');
 
-useHead({
-  title: 'Jovylle',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  charset: 'utf-8',
-  meta: [{ name: 'description', content: 'Genuinely addicted to coding.' }]
-});
+  useHead({
+    title: 'Jovylle',
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    charset: 'utf-8',
+    meta: [{ name: 'description', content: 'Genuinely addicted to coding.' }]
+  });
+  
 </script>
 <style></style>
