@@ -1,6 +1,7 @@
 <script setup>
 // TODO: make a global varialbe, maybe global state,
 const projects = await queryContent('my-projects').find()
+
 </script>
 <template>
   <div>
@@ -103,6 +104,10 @@ const projects = await queryContent('my-projects').find()
           </div>
         </div>
       </section>
+      <section>
+        <giscus />
+      </section>
     </div>
   </div>
 </template>
+

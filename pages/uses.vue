@@ -71,6 +71,7 @@
         </div>
       </div>
     </section>
+    <giscus />
   </div>
 </template>
 <script setup>
