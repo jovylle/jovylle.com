@@ -10,14 +10,20 @@ const projects = await queryContent('my-projects').find()
         <div
           class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
         >
-          <NuxtLink class="underline" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
-          <NuxtLink class="underline" to="/parallax">Parallax Effect</NuxtLink>
-          <NuxtLink class="underline" to="/game">Games</NuxtLink>
-          <NuxtLink class="underline" to="https://quickchatgpt.appcom.win/"
-            ><i class="bx bx-link-external"></i> Quick Chat Bot Tool</NuxtLink
-          >
-          <NuxtLink class="underline" to="https://vynsandtiney.atcebu.win/"
-            ><i class="bx bx-link-external"></i> Wedding Website
+          <NuxtLink class="underline inline-block mt-4" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="/parallax">Parallax Effect</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="/game">Games</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
+            <i class="bx bx-link-external" ></i> 
+            flying stick figure game
+          </NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://quickchatgpt.atcebu.win/">
+            <i class="bx bx-link-external" target="_blank"></i> 
+            Quick Chat Bot Tool
+          </NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://vynsandtiney.atcebu.win/">
+            <i class="bx bx-link-external" target="_blank"></i> 
+            Wedding Website
           </NuxtLink>
         </div>
       </section>
