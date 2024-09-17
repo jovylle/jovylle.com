@@ -12,15 +12,25 @@ rating: 3
 
 link[google.comm](google.comm)
 
-`asdsadasdasdasd CODE `
+`asdsadasdasdasd CODE`
+
+`asdsadsadsadsadasd`\
+asdasd
+
+``
+
+```
+heheh
+
+ehehe
+```
 
 * bullet
 * unorder bullits
-
-
 
 1. ordered 1
 2. 2
 3. 3
 
 ![spongebob alt](/decap/images/uploads/summer-water.png "spongebob title")
+
