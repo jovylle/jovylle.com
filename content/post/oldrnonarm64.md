@@ -1,3 +1,7 @@
+---
+title: Old React Native Version on Arm64 machines
+date: 2024-10-02T18:31:00.000Z
+---
 # Old React Native Version on Arm64 machines 
 
 

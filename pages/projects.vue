@@ -1,6 +1,6 @@
 <script setup>
 // TODO: make a global varialbe, maybe global state,
-const projects = await queryContent('my-projects').find()
+const projects = await queryContent('projects').find()
 
 </script>
 <template>
@@ -12,19 +12,11 @@ const projects = await queryContent('my-projects').find()
         >
           <NuxtLink class="underline inline-block mt-4" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
           <NuxtLink class="underline inline-block mt-4" to="/parallax">Parallax Effect</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="/game">Games</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
+          <!-- <NuxtLink class="underline inline-block mt-4" to="/game">minesweeper</NuxtLink> -->
+          <!-- <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
             <i class="bx bx-link-external" ></i> 
             flying stick figure game
-          </NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://quickchatgpt.atcebu.win/">
-            <i class="bx bx-link-external" target="_blank"></i> 
-            Quick Chat Bot Tool
-          </NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://vynsandtiney.atcebu.win/">
-            <i class="bx bx-link-external" target="_blank"></i> 
-            Wedding Website
-          </NuxtLink>
+          </NuxtLink> -->
         </div>
       </section>
       <!-- Projects grid -->
@@ -60,6 +52,11 @@ const projects = await queryContent('my-projects').find()
               v-if="projectItem.image"
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
               :style="'background-image: url('+projectItem.image+')'"
+            ></div>
+            <div
+              v-else-if="projectItem.thumbnail"
+              class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
+              :style="'background-image: url('+projectItem.thumbnail+')'"
             ></div>
             <div
               v-else
