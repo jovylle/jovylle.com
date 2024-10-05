@@ -5,6 +5,8 @@ date: 2024-10-05T13:23:00.000Z
 ---
 ### **How to Fix GitHub Authentication Issues Caused by Ksshaskpass on Linux**
 
+reference: https://bugzilla.redhat.com/show_bug.cgi?id=1043311#c6
+
 If you’ve ever run into an issue where your GitHub password is mistakenly stored as your username in the `ksshaskpass` utility, you’re not alone! This problem has affected many users on Linux distributions like Fedora and Kubuntu, where `ksshaskpass` manages credentials for Git operations. The confusion arises from an unintuitive prompt that can lead you to accidentally input your GitHub password when it asks for your username.
 
 In this post, we'll discuss the problem, how to fix it, and why this issue still lingers in modern Linux systems.
