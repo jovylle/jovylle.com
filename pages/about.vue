@@ -5,7 +5,7 @@
         <h2
           class="text-3xl sm:text-5xl text-center font-semibold my-8 my_hover"
         >
-          About me
+          About
         </h2>
         <div>
           <Coding class="h-[200px] mx-auto max-w-full" />

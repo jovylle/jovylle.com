@@ -33,7 +33,7 @@
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0 whitespace-nowrap"
                 to="/about"
               >
-                About me
+                About
               </NuxtLink>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
