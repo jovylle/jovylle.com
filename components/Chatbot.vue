@@ -17,7 +17,40 @@
       </button>
     </div>
     <div class="chatbot-body">
-      <div v-for="message in messages" :key="message.id" class="chatbot-message" v-html="message.html">
+      <div
+        v-for="message in messages"
+        :key="message.id"
+        class="chatbot-message"
+        v-html="message.html"
+      ></div>
+      <div v-if="loading" class="loading-indicator">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          style="background: none; display: block; shape-rendering: auto;"
+          width="40px"
+          height="40px"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="none"
+            stroke="#5f6368"
+            stroke-width="10"
+            r="35"
+            stroke-dasharray="164.93361431346415 56.97787143782138"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              repeatCount="indefinite"
+              dur="1s"
+              values="0 50 50;360 50 50"
+              keyTimes="0;1"
+            ></animateTransform>
+          </circle>
+        </svg>
       </div>
     </div>
     <div class="chatbot-footer justify-between space-x-5">
@@ -26,8 +59,9 @@
         @keyup.enter="sendMessage"
         placeholder="Type a message..."
         class="p-3 rounded-lg bg-ternary-light w-full"
+        :disabled="loading"
       />
-      <button class="p-3" @click="sendMessage">Send</button>
+      <button class="p-3" @click="sendMessage" :disabled="loading">Send</button>
     </div>
   </div>
 </template>
@@ -43,7 +77,8 @@ export default {
   data() {
     return {
       userInput: '',
-      messages: []
+      messages: [],
+      loading: false
     };
   },
   methods: {
@@ -51,22 +86,29 @@ export default {
       const userMessage = this.userInput;
       this.messages.push({ id: Date.now(), text: userMessage, html: marked(userMessage) });
       this.userInput = '';
+      this.loading = true;
 
-      const response = await fetch('/api/chatbot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          skills: this.skills,
-          projects: this.projects
-        })
-      });
+      try {
+        const response = await fetch('/api/chatbot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: userMessage,
+            skills: this.skills,
+            projects: this.projects
+          })
+        });
 
-      const data = await response.json();
-      const aiMessage = data.choices[0].message.content.trim();
-      this.messages.push({ id: Date.now() + 1, text: aiMessage, html: marked(aiMessage) });
+        const data = await response.json();
+        const aiMessage = data.choices[0].message.content.trim();
+        this.messages.push({ id: Date.now() + 1, text: aiMessage, html: marked(aiMessage) });
+      } catch (error) {
+        console.error('Error fetching AI response:', error);
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };
@@ -88,18 +130,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 20px;
-  /* border-bottom: 1px solid #ccc; */
 }
 .chatbot-body {
   max-height: 400px;
-  /* min-height: 400px; */
   overflow-y: auto;
-  /* padding: 10px; */
 }
 .chatbot-footer {
   display: flex;
   padding: 10px;
-  /* border-top: 1px solid #ccc; */
 }
 .chatbot-message {
   margin-bottom: 10px;
@@ -109,6 +147,11 @@ export default {
   text-align: right;
 }
 .chatbot-message:nth-child(even) {
+  @apply bg-primary-light p-5 rounded-lg;
+}
+.loading-indicator {
+  margin-bottom: 10px;
+  padding: 0px 10px;
   @apply bg-primary-light p-5 rounded-lg;
 }
 </style>
