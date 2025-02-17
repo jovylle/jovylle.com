@@ -126,7 +126,7 @@ export default {
       isMenuOpen: false,
       showChatbot: false,
       skills: [
-        "JavaScript", "PHP", "Python", "HTML", "CSS",
+        "JavaScript", "PHP", "Python", "HTML", "CSS", "Flutter", "Dart", "Ruby on Rails", "Ruby",
         "VueJs", "ReactJs", "NuxtJs", "Laravel", "CodeIgniter",
         "NodeJs", "ExpressJs", "GatsbyJS", "Jest", "TypeScript",
         "MySQL", "GraphQl", "GroQ", "AJAX", "REST APIs",
@@ -141,12 +141,12 @@ export default {
         {
           name: "Portfolio Website",
           description: "A personal portfolio website to showcase my projects and skills.",
-          link: "https://example.com"
+          link: "https://jovylle.com"
         },
         {
           name: "Chatbot Integration",
           description: "A chatbot integrated into a website using OpenAI's GPT model.",
-          link: "https://example.com"
+          link: "https://gptfree.uft1.com"
         },
         {
           name: "Melvorite Chrome Extension",
@@ -156,12 +156,17 @@ export default {
         {
           name: "ChatGPT Clone",
           description: "Chat interface powered by OpenAI API, leveraging serverless functions for scalability.",
-          link: "https://quickchatgpt.atcebu.win"
+          link: "https://gptfree.uft1.com"
         },
         {
           name: "Stick Figure Game",
           description: "Simple game built with PhaserJS, focused on engaging mechanics and responsive design.",
           link: "https://flyingstickfigure.atcebu.win"
+        },
+        {
+          name: "Flappy Bird Clone",
+          description: "Multiplatform game built with Flutter.",
+          link: "https://https://flappy-bird.uft1.com/"
         }
       ]
     };

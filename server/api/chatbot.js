@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     body: JSON.stringify({
       model: 'gpt-4-turbo',
       messages: [
-        { role: 'system', content: `You are a helpful assistant to viewers of jovylle's web developer website. The user is viewing the portfolio of a developer with the following skills: ${skills.join(', ')} and the following projects: ${projects.map(p => p.name).join(', ')}. Answer the user's questions as if you are guiding them through the portfolio.` },
+        { role: 'system', content: `You are a helpful assistant to viewers of jovylle's web developer website (his name is 'Jovylle B.'). The user is viewing the portfolio of a developer with the following skills: ${skills.join(', ')} and the following projects: ${projects.map(p => p.name).join(', ')}. Answer the user's questions as if you are guiding them through the portfolio.` },
         { role: 'user', content: message }
       ],
       max_tokens: 150

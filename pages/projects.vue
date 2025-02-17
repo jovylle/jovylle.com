@@ -56,19 +56,19 @@ const projects = await queryContent('projects').find()
             v-for="projectItem in projects"
             :key="projectItem._path"
             :to="projectItem._path"
-            class="rounded-xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex flex-col max-w-[350px] mx-auto"
+            class="rounded-xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex flex-col max-w-[350px] mx-auto w-full"
             aria-label="Single Project"
           >
             <!-- <div v-if="post.mainImage" class="bg-cover bg-center h-64 w-64" :style="`background-image: url(${post.mainImage?.asset._ref});`"></div> -->
             <div
               v-if="projectItem.image"
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
-              :style="'background-image: url('+projectItem.image+')'"
+              :style="`background-image: url(${projectItem.image})`"
             ></div>
             <div
               v-else-if="projectItem.thumbnail"
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
-              :style="'background-image: url('+projectItem.thumbnail+')'"
+              :style="`background-image: url(${projectItem.thumbnail})`"
             ></div>
             <div
               v-else
@@ -119,9 +119,9 @@ const projects = await queryContent('projects').find()
           </div>
         </div>
       </section>
-      <section>
+      <!-- <section>
         <giscus />
-      </section>
+      </section> -->
     </div>
   </div>
 </template>
