@@ -42,7 +42,10 @@ export default defineNuxtConfig({
       routes: ["/", "/projects", "/about", "/contact", "/posts", "/game"],
     },
   },
-  ssr: false, // Disable SSR since it’s all static
+  routeRules: {
+    "/game": { ssr: false },
+    "/parallax": { ssr: false },
+  },
   // routeRules: { // not sure with this
   //   // Homepage pre-rendered at build time
   //   "/": { prerender: true },
