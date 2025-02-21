@@ -38,8 +38,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ["/", "/projects", "/about"],
+      routes: ["/", "/projects", "/about", "/contact", "/posts", "/game"],
     },
+  },
+  routeRules: {
+    "/game": { ssr: false },
+    "/parallax": { ssr: false },
   },
   // routeRules: { // not sure with this
   //   // Homepage pre-rendered at build time
