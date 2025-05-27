@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-10 lg:space-y-32 max-w-[1280px] mx-auto">
+  <div class="space-y-10 lg:space-y-20 max-w-[1280px] mx-auto">
     <section class="md:min-h-[60vh] flex_center my-5 sm:my-10" id="about">
       <div class="container text-center space-y-10 sm:space-y-14">
         <h2

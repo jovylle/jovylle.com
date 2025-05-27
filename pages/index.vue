@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-10 lg:space-y-32 max-w-[1280px] mx-auto">
+  <div class="space-y-10 lg:space-y-20 max-w-[1280px] mx-auto">
     <section class="md:min-h-[40vh] flex_center py-8 ">
       <div class="container mx-auto block lg:flex_center">
         <!-- <div class="px-10 md:px-10">

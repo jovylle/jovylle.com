@@ -7,16 +7,31 @@ const projects = await queryContent('projects').find()
   <div>
     <div class="container mx-auto ">
       <section class="my-5 sm:my-14">
+        <div class="text-center">
+          <p
+            class="font-general-semibold text-xl sm:text-2xl sm:text-5xl font-semibold mb-2 text-ternary-dark dark:text-ternary-light"
+          >
+            Quick Links
+          </p>
+        </div>
         <div
           class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
         >
+          <NuxtLink class="underline inline-block mt-4" to="https://gptfree.uft1.com/" target="_blank">Chat Bot gpt3.5 ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="http://uft1.com/" target="_blank">Random Utility/Mini Tools List Site ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://friendmc.uft1.com/" target="_blank">Our Minecraft Server ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://sunflower-land-helper.jovylle.com/" target="_blank">Sunflowerland game Extension ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">Stick Figure Simple PhaserJs Game ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://is-home-online.uft1.com/" target="_blank">Check if home server is online ↗</NuxtLink>
           <NuxtLink class="underline inline-block mt-4" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
           <NuxtLink class="underline inline-block mt-4" to="/parallax">Parallax Effect</NuxtLink>
           <!-- <NuxtLink class="underline inline-block mt-4" to="/game">minesweeper</NuxtLink> -->
-          <!-- <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
+          <!-- 
+          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
             <i class="bx bx-link-external" ></i> 
             flying stick figure game
-          </NuxtLink> -->
+          </NuxtLink> 
+          -->
         </div>
       </section>
       <!-- Projects grid -->
@@ -44,19 +59,19 @@ const projects = await queryContent('projects').find()
             v-for="projectItem in projects"
             :key="projectItem._path"
             :to="projectItem._path"
-            class="rounded-xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex flex-col max-w-[350px] mx-auto"
+            class="rounded-xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex flex-col max-w-[350px] mx-auto w-full"
             aria-label="Single Project"
           >
             <!-- <div v-if="post.mainImage" class="bg-cover bg-center h-64 w-64" :style="`background-image: url(${post.mainImage?.asset._ref});`"></div> -->
             <div
               v-if="projectItem.image"
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
-              :style="'background-image: url('+projectItem.image+')'"
+              :style="`background-image: url(${projectItem.image})`"
             ></div>
             <div
               v-else-if="projectItem.thumbnail"
               class="bg-cover bg-center aspect-video w-full overflow-hidden max-h-[190px]"
-              :style="'background-image: url('+projectItem.thumbnail+')'"
+              :style="`background-image: url(${projectItem.thumbnail})`"
             ></div>
             <div
               v-else
@@ -107,9 +122,9 @@ const projects = await queryContent('projects').find()
           </div>
         </div>
       </section>
-      <section>
+      <!-- <section>
         <giscus />
-      </section>
+      </section> -->
     </div>
   </div>
 </template>

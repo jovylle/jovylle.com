@@ -1,5 +1,5 @@
 <template>
-  <section class="md:h-[60vh]" id="contact">
+  <section class="md:min-h-[30vh]" id="contact">
     <div class="container my-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
@@ -21,16 +21,21 @@
 
 <script setup>
 const links = [
+  { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
   { label: "About Me", route: "https://hub.jovylle.com/", icon: "👨‍💻", external: true },
   { label: "Projects", route: "/projects", icon: "🚀", external: false },
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
-  { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
-  { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
+  // { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
+  // { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
 ];
 
 const goTo = (route) => {
   if (route.startsWith("http")) {
     window.open(route, "_blank");
+  } else if (route === "#") {
+    // Trigger the chatbot toggle if the route is "#"
+    const event = new CustomEvent('toggle-chatbot');
+    window.dispatchEvent(event);
   } else {
     window.location.href = route;
   }
