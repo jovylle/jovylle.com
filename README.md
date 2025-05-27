@@ -1,75 +1,54 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## Setup
+### 📄 README Section (Add to your README.md)
 
-Make sure to install the dependencies:
+````markdown
+## 🧑‍💻 Contributing
 
-```bash
-# npm
-npm install
+We welcome contributions!
 
-# pnpm
-pnpm install
+To contribute:
 
-# yarn
-yarn install
+1. **Fork** this repository to your GitHub account.
+2. **Clone** your fork:
+   ```bash
+   git clone https://github.com/your-username/jovylle.com.git
+   cd jovylle.com
+````
 
-# bun
-bun install
+3. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+4. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+Once you've made your changes:
+
+1. **Commit and push** them to your fork.
+2. **Open a Pull Request (PR)** to the main repository on GitHub.
+3. We'll review and merge your PR once approved!
+
+---
+
+## 📦 Zipping the Project (Excludes `node_modules`)
+
+To create a zip of key folders and top-level files (excluding `node_modules`), run this PowerShell command:
+
+```powershell
+$ts = Get-Date -Format "MMddyyyy"
+$dest = "project-$ts.zip"
+Compress-Archive -Path @(Get-ChildItem -Directory | Where-Object { $_.Name -in 'components','content','layouts','pages','public','server' }).FullName + (Get-ChildItem -File).FullName -DestinationPath $dest -Force
 ```
 
-## Development Server
+This will generate a file like `project-05272025.zip` containing:
 
-Start the development server on `http://localhost:3000`:
+* `components/`, `content/`, `layouts/`, `pages/`, `public/`, `server/`
+* All top-level files
+* ✅ Excludes `node_modules` and other unneeded folders
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
