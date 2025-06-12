@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Game Tools & Community Feedback",
+    "tag": "Game Dev Tools",
+    "description": "Built tools for Sunflower Land & Phaser games with high usage. Collected user feedback for UX improvement. See feedbacks here: https://sfl.uft1.com/feedbacks",
+    "link": "https://sfl.uft1.com"
+  },
+  {
+    "title": "Full Stack Deployment with Laravel & Next.js",
+    "tag": "DevOps / Full Stack",
+    "description": "Deployed full-stack apps on Linux/Nginx, managed MySQL, and used serverless APIs with Python + GCP.",
+    "link": "https://uft1.com"
+  },
+  {
+    "title": "Frontend UI/UX Craftsmanship",
+    "tag": "Frontend",
+    "description": "Built mobile-first sites with Tailwind, Vue, Nuxt, and Next.js. Integrated animations and executed clean Figma designs.",
+    "link": ""
+  },
+  {
+    "title": "Real-Time API Integrations",
+    "tag": "API / Realtime",
+    "description": "Integrated OpenAI, OpenWeather, and game APIs. Automated data fetch with Puppeteer.",
+    "link": ""
+  },
+  {
+    "title": "Chrome Extensions with Game Automation",
+    "tag": "Extensions",
+    "description": "Created browser extensions for Melvor & Sunflower Land. Injected logic to DOM for automation. 100+ users.",
+    "link": ""
+  },
+  {
+    "title": "Content Workflows with Decap & CMS",
+    "tag": "CMS",
+    "description": "Implemented Decap CMS, headless workflows with Strapi/Sanity, Markdown, JSON, previews, and proxy servers.",
+    "link": ""
+  },
+  {
+    "title": "Backend Engineering with PHP, Python, and Node",
+    "tag": "Backend",
+    "description": "Built APIs and server logic using PHP (Laravel), Python (Flask), and Node. Handled auth, validation, jobs, and error logging.",
+    "link": ""
+  },
+  {
+    "title": "AI + Automation Projects with OpenAI & Puppeteer",
+    "tag": "AI / Automation",
+    "description": "Integrated OpenAI APIs (ChatGPT, embeddings) and built Puppeteer-based tools for scraping, automation, and UI bots.",
+    "link": ""
+  }
+]

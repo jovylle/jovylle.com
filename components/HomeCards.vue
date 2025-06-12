@@ -21,7 +21,7 @@
 
 <script setup>
 const links = [
-  { label: "Projects", route: "/projects", icon: "🚀", external: false },
+  { label: "Highlights", route: "/highlights", icon: "🚀", external: false },
   { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
   // { label: "About Me", route: "https://hub.jovylle.com/", icon: "👨‍💻", external: true },
