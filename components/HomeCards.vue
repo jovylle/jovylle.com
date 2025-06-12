@@ -21,10 +21,10 @@
 
 <script setup>
 const links = [
-  { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
-  { label: "About Me", route: "https://hub.jovylle.com/", icon: "👨‍💻", external: true },
   { label: "Projects", route: "/projects", icon: "🚀", external: false },
+  { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
+  // { label: "About Me", route: "https://hub.jovylle.com/", icon: "👨‍💻", external: true },
   // { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
   // { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
 ];

@@ -6,36 +6,8 @@ const projects = await queryContent('projects').find()
 <template>
   <div>
     <div class="container mx-auto ">
-      <section class="my-5 sm:my-14">
-        <div class="text-center">
-          <p
-            class="font-general-semibold text-xl sm:text-2xl sm:text-5xl font-semibold mb-2 text-ternary-dark dark:text-ternary-light"
-          >
-            Quick Links
-          </p>
-        </div>
-        <div
-          class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
-        >
-          <NuxtLink class="underline inline-block mt-4" to="https://gptfree.uft1.com/" target="_blank">Chat Bot gpt3.5 ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="http://uft1.com/" target="_blank">Random Utility/Mini Tools List Site ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://friendmc.uft1.com/" target="_blank">Our Minecraft Server ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://sunflower-land-helper.jovylle.com/" target="_blank">Sunflowerland game Extension ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">Stick Figure Simple PhaserJs Game ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="https://is-home-online.uft1.com/" target="_blank">Check if home server is online ↗</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
-          <NuxtLink class="underline inline-block mt-4" to="/parallax">Parallax Effect</NuxtLink>
-          <!-- <NuxtLink class="underline inline-block mt-4" to="/game">minesweeper</NuxtLink> -->
-          <!-- 
-          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
-            <i class="bx bx-link-external" ></i> 
-            flying stick figure game
-          </NuxtLink> 
-          -->
-        </div>
-      </section>
       <!-- Projects grid -->
-      <section class="pt-10 sm:pt-14 my-5 sm:my-14">
+      <section class="pt-4 sm:pt-8 my-5 sm:my-8">
         <!-- Projects grid title -->
         <div class="text-center">
           <p
@@ -112,7 +84,7 @@ const projects = await queryContent('projects').find()
             </div>
           </div>
         </div>
-        <div class="py-10 sm:py-20 text-center">
+        <div class="py-8 sm:py-12 text-center">
           <div
             class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
             role="alert"
@@ -120,6 +92,34 @@ const projects = await queryContent('projects').find()
             <span class="font-medium">Ey!</span> Rest of the projects are to be
             added or not available
           </div>
+        </div>
+      </section>
+      <section class="my-5 sm:my-8">
+        <div class="text-center">
+          <p
+            class="font-general-semibold text-xl sm:text-2xl sm:text-5xl font-semibold mb-2 text-ternary-dark dark:text-ternary-light"
+          >
+            Other Links
+          </p>
+        </div>
+        <div
+          class="sm:space-x-10 text-center flex justify-center flex-col sm:block"
+        >
+          <NuxtLink class="underline inline-block mt-4" to="https://gptfree.uft1.com/" target="_blank">Chat Bot gpt3.5 ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="http://uft1.com/" target="_blank">Random Utility/Mini Tools List Site ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://friendmc.uft1.com/" target="_blank">Our Minecraft Server ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://sunflower-land-helper.jovylle.com/" target="_blank">Sunflowerland game Extension ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">Stick Figure Simple PhaserJs Game ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="https://is-home-online.uft1.com/" target="_blank">Check if home server is online ↗</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="/noises">♪ Rain Sound Noise ♪</NuxtLink>
+          <NuxtLink class="underline inline-block mt-4" to="/parallax">Parallax Effect</NuxtLink>
+          <!-- <NuxtLink class="underline inline-block mt-4" to="/game">minesweeper</NuxtLink> -->
+          <!-- 
+          <NuxtLink class="underline inline-block mt-4" to="https://flyingstickfigure.atcebu.win/" target="_blank">
+            <i class="bx bx-link-external" ></i> 
+            flying stick figure game
+          </NuxtLink> 
+          -->
         </div>
       </section>
       <!-- <section>
