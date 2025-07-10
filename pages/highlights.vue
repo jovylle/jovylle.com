@@ -6,7 +6,7 @@
     <div class="mt-10 text-center">
       <RouterLink to="/projects">
         <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-          View All Projects
+          View Projects
         </button>
       </RouterLink>
     </div>

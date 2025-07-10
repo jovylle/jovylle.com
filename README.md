@@ -40,7 +40,7 @@ Once you've made your changes:
 To create a zip of key folders and top-level files (excluding `node_modules`), run this PowerShell command:
 
 ```powershell
-$ts = Get-Date -Format "MMddyyyy"
+$ts = Get-Date -Format "MM-dd-yyyy-HHmm"
 $dest = "project-$ts.zip"
 
 $dirs = Get-ChildItem -Directory | Where-Object { $_.Name -in 'components','content','layouts','pages','public','server' }
