@@ -1,15 +1,21 @@
 [
   {
+    "title": "Chat Widget",
+    "tag": "Chatbot / AI",
+    "description": "A super-lightweight, open-source GPT-powered chatbot you can drop into any static site in seconds. Zero-config embed with just two `<script>` tags, serverless Netlify Function backend to proxy OpenAI calls, fully customizable UI, MIT-licensed, and supports per-user routes and analytics integrations.",
+    "link": "https://chat-widget.uft1.com"
+  },
+  {
     "title": "Game Tools & Community Feedback",
     "tag": "Game Dev Tools",
-    "description": "Built tools for Sunflower Land & Phaser games with high usage. Collected user feedback for UX improvement. See feedbacks here: https://sfl.uft1.com/feedbacks",
-    "link": "https://sfl.uft1.com"
+    "description": "Built tools for Sunflower Land & Phaser games with high usage. Collected user feedback for UX improvement. See feedbacks at https://d1g.uk/feedbacks or join our Discord under Digging Discussion: https://discord.com/invite/sunflowerland",
+    "link": "https://d1g.uk/feedbacks"
   },
   {
     "title": "Full Stack Deployment with Laravel & Next.js",
     "tag": "DevOps / Full Stack",
     "description": "Deployed full-stack apps on Linux/Nginx, managed MySQL, and used serverless APIs with Python + GCP.",
-    "link": "https://uft1.com"
+    "link": ""
   },
   {
     "title": "Frontend UI/UX Craftsmanship",
