@@ -1,6 +1,6 @@
 <template>
   <section class="md:min-h-[40vh] flex_center" id="contact">
-    <div class="container my-10">
+    <div class="container">
       <h2
         class="text-3xl sm:text-5xl text-center font-semibold my-8 my_hover"
       >

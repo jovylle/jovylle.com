@@ -1,11 +1,11 @@
 <template>
-  <section class="md:min-h-[30vh]" id="contact">
-    <div class="container my-10">
+  <section class="md:min-h-[20vh]" id="contact">
+    <div class="container">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="link in links"
           :key="link.label"
-          class="card rounded-xl shadow-lg hover:shadow-xl cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex items-center py-6 flex-col max-w-[350px] w-full mx-auto bg-white dark:bg-ternary-dark"
+          class="card rounded-xl shadow-lg hover:shadow-xl cursor-pointer dark:border-4 dark:border-m4 flex items-center py-6 flex-col max-w-[350px] w-full mx-auto bg-white dark:bg-ternary-dark"
           @click="goTo(link.route)"
         >
           <div class="icon mb-4">{{ link.icon }}</div>
@@ -24,7 +24,6 @@ const links = [
   { label: "Highlights", route: "/highlights", icon: "🚀", external: false },
   { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
-  // { label: "About Me", route: "https://hub.jovylle.com/", icon: "👨‍💻", external: true },
   // { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
   // { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
 ];

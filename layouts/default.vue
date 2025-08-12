@@ -15,7 +15,7 @@
                 <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
               </div> -->
               <NuxtLink class="text-center" v-if="!isHomePage" to="/"> Home </NuxtLink>
-              <div class="block sm:hidden text-right">
+              <div v-if="!isHomePage" class="block sm:hidden text-right">
                 <button
                   aria-label="show menu button"
                   @click="isMenuOpen = !isMenuOpen"
@@ -26,26 +26,15 @@
                 </button>
               </div>
             </div>
-            <!-- <div
+            <div
+              v-if="!isHomePage" 
               :class="['font-bold sm:flex my-5 sm:my-0 space-x-0 sm:space-x-3 md:space-x-10  divide-y sm:justify-center divide-gray-200 sm:divide-y-0 w-[100vw] shadow-lg sm:shadow-none',isMenuOpen?'block':'hidden']"
             >
-              <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0 whitespace-nowrap"
-                to="/about"
-              >
-                About
-              </NuxtLink>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/projects"
               >
                 Projects
-              </NuxtLink>
-              <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
-                to="/posts"
-              >
-                Posts
               </NuxtLink>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
@@ -59,7 +48,7 @@
               >
                 Contact
               </NuxtLink>
-            </div> -->
+            </div>
             <div class="hidden sm:flex sm:items-center text-base text-primary-light space-x-2">
               <!-- <div class="">
                 <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
