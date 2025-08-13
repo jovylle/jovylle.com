@@ -22,7 +22,7 @@
 <script setup>
 const links = [
   { label: "Highlights", route: "/highlights", icon: "🚀", external: false },
-  { label: "Try the Chat AI", route: "#", icon: "🤖", external: false }, // New card for Chat AI
+  { label: "Blog", route: "https://hub.jovylle.com/", icon: "🎮", external: true }, // New card for Chat AI
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
   // { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
   // { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
