@@ -1,7 +1,7 @@
 <template>
   <section class="mx-auto p-6">
     <div class="mb-6">
-      <h2 class="text-3xl font-bold text-center">What I've Worked On</h2>
+      <h2 class="text-3xl font-bold text-center">Some Of My Work</h2>
       <p class="text-center text-gray-600">Here are some selected examples of my work.</p>
     </div>
     <div v-if="loading" class="text-gray-500 text-center">Loading...</div>
