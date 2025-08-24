@@ -58,7 +58,7 @@
     title: 'Jovylle',
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     charset: 'utf-8',
-    meta: [{ name: 'description', content: 'Genuinely addicted to coding.' }]
+    meta: [{ name: 'description', content: 'Welcome to Jovylle\'s portfolio, showcasing skills as a Full-Stack web developer.' }]
   });
   
 </script>

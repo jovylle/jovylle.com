@@ -59,4 +59,10 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+useHead({
+  title: 'Jovylle - Highlights',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  charset: 'utf-8',
+  meta: [{ name: 'description', content: 'Highlights of projects and achievements by Jovylle.' }]
+});
 </script>
