@@ -1,10 +1,11 @@
 <template>
   <section class="mx-auto p-6">
     <div class="mb-6">
-      <h2 class="text-3xl font-bold text-center">Highlights</h2>
+      <h2 class="text-3xl font-bold text-center">Some Of My Work</h2>
+      <p class="text-center text-gray-600">Here are some selected examples of my work.</p>
     </div>
     <div v-if="loading" class="text-gray-500 text-center">Loading...</div>
-    <div v-else-if="error" class="text-red-500 text-center">Failed to load highlights.</div>
+    <div v-else-if="error" class="text-red-500 text-center">Failed to load projects.</div>
     <ul v-else class="grid grid-cols-1 md:grid-cols-2 gap-6 list-none">
       <li
         v-for="item in highlights"
@@ -40,6 +41,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useHead } from '@vueuse/head'; // Ensure to import useHead if required
 
 const highlights = ref([]);
 const loading = ref(true);
@@ -47,8 +49,6 @@ const error = ref(false);
 
 onMounted(async () => {
   try {
-    // Use CORS proxy for local dev if needed:
-    // const res = await fetch('https://corsproxy.io/?https://pocket.uft1.com/data/highlights.json');
     const res = await fetch('https://pocket.uft1.com/data/highlights.json');
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
@@ -59,4 +59,14 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+// Setting the document head information
+useHead({
+  title: 'Jovylle - What I\'ve Worked On',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  charset: 'utf-8',
+  meta: [{ name: 'description', content: 'Selected examples of projects I have worked on, showcasing my capabilities as a developer.' }]
+});
 </script>
+
+<style></style>
