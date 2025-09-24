@@ -1,0 +1,404 @@
+{
+  "projects": [
+    {
+      "slug": "userscripts-tampermonkey",
+      "name": "userscripts-tampermonkey",
+      "repo": "https://github.com/jovylle/userscripts-tampermonkey",
+      "live": null,
+      "description": "Custom scripts for Tampermonkey",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "hey-mini",
+      "name": "hey-mini",
+      "repo": "https://github.com/jovylle/hey-mini",
+      "live": null,
+      "description": "Voice/assistant project",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "satellite-runner",
+      "name": "satellite-runner",
+      "repo": "https://github.com/jovylle/satellite-runner",
+      "live": null,
+      "description": "Automation runner",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "auth-widget",
+      "name": "auth-widget",
+      "repo": "https://github.com/jovylle/auth-widget",
+      "live": null,
+      "description": "Embeddable Firebase/AWS login widget",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "chatbot-widget",
+      "name": "chatbot-widget",
+      "repo": "https://github.com/jovylle/chatbot-widget",
+      "live": null,
+      "description": "Embeddable AI chatbot",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "py-pomodoro",
+      "name": "py-pomodoro",
+      "repo": "https://github.com/jovylle/py-pomodoro",
+      "live": null,
+      "description": "Python-based productivity timer",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "overfocus",
+      "name": "Overfocus",
+      "repo": "https://github.com/jovylle/Overfocus",
+      "live": null,
+      "description": "Focus helper scripts",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "block-w-extension",
+      "name": "block-w-extension",
+      "repo": "https://github.com/jovylle/block-w-extension",
+      "live": null,
+      "description": "Browser extension",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "delayed-voice-playback",
+      "name": "delayed_voice_playback",
+      "repo": "https://github.com/jovylle/delayed_voice_playback",
+      "live": null,
+      "description": "Audio utility",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "your-weather-app",
+      "name": "your_weather_app",
+      "repo": "https://github.com/jovylle/your_weather_app",
+      "live": null,
+      "description": "JS weather app",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "flappy-flutter-bird",
+      "name": "flappy_flutter_bird",
+      "repo": "https://github.com/jovylle/flappy_flutter_bird",
+      "live": null,
+      "description": "Flutter mini-game",
+      "category": "tools-extensions"
+    },
+    {
+      "slug": "jovylle-com",
+      "name": "jovylle.com",
+      "repo": "https://github.com/jovylle/jovylle.com",
+      "live": "https://jovylle.com/",
+      "description": "Portfolio site",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "hub",
+      "name": "hub",
+      "repo": "https://github.com/jovylle/hub",
+      "live": "https://hub.jovylle.com/",
+      "description": "Blog/portfolio hub (Next.js + Tailwind)",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "neat-starter-decap-cms-template",
+      "name": "neat-starter-decap-cms-template",
+      "repo": "https://github.com/jovylle/neat-starter-decap-cms-template",
+      "live": null,
+      "description": "Decap CMS starter template",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "repository-with-docs-for-ai",
+      "name": "repository-with-docs-for-ai",
+      "repo": "https://github.com/jovylle/repository-with-docs-for-ai",
+      "live": null,
+      "description": "Project template with docs",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "junrey-image-blog",
+      "name": "junrey-image-blog",
+      "repo": "https://github.com/jovylle/junrey-image-blog",
+      "live": null,
+      "description": "Blog setup for Junrey",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "via",
+      "name": "via",
+      "repo": "https://github.com/jovylle/via",
+      "live": "https://via.uft1.com/",
+      "description": "Personal site project",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "wanabusful",
+      "name": "wanabusful",
+      "repo": "https://github.com/jovylle/wanabusful",
+      "live": null,
+      "description": "Tools hub",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "prices-jquery-bootstrap",
+      "name": "prices-jquery-bootstrap",
+      "repo": "https://github.com/jovylle/prices-jquery-bootstrap",
+      "live": null,
+      "description": "Price listing demo",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "lpb-pisowifi-custom-theme-1",
+      "name": "lpb-pisowifi-custom-theme-1",
+      "repo": "https://github.com/jovylle/lpb-pisowifi-custom-theme-1",
+      "live": null,
+      "description": "Custom Pisowifi theme",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "sfl-world-clone",
+      "name": "SFL_World_Clone",
+      "repo": "https://github.com/jovylle/SFL_World_Clone",
+      "live": null,
+      "description": "HTML-based clone",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "sunflower-land-site",
+      "name": "sunflower-land-site",
+      "repo": "https://github.com/jovylle/sunflower-land-site",
+      "live": null,
+      "description": "Game helper extension site",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "stampost-nextjs",
+      "name": "stampost-nextjs",
+      "repo": "https://github.com/jovylle/stampost-nextjs",
+      "live": null,
+      "description": "Next.js posting tool",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "image-text-manager",
+      "name": "image-text-manager",
+      "repo": "https://github.com/jovylle/image-text-manager",
+      "live": null,
+      "description": "Simple HTML project",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "mojam",
+      "name": "mojam",
+      "repo": "https://github.com/jovylle/mojam",
+      "live": "https://mojam.uft1.com/",
+      "description": "Website hosted at uft1.com",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "smnd-test-deploy",
+      "name": "smnd-test-deploy",
+      "repo": "https://github.com/jovylle/smnd-test-deploy",
+      "live": null,
+      "description": "Test deployment site",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "smnd",
+      "name": "smnd",
+      "repo": "https://github.com/jovylle/smnd",
+      "live": null,
+      "description": "Static site template",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "lapis-crud-flexbackend",
+      "name": "lapis-crud-flexbackend",
+      "repo": "https://github.com/jovylle/lapis-crud-flexbackend",
+      "live": null,
+      "description": "Flex backend site",
+      "category": "websites-cms"
+    },
+    {
+      "slug": "sfl-crab",
+      "name": "sfl-crab",
+      "repo": "https://github.com/jovylle/sfl-crab",
+      "live": null,
+      "description": "Desert digging assistant for Sunflower Land",
+      "category": "game-tools"
+    },
+    {
+      "slug": "sunflower-land-fork",
+      "name": "sunflower-land-fork",
+      "repo": "https://github.com/jovylle/sunflower-land-fork",
+      "live": null,
+      "description": "Fork of Sunflower Land",
+      "category": "game-tools"
+    },
+    {
+      "slug": "sunflower-land-helper",
+      "name": "sunflower-land-helper",
+      "repo": "https://github.com/jovylle/sunflower-land-helper",
+      "live": null,
+      "description": "Helper tool for Sunflower Land",
+      "category": "game-tools"
+    },
+    {
+      "slug": "sfl-island-details",
+      "name": "sfl-island-details",
+      "repo": "https://github.com/jovylle/sfl-island-details",
+      "live": null,
+      "description": "Island data/details for Sunflower Land",
+      "category": "game-tools"
+    },
+    {
+      "slug": "me-playing-sfl-game",
+      "name": "me-playing-sfl-game",
+      "repo": "https://github.com/jovylle/me-playing-sfl-game",
+      "live": null,
+      "description": "Gameplay repo",
+      "category": "game-tools"
+    },
+    {
+      "slug": "sfl-notes",
+      "name": "sfl-notes",
+      "repo": "https://github.com/jovylle/sfl-notes",
+      "live": null,
+      "description": "Notes system for Sunflower Land",
+      "category": "game-tools"
+    },
+    {
+      "slug": "my-json-database",
+      "name": "my-json-database",
+      "repo": "https://github.com/jovylle/my-json-database",
+      "live": null,
+      "description": "JSON DB experiment",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "cebbys-fork",
+      "name": "cebbys-fork",
+      "repo": "https://github.com/jovylle/cebbys-fork",
+      "live": null,
+      "description": "Astro fork",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "testonly",
+      "name": "testonly",
+      "repo": "https://github.com/jovylle/testonly",
+      "live": null,
+      "description": "Testing repo",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "rusty",
+      "name": "rusty",
+      "repo": "https://github.com/jovylle/rusty",
+      "live": null,
+      "description": "Rust experiments",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "devlog-solo",
+      "name": "devlog-solo",
+      "repo": "https://github.com/jovylle/devlog-solo",
+      "live": null,
+      "description": "Personal devlog",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "high-tide-tracker",
+      "name": "high_tide_tracker",
+      "repo": "https://github.com/jovylle/high_tide_tracker",
+      "live": null,
+      "description": "C++ high tide tracker",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "is-homo-online",
+      "name": "is-homo-online",
+      "repo": "https://github.com/jovylle/is-homo-online",
+      "live": null,
+      "description": "Website experiment",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "workstation-mess-threejs",
+      "name": "workstation-mess-threejs",
+      "repo": "https://github.com/jovylle/workstation-mess-threejs",
+      "live": null,
+      "description": "3D experiment with Three.js",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "firecms-community",
+      "name": "firecms-community",
+      "repo": "https://github.com/jovylle/firecms-community",
+      "live": null,
+      "description": "FireCMS community repo",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "reusable-flutter-simple",
+      "name": "reusable_flutter_simple",
+      "repo": "https://github.com/jovylle/reusable_flutter_simple",
+      "live": null,
+      "description": "Flutter template",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "flutter-hello-world",
+      "name": "flutter-hello-world",
+      "repo": "https://github.com/jovylle/flutter-hello-world",
+      "live": null,
+      "description": "Simple Flutter project",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "gcp-functions",
+      "name": "gcp-functions",
+      "repo": "https://github.com/jovylle/gcp-functions",
+      "live": null,
+      "description": "Google Cloud Functions experiments",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "candy",
+      "name": "candy",
+      "repo": "https://github.com/jovylle/candy",
+      "live": null,
+      "description": "HTML toy project",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "awesome-uses",
+      "name": "awesome-uses",
+      "repo": "https://github.com/jovylle/awesome-uses",
+      "live": null,
+      "description": "Developer uses/gear list",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "modulo-jamstack-deploy",
+      "name": "modulo-jamstack-deploy",
+      "repo": "https://github.com/jovylle/modulo-jamstack-deploy",
+      "live": null,
+      "description": "Jamstack deploy template",
+      "category": "experiments-utilities"
+    },
+    {
+      "slug": "atecbu-wini",
+      "name": "atecbu.wini",
+      "repo": "https://github.com/jovylle/atecbu.wini",
+      "live": null,
+      "description": "Small HTML project",
+      "category": "experiments-utilities"
+    }
+  ]
+}
