@@ -1,6 +1,6 @@
 <script setup>
 // Fetch personal projects data
-const { data: projectsData } = await $fetch('/data/personal-projects.json')
+const projectsData = await $fetch('/data/personal-projects.json')
 const projects = projectsData?.projects || []
 
 // Group projects by category
