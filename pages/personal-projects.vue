@@ -35,19 +35,6 @@ const projects = computed(() => {
   }
 })
 
-// Group projects by category for display
-const groupedProjects = computed(() => {
-  const groups = {}
-  projects.value.forEach(project => {
-    const category = project.category || 'uncategorized'
-    if (!groups[category]) {
-      groups[category] = []
-    }
-    groups[category].push(project)
-  })
-  return groups
-})
-
 // Get unique categories from projects
 const availableCategories = computed(() => {
   const categories = new Set()
@@ -137,23 +124,13 @@ useHead({
         </div>
       </div>
 
-      <!-- Projects by Category -->
-      <div v-for="(categoryProjects, category) in groupedProjects" :key="category" class="mb-16">
-        <!-- Category Header -->
-        <div class="mb-8">
-          <h2 class="text-2xl sm:text-3xl font-semibold mb-2 text-primary-dark dark:text-primary-light border-b-2 border-secondary-dark dark:border-secondary-light pb-2">
-            {{ categoryNames[category] || category }}
-          </h2>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ categoryProjects.length }} project{{ categoryProjects.length !== 1 ? 's' : '' }}
-          </p>
-        </div>
-
+      <!-- All Projects Grid -->
+      <div class="mb-16">
         <!-- Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
-            v-for="project in categoryProjects"
-            :key="project.slug"
+            v-for="project in projects"
+            :key="project.slug || project.name"
             class="bg-white dark:bg-ternary-dark rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border dark:border-gray-700"
           >
             <!-- Project Header -->
