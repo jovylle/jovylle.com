@@ -1,6 +1,6 @@
 <script setup>
-// Fetch personal projects data
-const projectsData = await $fetch('/data/personal-projects.json')
+// Fetch personal projects data from external API
+const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
 const projects = projectsData?.projects || []
 
 // Group projects by category
