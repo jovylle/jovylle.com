@@ -69,6 +69,7 @@ const formatDate = (dateStr) => {
 useHead({
   title: 'Personal Projects Archive - Jovylle',
   meta: [
+    { name: 'description', content: `A comprehensive collection of ${allProjects.length} personal projects and experiments` },
     { name: 'robots', content: 'noindex, nofollow' }, // Keep it unlisted from search engines
   ]
 })
@@ -184,8 +185,8 @@ useHead({
 
               <!-- Live Site Link -->
               <a
-                v-if="project.live"
-                :href="project.live"
+                v-if="project.live || project.netlify_live"
+                :href="project.live ? project.live : `https://${project.netlify_live}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-colors duration-200"
@@ -194,9 +195,18 @@ useHead({
                 Live Site
               </a>
 
+              <!-- Netlify Status Badge (if available) -->
+              <span
+                v-if="project.netlify_status === 'current' && project.netlify_live"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900 rounded-full"
+              >
+                <i class="bx bx-check-circle mr-1"></i>
+                Deployed
+              </span>
+
               <!-- No Live Site Indicator -->
               <span
-                v-if="!project.live"
+                v-if="!project.live && !project.netlify_live"
                 class="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded-full"
               >
                 <i class="bx bx-code-alt mr-1"></i>
