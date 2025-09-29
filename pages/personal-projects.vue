@@ -1,18 +1,62 @@
 <script setup>
 // Fetch personal projects data from external API
 const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
-const projects = projectsData?.projects || []
+const allProjects = projectsData?.projects || []
 
-// Group projects by category
+// Reactive sorting and filtering
+const sortBy = ref('recent')
+const selectedCategory = ref('all')
+
+// Process and sort projects
+const projects = computed(() => {
+  let filteredProjects = [...allProjects]
+  
+  // Filter by category if selected
+  if (selectedCategory.value !== 'all') {
+    filteredProjects = filteredProjects.filter(project => 
+      project.category === selectedCategory.value
+    )
+  }
+  
+  // Sort projects
+  switch (sortBy.value) {
+    case 'recent':
+      return filteredProjects.sort((a, b) => 
+        new Date(b.updated_at) - new Date(a.updated_at)
+      )
+    case 'stars':
+      return filteredProjects.sort((a, b) => (b.stars || 0) - (a.stars || 0))
+    case 'name':
+      return filteredProjects.sort((a, b) => 
+        (a.title || a.name || '').localeCompare(b.title || b.name || '')
+      )
+    default:
+      return filteredProjects
+  }
+})
+
+// Group projects by category for display
 const groupedProjects = computed(() => {
   const groups = {}
-  projects.forEach(project => {
-    if (!groups[project.category]) {
-      groups[project.category] = []
+  projects.value.forEach(project => {
+    const category = project.category || 'uncategorized'
+    if (!groups[category]) {
+      groups[category] = []
     }
-    groups[project.category].push(project)
+    groups[category].push(project)
   })
   return groups
+})
+
+// Get unique categories from projects
+const availableCategories = computed(() => {
+  const categories = new Set()
+  allProjects.forEach(project => {
+    if (project.category) {
+      categories.add(project.category)
+    }
+  })
+  return Array.from(categories).sort()
 })
 
 // Category display names
@@ -20,7 +64,18 @@ const categoryNames = {
   'tools-extensions': 'Tools & Extensions',
   'websites-cms': 'Websites & CMS',
   'game-tools': 'Game Tools',
-  'experiments-utilities': 'Experiments & Utilities'
+  'experiments-utilities': 'Experiments & Utilities',
+  'uncategorized': 'Other Projects'
+}
+
+// Format date helper
+const formatDate = (dateStr) => {
+  if (!dateStr) return 'Unknown'
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
 }
 
 // Meta tags for SEO (but keep it unlisted)
@@ -41,8 +96,45 @@ useHead({
           Personal Projects Archive
         </h1>
         <p class="text-lg text-secondary-dark dark:text-secondary-light">
-          A comprehensive collection of {{ projects.length }} personal projects and experiments
+          A comprehensive collection of {{ allProjects.length }} personal projects and experiments
         </p>
+      </div>
+
+      <!-- Sorting and Filtering Controls -->
+      <div class="mb-12 bg-white dark:bg-ternary-dark rounded-lg shadow-lg p-6 border dark:border-gray-700">
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <!-- Sort By -->
+          <div class="flex items-center gap-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Sort by:</label>
+            <select 
+              v-model="sortBy" 
+              class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            >
+              <option value="recent">Most Recent</option>
+              <option value="stars">Most Stars</option>
+              <option value="name">Name (A-Z)</option>
+            </select>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="flex items-center gap-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Category:</label>
+            <select 
+              v-model="selectedCategory" 
+              class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            >
+              <option value="all">All Categories</option>
+              <option v-for="category in availableCategories" :key="category" :value="category">
+                {{ categoryNames[category] || category }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Results Count -->
+          <div class="text-sm text-gray-600 dark:text-gray-400">
+            Showing {{ projects.length }} of {{ allProjects.length }} projects
+          </div>
+        </div>
       </div>
 
       <!-- Projects by Category -->
@@ -67,11 +159,36 @@ useHead({
             <!-- Project Header -->
             <div class="mb-4">
               <h3 class="text-lg font-semibold text-primary-dark dark:text-primary-light mb-2">
-                {{ project.name }}
+                {{ project.title || project.name }}
               </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                {{ project.description }}
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
+                {{ project.description || 'No description available' }}
               </p>
+            </div>
+
+            <!-- Project Meta Info -->
+            <div class="mb-4 flex flex-wrap gap-2 text-xs">
+              <!-- Language -->
+              <span 
+                v-if="project.language"
+                class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
+              >
+                {{ project.language }}
+              </span>
+              
+              <!-- Stars -->
+              <span 
+                v-if="project.stars > 0"
+                class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full flex items-center"
+              >
+                <i class="bx bx-star mr-1"></i>
+                {{ project.stars }}
+              </span>
+              
+              <!-- Last Updated -->
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
+                {{ formatDate(project.updated_at) }}
+              </span>
             </div>
 
             <!-- Project Links -->
