@@ -21,7 +21,7 @@
 
 <script setup>
 const links = [
-  { label: "Some of my work", route: "/highlights", icon: "🚀", external: false },
+  { label: "Skills & Solutions", route: "/highlights", icon: "�️", external: false },
   { label: "Blog & Hub", route: "https://hub.jovylle.com/", icon: "📝", external: true },
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
 ];
