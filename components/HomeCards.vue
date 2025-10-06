@@ -22,10 +22,8 @@
 <script setup>
 const links = [
   { label: "Some of my work", route: "/highlights", icon: "🚀", external: false },
-  { label: "Blog", route: "https://hub.jovylle.com/", icon: "🎮", external: true }, // New card for Chat AI
+  { label: "Blog & Hub", route: "https://hub.jovylle.com/", icon: "📝", external: true },
   { label: "Contact Me", route: "/contact", icon: "📧", external: false },
-  // { label: "Rainsound", route: "/noises", icon: "🎵", external: false },
-  // { label: "Minesweeper", route: "/game", icon: "🎮", external: false },
 ];
 
 const goTo = (route) => {
