@@ -1,8 +1,8 @@
 <template>
   <section class="mx-auto p-6">
     <div class="mb-6">
-      <h2 class="text-3xl font-bold text-center">Some Of My Work</h2>
-      <p class="text-center text-gray-600">Here are some selected examples of my work.</p>
+      <h2 class="text-3xl font-bold text-center">Skills & Solutions</h2>
+      <p class="text-center text-gray-600 dark:text-gray-400">Technical challenges solved, features built, and technologies mastered</p>
     </div>
     <div v-if="loading" class="text-gray-500 text-center">Loading...</div>
     <div v-else-if="error" class="text-red-500 text-center">Failed to load projects.</div>
@@ -10,21 +10,64 @@
       <li
         v-for="item in highlights"
         :key="item.title"
-        class="bg-white shadow rounded-lg p-5 border"
+        class="bg-white dark:bg-ternary-dark shadow rounded-lg p-5 border dark:border-gray-600"
       >
-        <div class="flex items-center gap-2 mb-2">
-          <span class="font-semibold text-lg">{{ item.title }}</span>
-          <span class="text-xs bg-gray-200 rounded px-2 py-0.5">{{ item.tag }}</span>
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-lg text-primary-dark dark:text-primary-light">{{ item.title }}</span>
+            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded px-2 py-0.5">{{ item.tag }}</span>
+          </div>
         </div>
-        <p class="mb-2 text-gray-700">{{ item.description }}</p>
-        <a
-          v-if="item.link"
-          :href="item.link"
-          target="_blank"
-          class="inline-block px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-        >
-          Visit
-        </a>
+        
+        <!-- Challenge/Problem Section -->
+        <div v-if="item.challenge" class="mb-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded border-l-4 border-yellow-400">
+          <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-1">Challenge:</p>
+          <p class="text-sm text-yellow-700 dark:text-yellow-300">{{ item.challenge }}</p>
+        </div>
+        
+        <!-- Description/Solution -->
+        <p class="mb-3 text-gray-700 dark:text-gray-300">{{ item.description }}</p>
+        
+        <!-- Key Features Implemented -->
+        <div v-if="item.features && item.features.length > 0" class="mb-3 p-3 bg-green-50 dark:bg-green-900/20 rounded border-l-4 border-green-400">
+          <p class="text-sm font-medium text-green-800 dark:text-green-200 mb-2">Key Features Built:</p>
+          <ul class="text-sm text-green-700 dark:text-green-300 list-disc list-inside space-y-1">
+            <li v-for="feature in item.features" :key="feature">{{ feature }}</li>
+          </ul>
+        </div>
+        
+        <!-- Skills/Technologies Used -->
+        <div v-if="item.skills" class="mb-3">
+          <p class="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Technologies & Skills:</p>
+          <div class="flex flex-wrap gap-1">
+            <span 
+              v-for="skill in item.skills" 
+              :key="skill"
+              class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded font-medium"
+            >
+              {{ skill }}
+            </span>
+          </div>
+        </div>
+        
+        <div class="flex gap-2">
+          <a
+            v-if="item.link"
+            :href="item.link"
+            target="_blank"
+            class="inline-block px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm"
+          >
+            View Solution
+          </a>
+          <a
+            v-if="item.github"
+            :href="item.github"
+            target="_blank"
+            class="inline-block px-3 py-1 bg-gray-800 text-white rounded hover:bg-gray-900 transition text-sm"
+          >
+            Source Code
+          </a>
+        </div>
       </li>
     </ul>
 
@@ -33,7 +76,7 @@
         href="/projects"
         class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
       >
-        Projects
+        View All Projects
       </a>
     </div>
   </section>
@@ -62,10 +105,10 @@ onMounted(async () => {
 
 // Setting the document head information
 useHead({
-  title: 'Jovylle - What I\'ve Worked On',
+  title: 'Jovylle - Technical Skills & Features Built',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
-  meta: [{ name: 'description', content: 'Selected examples of projects I have worked on, showcasing my capabilities as a developer.' }]
+  meta: [{ name: 'description', content: 'Full-stack developer showcasing technical skills, features built, and technologies mastered through real-world problem-solving.' }]
 });
 </script>
 

@@ -13,16 +13,11 @@
         <div class=" lg:pr-0 p-5 sm:p-10 space-y-4 flex items-center flex-col text-center">
           <h1 class="text-3xl sm:text-4xl font-semibold uppercase my_hover">
             It's me, Jovylle
-            <!-- {{response.data.attributes.Title}} -->
           </h1>
-          <p class="text-m4 dark:text-ternary-light text-xl py-3 w-[200px]">A Full-Stack Web Developer</p>
-          <!-- <HelloSvg class="w-[200px] h-[100px] mx-auto" /> -->
-          <!-- <button
-            id="resumebutton" class="hover:line-through my_hover hover:cursor-default rounded-lg border-2 border-m1 my-4 py-1 px-3 text-sm flex items-center space-x-1 mx-auto"
-          >
-            <span>See CV/Resume</span>
-            <i class="bx bxs-right-top-arrow-circle"></i>
-          </button> -->
+          <p class="text-xl dark:text-ternary-light py-3 max-w-[300px]">A Full-Stack Web Developer</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 max-w-[400px]">
+            Building modern web experiences with clean code and thoughtful design
+          </p>
         </div>
       </div>
     </section>
