@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Widget</title>
+    <style>
+        /* Widget Styles */
+        .mystery-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .mystery-widget-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #0f3460;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(15, 52, 96, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystery-widget-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(15, 52, 96, 0.6);
+            border-color: #e94560;
+        }
+
+        .mystery-widget-button:active {
+            transform: scale(0.95);
+        }
+
+        .mystery-widget-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mystery-widget-button:hover::before {
+            opacity: 1;
+        }
+
+        .mystery-widget-icon {
+            width: 24px;
+            height: 24px;
+            fill: #e94560;
+            z-index: 1;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .mystery-widget-button.expanded .mystery-widget-icon {
+            transform: rotate(45deg);
+        }
+
+        .mystery-widget-panel {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 320px;
+            max-height: 500px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid #0f3460;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .mystery-widget-panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .mystery-widget-header {
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .mystery-widget-header::before {
+            content: '⚡';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .mystery-widget-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .mystery-widget-subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .mystery-widget-content {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(22, 33, 62, 0.5);
+        }
+
+        .mystery-widget-section {
+            margin-bottom: 20px;
+        }
+
+        .mystery-widget-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .mystery-widget-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e94560;
+            margin: 0 0 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mystery-widget-link {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(15, 52, 96, 0.3);
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .mystery-widget-link:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: #e94560;
+            transform: translateX(4px);
+        }
+
+        .mystery-widget-link:last-child {
+            margin-bottom: 0;
+        }
+
+        .mystery-widget-link-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            fill: #e94560;
+        }
+
+        .mystery-widget-link-content {
+            flex: 1;
+        }
+
+        .mystery-widget-link-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0 0 2px 0;
+            color: #ffffff;
+        }
+
+        .mystery-widget-link-desc {
+            font-size: 12px;
+            color: #a0a9c0;
+            margin: 0;
+        }
+
+        .mystery-widget-external {
+            width: 12px;
+            height: 12px;
+            margin-left: 8px;
+            opacity: 0.6;
+            fill: #a0a9c0;
+        }
+
+        /* Leaderboard Styles */
+        .mystery-widget-leaderboard {
+            margin-bottom: 12px;
+        }
+
+        .mystery-widget-loading {
+            text-align: center;
+            color: #a0a9c0;
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .mystery-widget-leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: rgba(15, 52, 96, 0.3);
+            border-radius: 6px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .mystery-widget-leaderboard-item:hover {
+            background: rgba(233, 69, 96, 0.1);
+            transform: translateX(2px);
+        }
+
+        .mystery-widget-leaderboard-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .mystery-widget-leaderboard-item.rank-1 {
+            border-left-color: #ffd700;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, rgba(15, 52, 96, 0.3) 100%);
+        }
+
+        .mystery-widget-leaderboard-item.rank-2 {
+            border-left-color: #c0c0c0;
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, rgba(15, 52, 96, 0.3) 100%);
+        }
+
+        .mystery-widget-leaderboard-item.rank-3 {
+            border-left-color: #cd7f32;
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, rgba(15, 52, 96, 0.3) 100%);
+        }
+
+        .mystery-widget-leaderboard-rank {
+            font-weight: 600;
+            font-size: 12px;
+            color: #ffffff;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .mystery-widget-leaderboard-rank.rank-1 {
+            color: #ffd700;
+        }
+
+        .mystery-widget-leaderboard-rank.rank-2 {
+            color: #c0c0c0;
+        }
+
+        .mystery-widget-leaderboard-rank.rank-3 {
+            color: #cd7f32;
+        }
+
+        .mystery-widget-leaderboard-player {
+            flex: 1;
+            margin-left: 8px;
+        }
+
+        .mystery-widget-leaderboard-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #ffffff;
+            margin: 0 0 2px 0;
+        }
+
+        .mystery-widget-leaderboard-time {
+            font-size: 11px;
+            color: #a0a9c0;
+            margin: 0;
+        }
+
+        .mystery-widget-leaderboard-score {
+            font-size: 12px;
+            font-weight: 600;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .mystery-widget-leaderboard-refresh {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .mystery-widget-refresh-btn {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid #e94560;
+            color: #e94560;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .mystery-widget-refresh-btn:hover {
+            background: rgba(233, 69, 96, 0.3);
+            color: #ffffff;
+        }
+
+        .mystery-widget-refresh-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .mystery-widget-hidden-link {
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .mystery-widget-hidden-link:hover {
+            opacity: 1;
+        }
+
+        .mystery-widget-hidden-link .mystery-widget-link-title {
+            font-size: 11px;
+            color: #a0a9c0;
+        }
+
+        .mystery-widget-hidden-link .mystery-widget-link-desc {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .mystery-widget {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .mystery-widget-panel {
+                width: 280px;
+                right: -10px;
+            }
+
+            .mystery-widget-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .mystery-widget-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Scrollbar styling */
+        .mystery-widget-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .mystery-widget-content::-webkit-scrollbar-track {
+            background: rgba(15, 52, 96, 0.3);
+        }
+
+        .mystery-widget-content::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 2px;
+        }
+
+        .mystery-widget-content::-webkit-scrollbar-thumb:hover {
+            background: #ff6b7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="mystery-widget">
+        <button class="mystery-widget-button" id="mysteryWidgetButton">
+            <svg class="mystery-widget-icon" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+        </button>
+        
+        <div class="mystery-widget-panel" id="mysteryWidgetPanel">
+            <div class="mystery-widget-header">
+                <h3 class="mystery-widget-title">⚡ Fast Zone</h3>
+                <p class="mystery-widget-subtitle">Test your reflexes</p>
+            </div>
+            
+            <div class="mystery-widget-content">
+                <div class="mystery-widget-section">
+                    <h4 class="mystery-widget-section-title">
+                        🏆 Leaderboard
+                    </h4>
+                    
+                    <div class="mystery-widget-leaderboard" id="leaderboard">
+                        <div class="mystery-widget-loading">Loading scores...</div>
+                    </div>
+                    
+                    <a href="https://fast.jovylle.com" class="mystery-widget-link" target="_blank">
+                        <svg class="mystery-widget-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                        </svg>
+                        <div class="mystery-widget-link-content">
+                            <div class="mystery-widget-link-title">🎮 Play Now</div>
+                            <div class="mystery-widget-link-desc">Challenge yourself & compete</div>
+                        </div>
+                        <svg class="mystery-widget-external" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="mystery-widget-section">
+                    <h4 class="mystery-widget-section-title">
+                        🎯 More Games
+                    </h4>
+                    
+                    <a href="https://flyingstickfigure.atcebu.win" class="mystery-widget-link" target="_blank">
+                        <svg class="mystery-widget-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                        </svg>
+                        <div class="mystery-widget-link-content">
+                            <div class="mystery-widget-link-title">Stick Figure Adventure</div>
+                            <div class="mystery-widget-link-desc">Platformer game</div>
+                        </div>
+                        <svg class="mystery-widget-external" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Hidden section for employers - very subtle -->
+                <div class="mystery-widget-section">
+                    <h4 class="mystery-widget-section-title">
+                        🔧 Tools
+                    </h4>
+                    
+                    <a href="https://gptfree.uft1.com" class="mystery-widget-link" target="_blank">
+                        <svg class="mystery-widget-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/>
+                        </svg>
+                        <div class="mystery-widget-link-content">
+                            <div class="mystery-widget-link-title">AI Chat Tool</div>
+                            <div class="mystery-widget-link-desc">Free GPT interface</div>
+                        </div>
+                        <svg class="mystery-widget-external" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                    </a>
+
+                    <!-- Very subtle portfolio link - only visible on hover -->
+                    <a href="https://jovylle.com" class="mystery-widget-link mystery-widget-hidden-link" target="_blank">
+                        <svg class="mystery-widget-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <div class="mystery-widget-link-content">
+                            <div class="mystery-widget-link-title">Developer Portfolio</div>
+                            <div class="mystery-widget-link-desc">Full-stack projects</div>
+                        </div>
+                        <svg class="mystery-widget-external" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class MysteryWidget {
+            constructor() {
+                this.button = document.getElementById('mysteryWidgetButton');
+                this.panel = document.getElementById('mysteryWidgetPanel');
+                this.leaderboard = document.getElementById('leaderboard');
+                this.isOpen = false;
+                this.leaderboardData = null;
+                
+                this.init();
+            }
+
+            init() {
+                this.button.addEventListener('click', () => this.toggle());
+                
+                // Close on outside click
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.mystery-widget')) {
+                        this.close();
+                    }
+                });
+
+                // Close on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.close();
+                    }
+                });
+
+                // Load leaderboard data
+                this.loadLeaderboard();
+
+                // Add some entrance animation delay
+                setTimeout(() => {
+                    this.button.style.opacity = '1';
+                    this.button.style.transform = 'scale(1)';
+                }, 1000);
+            }
+
+            toggle() {
+                if (this.isOpen) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            }
+
+            open() {
+                this.isOpen = true;
+                this.button.classList.add('expanded');
+                this.panel.classList.add('open');
+                
+                // Add a subtle bounce effect
+                this.panel.style.animation = 'none';
+                setTimeout(() => {
+                    this.panel.style.animation = 'bounceIn 0.3s ease-out';
+                }, 10);
+            }
+
+            close() {
+                this.isOpen = false;
+                this.button.classList.remove('expanded');
+                this.panel.classList.remove('open');
+            }
+
+            async loadLeaderboard() {
+                try {
+                    // Try to use the proxy endpoint first, fallback to direct API
+                    let response;
+                    try {
+                        response = await fetch('https://jovylle.com/api/leaderboard');
+                    } catch (proxyError) {
+                        console.log('Proxy failed, trying direct API...');
+                        response = await fetch('https://fast.jovylle.com/reaction/top.json', {
+                            mode: 'no-cors'
+                        });
+                        // For no-cors, we can't read the response, so show static data
+                        this.renderStaticLeaderboard();
+                        return;
+                    }
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch leaderboard');
+                    }
+                    
+                    const data = await response.json();
+                    this.leaderboardData = data;
+                    this.renderLeaderboard(data);
+                } catch (error) {
+                    console.error('Error loading leaderboard:', error);
+                    this.renderStaticLeaderboard();
+                }
+            }
+
+            renderLeaderboard(data) {
+                if (!data || !data.top || data.top.length === 0) {
+                    this.renderStaticLeaderboard();
+                    return;
+                }
+
+                const topPlayers = data.top.slice(0, 5); // Show top 5
+                const lastUpdated = new Date(data.last_updated).toLocaleString();
+
+                const leaderboardHTML = `
+                    <div class="mystery-widget-leaderboard-refresh">
+                        <button class="mystery-widget-refresh-btn" onclick="mysteryWidget.loadLeaderboard()">
+                            🔄 Refresh
+                        </button>
+                        <div style="font-size: 10px; color: #a0a9c0; margin-top: 4px;">
+                            Updated: ${lastUpdated}
+                        </div>
+                    </div>
+                    ${topPlayers.map((player, index) => `
+                        <div class="mystery-widget-leaderboard-item rank-${index + 1}">
+                            <div class="mystery-widget-leaderboard-rank rank-${index + 1}">
+                                ${index + 1}
+                            </div>
+                            <div class="mystery-widget-leaderboard-player">
+                                <div class="mystery-widget-leaderboard-name">${player.playerName}</div>
+                                <div class="mystery-widget-leaderboard-time">Season ${player.season}</div>
+                            </div>
+                            <div class="mystery-widget-leaderboard-score">
+                                ${player.ms}ms
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
+
+                this.leaderboard.innerHTML = leaderboardHTML;
+            }
+
+            renderStaticLeaderboard() {
+                // Fallback static leaderboard when API is not available
+                this.leaderboard.innerHTML = `
+                    <div class="mystery-widget-leaderboard-refresh">
+                        <button class="mystery-widget-refresh-btn" onclick="mysteryWidget.loadLeaderboard()">
+                            🔄 Retry
+                        </button>
+                    </div>
+                    <div style="text-align: center; color: #a0a9c0; font-size: 12px; padding: 8px;">
+                        Leaderboard temporarily unavailable<br>
+                        <a href="https://fast.jovylle.com" target="_blank" style="color: #e94560; text-decoration: none;">
+                            Play Reaction Test →
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize widget when DOM is ready
+        let mysteryWidget;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                mysteryWidget = new MysteryWidget();
+            });
+        } else {
+            mysteryWidget = new MysteryWidget();
+        }
+
+        // Add bounce animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounceIn {
+                0% { transform: translateY(20px) scale(0.95); opacity: 0; }
+                50% { transform: translateY(-5px) scale(1.02); opacity: 0.8; }
+                100% { transform: translateY(0) scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
