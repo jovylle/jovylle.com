@@ -185,73 +185,6 @@
             opacity: 0.6;
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            .jovylle-widget-panel {
-                background: #1f2937;
-                color: #f9fafb;
-            }
-
-            .jovylle-widget-section-title {
-                color: #d1d5db;
-            }
-
-            .jovylle-widget-link {
-                background: #374151;
-                color: #f9fafb;
-            }
-
-            .jovylle-widget-link:hover {
-                background: #4b5563;
-                border-color: #6b7280;
-            }
-
-            .jovylle-widget-link-desc {
-                color: #9ca3af;
-            }
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 480px) {
-            .jovylle-widget {
-                bottom: 15px;
-                right: 15px;
-            }
-
-            .jovylle-widget-panel {
-                width: 280px;
-                right: -10px;
-            }
-
-            .jovylle-widget-button {
-                width: 50px;
-                height: 50px;
-            }
-
-            .jovylle-widget-icon {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        /* Scrollbar styling */
-        .jovylle-widget-content::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .jovylle-widget-content::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        .jovylle-widget-content::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 2px;
-        }
-
-        .jovylle-widget-content::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
         /* Leaderboard Styles */
         .jovylle-widget-leaderboard {
             margin-bottom: 12px;
@@ -372,8 +305,31 @@
             cursor: not-allowed;
         }
 
-        /* Dark mode leaderboard */
+        /* Dark mode support */
         @media (prefers-color-scheme: dark) {
+            .jovylle-widget-panel {
+                background: #1f2937;
+                color: #f9fafb;
+            }
+
+            .jovylle-widget-section-title {
+                color: #d1d5db;
+            }
+
+            .jovylle-widget-link {
+                background: #374151;
+                color: #f9fafb;
+            }
+
+            .jovylle-widget-link:hover {
+                background: #4b5563;
+                border-color: #6b7280;
+            }
+
+            .jovylle-widget-link-desc {
+                color: #9ca3af;
+            }
+
             .jovylle-widget-leaderboard-item {
                 background: #374151;
                 color: #f9fafb;
@@ -413,6 +369,47 @@
                 background: #4b5563;
                 color: #f9fafb;
             }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .jovylle-widget {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .jovylle-widget-panel {
+                width: 280px;
+                right: -10px;
+            }
+
+            .jovylle-widget-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .jovylle-widget-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Scrollbar styling */
+        .jovylle-widget-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .jovylle-widget-content::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .jovylle-widget-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        .jovylle-widget-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
@@ -625,8 +622,20 @@
 
             async loadLeaderboard() {
                 try {
-                    // Use the proxy endpoint to avoid CORS issues
-                    const response = await fetch('/api/leaderboard');
+                    // Try to use the proxy endpoint first, fallback to direct API
+                    let response;
+                    try {
+                        response = await fetch('https://jovylle.com/api/leaderboard');
+                    } catch (proxyError) {
+                        console.log('Proxy failed, trying direct API...');
+                        response = await fetch('https://fast.jovylle.com/reaction/top.json', {
+                            mode: 'no-cors'
+                        });
+                        // For no-cors, we can't read the response, so show static data
+                        this.renderStaticLeaderboard();
+                        return;
+                    }
+                    
                     if (!response.ok) {
                         throw new Error('Failed to fetch leaderboard');
                     }
@@ -636,13 +645,13 @@
                     this.renderLeaderboard(data);
                 } catch (error) {
                     console.error('Error loading leaderboard:', error);
-                    this.renderLeaderboardError();
+                    this.renderStaticLeaderboard();
                 }
             }
 
             renderLeaderboard(data) {
                 if (!data || !data.top || data.top.length === 0) {
-                    this.renderLeaderboardError();
+                    this.renderStaticLeaderboard();
                     return;
                 }
 
@@ -677,7 +686,8 @@
                 this.leaderboard.innerHTML = leaderboardHTML;
             }
 
-            renderLeaderboardError() {
+            renderStaticLeaderboard() {
+                // Fallback static leaderboard when API is not available
                 this.leaderboard.innerHTML = `
                     <div class="jovylle-widget-leaderboard-refresh">
                         <button class="jovylle-widget-refresh-btn" onclick="jovylleWidget.loadLeaderboard()">
@@ -685,7 +695,10 @@
                         </button>
                     </div>
                     <div style="text-align: center; color: #6b7280; font-size: 12px; padding: 8px;">
-                        Unable to load leaderboard
+                        Leaderboard temporarily unavailable<br>
+                        <a href="https://fast.jovylle.com" target="_blank" style="color: #667eea; text-decoration: none;">
+                            Play Reaction Test →
+                        </a>
                     </div>
                 `;
             }
