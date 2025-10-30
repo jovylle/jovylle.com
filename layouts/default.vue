@@ -1,6 +1,7 @@
 <template>
   <div
     :class='" text-lg overflow-hidden flex flex-col tracking-wider " + (darkMode?"dark bg-ternary-dark":"bg-ternary-light ")'
+    style="--accent:#9CA3AF;--divider:#E9ECEF;--divider-dark:#404040"
   >
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
       <section class="">
@@ -32,10 +33,16 @@
             >
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
-                to="/projects"
+                to="/highlights"
               >
-                Projects
+                Highlights
               </NuxtLink>
+              <a
+                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
+                href="https://hub.jovylle.com" target="_blank" rel="noopener"
+              >
+                Blog & Hub ↗
+              </a>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/uses"
@@ -84,80 +91,23 @@
         </div>
       </section>
     </div>
-    <button @click="toggleChatbot" class="chatbot-toggle-button bg-m4">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        fill="#FFFFFF"
-      >
-        <path
-          d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
-        />
-      </svg>
-    </button>
-    <Chatbot v-if="showChatbot" :skills="skills" :projects="projects" @close="toggleChatbot" />
+    
+    
+    <!-- Quick Menu Widget via embed.js -->
+    <div id="embedded-quick-menu"></div>
   </div>
 </template>
 
 <script>
-import Chatbot from '~/components/Chatbot.vue';
+ 
 
 export default {
-  components: {
-    Chatbot
-  },
+  components: { },
   data() {
     return {
       darkMode: false,
       currentYear: new Date().getFullYear(),
-      isMenuOpen: false,
-      showChatbot: false,
-      skills: [
-        "JavaScript", "PHP", "Python", "HTML", "CSS", "Flutter", "Dart", "Ruby on Rails", "Ruby",
-        "VueJs", "ReactJs", "NuxtJs", "Laravel", "CodeIgniter",
-        "NodeJs", "ExpressJs", "GatsbyJS", "Jest", "TypeScript",
-        "MySQL", "GraphQl", "GroQ", "AJAX", "REST APIs",
-        "JSON", "SanityIO", "StrapiJS", "Web Design",
-        "Azure", "GCP", "jQuery", "Bootstrap", "TailwindCSS",
-        "SalJS", "Gsap", "SCSS", "Git", "GitHub",
-        "Web Performance Optimization", "User Experience", "SEO",
-        "Analytical Skills", "Creative Problem Solving",
-        "Collaboration", "Effective Communication", "Independent Worker", "Self Motivated"
-      ],
-      projects: [
-        {
-          name: "Portfolio Website",
-          description: "A personal portfolio website to showcase my projects and skills.",
-          link: "https://jovylle.com"
-        },
-        {
-          name: "Chatbot Integration",
-          description: "A chatbot integrated into a website using OpenAI's GPT model.",
-          link: "https://gptfree.uft1.com"
-        },
-        {
-          name: "Melvorite Chrome Extension",
-          description: "Chrome extension for automating tasks in Melvor Idle using JavaScript and Chrome APIs.",
-          link: "https://github.com/jovylle/melvorite"
-        },
-        {
-          name: "ChatGPT Clone",
-          description: "Chat interface powered by OpenAI API, leveraging serverless functions for scalability.",
-          link: "https://gptfree.uft1.com"
-        },
-        {
-          name: "Stick Figure Game",
-          description: "Simple game built with PhaserJS, focused on engaging mechanics and responsive design.",
-          link: "https://flyingstickfigure.atcebu.win"
-        },
-        {
-          name: "Flappy Bird Clone",
-          description: "Multiplatform game built with Flutter.",
-          link: "https://https://flappy-bird.uft1.com/"
-        }
-      ]
+      isMenuOpen: false
     };
   },
   computed: {
@@ -169,15 +119,22 @@ export default {
     toggleDarkMode() {
       this.darkMode = !this.darkMode;
     },
-    toggleChatbot() {
-      this.showChatbot = !this.showChatbot;
-    }
+    
   },
   mounted() {
-    window.addEventListener('toggle-chatbot', this.toggleChatbot);
+    // Load the embeddable quick menu widget (inline, no iframe)
+    if (!document.querySelector('script[data-jovylle-embed]')) {
+      const s = document.createElement('script');
+      s.src = '/widget/embed-inline.js';
+      s.async = true;
+      s.setAttribute('data-jovylle-embed', 'true');
+      s.setAttribute('data-position', 'top-right');
+      s.setAttribute('data-size', 'medium');
+      document.body.appendChild(s);
+    }
   },
   beforeDestroy() {
-    window.removeEventListener('toggle-chatbot', this.toggleChatbot);
+    
   }
 }
 </script>

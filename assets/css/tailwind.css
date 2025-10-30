@@ -1,5 +1,24 @@
 @tailwind base;
 @layer base {
+  :root {
+    --accent: #9CA3AF;
+    --divider: #E9ECEF;
+    --divider-dark: #404040;
+    --stroke-interactive: 3px; /* buttons/cards */
+    --stroke-divider: 1px;       /* dividers */
+  }
+
+  .dark {
+    --accent: #9CA3AF;
+    --divider: #E9ECEF; /* still used for outer pages (rings) */
+    --divider-dark: #404040;
+  }
+
+  html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   h1 {
     @apply text-4xl font-bold my-12;
   }
@@ -53,6 +72,11 @@
   /* a {
     @apply text-blue-600 underline;
   } */
+
+  hr, .ui-divider {
+    border: 0;
+    border-top: var(--stroke-divider) solid var(--divider);
+  }
 }
 @tailwind components;
 @tailwind utilities;
@@ -83,4 +107,14 @@
 
 div#__nuxt > div {
   min-height: 100vh !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

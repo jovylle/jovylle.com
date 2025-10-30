@@ -1,6 +1,8 @@
 <script setup>
-// TODO: make a global varialbe, maybe global state,
-const projects = await queryContent('projects').find()
+// Temporarily redirect projects to highlights to avoid confusion
+await navigateTo('/highlights', { replace: true })
+// Note: legacy code below retained for potential future use
+// const projects = await queryContent('projects').find()
 
 </script>
 <template>
@@ -31,7 +33,7 @@ const projects = await queryContent('projects').find()
             v-for="projectItem in projects"
             :key="projectItem._path"
             :to="projectItem._path"
-            class="rounded-xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 dark:border-4 dark:border-m4 flex flex-col max-w-[350px] mx-auto w-full"
+            class="rounded-xl overflow-hidden cursor-pointer mb-10 sm:mb-0 flex flex-col max-w-[350px] mx-auto w-full bg-white dark:bg-ternary-dark border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]"
             aria-label="Single Project"
           >
             <!-- <div v-if="post.mainImage" class="bg-cover bg-center h-64 w-64" :style="`background-image: url(${post.mainImage?.asset._ref});`"></div> -->
@@ -66,7 +68,7 @@ const projects = await queryContent('projects').find()
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 sm:gap-10"
         >
           <div
-            class="rounded-xl shadow-lg hover:shadow-xl cursor-pointer mb-10 sm:mb-0 bg-secondary-light dark:bg-ternary-dark"
+            class="rounded-xl cursor-pointer mb-10 sm:mb-0 bg-secondary-light dark:bg-ternary-dark border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]"
           >
             <div>
               <img

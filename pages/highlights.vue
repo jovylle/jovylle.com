@@ -10,7 +10,7 @@
       <li
         v-for="item in highlights"
         :key="item.title"
-        class="bg-white dark:bg-ternary-dark shadow rounded-lg p-5 border dark:border-gray-600"
+        class="bg-white dark:bg-ternary-dark rounded-lg p-5 border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]"
       >
         <div class="flex items-start justify-between mb-3">
           <div class="flex items-center gap-2">
@@ -51,34 +51,20 @@
         </div>
         
         <div class="flex gap-2">
-          <a
-            v-if="item.link"
-            :href="item.link"
-            target="_blank"
-            class="inline-block px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm"
-          >
-            View Solution
+          <a v-if="item.link" :href="item.link" target="_blank">
+            <UiButton variant="outline-dashed">View Solution</UiButton>
           </a>
-          <a
-            v-if="item.github"
-            :href="item.github"
-            target="_blank"
-            class="inline-block px-3 py-1 bg-gray-800 text-white rounded hover:bg-gray-900 transition text-sm"
-          >
-            Source Code
+          <a v-if="item.github" :href="item.github" target="_blank">
+            <UiButton variant="outline">Source Code</UiButton>
           </a>
         </div>
       </li>
     </ul>
-
-    <div class="flex justify-center mt-8">
-      <a
-        href="/projects"
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
-        View All Projects
-      </a>
-    </div>
+    <!-- <div class="flex justify-center mt-8">
+      <NuxtLink to="/highlights">
+        <UiButton variant="outline-dashed">More highlights</UiButton>
+      </NuxtLink>
+    </div> -->
   </section>
 </template>
 

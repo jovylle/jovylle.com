@@ -2,28 +2,37 @@
   <section class="md:min-h-[20vh]" id="contact">
     <div class="container">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
+        <UiCard
           v-for="link in links"
           :key="link.label"
-          class="card rounded-xl shadow-lg hover:shadow-xl cursor-pointer dark:border-4 dark:border-m4 flex items-center py-6 flex-col max-w-[350px] w-full mx-auto bg-white dark:bg-ternary-dark"
+          variant="dashed"
+          class="cursor-pointer flex items-center py-6 flex-col max-w-[350px] w-full mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] transition duration-150"
+          tabindex="0"
           @click="goTo(link.route)"
+          @keydown.enter="goTo(link.route)"
         >
-          <div class="icon mb-4">{{ link.icon }}</div>
+          <div class="icon mb-4">
+            <component :is="link.icon" :size="22" :stroke-width="1.6" />
+          </div>
           <p class="font-general-semibold text-md sm:text-xl font-semibold p-0">
             {{ link.label }}
             <span v-if="link.external" class="text-sm text-gray-500 ml-2">(External)</span>
           </p>
-        </div>
+        </UiCard>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import IconTool from '@/components/icons/IconTool.vue'
+import IconBook from '@/components/icons/IconBook.vue'
+import IconMail from '@/components/icons/IconMail.vue'
+
 const links = [
-  { label: "Skills & Solutions", route: "/highlights", icon: "�️", external: false },
-  { label: "Blog & Hub", route: "https://hub.jovylle.com/", icon: "📝", external: true },
-  { label: "Contact Me", route: "/contact", icon: "📧", external: false },
+  { label: "Skills & Solutions", route: "/highlights", icon: IconTool, external: false },
+  { label: "Blog & Hub", route: "https://hub.jovylle.com/", icon: IconBook, external: true },
+  { label: "Contact Me", route: "/contact", icon: IconMail, external: false },
 ];
 
 const goTo = (route) => {
@@ -62,7 +71,6 @@ const goTo = (route) => {
 } */
 
 .icon {
-  font-size: 2.5rem;
-  color: white;
+  color: currentColor;
 }
 </style>
