@@ -18,10 +18,22 @@
           <p class="text-sm text-gray-600 dark:text-gray-400 max-w-[400px]">
             Building modern web experiences with clean code and thoughtful design
           </p>
+          <UiDivider />
+          <div class="flex items-center gap-3">
+            <NuxtLink to="/contact">
+              <UiButton variant="primary">Get in touch</UiButton>
+            </NuxtLink>
+            <NuxtLink to="/highlights">
+              <UiButton variant="outline-dashed">See highlights</UiButton>
+            </NuxtLink>
+            <NuxtLink to="/hub">
+              <UiButton variant="outline-dashed">Blog & Hub</UiButton>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </section>
-    <HomeCards />
+    
   </div>
 </template>
 <script setup>

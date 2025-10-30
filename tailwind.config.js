@@ -24,7 +24,17 @@ export default {
         "m2": "#379683",
         "m3": "#7395AE",
         "m4": "#557A95",
-        "m5": "#B1A296"
+        "m5": "#B1A296",
+
+        // Distinct minimal tokens
+        accent: "#9CA3AF",
+        divider: "#E9ECEF",
+        dividerDark: "#404040"
+      },
+      boxShadow: {
+        soft: "0 2px 6px rgba(0,0,0,0.08)",
+        ring: "0 0 0 1px var(--divider)",
+        ringDark: "0 0 0 1px var(--divider-dark)",
       },
     },
   },

@@ -6,27 +6,22 @@
         type="text"
         placeholder="Your Name"
         required
-        class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
+        class="w-full p-3 rounded-[4px] bg-white dark:bg-gray-800 border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
       />
       <input
         v-model="formData.email"
         type="email"
         placeholder="Your Email"
         required
-        class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
+        class="w-full p-3 rounded-[4px] bg-white dark:bg-gray-800 border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
       />
       <textarea
         v-model="formData.message"
         placeholder="Your Message"
         required
-        class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
+        class="w-full p-3 rounded-[4px] bg-white dark:bg-gray-800 border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
       ></textarea>
-      <button
-        type="submit"
-        class="w-full bg-m4 hover:bg-m3 text-white font-semibold p-3 rounded-lg"
-      >
-        Send Message
-      </button>
+      <UiButton class="w-full" type="submit">Send Message</UiButton>
       <p v-if="message" class="text-m2 mt-2 text-center">{{ message }}</p>
     </form>
   </div>

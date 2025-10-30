@@ -2,6 +2,8 @@
 
 # Jovylle.com - Personal Portfolio & Widget Library
 
+For the project overview, UI rules, and architecture, see `docs/project_overview.md`.
+
 A modern personal portfolio website built with Nuxt.js, featuring a floating widget that can be embedded on any website.
 
 ## 🚀 Quick Menu Widget

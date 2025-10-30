@@ -1,6 +1,7 @@
 <template>
   <div
     :class='" text-lg overflow-hidden flex flex-col tracking-wider " + (darkMode?"dark bg-ternary-dark":"bg-ternary-light ")'
+    style="--accent:#9CA3AF;--divider:#E9ECEF;--divider-dark:#404040"
   >
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
       <section class="">
@@ -32,10 +33,16 @@
             >
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
-                to="/projects"
+                to="/highlights"
               >
-                Projects
+                Highlights
               </NuxtLink>
+              <a
+                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
+                href="https://hub.jovylle.com" target="_blank" rel="noopener"
+              >
+                Blog & Hub ↗
+              </a>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/uses"
@@ -115,7 +122,16 @@ export default {
     
   },
   mounted() {
-    
+    // Load the embeddable quick menu widget (inline, no iframe)
+    if (!document.querySelector('script[data-jovylle-embed]')) {
+      const s = document.createElement('script');
+      s.src = '/widget/embed-inline.js';
+      s.async = true;
+      s.setAttribute('data-jovylle-embed', 'true');
+      s.setAttribute('data-position', 'top-right');
+      s.setAttribute('data-size', 'medium');
+      document.body.appendChild(s);
+    }
   },
   beforeDestroy() {
     

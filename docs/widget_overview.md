@@ -76,7 +76,7 @@ server/api/
 </iframe>
 ```
 
-### Method 2: JavaScript (Convenience Option)
+### Method 2: JavaScript (Convenience Option - iframe)
 ```html
 <script 
     src="https://jovylle.com/widget/embed.js" 
@@ -84,6 +84,37 @@ server/api/
     data-size="large">
 </script>
 ```
+
+### Method 3: JavaScript Inline (No iframe, Shadow DOM)
+```html
+<script 
+  src="https://jovylle.com/widget/embed-inline.js"
+  data-position="top-right"
+  data-size="medium"
+  data-density="comfortable"
+  data-theme="light"
+  data-hide-chat="false"
+  data-open="false"
+  async
+></script>
+```
+
+Inline API (optional):
+```html
+<script>
+  // After script loads
+  // window.JovylleInlineWidget.open()
+  // window.JovylleInlineWidget.close()
+  // window.JovylleInlineWidget.toggle()
+  // window.JovylleInlineWidget.switchTab('links'|'chat')
+  // window.JovylleInlineWidget.setTheme('light'|'dark')
+  // window.JovylleInlineWidget.state // read-only snapshot
+<\/script>
+```
+
+Density options:
+- comfortable: 8/12 px paddings, relaxed spacing (default)
+- compact: smaller paddings for tight layouts
 
 ## Configuration Options
 
