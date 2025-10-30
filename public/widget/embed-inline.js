@@ -68,6 +68,7 @@
       border: 3px dashed var(--widget-border, #e9ecef);
       opacity: 0; transform: translateY(8px) scale(.98);
       transition: opacity .2s ease, transform .2s ease; overflow: hidden;
+      display: flex; flex-direction: column; max-height: calc(100% - 80px);
     }
     .open { opacity: 1; transform: translateY(0) scale(1); }
     .mystery-widget-header { background: #f8f9fa; padding: var(--pad-header); border-bottom: 1px solid #e9ecef; display:flex; align-items:center; justify-content: space-between; }
@@ -76,7 +77,7 @@
     .mystery-widget-tab { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .quick-btn { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .mystery-widget-tab.active { color:#495057; background:#e9ecef; border-color:#adb5bd; }
-    .mystery-widget-content { padding: var(--pad-content); max-height: 400px; overflow-y:auto; }
+    .mystery-widget-content { padding: var(--pad-content); flex: 1; overflow-y:auto; }
     .mystery-widget-section { margin-bottom: var(--section-mb); }
     .mystery-widget-link { display:block; padding: var(--link-pad); margin-bottom:4px; text-decoration:none; color:#495057; font-size:16px; transition:all .2s ease; border-bottom:3px dashed #e9ecef; }
     .mystery-widget-link:hover { background:#f8f9fa; transform: translateX(2px); }
@@ -94,8 +95,10 @@
     :host(.dark-theme) .mystery-widget-header { background:#2d2d2d; border-bottom:1px solid #404040; }
     :host(.dark-theme) .mystery-widget-title { color:#ffffff; }
     :host(.dark-theme) .mystery-widget-tab { background:#2d2d2d; border-color:#404040; color:#cccccc; }
+    :host(.dark-theme) .quick-btn { background:#2d2d2d; border-color:#404040; color:#cccccc; }
     :host(.dark-theme) .mystery-widget-tab.active { background:#404040; border-color:#555555; color:#ffffff; }
     :host(.dark-theme) .mystery-widget-link { color:#cccccc; border-bottom-color:#404040; }
+    :host(.dark-theme) .mystery-widget-link:hover { background:#2d2d2d; }
     :host(.dark-theme) .chat-message.user { background:#2a2a2a; color:#e5e7eb; border-color:#404040; }
     :host(.dark-theme) .chat-message.assistant { background:#1a1a1a; color:#cccccc; border-color:#404040; }
 
@@ -121,7 +124,7 @@
         </div>
         <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
       </div>
-      <div class="mystery-widget-content" style="max-height: ${dims.h - 100}px;">
+      <div class="mystery-widget-content">
         <div id="linksTab" class="mystery-widget-tab-content">
           <div class="mystery-widget-section">
             <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
