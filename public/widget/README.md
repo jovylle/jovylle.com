@@ -185,7 +185,8 @@ Works in all modern browsers:
 - ✅ **GPT-4o-mini** - Upgraded from GPT-3.5-turbo (60% cheaper!)
 - ✅ **Smart Tab** - Alerts tab auto-hides when empty
 - ✅ **Dark Mode Support** - All notifications adapt to theme
-- ✅ **Badge Counter** - Unread notification count
+- ✅ **Badge Counter** - Unread notification count on Alerts tab
+- ✅ **Button Badge** - Red alert badge on floating widget button
 
 ### Improvements
 - Reorganized UI (Quick Links first)

@@ -15,6 +15,7 @@
   const hidePortfolio = script?.getAttribute('data-hide-portfolio') === 'true';
   const showOnly = script?.getAttribute('data-show-only');
   const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
+  const aiContext = script?.getAttribute('data-ai-context') || '';
 
   const sizes = {
     small: { w: 280, h: 380 },
@@ -61,6 +62,15 @@
       position: absolute; bottom: 0; right: 0;
     }
     .mystery-widget-button:hover { opacity: .9; transform: translateY(2px); }
+    .button-badge { 
+      position: absolute; top: -2px; right: -2px; 
+      background: #dc3545; color: #fff; 
+      font-size: 10px; font-weight: 700; 
+      padding: 3px 6px; border-radius: 10px; 
+      min-width: 18px; text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: none;
+    }
     .mystery-widget-button svg { width: 20px; height: 20px; }
 
     .mystery-widget-container {
@@ -110,6 +120,7 @@
     /* Dark theme */
     :host(.dark-theme) .mystery-widget-container { --widget-bg:#1a1a1a; --widget-border:#404040; }
     :host(.dark-theme) .mystery-widget-button { background:#1a1a1a; color:#cccccc; border-color:#404040; }
+    :host(.dark-theme) .button-badge { background:#ff6b6b; }
     :host(.dark-theme) .mystery-widget-header { background:#2d2d2d; border-bottom:1px solid #404040; }
     :host(.dark-theme) .mystery-widget-title { color:#ffffff; }
     :host(.dark-theme) .mystery-widget-section h4 { color:#ffffff; }
@@ -140,63 +151,65 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M4 4h4v4H4zM10 4h4v4h-4zM16 4h4v4h-4zM4 10h4v4H4zM10 10h4v4h-4zM16 10h4v4h-4zM4 16h4v4H4zM10 16h4v4h-4zM16 16h4v4h-4z"/>
       </svg>
+      <span class="button-badge" id="buttonBadge">0</span>
     </button>
     <div class="mystery-widget-container" id="widgetContainer">
       <div class="mystery-widget-header">
-        <h3 class="mystery-widget-title">Quick Menu</h3>
+        <h3 class="mystery-widget-title">AI Assistant</h3>
         <div class="mystery-widget-tabs">
-          <button class="mystery-widget-tab active" data-tab="links" type="button">Links</button>
+          <button class="mystery-widget-tab active" data-tab="chat" type="button">Chat</button>
           <button class="mystery-widget-tab" data-tab="notifications" type="button" style="position:relative; display:none;">
             Alerts
             <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
           </button>
-          <button class="mystery-widget-tab" data-tab="chat" style="white-space:nowrap;" type="button">AI Chat</button>
-        <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
+          <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
         </div>
       </div>
       <div class="mystery-widget-content">
-        <div id="linksTab" class="mystery-widget-tab-content">
-          <div class="mystery-widget-section">
-            <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057;">
-              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 1 7 0l2 2a5 5 0 0 1-7 7l-2-2"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l2-2"/></svg></span>
-              Quick Links
-            </h4>
-            <a href="https://jovylle.com" class="mystery-widget-link" target="_blank">
-              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v11H3z"/><path d="M8 7V5h8v2"/></svg></span>
-              Portfolio
-            </a>
-            <a href="#" class="mystery-widget-link feedback-link" target="_blank" style="display:none;">
-              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-              Feedback
-            </a>
-          </div>
-          <div class="mystery-widget-section">
-            <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
-              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
-              <span style="flex:1">Reaction Test</span>
-              <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
-            </h4>
-            <div class="leaderboard" id="leaderboard"></div>
+        <div id="chatTab" class="mystery-widget-tab-content">
+          <div class="chat-container" style="height:100%; display:flex; flex-direction:column;">
+            <div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:0; background:transparent; border:none; margin-bottom:8px; border-radius:0; min-height:0;">
+              <!-- Quick Links shown here initially -->
+              <div id="chatWelcome" class="chat-welcome">
+                <div class="mystery-widget-section">
+                  <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057;">
+                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 1 7 0l2 2a5 5 0 0 1-7 7l-2-2"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l2-2"/></svg></span>
+                    Quick Links
+                  </h4>
+                  <a href="https://jovylle.com" class="mystery-widget-link" target="_blank">
+                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v11H3z"/><path d="M8 7V5h8v2"/></svg></span>
+                    Portfolio
+                  </a>
+                  <a href="#" class="mystery-widget-link feedback-link" target="_blank" style="display:none;">
+                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                    Feedback
+                  </a>
+                </div>
+                <div class="mystery-widget-section">
+                  <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
+                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+                    <span style="flex:1">Reaction Test</span>
+                    <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
+                  </h4>
+                  <div class="leaderboard" id="leaderboard"></div>
+                </div>
+              </div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator" style="display:none; padding:8px 12px; color:#6c757d; font-style:italic; font-size:13px;">AI is typing...</div>
+            <div class="chat-quick" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; flex-shrink:0;">
+              <button class="quick-btn" data-quick="What are your skills?">Skills</button>
+              <button class="quick-btn" data-quick="Tell me about your experience">Experience</button>
+              <button class="quick-btn" data-quick="What projects have you worked on?">Projects</button>
+            </div>
+            <div class="chat-input-container" style="display:flex; gap:8px; flex-shrink:0;">
+              <input class="chat-input" id="chatInput" placeholder="Ask me anything..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
+              <button class="chat-send" type="button" style="padding:8px 16px; background:#6c757d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">Send</button>
+            </div>
           </div>
         </div>
         <div id="notificationsTab" class="mystery-widget-tab-content" style="display:none;">
           <div class="notifications-container" id="notificationsContainer">
             <div class="notification-empty">No notifications yet</div>
-          </div>
-        </div>
-        <div id="chatTab" class="mystery-widget-tab-content" style="display:none;">
-          <div class="chat-container" style="height:100%; display:flex; flex-direction:column;">
-            <div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:0; background:transparent; border:none; margin-bottom:8px; border-radius:0; min-height:0;"></div>
-            <div class="typing-indicator" id="typingIndicator" style="display:none; padding:8px 12px; color:#6c757d; font-style:italic; font-size:13px;">AI is typing...</div>
-            <div class="chat-quick" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; flex-shrink:0;">
-              <button class="quick-btn" data-quick="Summarize my highlights">Summarize highlights</button>
-              <button class="quick-btn" data-quick="What are my top 3 strengths?">Top 3 strengths</button>
-              <button class="quick-btn" data-quick="What can you build for a small business?">What can you build?</button>
-            </div>
-            <div class="chat-input-container" style="display:flex; gap:8px; flex-shrink:0;">
-              <input class="chat-input" id="chatInput" placeholder="Ask about skills, projects, etc..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
-              <button class="chat-send" type="button" style="padding:8px 16px; background:#6c757d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">Send</button>
-            </div>
           </div>
         </div>
       </div>
@@ -210,11 +223,12 @@
   // Behavior
   const state = {
     isOpen: false,
-    currentTab: 'links',
+    currentTab: 'chat',
     skills: ['JavaScript','Vue.js','Nuxt.js','Node.js','TypeScript','Tailwind CSS'],
     projects: [ { name: 'Portfolio' }, { name: 'Reaction Test Game' } ],
     notifications: [],
     unreadCount: 0,
+    hasStartedChat: false,
   };
 
   function setTheme(theme) {
@@ -238,6 +252,8 @@
   const quickButtons = shadow.querySelectorAll('.quick-btn[data-quick]');
   const notificationsContainer = shadow.getElementById('notificationsContainer');
   const notificationBadge = shadow.getElementById('notificationBadge');
+  const buttonBadge = shadow.getElementById('buttonBadge');
+  const chatWelcome = shadow.getElementById('chatWelcome');
 
   function open() { state.isOpen = true; panel.classList.add('open'); button.setAttribute('aria-expanded','true'); }
   function close() { state.isOpen = false; panel.classList.remove('open'); button.setAttribute('aria-expanded','false'); }
@@ -259,7 +275,6 @@
     tabButtons.forEach(el => el.classList.remove('active'));
     const current = Array.from(tabButtons).find(el => el.getAttribute('data-tab') === tab);
     if (current) current.classList.add('active');
-    shadow.getElementById('linksTab').style.display = tab === 'links' ? 'block' : 'none';
     shadow.getElementById('notificationsTab').style.display = tab === 'notifications' ? 'block' : 'none';
     shadow.getElementById('chatTab').style.display = tab === 'chat' ? 'block' : 'none';
     // Mark notifications as read when viewing
@@ -354,11 +369,32 @@
 
   async function sendChatMessage() {
     const message = chatInput.value.trim(); if (!message) return;
+    
+    // Hide welcome content on first message
+    if (!state.hasStartedChat && chatWelcome) {
+      chatWelcome.style.display = 'none';
+      state.hasStartedChat = true;
+    }
+    
     addChatMessage(message, 'user'); chatInput.value = ''; chatSendBtn.disabled = true; typingIndicator.style.display = 'block';
     try {
       let apiUrl = '/.netlify/functions/chatbot';
       if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') apiUrl = '/api/chatbot';
-      const resp = await fetch(apiUrl, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message, skills: state.skills, projects: state.projects, highlights: state.highlights }) });
+      
+      // Use custom AI context from host or default
+      const context = aiContext || `You are a helpful assistant. Skills: ${state.skills.join(', ')}. Projects: ${state.projects.map(p => p.name).join(', ')}.`;
+      
+      const resp = await fetch(apiUrl, { 
+        method:'POST', 
+        headers:{'Content-Type':'application/json'}, 
+        body: JSON.stringify({ 
+          message, 
+          context: context,
+          skills: state.skills, 
+          projects: state.projects, 
+          highlights: state.highlights 
+        }) 
+      });
       const data = await resp.json();
       const ai = data.choices?.[0]?.message?.content || 'Sorry, I could not process your request.';
       typingIndicator.style.display = 'none';
@@ -382,23 +418,9 @@
 
   // Apply configuration flags
   (function applyConfig(){
-    if (hideChat) {
-      const chatTabBtn = Array.from(tabButtons).find(b=>b.getAttribute('data-tab')==='chat');
-      if (chatTabBtn) chatTabBtn.style.display = 'none';
-      shadow.getElementById('chatTab').style.display = 'none';
-      switchTab('links');
-    }
     if (hidePortfolio) {
       const link = shadow.querySelector('.mystery-widget-link[href="https://jovylle.com"]');
       if (link) link.style.display = 'none';
-    }
-    if (showOnly) {
-      const allowed = showOnly.split(',');
-      if (!allowed.includes('chat')) {
-        const chatTabBtn = Array.from(tabButtons).find(b=>b.getAttribute('data-tab')==='chat');
-        if (chatTabBtn) chatTabBtn.style.display = 'none';
-        shadow.getElementById('chatTab').style.display = 'none';
-      }
     }
     
     // Setup feedback link
@@ -430,9 +452,10 @@
     if (state.notifications.length === 0) {
       if (notifTab) notifTab.style.display = 'none';
       notificationBadge.style.display = 'none';
-      // Switch to links tab if currently on notifications
+      buttonBadge.style.display = 'none';
+      // Switch to chat tab if currently on notifications
       if (state.currentTab === 'notifications') {
-        switchTab('links');
+        switchTab('chat');
       }
       return;
     }
@@ -440,12 +463,18 @@
     // Show tab when there are notifications
     if (notifTab) notifTab.style.display = '';
     
-    // Update badge
+    // Update badges
     if (state.unreadCount > 0) {
-      notificationBadge.textContent = state.unreadCount > 99 ? '99+' : state.unreadCount;
+      const badgeText = state.unreadCount > 99 ? '99+' : state.unreadCount;
+      notificationBadge.textContent = badgeText;
       notificationBadge.style.display = 'block';
+      
+      // Update button badge (on the floating button)
+      buttonBadge.textContent = badgeText;
+      buttonBadge.style.display = 'block';
     } else {
       notificationBadge.style.display = 'none';
+      buttonBadge.style.display = 'none';
     }
   }
 
@@ -578,7 +607,9 @@
 
   // Expose minimal API
   window.JovylleInlineWidget = {
-    open, close, toggle, switchTab, setTheme,
+    open, close, toggle, 
+    switchTab, // 'chat' or 'notifications'
+    setTheme,
     // Notification API
     addNotification,
     removeNotification,

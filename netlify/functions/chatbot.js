@@ -10,7 +10,7 @@ export const handler = async (event, context) => {
 
     try {
         // Parse request body
-        const { message, skills, projects } = JSON.parse(event.body);
+        const { message, context, skills, projects } = JSON.parse(event.body);
         
         if (!message) {
             return {
@@ -29,6 +29,15 @@ export const handler = async (event, context) => {
             };
         }
 
+        // Use custom context if provided, otherwise use default
+        const systemMessage = context || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
+
+Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, Python, PHP, Laravel, MySQL, MongoDB, Git, Docker, AWS, GCP'}
+
+Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
+
+Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`;
+
         // Call OpenAI API
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -41,13 +50,7 @@ export const handler = async (event, context) => {
                 messages: [
                     {
                         role: 'system',
-                        content: `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
-
-Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, Python, PHP, Laravel, MySQL, MongoDB, Git, Docker, AWS, GCP'}
-
-Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
-
-Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`
+                        content: systemMessage
                     },
                     { role: 'user', content: message }
                 ],

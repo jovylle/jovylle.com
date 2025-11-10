@@ -223,6 +223,7 @@ window.JovylleInlineWidget.clearAllNotifications();
 ```
 
 ### Notification Features
+- **Button Badge**: Red notification badge on the floating widget button (catches attention immediately!)
 - **Badge Counter**: Unread notification count shown on Alerts tab
 - **Smart Tab**: Alerts tab auto-hides when there are no notifications (keeps UI clean!)
 - **Persistence**: Notifications saved to localStorage
