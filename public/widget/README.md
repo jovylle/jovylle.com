@@ -36,7 +36,18 @@ Add this single line to your website (before closing `</body>` tag):
 </script>
 ```
 
-### 2. Send Notifications
+### 2. Customize AI Context (Optional)
+
+```html
+<script 
+  src="https://jovylle.com/widget/embed-inline.js"
+  data-ai-context="You are an AI for ABC Company. We specialize in..."
+  data-feedback-url="https://yoursite.com/feedback"
+  async>
+</script>
+```
+
+### 3. Send Notifications (Optional)
 
 ```javascript
 window.JovylleInlineWidget.addNotification({
@@ -53,12 +64,14 @@ That's it! 🎉
 
 ## ✨ Features
 
-- 🔔 **Smart Notifications** - 4 types (info, success, warning, error)
-- 🤖 **AI Chat** - GPT-4o-mini powered assistant
-- 🎮 **Live Leaderboard** - Real-time game scores
-- 🎨 **Dark Mode** - Beautiful themes
+- 🔔 **Smart Notifications** - 4 types with badge on button
+- 🤖 **AI Chat (GPT-4o-mini)** - Customizable AI assistant
+- 💬 **Custom AI Context** - Host websites provide their own context
+- 📝 **Markdown Support** - Bold, italic, code, links in responses
+- 🎨 **Dark Mode** - Beautiful light & dark themes
 - 📱 **Mobile Ready** - Fully responsive
 - 🔒 **Style Isolation** - Shadow DOM protection
+- 🎯 **Chat-First UI** - Clean, focused interface
 
 ---
 
@@ -140,7 +153,9 @@ const state = window.JovylleInlineWidget.state;
 | `data-density` | comfortable, compact | comfortable | Spacing |
 | `data-open` | true, false | false | Open on load |
 | `data-hide-chat` | true, false | false | Hide AI chat |
+| `data-hide-portfolio` | true, false | false | Hide Jovylle.com portfolio link |
 | `data-feedback-url` | URL string | none | Custom feedback link |
+| `data-ai-context` | Text string | default | Custom AI instructions/context |
 
 ---
 
@@ -181,18 +196,22 @@ Works in all modern browsers:
 ## 📊 What's New in v2.0
 
 ### Major Features
+- ✅ **Chat-First UI** - Clean interface with chat as primary feature
+- ✅ **Custom AI Context** - Host websites provide their own AI instructions
+- ✅ **Markdown Support** - AI responses support formatting (bold, italic, code, links)
 - ✅ **Notification System** - Complete alert system with persistence
 - ✅ **GPT-4o-mini** - Upgraded from GPT-3.5-turbo (60% cheaper!)
 - ✅ **Smart Tab** - Alerts tab auto-hides when empty
-- ✅ **Dark Mode Support** - All notifications adapt to theme
-- ✅ **Badge Counter** - Unread notification count on Alerts tab
 - ✅ **Button Badge** - Red alert badge on floating widget button
 
 ### Improvements
-- Reorganized UI (Quick Links first)
+- Chat-first design (Links tab removed, merged into chat welcome)
+- Quick Links embedded in chat (auto-hide when conversation starts)
+- Removed generic quick buttons
+- Removed leaderboard (cleaner UI)
+- Markdown rendering for AI responses
 - Better dark mode colors
 - Theme toggle icon fix
-- Improved leaderboard visibility
 - Enhanced mobile responsiveness
 
 ---

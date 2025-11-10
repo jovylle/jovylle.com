@@ -16,6 +16,13 @@
   const showOnly = script?.getAttribute('data-show-only');
   const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
   const aiContext = script?.getAttribute('data-ai-context') || '';
+  
+  // Debug: Log AI context on load
+  if (aiContext) {
+    console.log('✅ Custom AI Context loaded:', aiContext.substring(0, 150) + '...');
+  } else {
+    console.log('ℹ️ No custom AI context, using default');
+  }
 
   const sizes = {
     small: { w: 280, h: 380 },
@@ -98,9 +105,15 @@
     .icon-inline { display:inline-flex; vertical-align:middle; margin-right:6px; }
     .icon-inline svg { width: 16px; height: 16px; }
     .rank-num { display:inline-flex; align-items:center; justify-content:center; width:20px; }
-    .chat-message { margin-bottom:8px; padding:8px 12px; border-radius:8px; max-width:85%; word-wrap:break-word; border:3px dashed #e9ecef; }
+    .chat-message { margin-bottom:8px; padding:8px 12px; border-radius:8px; max-width:85%; word-wrap:break-word; border:3px dashed #e9ecef; line-height:1.5; }
     .chat-message.user { align-self:flex-end; background:#f0f4f8; color:#0f172a; border-color:#dee2e6; }
     .chat-message.assistant { align-self:flex-start; background:#ffffff; color:#495057; border-color:var(--widget-border, #e9ecef); }
+    .chat-message strong { font-weight:700; }
+    .chat-message em { font-style:italic; }
+    .chat-message code { background:#f1f3f5; padding:2px 4px; border-radius:3px; font-family:monospace; font-size:0.9em; }
+    .chat-message a { color:#667eea; text-decoration:underline; }
+    .chat-message ul, .chat-message ol { margin:4px 0; padding-left:20px; }
+    .chat-message li { margin:2px 0; }
 
     /* Notifications */
     .notification-badge { position:absolute; top:-4px; right:-4px; background:#dc3545; color:#fff; font-size:10px; font-weight:700; padding:2px 6px; border-radius:10px; min-width:18px; text-align:center; }
@@ -133,6 +146,8 @@
     :host(.dark-theme) .mystery-widget-link:hover { background:#2d2d2d; }
     :host(.dark-theme) .chat-message.user { background:#2a2a2a; color:#e5e7eb; border-color:#404040; }
     :host(.dark-theme) .chat-message.assistant { background:#1a1a1a; color:#cccccc; border-color:#404040; }
+    :host(.dark-theme) .chat-message code { background:#2a2a2a; color:#e5e7eb; }
+    :host(.dark-theme) .chat-message a { color:#74b9ff; }
     :host(.dark-theme) .notification-item.info { background:#1a3a52; border-color:#2980b9; color:#74c0fc; }
     :host(.dark-theme) .notification-item.success { background:#1a3a2e; border-color:#27ae60; color:#8ce99a; }
     :host(.dark-theme) .notification-item.warning { background:#4a3a1a; border-color:#f39c12; color:#ffe066; }
@@ -185,22 +200,9 @@
                     Feedback
                   </a>
                 </div>
-                <div class="mystery-widget-section">
-                  <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
-                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
-                    <span style="flex:1">Reaction Test</span>
-                    <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
-                  </h4>
-                  <div class="leaderboard" id="leaderboard"></div>
-                </div>
               </div>
             </div>
             <div class="typing-indicator" id="typingIndicator" style="display:none; padding:8px 12px; color:#6c757d; font-style:italic; font-size:13px;">AI is typing...</div>
-            <div class="chat-quick" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; flex-shrink:0;">
-              <button class="quick-btn" data-quick="What are your skills?">Skills</button>
-              <button class="quick-btn" data-quick="Tell me about your experience">Experience</button>
-              <button class="quick-btn" data-quick="What projects have you worked on?">Projects</button>
-            </div>
             <div class="chat-input-container" style="display:flex; gap:8px; flex-shrink:0;">
               <input class="chat-input" id="chatInput" placeholder="Ask me anything..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
               <button class="chat-send" type="button" style="padding:8px 16px; background:#6c757d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">Send</button>
@@ -243,13 +245,11 @@
   const panel = shadow.getElementById('widgetContainer');
   const tabButtons = shadow.querySelectorAll('.mystery-widget-tab[data-tab]');
   const themeBtn = shadow.querySelector('[data-action="theme"]');
-  const playBtn = shadow.querySelector('.play-button');
   const chatSendBtn = shadow.querySelector('.chat-send');
   const chatInput = shadow.getElementById('chatInput');
   const chatMessages = shadow.getElementById('chatMessages');
   const typingIndicator = shadow.getElementById('typingIndicator');
   const highlightsList = shadow.getElementById('highlightsList');
-  const quickButtons = shadow.querySelectorAll('.quick-btn[data-quick]');
   const notificationsContainer = shadow.getElementById('notificationsContainer');
   const notificationBadge = shadow.getElementById('notificationBadge');
   const buttonBadge = shadow.getElementById('buttonBadge');
@@ -296,7 +296,6 @@
     themeBtn.innerHTML = (next === 'dark') ? svgSun() : svgMoon();
   });
 
-  playBtn.addEventListener('click', () => window.open('https://fast.jovylle.com', '_blank'));
 
   // Apply position to button and panel inside the host
   (function applyPosition(){
@@ -326,27 +325,6 @@
     }
   })();
 
-  async function loadLeaderboard() {
-    const el = shadow.getElementById('leaderboard');
-    el.innerHTML = '<div style="text-align:center;color:#6c757d;font-size:16px;padding:4px;">Loading leaderboard...</div>';
-    try {
-      let data;
-      try {
-        const r = await fetch('/api/leaderboard');
-        if (!r.ok) throw new Error('local api');
-        data = await r.json();
-      } catch {
-        const rr = await fetch('https://fast.jovylle.com/reaction/top.json');
-        data = await rr.json();
-      }
-      const top = (data.top || []).slice(0,3);
-      if (!top.length) throw new Error('no data');
-      el.innerHTML = top.map((p,i)=>`<div class="leaderboard-row"><span class="rank-num">${i+1}.</span><span>${p.playerName}</span><span>${p.ms}ms</span></div>`).join('');
-    } catch {
-      el.innerHTML = '<div style="text-align:center;color:#dc3545;font-size:16px;padding:4px;">Leaderboard unavailable</div>';
-    }
-  }
-  loadLeaderboard();
 
   async function loadHighlights() {
     try {
@@ -384,6 +362,8 @@
       // Use custom AI context from host or default
       const context = aiContext || `You are a helpful assistant. Skills: ${state.skills.join(', ')}. Projects: ${state.projects.map(p => p.name).join(', ')}.`;
       
+      console.log('🤖 AI Context being used:', context.substring(0, 100) + '...');
+      
       const resp = await fetch(apiUrl, { 
         method:'POST', 
         headers:{'Content-Type':'application/json'}, 
@@ -404,17 +384,50 @@
       addChatMessage("Sorry, I'm having trouble right now.", 'assistant');
     } finally { chatSendBtn.disabled = false; }
   }
+  // Simple markdown parser (no dependencies)
+  function parseMarkdown(text) {
+    let html = text;
+    
+    // Escape HTML
+    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    
+    // Bold: **text** or __text__
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    
+    // Italic: *text* or _text_
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+    
+    // Inline code: `code`
+    html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+    
+    // Links: [text](url)
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    
+    // Line breaks
+    html = html.replace(/\n/g, '<br>');
+    
+    return html;
+  }
+
   function addChatMessage(text, who) {
     const div = document.createElement('div');
     div.className = 'chat-message ' + who;
-    div.textContent = text;
+    
+    // Apply markdown for assistant messages
+    if (who === 'assistant') {
+      div.innerHTML = parseMarkdown(text);
+    } else {
+      div.textContent = text;
+    }
+    
     chatMessages.appendChild(div);
     // Ensure newest message is visible within the scroll container only
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
   chatSendBtn.addEventListener('click', sendChatMessage);
   chatInput.addEventListener('keypress', (e)=>{ if (e.key === 'Enter') sendChatMessage(); });
-  quickButtons.forEach(btn => btn.addEventListener('click', () => { chatInput.value = btn.getAttribute('data-quick') || ''; sendChatMessage(); }));
 
   // Apply configuration flags
   (function applyConfig(){

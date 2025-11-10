@@ -37,6 +37,8 @@ Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, P
 Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
 
 Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`;
+        
+        console.log('🤖 Server received context:', context ? 'Custom (' + context.substring(0, 50) + '...)' : 'Using default');
 
         // Call OpenAI API
         const response = await fetch('https://api.openai.com/v1/chat/completions', {

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tony's Pizza Shop - Best Pizza in Town!</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #2d3436;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      font-size: 3.5rem;
+      color: #e74c3c;
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 3px 3px 0px #c0392b;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+    }
+    .hero {
+      background: #fdcb6e;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 5px solid #e17055;
+    }
+    .hero h2 {
+      color: #d63031;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .menu-item {
+      background: linear-gradient(135deg, #fab1a0 0%, #ff7675 100%);
+      padding: 20px;
+      border-radius: 15px;
+      border: 3px solid #d63031;
+      transition: transform 0.3s;
+    }
+    .menu-item:hover {
+      transform: scale(1.05);
+    }
+    .menu-item h3 {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .menu-item p {
+      color: #2d3436;
+      margin-bottom: 10px;
+    }
+    .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffeaa7;
+      text-shadow: 2px 2px 0px #d63031;
+    }
+    .info-box {
+      background: #74b9ff;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 30px;
+      border: 3px solid #0984e3;
+    }
+    .info-box h3 {
+      color: white;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .info-box li {
+      color: #2d3436;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+    .info-box li:before {
+      content: "🍕";
+      position: absolute;
+      left: 0;
+    }
+    .cta {
+      background: #00b894;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 30px;
+      font-size: 1.3rem;
+      border: 3px solid #00896c;
+    }
+    .emoji {
+      font-size: 3rem;
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍕 Tony's Pizza Shop 🍕</h1>
+    <p class="subtitle">The Best Pizza in Brooklyn Since 1985!</p>
+
+    <div class="hero">
+      <h2>Welcome to Pizza Paradise!</h2>
+      <p style="font-size: 1.1rem; line-height: 1.6;">
+        For over 35 years, Tony's has been serving authentic New York-style pizza made with love, 
+        fresh ingredients, and our secret family recipe sauce. Every pizza is hand-tossed and 
+        baked to perfection in our brick oven!
+      </p>
+    </div>
+
+    <h2 style="color: #e74c3c; font-size: 2.5rem; margin-bottom: 20px; text-align: center;">
+      🌟 Our Signature Pizzas 🌟
+    </h2>
+
+    <div class="menu">
+      <div class="menu-item">
+        <h3>🧀 Classic Margherita</h3>
+        <p>Fresh mozzarella, basil, tomato sauce</p>
+        <div class="price">$12.99</div>
+      </div>
+      
+      <div class="menu-item">
+        <h3>🥓 Meat Lovers</h3>
+        <p>Pepperoni, sausage, bacon, ham</p>
+        <div class="price">$16.99</div>
+      </div>
+      
+      <div class="menu-item">
+        <h3>🌶️ Spicy Diavola</h3>
+        <p>Spicy salami, jalapeños, hot sauce</p>
+        <div class="price">$14.99</div>
+      </div>
+      
+      <div class="menu-item">
+        <h3>🥗 Veggie Supreme</h3>
+        <p>Mushrooms, peppers, onions, olives</p>
+        <div class="price">$13.99</div>
+      </div>
+      
+      <div class="menu-item">
+        <h3>🦐 Seafood Special</h3>
+        <p>Shrimp, calamari, garlic, lemon</p>
+        <div class="price">$18.99</div>
+      </div>
+      
+      <div class="menu-item">
+        <h3>🍍 Hawaiian Delight</h3>
+        <p>Ham, pineapple (don't judge!)</p>
+        <div class="price">$14.99</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>📍 Visit Us!</h3>
+      <ul>
+        <li><strong>Address:</strong> 123 Pizza Street, Brooklyn, NY 11201</li>
+        <li><strong>Phone:</strong> (555) TONY-PIE</li>
+        <li><strong>Hours:</strong> Mon-Sun 11am - 11pm</li>
+        <li><strong>Delivery:</strong> Free within 5 miles!</li>
+        <li><strong>Catering:</strong> Perfect for parties & events</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      💬 <strong>Have questions about our menu, ingredients, or delivery?</strong><br>
+      Click the widget button and chat with our AI assistant!<br>
+      We're here to help you find your perfect pizza! 🍕
+    </div>
+
+    <div class="emoji">🍕🍕🍕</div>
+  </div>
+
+  <!-- Load the Jovylle Widget with Pizza Shop Context -->
+  <script 
+    src="/widget/embed-inline.js"
+    data-position="bottom-right"
+    data-size="medium"
+    data-hide-portfolio="true"
+    data-feedback-url="https://tally.so/r/WO9dWk"
+    data-ai-context="You are a friendly AI assistant for Tony's Pizza Shop in Brooklyn, NY. Here's what you know:
+
+ABOUT US:
+- Family-owned since 1985 (over 35 years!)
+- Authentic New York-style pizza
+- Hand-tossed dough made fresh daily
+- Secret family recipe tomato sauce
+- Brick oven baked
+- Located at 123 Pizza Street, Brooklyn, NY 11201
+
+MENU & PRICES:
+- Classic Margherita: $12.99 (fresh mozzarella, basil, tomato sauce)
+- Meat Lovers: $16.99 (pepperoni, sausage, bacon, ham)
+- Spicy Diavola: $14.99 (spicy salami, jalapeños, hot sauce)
+- Veggie Supreme: $13.99 (mushrooms, peppers, onions, olives)
+- Seafood Special: $18.99 (shrimp, calamari, garlic, lemon)
+- Hawaiian Delight: $14.99 (ham, pineapple)
+
+SIZES: Small (10\"), Medium (14\"), Large (18\")
+CRUST OPTIONS: Thin, regular, thick, gluten-free (+$3)
+
+HOURS: Monday-Sunday, 11am - 11pm
+PHONE: (555) TONY-PIE
+DELIVERY: Free within 5 miles, $25 minimum order
+PICKUP: 15-20 minutes
+CATERING: Available for parties and events
+
+SPECIALS:
+- Tuesday: Buy one get one 50% off
+- Family Deal: 2 large pizzas + garlic bread + 2L soda = $35
+
+Be enthusiastic about pizza! Use pizza emojis when appropriate. Help customers choose pizzas based on their preferences. Answer questions about ingredients, delivery, and ordering. Keep responses friendly, casual, and helpful."
+    async>
+  </script>
+
+  <script>
+    // Show a welcome notification after page loads
+    setTimeout(() => {
+      if (window.JovylleInlineWidget) {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: '🍕 Welcome to Tony\'s!',
+          message: 'Try our new Seafood Special! Ask the AI assistant about our menu.',
+          persistent: false
+        });
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
+
