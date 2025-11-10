@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Notification Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+    h1 {
+      color: #495057;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #6c757d;
+      margin-bottom: 30px;
+    }
+    .demo-section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .demo-section h2 {
+      font-size: 18px;
+      color: #495057;
+      margin-top: 0;
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .btn-info {
+      background: #4dabf7;
+      color: white;
+    }
+    .btn-success {
+      background: #51cf66;
+      color: white;
+    }
+    .btn-warning {
+      background: #ffd43b;
+      color: #333;
+    }
+    .btn-error {
+      background: #ff6b6b;
+      color: white;
+    }
+    .btn-control {
+      background: #6c757d;
+      color: white;
+    }
+    code {
+      background: #f1f3f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+      color: #e74c3c;
+    }
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Widget Notification System Demo</h1>
+  <p class="subtitle">Test out the new notification features for the Jovylle Widget</p>
+
+  <!-- Basic Notifications -->
+  <div class="demo-section">
+    <h2>📢 Basic Notifications</h2>
+    <p>Try different notification types:</p>
+    <div class="button-grid">
+      <button class="btn-info" onclick="testInfoNotification()">Info Notification</button>
+      <button class="btn-success" onclick="testSuccessNotification()">Success Notification</button>
+      <button class="btn-warning" onclick="testWarningNotification()">Warning Notification</button>
+      <button class="btn-error" onclick="testErrorNotification()">Error Notification</button>
+    </div>
+  </div>
+
+  <!-- Advanced Examples -->
+  <div class="demo-section">
+    <h2>🚀 Advanced Examples</h2>
+    <p>Real-world use cases:</p>
+    <div class="button-grid">
+      <button class="btn-info" onclick="welcomeMessage()">Welcome Message</button>
+      <button class="btn-success" onclick="successMessage()">Save Success</button>
+      <button class="btn-warning" onclick="maintenanceNotice()">Maintenance Alert</button>
+      <button class="btn-error" onclick="errorMessage()">Error Alert</button>
+      <button class="btn-info" onclick="featureAnnouncement()">Feature Announcement</button>
+      <button class="btn-warning" onclick="tempNotification()">Temporary (10s)</button>
+    </div>
+  </div>
+
+  <!-- Widget Controls -->
+  <div class="demo-section">
+    <h2>🎛️ Widget Controls</h2>
+    <p>Control the widget programmatically:</p>
+    <div class="button-grid">
+      <button class="btn-control" onclick="openWidget()">Open Widget</button>
+      <button class="btn-control" onclick="showNotifications()">Show Notifications Tab</button>
+      <button class="btn-control" onclick="getNotificationCount()">Get Notification Count</button>
+      <button class="btn-control" onclick="clearAll()">Clear All Notifications</button>
+    </div>
+  </div>
+
+  <!-- API Examples -->
+  <div class="demo-section">
+    <h2>💻 API Usage</h2>
+    <p>Example code snippets:</p>
+    
+    <h3 style="font-size: 14px; margin-top: 20px;">Add a notification:</h3>
+    <pre class="code-block">window.JovylleInlineWidget.addNotification({
+  type: 'success',
+  title: 'Welcome!',
+  message: 'Thanks for visiting our site.',
+  persistent: true
+});</pre>
+
+    <h3 style="font-size: 14px; margin-top: 20px;">Clear all notifications:</h3>
+    <pre class="code-block">window.JovylleInlineWidget.clearAllNotifications();</pre>
+
+    <h3 style="font-size: 14px; margin-top: 20px;">Get all notifications:</h3>
+    <pre class="code-block">const notifications = window.JovylleInlineWidget.getNotifications();
+console.log(notifications);</pre>
+  </div>
+
+  <!-- Load the widget -->
+  <script src="/widget/embed-inline.js" 
+    data-position="bottom-right" 
+    data-size="medium" 
+    data-open="false" 
+    async>
+  </script>
+
+  <!-- Demo functions -->
+  <script>
+    // Wait for widget to load
+    function waitForWidget(callback) {
+      if (window.JovylleInlineWidget) {
+        callback();
+      } else {
+        setTimeout(() => waitForWidget(callback), 100);
+      }
+    }
+
+    // Basic notification types
+    function testInfoNotification() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: 'Information',
+          message: 'This is an informational message.',
+          persistent: true
+        });
+      });
+    }
+
+    function testSuccessNotification() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: 'Success!',
+          message: 'Operation completed successfully.',
+          persistent: true
+        });
+      });
+    }
+
+    function testWarningNotification() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'warning',
+          title: 'Warning',
+          message: 'Please review this warning message.',
+          persistent: true
+        });
+      });
+    }
+
+    function testErrorNotification() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'error',
+          title: 'Error',
+          message: 'An error has occurred. Please try again.',
+          persistent: true
+        });
+      });
+    }
+
+    // Real-world examples
+    function welcomeMessage() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: '👋 Welcome!',
+          message: 'Thanks for visiting! Check out the Quick Links tab for more.',
+          persistent: true
+        });
+      });
+    }
+
+    function successMessage() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: '✅ Saved Successfully',
+          message: 'Your changes have been saved.',
+          persistent: false
+        });
+      });
+    }
+
+    function maintenanceNotice() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'warning',
+          title: '🔧 Scheduled Maintenance',
+          message: 'System maintenance is scheduled for tonight at 2:00 AM EST.',
+          persistent: true
+        });
+      });
+    }
+
+    function errorMessage() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'error',
+          title: '❌ Connection Error',
+          message: 'Unable to connect to server. Please check your internet connection.',
+          persistent: true
+        });
+      });
+    }
+
+    function featureAnnouncement() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: '🎉 New Feature!',
+          message: 'We just launched a new notification system. Try it out!',
+          persistent: true
+        });
+      });
+    }
+
+    function tempNotification() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: '⏱️ Temporary Notice',
+          message: 'This notification will auto-dismiss in 10 seconds.',
+          persistent: false
+        });
+      });
+    }
+
+    // Widget controls
+    function openWidget() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.open();
+      });
+    }
+
+    function showNotifications() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function getNotificationCount() {
+      waitForWidget(() => {
+        const notifications = window.JovylleInlineWidget.getNotifications();
+        alert(`You have ${notifications.length} notification(s)`);
+        console.log('Notifications:', notifications);
+      });
+    }
+
+    function clearAll() {
+      waitForWidget(() => {
+        if (confirm('Clear all notifications?')) {
+          window.JovylleInlineWidget.clearAllNotifications();
+          alert('All notifications cleared!');
+        }
+      });
+    }
+
+    // Auto-show welcome message on page load
+    setTimeout(() => {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: '🚀 Demo Ready',
+          message: 'Click the buttons above to test different notifications!',
+          persistent: false
+        });
+      });
+    }, 1000);
+  </script>
+</body>
+</html>
+
+
+
+
+
