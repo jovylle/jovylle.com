@@ -1,12 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick Menu Widget (Inline Host)</title>
+  <title>Jovylle Widget - Interactive Demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #fff;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin: 5px;
+      backdrop-filter: blur(10px);
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .card {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card p {
+      opacity: 0.9;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    button {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .btn-primary { background: #fff; color: #667eea; }
+    .btn-info { background: #4dabf7; color: #fff; }
+    .btn-success { background: #51cf66; color: #fff; }
+    .btn-warning { background: #ffd43b; color: #333; }
+    .btn-error { background: #ff6b6b; color: #fff; }
+    .btn-dark { background: #2d2d2d; color: #fff; }
+    
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 40px;
+    }
+    .feature-item {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid #fff;
+    }
+    .feature-item h4 {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .feature-item p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .code-section {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 40px;
+    }
+    .code-section h3 {
+      margin-bottom: 15px;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .demo-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Minimal host page: loads the inline embed script only. -->
-  <script src="/widget/embed-inline.js" data-position="bottom-right" data-size="medium" async></script>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>🎯 Jovylle Widget Demo</h1>
+      <p>A powerful, embeddable widget with notifications, AI chat, and more!</p>
+      <div>
+        <span class="badge">🔔 Notifications</span>
+        <span class="badge">🤖 AI Chat (GPT-4o-mini)</span>
+        <span class="badge">🎮 Leaderboard</span>
+        <span class="badge">🎨 Dark Mode</span>
+      </div>
+    </div>
+
+    <!-- Demo Cards -->
+    <div class="demo-grid">
+      <!-- Notifications Card -->
+      <div class="card">
+        <h3>🔔 Notifications</h3>
+        <p>Test different notification types. Host websites can push alerts to visitors!</p>
+        <button class="btn-info" onclick="testInfo()">Info Alert</button>
+        <button class="btn-success" onclick="testSuccess()">Success Alert</button>
+        <button class="btn-warning" onclick="testWarning()">Warning Alert</button>
+        <button class="btn-error" onclick="testError()">Error Alert</button>
+      </div>
+
+      <!-- Real-World Examples -->
+      <div class="card">
+        <h3>🚀 Real Examples</h3>
+        <p>See how notifications work in real scenarios.</p>
+        <button class="btn-primary" onclick="welcomeMsg()">👋 Welcome Message</button>
+        <button class="btn-success" onclick="saveSuccess()">✅ Save Success</button>
+        <button class="btn-warning" onclick="maintenance()">🔧 Maintenance</button>
+        <button class="btn-info" onclick="announcement()">🎉 Announcement</button>
+      </div>
+
+      <!-- Widget Controls -->
+      <div class="card">
+        <h3>🎛️ Widget Controls</h3>
+        <p>Control the widget programmatically via JavaScript.</p>
+        <button class="btn-primary" onclick="openWidget()">Open Widget</button>
+        <button class="btn-primary" onclick="showNotifications()">Show Notifications</button>
+        <button class="btn-primary" onclick="showChat()">Show AI Chat</button>
+        <button class="btn-dark" onclick="clearAll()">Clear All Alerts</button>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="feature-list">
+      <div class="feature-item">
+        <h4>🔔 Smart Notifications</h4>
+        <p>4 types, badge counter, auto-dismiss, localStorage persistence</p>
+      </div>
+      <div class="feature-item">
+        <h4>🤖 AI Assistant</h4>
+        <p>GPT-4o-mini powered chat about portfolio & projects</p>
+      </div>
+      <div class="feature-item">
+        <h4>🎮 Live Leaderboard</h4>
+        <p>Real-time reaction test game scores</p>
+      </div>
+      <div class="feature-item">
+        <h4>🎨 Theme Support</h4>
+        <p>Beautiful light & dark modes with auto-switch</p>
+      </div>
+      <div class="feature-item">
+        <h4>📱 Mobile Ready</h4>
+        <p>Fully responsive on all devices</p>
+      </div>
+      <div class="feature-item">
+        <h4>🔒 Shadow DOM</h4>
+        <p>Complete style isolation from host site</p>
+      </div>
+    </div>
+
+    <!-- Code Example -->
+    <div class="code-section">
+      <h3>💻 Quick Start</h3>
+      <pre>&lt;!-- 1. Embed the widget --&gt;
+&lt;script 
+  src="https://jovylle.com/widget/embed-inline.js"
+  data-position="bottom-right"
+  data-size="medium"
+  async&gt;
+&lt;/script&gt;
+
+&lt;!-- 2. Send notifications --&gt;
+&lt;script&gt;
+window.JovylleInlineWidget.addNotification({
+  type: 'success',
+  title: 'Welcome!',
+  message: 'Thanks for visiting!',
+  persistent: true
+});
+&lt;/script&gt;</pre>
+    </div>
+  </div>
+
+  <!-- Load the widget -->
+  <script src="/widget/embed-inline.js" 
+    data-position="bottom-right" 
+    data-size="medium" 
+    data-open="false"
+    async>
+  </script>
+
+  <!-- Demo Functions -->
+  <script>
+    function waitForWidget(callback) {
+      if (window.JovylleInlineWidget) {
+        callback();
+      } else {
+        setTimeout(() => waitForWidget(callback), 100);
+      }
+    }
+
+    // Basic notifications
+    function testInfo() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: 'Information',
+          message: 'This is an informational message with important details.',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function testSuccess() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: 'Success!',
+          message: 'Operation completed successfully. Great job!',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function testWarning() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'warning',
+          title: 'Warning',
+          message: 'Please review this warning message before proceeding.',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function testError() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'error',
+          title: 'Error',
+          message: 'An error occurred. Please try again or contact support.',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    // Real-world examples
+    function welcomeMsg() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: '👋 Welcome!',
+          message: 'Thanks for visiting! Check out the Quick Links tab for more info.',
+          persistent: false
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function saveSuccess() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'success',
+          title: '✅ Saved Successfully',
+          message: 'Your changes have been saved. This will auto-dismiss in 10s.',
+          persistent: false
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function maintenance() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'warning',
+          title: '🔧 Scheduled Maintenance',
+          message: 'System maintenance is scheduled for tonight at 2:00 AM EST. Downtime expected: 30 minutes.',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function announcement() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: '🎉 New Feature Released!',
+          message: 'We just launched our notification system! Try it out and let us know what you think.',
+          persistent: true
+        });
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    // Widget controls
+    function openWidget() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.open();
+      });
+    }
+
+    function showNotifications() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('notifications');
+      });
+    }
+
+    function showChat() {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.open();
+        window.JovylleInlineWidget.switchTab('chat');
+      });
+    }
+
+    function clearAll() {
+      waitForWidget(() => {
+        if (confirm('Clear all notifications?')) {
+          window.JovylleInlineWidget.clearAllNotifications();
+          alert('✅ All notifications cleared!');
+        }
+      });
+    }
+
+    // Auto-show demo message after 2 seconds
+    setTimeout(() => {
+      waitForWidget(() => {
+        window.JovylleInlineWidget.addNotification({
+          type: 'info',
+          title: '🚀 Demo Ready!',
+          message: 'Click the buttons above to test the notification system.',
+          persistent: false
+        });
+      });
+    }, 2000);
+  </script>
 </body>
 </html>

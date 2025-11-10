@@ -64,6 +64,8 @@ server/api/
 4. **Analytics**: Event tracking for insights
 5. **Content Configuration**: Hide/show specific elements (chat, portfolio, sections)
 6. **Smart Embedding**: Different configurations for different use cases
+7. **Notification System**: Host websites can push alerts/messages to visitors
+8. **AI Chat (GPT-4o-mini)**: Upgraded from GPT-3.5-turbo for better responses at lower cost
 
 ## Embedding Methods
 
@@ -103,12 +105,26 @@ Inline API (optional):
 ```html
 <script>
   // After script loads
+  // Widget Control
   // window.JovylleInlineWidget.open()
   // window.JovylleInlineWidget.close()
   // window.JovylleInlineWidget.toggle()
-  // window.JovylleInlineWidget.switchTab('links'|'chat')
+  // window.JovylleInlineWidget.switchTab('links'|'notifications'|'chat')
   // window.JovylleInlineWidget.setTheme('light'|'dark')
-  // window.JovylleInlineWidget.state // read-only snapshot
+  
+  // Notification API
+  // window.JovylleInlineWidget.addNotification({
+  //   type: 'info',        // 'info', 'success', 'warning', 'error'
+  //   title: 'Hello!',     // Notification title
+  //   message: 'Welcome',  // Notification message
+  //   persistent: true     // false = auto-remove after 10s
+  // })
+  // window.JovylleInlineWidget.removeNotification(id|index)
+  // window.JovylleInlineWidget.clearAllNotifications()
+  // window.JovylleInlineWidget.getNotifications() // returns array
+  
+  // State (read-only)
+  // window.JovylleInlineWidget.state
 <\/script>
 ```
 
@@ -152,6 +168,73 @@ Density options:
 - Portfolio link clicks (employer interest)
 - AI chat interactions
 
+## Notification System
+
+### How It Works
+Host websites can use the widget as a **notification center** to display important messages, alerts, or updates to visitors. Perfect for:
+- System status updates
+- Feature announcements
+- User-specific messages
+- Promotional alerts
+- Error/warning notifications
+
+### Notification Types
+1. **info** (blue) - General information
+2. **success** (green) - Success messages
+3. **warning** (yellow) - Warnings or cautions
+4. **error** (red) - Error messages
+
+### Usage Examples
+
+**Add a notification:**
+```javascript
+window.JovylleInlineWidget.addNotification({
+  type: 'success',
+  title: 'Welcome!',
+  message: 'Thanks for visiting our site.',
+  persistent: false  // Auto-remove after 10s
+});
+```
+
+**Show a system alert:**
+```javascript
+window.JovylleInlineWidget.addNotification({
+  type: 'warning',
+  title: 'Maintenance Notice',
+  message: 'System maintenance scheduled for tonight at 2 AM.',
+  persistent: true  // Stays until user dismisses
+});
+```
+
+**Remove a notification:**
+```javascript
+const id = window.JovylleInlineWidget.addNotification({...});
+window.JovylleInlineWidget.removeNotification(id);
+```
+
+**Clear all notifications:**
+```javascript
+window.JovylleInlineWidget.clearAllNotifications();
+```
+
+### Notification Features
+- **Badge Counter**: Unread notification count shown on Alerts tab
+- **Smart Tab**: Alerts tab auto-hides when there are no notifications (keeps UI clean!)
+- **Persistence**: Notifications saved to localStorage
+- **Auto-dismiss**: Non-persistent notifications auto-remove after 10s
+- **Limit**: Max 50 notifications (oldest removed first)
+- **Dark Mode**: Notifications adapt to theme
+- **Timestamps**: Each notification shows when it was created
+
+## Technology Updates
+
+### AI Chat Model
+- **Current**: GPT-4o-mini (OpenAI)
+- **Previous**: GPT-3.5-turbo
+- **Benefits**: Better responses, lower cost, improved context understanding
+- **Cost**: ~60% cheaper than GPT-3.5-turbo
+- **Performance**: Significantly better at nuanced conversations
+
 ## Future Considerations
 
 ### Potential Enhancements
@@ -159,12 +242,15 @@ Density options:
 - Additional game integrations
 - Social sharing features
 - Advanced analytics dashboard
+- Notification webhooks for external systems
+- Custom notification templates
 
 ### Maintenance Notes
 - Keep the widget lightweight and fast
 - Maintain security-first approach
 - Regular updates to game integration
-- Monitor AI chat quality and costs
+- Monitor AI chat quality and costs (GPT-4o-mini = excellent cost/performance)
+- Monitor notification storage limits
 
 ---
 

@@ -75,6 +75,7 @@
     .mystery-widget-title { margin:0; font-size:16px; font-weight:600; color:#495057; }
     .mystery-widget-tabs { display:flex; gap: var(--tab-gap); }
     .mystery-widget-tab { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
+    .mystery-widget-tab svg { width: 14px; height: 14px; stroke: currentColor; }
     .quick-btn { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .mystery-widget-tab.active { color:#495057; background:#e9ecef; border-color:#adb5bd; }
     .mystery-widget-content { padding: var(--pad-content); flex: 1; overflow-y:auto; }
@@ -89,11 +90,29 @@
     .chat-message.user { align-self:flex-end; background:#f0f4f8; color:#0f172a; border-color:#dee2e6; }
     .chat-message.assistant { align-self:flex-start; background:#ffffff; color:#495057; border-color:var(--widget-border, #e9ecef); }
 
+    /* Notifications */
+    .notification-badge { position:absolute; top:-4px; right:-4px; background:#dc3545; color:#fff; font-size:10px; font-weight:700; padding:2px 6px; border-radius:10px; min-width:18px; text-align:center; }
+    .notification-item { padding:12px; margin-bottom:8px; border-radius:6px; border:2px solid; position:relative; }
+    .notification-item.info { background:#e7f5ff; border-color:#4dabf7; color:#1971c2; }
+    .notification-item.success { background:#d3f9d8; border-color:#51cf66; color:#2b8a3e; }
+    .notification-item.warning { background:#fff3bf; border-color:#ffd43b; color:#e67700; }
+    .notification-item.error { background:#ffe0e0; border-color:#ff6b6b; color:#c92a2a; }
+    .notification-item-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; }
+    .notification-item-title { font-weight:600; font-size:13px; }
+    .notification-item-body { font-size:12px; line-height:1.4; }
+    .notification-item-close { background:transparent; border:none; cursor:pointer; font-size:16px; font-weight:700; opacity:.6; padding:0; line-height:1; width:16px; height:16px; }
+    .notification-item-close:hover { opacity:1; }
+    .notification-item-time { font-size:10px; opacity:.7; margin-top:4px; }
+    .notification-empty { text-align:center; color:#6c757d; padding:32px 12px; font-size:14px; }
+
     /* Dark theme */
     :host(.dark-theme) .mystery-widget-container { --widget-bg:#1a1a1a; --widget-border:#404040; }
     :host(.dark-theme) .mystery-widget-button { background:#1a1a1a; color:#cccccc; border-color:#404040; }
     :host(.dark-theme) .mystery-widget-header { background:#2d2d2d; border-bottom:1px solid #404040; }
     :host(.dark-theme) .mystery-widget-title { color:#ffffff; }
+    :host(.dark-theme) .mystery-widget-section h4 { color:#ffffff; }
+    :host(.dark-theme) .leaderboard-row { color:#cccccc; border-bottom-color:#404040; }
+    :host(.dark-theme) .play-button { background:#555555 !important; }
     :host(.dark-theme) .mystery-widget-tab { background:#2d2d2d; border-color:#404040; color:#cccccc; }
     :host(.dark-theme) .quick-btn { background:#2d2d2d; border-color:#404040; color:#cccccc; }
     :host(.dark-theme) .mystery-widget-tab.active { background:#404040; border-color:#555555; color:#ffffff; }
@@ -101,6 +120,11 @@
     :host(.dark-theme) .mystery-widget-link:hover { background:#2d2d2d; }
     :host(.dark-theme) .chat-message.user { background:#2a2a2a; color:#e5e7eb; border-color:#404040; }
     :host(.dark-theme) .chat-message.assistant { background:#1a1a1a; color:#cccccc; border-color:#404040; }
+    :host(.dark-theme) .notification-item.info { background:#1a3a52; border-color:#2980b9; color:#74c0fc; }
+    :host(.dark-theme) .notification-item.success { background:#1a3a2e; border-color:#27ae60; color:#8ce99a; }
+    :host(.dark-theme) .notification-item.warning { background:#4a3a1a; border-color:#f39c12; color:#ffe066; }
+    :host(.dark-theme) .notification-item.error { background:#4a1a1a; border-color:#e74c3c; color:#ffa8a8; }
+    :host(.dark-theme) .notification-empty { color:#999999; }
 
     @media (prefers-reduced-motion: reduce) {
       .mystery-widget-button, .mystery-widget-container, .mystery-widget-tab, .mystery-widget-link { transition: none !important; transform: none !important; }
@@ -120,20 +144,16 @@
         <h3 class="mystery-widget-title">Quick Menu</h3>
         <div class="mystery-widget-tabs">
           <button class="mystery-widget-tab active" data-tab="links" type="button">Links</button>
+          <button class="mystery-widget-tab" data-tab="notifications" type="button" style="position:relative; display:none;">
+            Alerts
+            <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+          </button>
           <button class="mystery-widget-tab" data-tab="chat" type="button">AI Chat</button>
         </div>
         <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
       </div>
       <div class="mystery-widget-content">
         <div id="linksTab" class="mystery-widget-tab-content">
-          <div class="mystery-widget-section">
-            <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
-              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
-              <span style="flex:1">Reaction Test</span>
-              <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
-            </h4>
-            <div class="leaderboard" id="leaderboard"></div>
-          </div>
           <div class="mystery-widget-section">
             <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057;">
               <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 1 7 0l2 2a5 5 0 0 1-7 7l-2-2"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l2-2"/></svg></span>
@@ -143,6 +163,19 @@
               <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v11H3z"/><path d="M8 7V5h8v2"/></svg></span>
               Portfolio
             </a>
+          </div>
+          <div class="mystery-widget-section">
+            <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
+              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+              <span style="flex:1">Reaction Test</span>
+              <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
+            </h4>
+            <div class="leaderboard" id="leaderboard"></div>
+          </div>
+        </div>
+        <div id="notificationsTab" class="mystery-widget-tab-content" style="display:none;">
+          <div class="notifications-container" id="notificationsContainer">
+            <div class="notification-empty">No notifications yet</div>
           </div>
         </div>
         <div id="chatTab" class="mystery-widget-tab-content" style="display:none;">
@@ -174,6 +207,8 @@
     currentTab: 'links',
     skills: ['JavaScript','Vue.js','Nuxt.js','Node.js','TypeScript','Tailwind CSS'],
     projects: [ { name: 'Portfolio' }, { name: 'Reaction Test Game' } ],
+    notifications: [],
+    unreadCount: 0,
   };
 
   function setTheme(theme) {
@@ -195,6 +230,8 @@
   const typingIndicator = shadow.getElementById('typingIndicator');
   const highlightsList = shadow.getElementById('highlightsList');
   const quickButtons = shadow.querySelectorAll('.quick-btn[data-quick]');
+  const notificationsContainer = shadow.getElementById('notificationsContainer');
+  const notificationBadge = shadow.getElementById('notificationBadge');
 
   function open() { state.isOpen = true; panel.classList.add('open'); button.setAttribute('aria-expanded','true'); }
   function close() { state.isOpen = false; panel.classList.remove('open'); button.setAttribute('aria-expanded','false'); }
@@ -217,7 +254,14 @@
     const current = Array.from(tabButtons).find(el => el.getAttribute('data-tab') === tab);
     if (current) current.classList.add('active');
     shadow.getElementById('linksTab').style.display = tab === 'links' ? 'block' : 'none';
+    shadow.getElementById('notificationsTab').style.display = tab === 'notifications' ? 'block' : 'none';
     shadow.getElementById('chatTab').style.display = tab === 'chat' ? 'block' : 'none';
+    // Mark notifications as read when viewing
+    if (tab === 'notifications') {
+      state.unreadCount = 0;
+      updateNotificationBadge();
+      saveNotificationsToStorage();
+    }
   }
 
   function svgMoon(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'}
@@ -363,9 +407,168 @@
     });
   })();
 
+  // ===== Notification System =====
+  function updateNotificationBadge() {
+    const notifTab = Array.from(tabButtons).find(b => b.getAttribute('data-tab') === 'notifications');
+    
+    // Hide entire tab if no notifications
+    if (state.notifications.length === 0) {
+      if (notifTab) notifTab.style.display = 'none';
+      notificationBadge.style.display = 'none';
+      // Switch to links tab if currently on notifications
+      if (state.currentTab === 'notifications') {
+        switchTab('links');
+      }
+      return;
+    }
+    
+    // Show tab when there are notifications
+    if (notifTab) notifTab.style.display = '';
+    
+    // Update badge
+    if (state.unreadCount > 0) {
+      notificationBadge.textContent = state.unreadCount > 99 ? '99+' : state.unreadCount;
+      notificationBadge.style.display = 'block';
+    } else {
+      notificationBadge.style.display = 'none';
+    }
+  }
+
+  function saveNotificationsToStorage() {
+    try {
+      localStorage.setItem('jovylle-widget-notifications', JSON.stringify({
+        notifications: state.notifications,
+        unreadCount: state.unreadCount
+      }));
+    } catch (e) {
+      console.warn('Failed to save notifications to localStorage:', e);
+    }
+  }
+
+  function loadNotificationsFromStorage() {
+    try {
+      const saved = localStorage.getItem('jovylle-widget-notifications');
+      if (saved) {
+        const data = JSON.parse(saved);
+        state.notifications = data.notifications || [];
+        state.unreadCount = data.unreadCount || 0;
+        renderNotifications();
+        updateNotificationBadge();
+      }
+    } catch (e) {
+      console.warn('Failed to load notifications from localStorage:', e);
+    }
+  }
+
+  function renderNotifications() {
+    if (state.notifications.length === 0) {
+      notificationsContainer.innerHTML = '<div class="notification-empty">No notifications yet</div>';
+      return;
+    }
+    
+    notificationsContainer.innerHTML = state.notifications.map((notif, index) => {
+      const timeStr = notif.timestamp ? new Date(notif.timestamp).toLocaleString() : '';
+      return `
+        <div class="notification-item ${notif.type || 'info'}" data-notif-id="${notif.id}">
+          <div class="notification-item-header">
+            <div class="notification-item-title">${notif.title || 'Notification'}</div>
+            <button class="notification-item-close" data-notif-index="${index}" type="button" aria-label="Close notification">×</button>
+          </div>
+          ${notif.message ? `<div class="notification-item-body">${notif.message}</div>` : ''}
+          ${timeStr ? `<div class="notification-item-time">${timeStr}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+    
+    // Add close button handlers
+    notificationsContainer.querySelectorAll('.notification-item-close').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt(btn.getAttribute('data-notif-index'));
+        removeNotification(index);
+      });
+    });
+  }
+
+  function addNotification(notification) {
+    // Validate notification object
+    if (!notification || typeof notification !== 'object') {
+      console.error('Invalid notification object');
+      return;
+    }
+    
+    const notif = {
+      id: notification.id || `notif-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      type: notification.type || 'info', // info, success, warning, error
+      title: notification.title || 'Notification',
+      message: notification.message || '',
+      timestamp: notification.timestamp || Date.now(),
+      persistent: notification.persistent !== false, // default true
+    };
+    
+    state.notifications.unshift(notif); // Add to beginning
+    state.unreadCount++;
+    
+    // Limit to 50 notifications
+    if (state.notifications.length > 50) {
+      state.notifications = state.notifications.slice(0, 50);
+    }
+    
+    renderNotifications();
+    updateNotificationBadge();
+    saveNotificationsToStorage();
+    
+    // Auto-remove non-persistent notifications after 10 seconds if not viewing
+    if (!notif.persistent && state.currentTab !== 'notifications') {
+      setTimeout(() => {
+        const idx = state.notifications.findIndex(n => n.id === notif.id);
+        if (idx !== -1) removeNotification(idx);
+      }, 10000);
+    }
+    
+    return notif.id;
+  }
+
+  function removeNotification(indexOrId) {
+    let index = indexOrId;
+    if (typeof indexOrId === 'string') {
+      index = state.notifications.findIndex(n => n.id === indexOrId);
+    }
+    
+    if (index >= 0 && index < state.notifications.length) {
+      state.notifications.splice(index, 1);
+      renderNotifications();
+      updateNotificationBadge();
+      saveNotificationsToStorage();
+    }
+  }
+
+  function clearAllNotifications() {
+    state.notifications = [];
+    state.unreadCount = 0;
+    renderNotifications();
+    updateNotificationBadge();
+    saveNotificationsToStorage();
+  }
+
+  function getNotifications() {
+    return [...state.notifications];
+  }
+
+  // Load saved notifications on init
+  loadNotificationsFromStorage();
+  
+  // Hide Alerts tab initially if no notifications
+  updateNotificationBadge();
+
   // Expose minimal API
   window.JovylleInlineWidget = {
     open, close, toggle, switchTab, setTheme,
+    // Notification API
+    addNotification,
+    removeNotification,
+    clearAllNotifications,
+    getNotifications,
     get state() { return { ...state }; }
   };
 
