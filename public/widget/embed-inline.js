@@ -14,6 +14,7 @@
   const hideChat = script?.getAttribute('data-hide-chat') === 'true';
   const hidePortfolio = script?.getAttribute('data-hide-portfolio') === 'true';
   const showOnly = script?.getAttribute('data-show-only');
+  const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
 
   const sizes = {
     small: { w: 280, h: 380 },
@@ -78,7 +79,8 @@
     .mystery-widget-tab svg { width: 14px; height: 14px; stroke: currentColor; }
     .quick-btn { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .mystery-widget-tab.active { color:#495057; background:#e9ecef; border-color:#adb5bd; }
-    .mystery-widget-content { padding: var(--pad-content); flex: 1; overflow-y:auto; }
+    .mystery-widget-content { padding: var(--pad-content); flex: 1; overflow-y:auto; min-height: 0; }
+    .mystery-widget-tab-content { height: 100%; display: flex; flex-direction: column; }
     .mystery-widget-section { margin-bottom: var(--section-mb); }
     .mystery-widget-link { display:block; padding: var(--link-pad); margin-bottom:4px; text-decoration:none; color:#495057; font-size:16px; transition:all .2s ease; border-bottom:3px dashed #e9ecef; }
     .mystery-widget-link:hover { background:#f8f9fa; transform: translateX(2px); }
@@ -148,9 +150,9 @@
             Alerts
             <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
           </button>
-          <button class="mystery-widget-tab" data-tab="chat" type="button">AI Chat</button>
-        </div>
+          <button class="mystery-widget-tab" data-tab="chat" style="white-space:nowrap;" type="button">AI Chat</button>
         <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
+        </div>
       </div>
       <div class="mystery-widget-content">
         <div id="linksTab" class="mystery-widget-tab-content">
@@ -162,6 +164,10 @@
             <a href="https://jovylle.com" class="mystery-widget-link" target="_blank">
               <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v11H3z"/><path d="M8 7V5h8v2"/></svg></span>
               Portfolio
+            </a>
+            <a href="#" class="mystery-widget-link feedback-link" target="_blank" style="display:none;">
+              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+              Feedback
             </a>
           </div>
           <div class="mystery-widget-section">
@@ -179,15 +185,15 @@
           </div>
         </div>
         <div id="chatTab" class="mystery-widget-tab-content" style="display:none;">
-          <div class="chat-container" style="min-height:260px; display:flex; flex-direction:column;">
-            <div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:0; background:transparent; border:none; margin-bottom:8px; border-radius:0;"></div>
+          <div class="chat-container" style="height:100%; display:flex; flex-direction:column;">
+            <div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:0; background:transparent; border:none; margin-bottom:8px; border-radius:0; min-height:0;"></div>
             <div class="typing-indicator" id="typingIndicator" style="display:none; padding:8px 12px; color:#6c757d; font-style:italic; font-size:13px;">AI is typing...</div>
-            <div class="chat-quick" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+            <div class="chat-quick" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; flex-shrink:0;">
               <button class="quick-btn" data-quick="Summarize my highlights">Summarize highlights</button>
               <button class="quick-btn" data-quick="What are my top 3 strengths?">Top 3 strengths</button>
               <button class="quick-btn" data-quick="What can you build for a small business?">What can you build?</button>
             </div>
-            <div class="chat-input-container" style="display:flex; gap:8px;">
+            <div class="chat-input-container" style="display:flex; gap:8px; flex-shrink:0;">
               <input class="chat-input" id="chatInput" placeholder="Ask about skills, projects, etc..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
               <button class="chat-send" type="button" style="padding:8px 16px; background:#6c757d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">Send</button>
             </div>
@@ -383,7 +389,7 @@
       switchTab('links');
     }
     if (hidePortfolio) {
-      const link = shadow.querySelector('.mystery-widget-link');
+      const link = shadow.querySelector('.mystery-widget-link[href="https://jovylle.com"]');
       if (link) link.style.display = 'none';
     }
     if (showOnly) {
@@ -394,10 +400,19 @@
         shadow.getElementById('chatTab').style.display = 'none';
       }
     }
+    
+    // Setup feedback link
+    const feedbackLink = shadow.querySelector('.feedback-link');
+    if (feedbackUrl && feedbackLink) {
+      feedbackLink.href = feedbackUrl;
+      feedbackLink.style.display = 'block';
+    }
+    
     // Hide quick link pointing to the current host
     Array.from(shadow.querySelectorAll('a.mystery-widget-link[href]')).forEach(a => {
       try {
         const href = a.getAttribute('href');
+        if (!href || href === '#') return; // Skip feedback placeholder
         const targetHost = new URL(href, location.href).hostname.replace(/^www\./,'');
         const currentHost = location.hostname.replace(/^www\./,'');
         if (targetHost === currentHost) {

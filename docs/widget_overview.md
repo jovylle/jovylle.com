@@ -1,4 +1,8 @@
-# Quick Menu Widget - Overview & Context
+# Jovylle Widget - Overview & Context
+
+**Official Name:** Jovylle Widget (formerly "Quick Menu Widget")  
+**Version:** 2.0  
+**Release:** November 2025
 
 ## Widget Goals & Design Philosophy
 
@@ -153,6 +157,7 @@ Density options:
 - `hideChat`: true/false - Hide AI Chat tab entirely
 - `hidePortfolio`: true/false - Hide portfolio link from Quick Links
 - `showOnly`: comma-separated - Only show specified sections (leaderboard,links,chat)
+- `feedbackUrl`: URL string - Show custom feedback link in Quick Links (host-provided URL)
 
 ## Development Context
 

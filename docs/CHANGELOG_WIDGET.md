@@ -1,4 +1,7 @@
-# Widget Changelog
+# Jovylle Widget - Changelog
+
+**Official Name:** Jovylle Widget  
+**Current Version:** 2.0
 
 ## November 2025 - Major Update 🚀
 
