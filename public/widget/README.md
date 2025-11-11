@@ -154,6 +154,7 @@ const state = window.JovylleInlineWidget.state;
 | `data-density` | comfortable, compact | comfortable | Spacing |
 | `data-open` | true, false | false | Open on load |
 | `data-title` | Text string | "Widget" | Custom widget title |
+| `data-show-leaderboard` | true, false | false | Show Reaction Test leaderboard |
 | `data-hide-chat` | true, false | false | Hide AI chat |
 | `data-hide-portfolio` | true, false | false | Hide Jovylle.com portfolio link |
 | `data-feedback-url` | URL string | none | Custom feedback link |

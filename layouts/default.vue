@@ -130,6 +130,7 @@ export default {
       s.setAttribute('data-jovylle-embed', 'true');
       s.setAttribute('data-position', 'top-right');
       s.setAttribute('data-size', 'medium');
+      s.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard
       document.body.appendChild(s);
     }
   },

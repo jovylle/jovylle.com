@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
   if (document.querySelector('script[data-jovylle-embed="true"]')) return;
 
   const script = document.createElement('script');
-  script.src = '/widget/embed-with-leaderboard.js'; // Home version WITH leaderboard
+  script.src = '/widget/embed-inline.js';
   script.async = true;
   script.setAttribute('data-jovylle-embed', 'true');
 
@@ -13,6 +13,7 @@ export default defineNuxtPlugin(() => {
   script.setAttribute('data-position', 'bottom-right');
   script.setAttribute('data-size', 'small');
   script.setAttribute('data-title', 'AI Assistant');
+  script.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard for home page
   script.setAttribute('data-hide-portfolio', 'true');
   script.setAttribute('data-feedback-url', 'https://tally.so/r/WO9dWk');
   script.setAttribute('data-ai-context', `You are an AI assistant for Jovylle Bermudez's portfolio website. 

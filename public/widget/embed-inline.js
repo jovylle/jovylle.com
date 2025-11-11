@@ -17,6 +17,7 @@
   const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
+  const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -621,6 +622,78 @@
   
   // Hide Alerts tab initially if no notifications
   updateNotificationBadge();
+
+  // Inject leaderboard if enabled
+  if (showLeaderboard && chatWelcome) {
+    const leaderboardSection = document.createElement('div');
+    leaderboardSection.className = 'mystery-widget-section';
+    leaderboardSection.style.marginTop = '12px';
+    leaderboardSection.innerHTML = `
+      <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
+        <span class="icon-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          </svg>
+        </span>
+        <span style="flex:1">Reaction Test</span>
+        <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
+      </h4>
+      <div class="leaderboard" id="inlineLeaderboard">Loading...</div>
+    `;
+    
+    chatWelcome.appendChild(leaderboardSection);
+    
+    // Add play button handler
+    const playBtn = leaderboardSection.querySelector('.play-button');
+    if (playBtn) {
+      playBtn.addEventListener('click', () => window.open('https://fast.jovylle.com', '_blank'));
+    }
+    
+    // Load leaderboard data
+    async function loadLeaderboard() {
+      const el = shadow.getElementById('inlineLeaderboard');
+      if (!el) return;
+      
+      el.innerHTML = '<div style="text-align:center;color:#6c757d;font-size:12px;padding:4px;">Loading...</div>';
+      
+      try {
+        let data;
+        
+        // Try local API first (for local development)
+        try {
+          const r = await fetch('/api/leaderboard');
+          if (r.ok) {
+            data = await r.json();
+          }
+        } catch {}
+        
+        // Fallback to direct API
+        if (!data) {
+          const r = await fetch('https://fast.jovylle.com/reaction/top.json');
+          data = await r.json();
+        }
+        
+        const top = (data.top || []).slice(0, 3);
+        
+        if (!top.length) throw new Error('no data');
+        
+        el.innerHTML = top.map((p, i) => `
+          <div class="leaderboard-row">
+            <span class="rank-num">${i + 1}.</span>
+            <span>${p.playerName}</span>
+            <span>${p.ms}ms</span>
+          </div>
+        `).join('');
+        
+      } catch (err) {
+        el.innerHTML = '<div style="text-align:center;color:#dc3545;font-size:12px;padding:4px;">Leaderboard unavailable</div>';
+      }
+    }
+    
+    loadLeaderboard();
+    console.log('🎮 Leaderboard enabled and loaded');
+  }
 
   // Expose minimal API
   window.JovylleInlineWidget = {
