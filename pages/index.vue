@@ -24,7 +24,7 @@
               <UiButton variant="primary">Get in touch</UiButton>
             </NuxtLink>
             <NuxtLink to="/highlights">
-              <UiButton variant="outline-dashed">See highlights</UiButton>
+              <UiButton variant="outline-dashed">AI & Solutions</UiButton>
             </NuxtLink>
             <NuxtLink to="/hub">
               <UiButton variant="outline-dashed">Blog & Hub</UiButton>

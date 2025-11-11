@@ -35,7 +35,7 @@
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/highlights"
               >
-                Highlights
+                AI & Solutions
               </NuxtLink>
               <a
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
