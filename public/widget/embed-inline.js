@@ -228,6 +228,7 @@
     currentTab: 'chat',
     skills: ['JavaScript','Vue.js','Nuxt.js','Node.js','TypeScript','Tailwind CSS'],
     projects: [ { name: 'Portfolio' }, { name: 'Reaction Test Game' } ],
+    aiSolutions: [],
     notifications: [],
     unreadCount: 0,
     hasStartedChat: false,
@@ -249,7 +250,7 @@
   const chatInput = shadow.getElementById('chatInput');
   const chatMessages = shadow.getElementById('chatMessages');
   const typingIndicator = shadow.getElementById('typingIndicator');
-  const highlightsList = shadow.getElementById('highlightsList');
+  const aiSolutionsList = shadow.getElementById('aiSolutionsList');
   const notificationsContainer = shadow.getElementById('notificationsContainer');
   const notificationBadge = shadow.getElementById('notificationBadge');
   const buttonBadge = shadow.getElementById('buttonBadge');
@@ -326,24 +327,24 @@
   })();
 
 
-  async function loadHighlights() {
+  async function loadAISolutions() {
     try {
       const res = await fetch('https://pocket.uft1.com/data/highlights.json');
       const data = await res.json();
-      state.highlights = Array.isArray(data.highlights) ? data.highlights : [];
-      if (highlightsList) {
-        const top = state.highlights.slice(0, 3);
-        highlightsList.innerHTML = top.map(h => `
+      state.aiSolutions = Array.isArray(data.highlights) ? data.highlights : [];
+      if (aiSolutionsList) {
+        const top = state.aiSolutions.slice(0, 3);
+        aiSolutionsList.innerHTML = top.map(h => `
           <a ${h.link ? `href="${h.link}" target="_blank"` : ''} class="mystery-widget-link">
             <strong>${h.title}</strong> · <span style="color:#6c757d;">${h.tag || ''}</span>
           </a>
         `).join('');
       }
     } catch (e) {
-      if (highlightsList) highlightsList.innerHTML = '<div style="color:#6c757d; font-size:14px;">Highlights unavailable</div>';
+      if (aiSolutionsList) aiSolutionsList.innerHTML = '<div style="color:#6c757d; font-size:14px;">AI Solutions unavailable</div>';
     }
   }
-  loadHighlights();
+  loadAISolutions();
 
   async function sendChatMessage() {
     const message = chatInput.value.trim(); if (!message) return;
@@ -372,7 +373,7 @@
           context: context,
           skills: state.skills, 
           projects: state.projects, 
-          highlights: state.highlights 
+          aiSolutions: state.aiSolutions 
         }) 
       });
       const data = await resp.json();
