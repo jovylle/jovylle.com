@@ -12,6 +12,7 @@ export default defineNuxtPlugin(() => {
   // Default configuration for global embed
   script.setAttribute('data-position', 'bottom-right');
   script.setAttribute('data-size', 'small');
+  script.setAttribute('data-title', 'AI Assistant');
   script.setAttribute('data-hide-portfolio', 'true');
   script.setAttribute('data-feedback-url', 'https://tally.so/r/WO9dWk');
   script.setAttribute('data-ai-context', `You are an AI assistant for Jovylle Bermudez's portfolio website. 

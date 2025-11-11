@@ -345,6 +345,12 @@
             <td>Open widget on page load</td>
           </tr>
           <tr>
+            <td><code>data-title</code></td>
+            <td>Text string</td>
+            <td>"Widget"</td>
+            <td>Custom widget title in header</td>
+          </tr>
+          <tr>
             <td><code>data-hide-chat</code></td>
             <td>true, false</td>
             <td>false</td>
@@ -589,7 +595,8 @@ console.log(state.notifications.length);</pre>
   <!-- Load the widget -->
   <script src="/widget/embed-inline.js" 
     data-position="bottom-right" 
-    data-size="medium" 
+    data-size="medium"
+    data-title="Jovylle Widget" 
     async>
   </script>
 

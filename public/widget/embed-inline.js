@@ -16,6 +16,7 @@
   const showOnly = script?.getAttribute('data-show-only');
   const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
   const aiContext = script?.getAttribute('data-ai-context') || '';
+  const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -88,6 +89,8 @@
       transition: opacity .2s ease, transform .2s ease; overflow: hidden;
       display: flex; flex-direction: column; max-height: calc(100% - 80px);
     }
+      .chat-welcome{
+      min-height: 200px;}
     .open { opacity: 1; transform: translateY(0) scale(1); }
     .mystery-widget-header { background: #f8f9fa; padding: var(--pad-header); border-bottom: 1px solid #e9ecef; display:flex; align-items:center; justify-content: space-between; }
     .mystery-widget-title { margin:0; font-size:16px; font-weight:600; color:#495057; }
@@ -170,7 +173,7 @@
     </button>
     <div class="mystery-widget-container" id="widgetContainer">
       <div class="mystery-widget-header">
-        <h3 class="mystery-widget-title">AI Assistant</h3>
+        <h3 class="mystery-widget-title">${widgetTitle}</h3>
         <div class="mystery-widget-tabs">
           <button class="mystery-widget-tab active" data-tab="chat" type="button">Chat</button>
           <button class="mystery-widget-tab" data-tab="notifications" type="button" style="position:relative; display:none;">
