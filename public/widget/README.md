@@ -41,6 +41,7 @@ Add this single line to your website (before closing `</body>` tag):
 ```html
 <script 
   src="https://jovylle.com/widget/embed-inline.js"
+  data-title="Help Center"
   data-ai-context="You are an AI for ABC Company. We specialize in..."
   data-feedback-url="https://yoursite.com/feedback"
   async>
@@ -152,6 +153,8 @@ const state = window.JovylleInlineWidget.state;
 | `data-theme` | light, dark | auto | Color theme |
 | `data-density` | comfortable, compact | comfortable | Spacing |
 | `data-open` | true, false | false | Open on load |
+| `data-title` | Text string | "Widget" | Custom widget title |
+| `data-show-leaderboard` | true, false | false | Show Reaction Test leaderboard |
 | `data-hide-chat` | true, false | false | Hide AI chat |
 | `data-hide-portfolio` | true, false | false | Hide Jovylle.com portfolio link |
 | `data-feedback-url` | URL string | none | Custom feedback link |

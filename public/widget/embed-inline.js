@@ -16,6 +16,8 @@
   const showOnly = script?.getAttribute('data-show-only');
   const feedbackUrl = script?.getAttribute('data-feedback-url') || '';
   const aiContext = script?.getAttribute('data-ai-context') || '';
+  const widgetTitle = script?.getAttribute('data-title') || 'Widget';
+  const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -88,6 +90,8 @@
       transition: opacity .2s ease, transform .2s ease; overflow: hidden;
       display: flex; flex-direction: column; max-height: calc(100% - 80px);
     }
+      .chat-welcome{
+      min-height: 200px;}
     .open { opacity: 1; transform: translateY(0) scale(1); }
     .mystery-widget-header { background: #f8f9fa; padding: var(--pad-header); border-bottom: 1px solid #e9ecef; display:flex; align-items:center; justify-content: space-between; }
     .mystery-widget-title { margin:0; font-size:16px; font-weight:600; color:#495057; }
@@ -170,7 +174,7 @@
     </button>
     <div class="mystery-widget-container" id="widgetContainer">
       <div class="mystery-widget-header">
-        <h3 class="mystery-widget-title">AI Assistant</h3>
+        <h3 class="mystery-widget-title">${widgetTitle}</h3>
         <div class="mystery-widget-tabs">
           <button class="mystery-widget-tab active" data-tab="chat" type="button">Chat</button>
           <button class="mystery-widget-tab" data-tab="notifications" type="button" style="position:relative; display:none;">
@@ -228,6 +232,7 @@
     currentTab: 'chat',
     skills: ['JavaScript','Vue.js','Nuxt.js','Node.js','TypeScript','Tailwind CSS'],
     projects: [ { name: 'Portfolio' }, { name: 'Reaction Test Game' } ],
+    aiSolutions: [],
     notifications: [],
     unreadCount: 0,
     hasStartedChat: false,
@@ -249,7 +254,7 @@
   const chatInput = shadow.getElementById('chatInput');
   const chatMessages = shadow.getElementById('chatMessages');
   const typingIndicator = shadow.getElementById('typingIndicator');
-  const highlightsList = shadow.getElementById('highlightsList');
+  const aiSolutionsList = shadow.getElementById('aiSolutionsList');
   const notificationsContainer = shadow.getElementById('notificationsContainer');
   const notificationBadge = shadow.getElementById('notificationBadge');
   const buttonBadge = shadow.getElementById('buttonBadge');
@@ -326,24 +331,24 @@
   })();
 
 
-  async function loadHighlights() {
+  async function loadAISolutions() {
     try {
       const res = await fetch('https://pocket.uft1.com/data/highlights.json');
       const data = await res.json();
-      state.highlights = Array.isArray(data.highlights) ? data.highlights : [];
-      if (highlightsList) {
-        const top = state.highlights.slice(0, 3);
-        highlightsList.innerHTML = top.map(h => `
+      state.aiSolutions = Array.isArray(data.highlights) ? data.highlights : [];
+      if (aiSolutionsList) {
+        const top = state.aiSolutions.slice(0, 3);
+        aiSolutionsList.innerHTML = top.map(h => `
           <a ${h.link ? `href="${h.link}" target="_blank"` : ''} class="mystery-widget-link">
             <strong>${h.title}</strong> · <span style="color:#6c757d;">${h.tag || ''}</span>
           </a>
         `).join('');
       }
     } catch (e) {
-      if (highlightsList) highlightsList.innerHTML = '<div style="color:#6c757d; font-size:14px;">Highlights unavailable</div>';
+      if (aiSolutionsList) aiSolutionsList.innerHTML = '<div style="color:#6c757d; font-size:14px;">AI Solutions unavailable</div>';
     }
   }
-  loadHighlights();
+  loadAISolutions();
 
   async function sendChatMessage() {
     const message = chatInput.value.trim(); if (!message) return;
@@ -372,7 +377,7 @@
           context: context,
           skills: state.skills, 
           projects: state.projects, 
-          highlights: state.highlights 
+          aiSolutions: state.aiSolutions 
         }) 
       });
       const data = await resp.json();
@@ -617,6 +622,78 @@
   
   // Hide Alerts tab initially if no notifications
   updateNotificationBadge();
+
+  // Inject leaderboard if enabled
+  if (showLeaderboard && chatWelcome) {
+    const leaderboardSection = document.createElement('div');
+    leaderboardSection.className = 'mystery-widget-section';
+    leaderboardSection.style.marginTop = '12px';
+    leaderboardSection.innerHTML = `
+      <h4 style="margin:0 0 8px 0; font-size:14px; font-weight:600; color:#495057; display:flex; align-items:center; justify-content:space-between;">
+        <span class="icon-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          </svg>
+        </span>
+        <span style="flex:1">Reaction Test</span>
+        <button class="play-button" type="button" style="padding:4px 8px; background:#6c757d; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:500;">Play</button>
+      </h4>
+      <div class="leaderboard" id="inlineLeaderboard">Loading...</div>
+    `;
+    
+    chatWelcome.appendChild(leaderboardSection);
+    
+    // Add play button handler
+    const playBtn = leaderboardSection.querySelector('.play-button');
+    if (playBtn) {
+      playBtn.addEventListener('click', () => window.open('https://fast.jovylle.com', '_blank'));
+    }
+    
+    // Load leaderboard data
+    async function loadLeaderboard() {
+      const el = shadow.getElementById('inlineLeaderboard');
+      if (!el) return;
+      
+      el.innerHTML = '<div style="text-align:center;color:#6c757d;font-size:12px;padding:4px;">Loading...</div>';
+      
+      try {
+        let data;
+        
+        // Try local API first (for local development)
+        try {
+          const r = await fetch('/api/leaderboard');
+          if (r.ok) {
+            data = await r.json();
+          }
+        } catch {}
+        
+        // Fallback to direct API
+        if (!data) {
+          const r = await fetch('https://fast.jovylle.com/reaction/top.json');
+          data = await r.json();
+        }
+        
+        const top = (data.top || []).slice(0, 3);
+        
+        if (!top.length) throw new Error('no data');
+        
+        el.innerHTML = top.map((p, i) => `
+          <div class="leaderboard-row">
+            <span class="rank-num">${i + 1}.</span>
+            <span>${p.playerName}</span>
+            <span>${p.ms}ms</span>
+          </div>
+        `).join('');
+        
+      } catch (err) {
+        el.innerHTML = '<div style="text-align:center;color:#dc3545;font-size:12px;padding:4px;">Leaderboard unavailable</div>';
+      }
+    }
+    
+    loadLeaderboard();
+    console.log('🎮 Leaderboard enabled and loaded');
+  }
 
   // Expose minimal API
   window.JovylleInlineWidget = {

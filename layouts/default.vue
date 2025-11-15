@@ -35,7 +35,7 @@
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/highlights"
               >
-                Highlights
+                AI & Solutions
               </NuxtLink>
               <a
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
@@ -130,6 +130,7 @@ export default {
       s.setAttribute('data-jovylle-embed', 'true');
       s.setAttribute('data-position', 'top-right');
       s.setAttribute('data-size', 'medium');
+      s.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard
       document.body.appendChild(s);
     }
   },
