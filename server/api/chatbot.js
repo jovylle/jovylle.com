@@ -1,38 +1,75 @@
-import { defineEventHandler, readBody } from 'h3';
+import { defineEventHandler, readBody, createError } from 'h3';
 import fetch from 'node-fetch';
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
-  const { message, context, skills, projects } = body;
+  try {
+    const body = await readBody(event);
+    const { message, context: customContext, skills, projects } = body;
 
-  // Use custom context if provided, otherwise use default
-  const systemMessage = context || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
+    if (!message) {
+      throw createError({
+        statusCode: 400,
+        message: 'Message is required'
+      });
+    }
+
+    // Check if API key is available
+    if (!process.env.OPENAI_API_KEY) {
+      throw createError({
+        statusCode: 500,
+        message: 'OpenAI API key not configured'
+      });
+    }
+
+    // Use custom context if provided, otherwise use default
+    const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
 
 Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, Python, PHP, Laravel, MySQL, MongoDB, Git, Docker, AWS, GCP'}
 
 Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
 
 Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`;
-  
-  console.log('🤖 Local API received context:', context ? 'Custom (' + context.substring(0, 50) + '...)' : 'Using default');
+    
+    console.log('🤖 Local API received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: systemMessage },
-        { role: 'user', content: message }
-      ],
-      max_tokens: 150,
-      temperature: 0.7
-    })
-  });
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemMessage },
+          { role: 'user', content: message }
+        ],
+        max_tokens: 150,
+        temperature: 0.7
+      })
+    });
 
-  const data = await response.json();
-  return data;
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('OpenAI API error:', response.status, errorData);
+      throw createError({
+        statusCode: response.status,
+        message: `OpenAI API error: ${errorData.error?.message || 'Unknown error'}`
+      });
+    }
+
+    const data = await response.json();
+    
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw createError({
+        statusCode: 500,
+        message: 'Invalid response format from OpenAI API'
+      });
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error in chatbot API:', error);
+    throw error;
+  }
 });
