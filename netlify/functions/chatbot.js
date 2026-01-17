@@ -26,7 +26,7 @@ export const handler = async (event, context) => {
 
     try {
         // Parse request body
-        const { message, context: customContext, skills, projects } = JSON.parse(event.body);
+        const { message, context: customContext, skills, projects, aiSolutions } = JSON.parse(event.body);
         
         if (!message) {
             return {
@@ -51,14 +51,53 @@ export const handler = async (event, context) => {
             };
         }
 
+        // Build skills & experience from aiSolutions if available
+        let skillsContext = '';
+        let projectsContext = '';
+        
+        if (aiSolutions && Array.isArray(aiSolutions) && aiSolutions.length > 0) {
+            skillsContext = aiSolutions.map(item => 
+                `${item.tag}: ${item.title} - ${item.description}`
+            ).join('\n');
+            projectsContext = aiSolutions.filter(item => item.link).map(item =>
+                `- ${item.title} (${item.tag}): ${item.description}${item.link ? ` [${item.link}]` : ''}`
+            ).join('\n');
+        } else {
+            // Fallback to defaults
+            skillsContext = `Chat Widget (Chatbot/AI), Game Tools & Community Feedback, Full Stack Deployment with Laravel & Next.js, Frontend UI/UX Craftsmanship, Real-Time API Integrations, Chrome Extensions with Game Automation, Content Workflows with Decap & CMS, Backend Engineering with PHP/Python/Node, AI + Automation Projects with OpenAI & Puppeteer`;
+            projectsContext = `- Sunflower Land: Desert Digging Tool - High-performance web tool used by hundreds daily
+- Personal Hub (hub.jovylle.com) - Comprehensive utility tools and services  
+- Reaction Test Game (fast.jovylle.com) - Interactive game with leaderboard system
+- Chat Widget (chat-widget.uft1.com) - Lightweight GPT-powered chatbot
+- ChatGPT Clone - Python & GCP serverless implementation
+- Weather App - Full-stack weather application`;
+        }
+        
         // Use custom context if provided, otherwise use default
-        const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
+        const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
 
-Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, Python, PHP, Laravel, MySQL, MongoDB, Git, Docker, AWS, GCP'}
+About Jovylle:
+- Full-Stack Web Developer based in the Philippines
+- Passionate about building modern web experiences with clean code and thoughtful design
+- Enjoys solving complex technical challenges and creating tools that help people
+- Has experience with game enhancement development using Java, working with API constraints
+- Built production applications serving hundreds of daily users (e.g., Sunflower Land tools)
+- Active in the web development community
 
-Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
+Skills & Experience:
+${skillsContext}
 
-Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`;
+Notable Projects & Achievements:
+${projectsContext}
+
+Personality:
+- Friendly and approachable, uses casual but professional tone
+- Direct and helpful - gets to the point
+- Genuinely excited about web development and technology
+- Modest but confident about abilities
+- Happy to discuss technical details or general questions
+
+Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. If asked about availability for work, mention checking the contact page.`;
         
         console.log('🤖 Server received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 
