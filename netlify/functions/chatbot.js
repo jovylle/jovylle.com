@@ -56,33 +56,33 @@ export const handler = async (event, context) => {
         let projectsContext = '';
         
         if (aiSolutions && Array.isArray(aiSolutions) && aiSolutions.length > 0) {
-            skillsContext = aiSolutions.map(item => 
-                `${item.tag}: ${item.title} - ${item.description}`
-            ).join('\n');
+            // Parse with full details: technologies, years, descriptions
+            skillsContext = aiSolutions.map(item => {
+                const techs = item.technologies ? ` (${item.technologies.join(', ')})` : '';
+                const year = item.year ? ` [${item.year}]` : '';
+                return `${item.tag}: ${item.title}${year}${techs} - ${item.description}`;
+            }).join('\n\n');
+            
             projectsContext = aiSolutions.filter(item => item.link).map(item =>
-                `- ${item.title} (${item.tag}): ${item.description}${item.link ? ` [${item.link}]` : ''}`
+                `- ${item.title} (${item.tag}): ${item.description} → ${item.link}`
             ).join('\n');
         } else {
-            // Fallback to defaults
-            skillsContext = `Chat Widget (Chatbot/AI), Game Tools & Community Feedback, Full Stack Deployment with Laravel & Next.js, Frontend UI/UX Craftsmanship, Real-Time API Integrations, Chrome Extensions with Game Automation, Content Workflows with Decap & CMS, Backend Engineering with PHP/Python/Node, AI + Automation Projects with OpenAI & Puppeteer`;
-            projectsContext = `- Sunflower Land: Desert Digging Tool - High-performance web tool used by hundreds daily
-- Personal Hub (hub.jovylle.com) - Comprehensive utility tools and services  
-- Reaction Test Game (fast.jovylle.com) - Interactive game with leaderboard system
-- Chat Widget (chat-widget.uft1.com) - Lightweight GPT-powered chatbot
-- ChatGPT Clone - Python & GCP serverless implementation
-- Weather App - Full-stack weather application`;
+            // Minimal fallback if API fails
+            skillsContext = `Full-Stack Web Developer with expertise in Vue, React, Node.js, Laravel, Python, and cloud deployments.`;
+            projectsContext = `- Web applications serving hundreds of daily users
+- Open-source tools and widgets
+- Full-stack commercial projects`;
         }
         
         // Use custom context if provided, otherwise use default
         const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
 
 About Jovylle:
-- Full-Stack Web Developer based in the Philippines
-- Passionate about building modern web experiences with clean code and thoughtful design
-- Enjoys solving complex technical challenges and creating tools that help people
-- Has experience with game enhancement development using Java, working with API constraints
-- Built production applications serving hundreds of daily users (e.g., Sunflower Land tools)
-- Active in the web development community
+- Full-Stack Web Developer passionate about building modern web experiences
+- Focuses on clean code, thoughtful design, and solving complex technical challenges
+- Creates tools that serve hundreds of daily users
+- Active contributor to web development and open-source communities
+- Experience spans frontend, backend, DevOps, AI integrations, and client-side development
 
 Skills & Experience:
 ${skillsContext}
@@ -90,14 +90,13 @@ ${skillsContext}
 Notable Projects & Achievements:
 ${projectsContext}
 
-Personality:
-- Friendly and approachable, uses casual but professional tone
-- Direct and helpful - gets to the point
+Personality & Communication:
+- Friendly, approachable, and uses a casual but professional tone
+- Direct and helpful - gets to the point quickly
 - Genuinely excited about web development and technology
-- Modest but confident about abilities
-- Happy to discuss technical details or general questions
+- Happy to discuss technical details or answer general questions
 
-Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. If asked about availability for work, mention checking the contact page.`;
+Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`;
         
         console.log('🤖 Server received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 
