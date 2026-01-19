@@ -26,7 +26,7 @@ export const handler = async (event, context) => {
 
     try {
         // Parse request body
-        const { message, context: customContext, skills, projects, aiSolutions } = JSON.parse(event.body);
+        const { message, context: customContext, skills, projects, aiSolutions, profile } = JSON.parse(event.body);
         
         if (!message) {
             return {
@@ -74,15 +74,23 @@ export const handler = async (event, context) => {
 - Full-stack commercial projects`;
         }
         
+        const profileContext = profile
+            ? `Profile Summary:
+- ${profile.title}: ${profile.short_bio}
+- Tone: ${profile.tone}
+- Availability: ${profile.availability}
+- Contact path: ${profile.contact_path}
+`
+            : `Profile Summary:
+- Full-Stack Web Developer focused on modern web experiences and developer tools.
+- Appreciates clean code, thoughtful design, and solving complex technical problems.
+- Availability: Open to opportunities.
+`;
+
         // Use custom context if provided, otherwise use default
         const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
 
-About Jovylle:
-- Full-Stack Web Developer passionate about building modern web experiences
-- Focuses on clean code, thoughtful design, and solving complex technical challenges
-- Creates tools that serve hundreds of daily users
-- Active contributor to web development and open-source communities
-- Experience spans frontend, backend, DevOps, AI integrations, and client-side development
+${profileContext}
 
 Skills & Experience:
 ${skillsContext}
@@ -96,7 +104,7 @@ Personality & Communication:
 - Genuinely excited about web development and technology
 - Happy to discuss technical details or answer general questions
 
-Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`;
+Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`; 
         
         console.log('🤖 Server received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 

@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { message, context: customContext, skills, projects, aiSolutions } = body;
+    const { message, context: customContext, skills, projects, aiSolutions, profile } = body;
 
     if (!message) {
       throw createError({
@@ -44,15 +44,14 @@ export default defineEventHandler(async (event) => {
 - Full-stack commercial projects`;
     }
     
+    const profileContext = profile
+      ? `Profile Summary:\n- ${profile.title}: ${profile.short_bio}\n- Tone: ${profile.tone}\n- Availability: ${profile.availability}\n- Contact path: ${profile.contact_path}\n`
+      : `Profile Summary:\n- Full-Stack Web Developer focused on modern web experiences and developer tools.\n- Appreciates clean code, thoughtful design, and solving complex technical problems.\n- Availability: Open to opportunities.`;
+
     // Use custom context if provided, otherwise use default
     const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
 
-About Jovylle:
-- Full-Stack Web Developer passionate about building modern web experiences
-- Focuses on clean code, thoughtful design, and solving complex technical challenges
-- Creates tools that serve hundreds of daily users
-- Active contributor to web development and open-source communities
-- Experience spans frontend, backend, DevOps, AI integrations, and client-side development
+${profileContext}
 
 Skills & Experience:
 ${skillsContext}
@@ -66,7 +65,7 @@ Personality & Communication:
 - Genuinely excited about web development and technology
 - Happy to discuss technical details or answer general questions
 
-Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`;
+Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`; 
     
     console.log('🤖 Local API received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 
