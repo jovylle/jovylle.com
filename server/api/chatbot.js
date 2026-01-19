@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { message, context: customContext, skills, projects } = body;
+    const { message, context: customContext, skills, projects, aiSolutions, profile } = body;
 
     if (!message) {
       throw createError({
@@ -21,14 +21,51 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Build skills & experience from aiSolutions if available
+    let skillsContext = '';
+    let projectsContext = '';
+    
+    if (aiSolutions && Array.isArray(aiSolutions) && aiSolutions.length > 0) {
+      // Parse with full details: technologies, years, descriptions
+      skillsContext = aiSolutions.map(item => {
+        const techs = item.technologies ? ` (${item.technologies.join(', ')})` : '';
+        const year = item.year ? ` [${item.year}]` : '';
+        return `${item.tag}: ${item.title}${year}${techs} - ${item.description}`;
+      }).join('\n\n');
+      
+      projectsContext = aiSolutions.filter(item => item.link).map(item =>
+        `- ${item.title} (${item.tag}): ${item.description} → ${item.link}`
+      ).join('\n');
+    } else {
+      // Minimal fallback if API fails
+      skillsContext = `Full-Stack Web Developer with expertise in Vue, React, Node.js, Laravel, Python, and cloud deployments.`;
+      projectsContext = `- Web applications serving hundreds of daily users
+- Open-source tools and widgets
+- Full-stack commercial projects`;
+    }
+    
+    const profileContext = profile
+      ? `Profile Summary:\n- ${profile.title}: ${profile.short_bio}\n- Tone: ${profile.tone}\n- Availability: ${profile.availability}\n- Contact path: ${profile.contact_path}\n`
+      : `Profile Summary:\n- Full-Stack Web Developer focused on modern web experiences and developer tools.\n- Appreciates clean code, thoughtful design, and solving complex technical problems.\n- Availability: Open to opportunities.`;
+
     // Use custom context if provided, otherwise use default
-    const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects. 
+    const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
 
-Skills: ${skills ? skills.join(', ') : 'JavaScript, Vue, Nuxt, React, Node.js, Python, PHP, Laravel, MySQL, MongoDB, Git, Docker, AWS, GCP'}
+${profileContext}
 
-Projects: ${projects ? projects.map(p => p.name).join(', ') : 'Portfolio Website, Reaction Test Game, ChatGPT Clone, Stick Figure Game, Melvorite Extension, Sunflower Land Helper'}
+Skills & Experience:
+${skillsContext}
 
-Keep responses concise (under 150 words), friendly, and helpful. Focus on Jovylle's technical expertise and project experience.`;
+Notable Projects & Achievements:
+${projectsContext}
+
+Personality & Communication:
+- Friendly, approachable, and uses a casual but professional tone
+- Direct and helpful - gets to the point quickly
+- Genuinely excited about web development and technology
+- Happy to discuss technical details or answer general questions
+
+Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`; 
     
     console.log('🤖 Local API received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
 
