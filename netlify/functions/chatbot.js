@@ -87,8 +87,18 @@ export const handler = async (event, context) => {
 - Availability: Open to opportunities.
 `;
 
+        const roleInstructions = `
+Always speak about Jovylle in third person, e.g., "Jovylle can help..."
+Describe how his skills or projects solve the visitor's problem.
+Keep answers concise (under 150 words) and friendly.
+Avoid framing responses as the assistant offering personal services.
+Mention relevant highlights when the visitor asks about capabilities.
+`;
+
         // Use custom context if provided, otherwise use default
         const systemMessage = customContext || `You are a helpful assistant for Jovylle's portfolio website. You help visitors learn about Jovylle's work, skills, and projects.
+
+${roleInstructions}
 
 ${profileContext}
 
