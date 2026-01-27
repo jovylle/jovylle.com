@@ -18,9 +18,7 @@
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
-  const notificationIndexUrl =
-    script?.getAttribute('data-notifications-index') ||
-    'https://pocket.uft1.com/notifications/index.json';
+  const notificationIndexUrl = (script?.getAttribute('data-notifications-index') || '').trim() || null;
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')
@@ -28,6 +26,7 @@
     .filter(Boolean);
   const autoOpenOnNotifications =
     script?.getAttribute('data-auto-open-on-notifications') === 'true';
+  const notificationTabTitle = script?.getAttribute('data-notification-tab-title') || 'Alerts';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -270,6 +269,7 @@
   const notificationBadge = shadow.getElementById('notificationBadge');
   const buttonBadge = shadow.getElementById('buttonBadge');
   const chatWelcome = shadow.getElementById('chatWelcome');
+  const headerTitle = shadow.querySelector('.mystery-widget-title');
 
   function open() { state.isOpen = true; panel.classList.add('open'); button.setAttribute('aria-expanded','true'); }
   function close() { state.isOpen = false; panel.classList.remove('open'); button.setAttribute('aria-expanded','false'); }
@@ -293,6 +293,9 @@
     if (current) current.classList.add('active');
     shadow.getElementById('notificationsTab').style.display = tab === 'notifications' ? 'block' : 'none';
     shadow.getElementById('chatTab').style.display = tab === 'chat' ? 'block' : 'none';
+    if (headerTitle) {
+      headerTitle.textContent = tab === 'notifications' ? notificationTabTitle : widgetTitle;
+    }
     // Mark notifications as read when viewing
     if (tab === 'notifications') {
       state.unreadCount = 0;
@@ -645,7 +648,10 @@ function handleAutoOpenForNotifications() {
   function matchesNotificationTags(notification) {
     if (!notification || notificationTagFilters.length === 0) return true;
     const notifTags = Array.isArray(notification.tags)
-      ? notification.tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean)
+      ? notification.tags
+          .filter((tag) => typeof tag === 'string')
+          .map((tag) => tag.trim().toLowerCase())
+          .filter(Boolean)
       : [];
     if (notifTags.length === 0) {
       return notificationTagFilters.includes('all');
@@ -668,6 +674,9 @@ function handleAutoOpenForNotifications() {
   }
 
   async function loadExternalNotifications() {
+    if (!notificationIndexUrl) {
+      return;
+    }
     const effectiveLimit = Number.isFinite(notificationLimit) && notificationLimit > 0 ? notificationLimit : 10;
     const indexData = await fetchJson(notificationIndexUrl);
     const baseUrl = notificationIndexUrl.replace(/\/[^\/]+$/, '/');
@@ -705,7 +714,8 @@ function handleAutoOpenForNotifications() {
       .filter(matchesNotificationTags)
       .forEach(addNotification);
 
-    dynamicNotifications.forEach(addNotification);
+    dynamicNotifications.reverse().forEach(addNotification);
+    handleAutoOpenForNotifications();
   }
 
   // Load saved notifications on init
@@ -713,7 +723,9 @@ function handleAutoOpenForNotifications() {
   
   // Hide Alerts tab initially if no notifications
   updateNotificationBadge();
-  loadExternalNotifications();
+  if (notificationIndexUrl) {
+    loadExternalNotifications();
+  }
 
   // Inject leaderboard if enabled
   if (showLeaderboard && chatWelcome) {

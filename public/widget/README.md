@@ -163,6 +163,7 @@ const state = window.JovylleInlineWidget.state;
 | `data-notifications-index` | URL string | none | Endpoint that returns `{ "files": ["2026-01-27.json", ...] }` for the notification archive |
 | `data-notifications-limit` | number | 10 | Total dynamic notifications to fetch/display from the index |
 | `data-notification-tags` | csv | | Limit included notifications to entries whose `tags` array contains at least one of these values |
+| `data-notification-tab-title` | Text string | "Alerts" | Header text to display while the Notifications tab is active |
 
 ## 🗂️ Dynamic Notification Index
 
@@ -178,6 +179,7 @@ const state = window.JovylleInlineWidget.state;
 - Store each referenced file in the same directory and expose `{ "notifications": [/* widget notification objects */] }`.
 - Add an optional `pinned.json` file for evergreen alerts; it is always fetched even when the limit is reached.
 - Use `data-notifications-index` to point the widget at your index, `data-notifications-limit` to cap how many recent entries are displayed, and `data-notification-tags` to scope alerts per site (e.g., `jovylle.com,all`).
+- Use `data-notification-tab-title` (default `Alerts`) if you want the header to rename itself while showing the notifications tab.
 
 ---
 

@@ -16,6 +16,7 @@ export default defineNuxtPlugin(() => {
   script.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard for home page
   script.setAttribute('data-hide-portfolio', 'true');
   script.setAttribute('data-auto-open-on-notifications', 'true');
+  script.setAttribute('data-notification-tab-title', 'Alerts');
   script.setAttribute('data-feedback-url', 'https://tally.so/r/WO9dWk');
   script.setAttribute('data-notifications-index', 'https://pocket.uft1.com/notifications/index.json');
   script.setAttribute('data-notifications-limit', '10');

@@ -17,6 +17,7 @@ Host websites can now use the widget as a notification center to display alerts 
 - localStorage persistence across sessions
 - Lightweight notification index support (`data-notifications-index`, `data-notifications-limit`, `data-notification-tags`) so alerts can be sourced from a static JSON database with optional filtering.
 - Auto-open-on-notifications option so the widget expands to Alerts when unread items are present
+- Header now reflects the selected tab (customize via `data-notification-tab-title` for the Alerts view).
 - Dark mode support
 - Timestamps on all notifications
 - Max 50 notifications with automatic cleanup

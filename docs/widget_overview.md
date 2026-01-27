@@ -143,6 +143,7 @@ Density options:
 - `data-notifications-index`: URL — point the widget at a lightweight JSON index that lists files (`{ "files": ["2026-01-27.json", ...] }`) hosted on your static database (e.g., `https://pocket.uft1.com/notifications/index.json`).
 - `data-notifications-limit`: number (defaults to `10`) — caps how many of the most recent dynamic notifications are added from the index so you never flood the tab.
 - `data-notification-tags`: comma-separated list — the widget only shows notifications whose `tags` array includes at least one of the provided values, letting a shared database serve multiple sites (e.g., `jovylle.com,all`).
+- `data-notification-tab-title`: text — change the header title while the Alerts tab is visible (default `Alerts`).
 
 ## Configuration Options
 
