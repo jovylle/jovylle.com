@@ -18,9 +18,7 @@
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
-  const notificationIndexUrl =
-    script?.getAttribute('data-notifications-index') ||
-    'https://pocket.uft1.com/notifications/index.json';
+  const notificationIndexUrl = (script?.getAttribute('data-notifications-index') || '').trim() || null;
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')
@@ -650,7 +648,10 @@ function handleAutoOpenForNotifications() {
   function matchesNotificationTags(notification) {
     if (!notification || notificationTagFilters.length === 0) return true;
     const notifTags = Array.isArray(notification.tags)
-      ? notification.tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean)
+      ? notification.tags
+          .filter((tag) => typeof tag === 'string')
+          .map((tag) => tag.trim().toLowerCase())
+          .filter(Boolean)
       : [];
     if (notifTags.length === 0) {
       return notificationTagFilters.includes('all');
@@ -673,6 +674,9 @@ function handleAutoOpenForNotifications() {
   }
 
   async function loadExternalNotifications() {
+    if (!notificationIndexUrl) {
+      return;
+    }
     const effectiveLimit = Number.isFinite(notificationLimit) && notificationLimit > 0 ? notificationLimit : 10;
     const indexData = await fetchJson(notificationIndexUrl);
     const baseUrl = notificationIndexUrl.replace(/\/[^\/]+$/, '/');
@@ -710,7 +714,7 @@ function handleAutoOpenForNotifications() {
       .filter(matchesNotificationTags)
       .forEach(addNotification);
 
-    dynamicNotifications.forEach(addNotification);
+    dynamicNotifications.reverse().forEach(addNotification);
     handleAutoOpenForNotifications();
   }
 
@@ -719,7 +723,9 @@ function handleAutoOpenForNotifications() {
   
   // Hide Alerts tab initially if no notifications
   updateNotificationBadge();
-  loadExternalNotifications();
+  if (notificationIndexUrl) {
+    loadExternalNotifications();
+  }
 
   // Inject leaderboard if enabled
   if (showLeaderboard && chatWelcome) {
