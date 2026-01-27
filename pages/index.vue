@@ -19,7 +19,7 @@
             Building modern web experiences with clean code and thoughtful design
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            See some projects at
+            Check work at
             <a
               href="https://github.com/jovylle"
               target="_blank"
