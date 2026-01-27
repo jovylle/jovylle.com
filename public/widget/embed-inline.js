@@ -28,6 +28,7 @@
     .filter(Boolean);
   const autoOpenOnNotifications =
     script?.getAttribute('data-auto-open-on-notifications') === 'true';
+  const notificationTabTitle = script?.getAttribute('data-notification-tab-title') || 'Alerts';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -270,6 +271,7 @@
   const notificationBadge = shadow.getElementById('notificationBadge');
   const buttonBadge = shadow.getElementById('buttonBadge');
   const chatWelcome = shadow.getElementById('chatWelcome');
+  const headerTitle = shadow.querySelector('.mystery-widget-title');
 
   function open() { state.isOpen = true; panel.classList.add('open'); button.setAttribute('aria-expanded','true'); }
   function close() { state.isOpen = false; panel.classList.remove('open'); button.setAttribute('aria-expanded','false'); }
@@ -293,6 +295,9 @@
     if (current) current.classList.add('active');
     shadow.getElementById('notificationsTab').style.display = tab === 'notifications' ? 'block' : 'none';
     shadow.getElementById('chatTab').style.display = tab === 'chat' ? 'block' : 'none';
+    if (headerTitle) {
+      headerTitle.textContent = tab === 'notifications' ? notificationTabTitle : widgetTitle;
+    }
     // Mark notifications as read when viewing
     if (tab === 'notifications') {
       state.unreadCount = 0;
@@ -706,6 +711,7 @@ function handleAutoOpenForNotifications() {
       .forEach(addNotification);
 
     dynamicNotifications.forEach(addNotification);
+    handleAutoOpenForNotifications();
   }
 
   // Load saved notifications on init
