@@ -153,12 +153,31 @@ const state = window.JovylleInlineWidget.state;
 | `data-theme` | light, dark | auto | Color theme |
 | `data-density` | comfortable, compact | comfortable | Spacing |
 | `data-open` | true, false | false | Open on load |
+| `data-auto-open-on-notifications` | true, false | false | If set, widget opens and switches to the Alerts tab when unread notifications exist |
 | `data-title` | Text string | "Widget" | Custom widget title |
 | `data-show-leaderboard` | true, false | false | Show Reaction Test leaderboard |
 | `data-hide-chat` | true, false | false | Hide AI chat |
 | `data-hide-portfolio` | true, false | false | Hide Jovylle.com portfolio link |
 | `data-feedback-url` | URL string | none | Custom feedback link |
 | `data-ai-context` | Text string | default | Custom AI instructions/context |
+| `data-notifications-index` | URL string | none | Endpoint that returns `{ "files": ["2026-01-27.json", ...] }` for the notification archive |
+| `data-notifications-limit` | number | 10 | Total dynamic notifications to fetch/display from the index |
+| `data-notification-tags` | csv | | Limit included notifications to entries whose `tags` array contains at least one of these values |
+
+## 🗂️ Dynamic Notification Index
+
+- Host a small JSON index (e.g., `https://pocket.uft1.com/notifications/index.json`) that looks like:
+  ```json
+  {
+    "files": [
+      "2026-01-27.json",
+      "2026-01-24.json"
+    ]
+  }
+  ```
+- Store each referenced file in the same directory and expose `{ "notifications": [/* widget notification objects */] }`.
+- Add an optional `pinned.json` file for evergreen alerts; it is always fetched even when the limit is reached.
+- Use `data-notifications-index` to point the widget at your index, `data-notifications-limit` to cap how many recent entries are displayed, and `data-notification-tags` to scope alerts per site (e.g., `jovylle.com,all`).
 
 ---
 

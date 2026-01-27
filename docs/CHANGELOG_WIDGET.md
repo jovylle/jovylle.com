@@ -15,6 +15,8 @@ Host websites can now use the widget as a notification center to display alerts 
 - Badge counter showing unread notifications
 - Persistent and temporary notifications (auto-dismiss after 10s)
 - localStorage persistence across sessions
+- Lightweight notification index support (`data-notifications-index`, `data-notifications-limit`, `data-notification-tags`) so alerts can be sourced from a static JSON database with optional filtering.
+- Auto-open-on-notifications option so the widget expands to Alerts when unread items are present
 - Dark mode support
 - Timestamps on all notifications
 - Max 50 notifications with automatic cleanup
@@ -52,6 +54,8 @@ Upgraded from GPT-3.5-turbo to **GPT-4o-mini**
    - Added public API methods
    - Updated tab switching logic
    - Added auto-dismiss for temporary notifications
+   - Added auto-open-on-notifications flag to auto-expand the Alerts tab when unread items exist
+- Added static notification index fetching + tag/limit filters so the widget can load alerts from a shared JSON database (`data-notifications-index`, `data-notifications-limit`, `data-notification-tags`).
 
 3. **docs/widget_overview.md**
    - Added notification system documentation

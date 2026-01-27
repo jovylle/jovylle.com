@@ -101,6 +101,7 @@ server/api/
   data-theme="light"
   data-hide-chat="false"
   data-open="false"
+  data-auto-open-on-notifications="true"
   async
 ></script>
 ```
@@ -135,6 +136,13 @@ Inline API (optional):
 Density options:
 - comfortable: 8/12 px paddings, relaxed spacing (default)
 - compact: smaller paddings for tight layouts
+
+### Notification Behavior
+
+- `data-auto-open-on-notifications`: true/false (defaults to `false`) — automatically opens the widget and switches to the Notifications tab whenever unread alerts exist, so time-sensitive messages are visible immediately.
+- `data-notifications-index`: URL — point the widget at a lightweight JSON index that lists files (`{ "files": ["2026-01-27.json", ...] }`) hosted on your static database (e.g., `https://pocket.uft1.com/notifications/index.json`).
+- `data-notifications-limit`: number (defaults to `10`) — caps how many of the most recent dynamic notifications are added from the index so you never flood the tab.
+- `data-notification-tags`: comma-separated list — the widget only shows notifications whose `tags` array includes at least one of the provided values, letting a shared database serve multiple sites (e.g., `jovylle.com,all`).
 
 ## Configuration Options
 
