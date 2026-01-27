@@ -19,7 +19,7 @@
             Building modern web experiences with clean code and thoughtful design
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Check work at
+            Check out
             <a
               href="https://github.com/jovylle"
               target="_blank"
@@ -28,6 +28,7 @@
             >
               github.com/jovylle
             </a>
+            — it’s the best.
           </p>
           <UiDivider />
           <div class="flex items-center gap-3">
