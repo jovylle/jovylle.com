@@ -18,6 +18,18 @@
           <p class="text-sm text-gray-600 dark:text-gray-400 max-w-[400px]">
             Building modern web experiences with clean code and thoughtful design
           </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Check out
+            <a
+              href="https://github.com/jovylle"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-700 dark:text-gray-200 underline decoration-dashed decoration-1"
+            >
+              github.com/jovylle
+            </a>
+            — it’s the best.
+          </p>
           <UiDivider />
           <div class="flex items-center gap-3">
             <NuxtLink to="/contact">

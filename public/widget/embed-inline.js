@@ -18,6 +18,16 @@
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
+  const notificationIndexUrl =
+    script?.getAttribute('data-notifications-index') ||
+    'https://pocket.uft1.com/notifications/index.json';
+  const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
+  const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
+    .split(',')
+    .map(tag => tag.trim().toLowerCase())
+    .filter(Boolean);
+  const autoOpenOnNotifications =
+    script?.getAttribute('data-auto-open-on-notifications') === 'true';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -237,6 +247,7 @@
     unreadCount: 0,
     hasStartedChat: false,
   };
+  let hasAutoOpenedForNotifications = false;
 
   function setTheme(theme) {
     if (theme === 'dark') host.classList.add('dark-theme'); else host.classList.remove('dark-theme');
@@ -496,6 +507,14 @@
     }
   }
 
+function handleAutoOpenForNotifications() {
+  if (!autoOpenOnNotifications || hasAutoOpenedForNotifications) return;
+  if (state.notifications.length === 0 || state.unreadCount === 0) return;
+  hasAutoOpenedForNotifications = true;
+  open();
+  switchTab('notifications');
+}
+
   function saveNotificationsToStorage() {
     try {
       localStorage.setItem('jovylle-widget-notifications', JSON.stringify({
@@ -516,6 +535,7 @@
         state.unreadCount = data.unreadCount || 0;
         renderNotifications();
         updateNotificationBadge();
+        handleAutoOpenForNotifications();
       }
     } catch (e) {
       console.warn('Failed to load notifications from localStorage:', e);
@@ -567,6 +587,10 @@
       timestamp: notification.timestamp || Date.now(),
       persistent: notification.persistent !== false, // default true
     };
+
+    if (state.notifications.some(n => n.id === notif.id)) {
+      return notif.id;
+    }
     
     state.notifications.unshift(notif); // Add to beginning
     state.unreadCount++;
@@ -579,6 +603,7 @@
     renderNotifications();
     updateNotificationBadge();
     saveNotificationsToStorage();
+    handleAutoOpenForNotifications();
     
     // Auto-remove non-persistent notifications after 10 seconds if not viewing
     if (!notif.persistent && state.currentTab !== 'notifications') {
@@ -617,11 +642,78 @@
     return [...state.notifications];
   }
 
+  function matchesNotificationTags(notification) {
+    if (!notification || notificationTagFilters.length === 0) return true;
+    const notifTags = Array.isArray(notification.tags)
+      ? notification.tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean)
+      : [];
+    if (notifTags.length === 0) {
+      return notificationTagFilters.includes('all');
+    }
+    return notifTags.some((tag) => notificationTagFilters.includes(tag));
+  }
+
+  async function fetchJson(url) {
+    try {
+      const res = await fetch(url, { cache: 'no-cache' });
+      if (!res.ok) {
+        console.warn(`Notification loader: ${res.status} ${res.statusText} at ${url}`);
+        return null;
+      }
+      return await res.json();
+    } catch (error) {
+      console.warn('Notification loader: failed to fetch', url, error);
+      return null;
+    }
+  }
+
+  async function loadExternalNotifications() {
+    const effectiveLimit = Number.isFinite(notificationLimit) && notificationLimit > 0 ? notificationLimit : 10;
+    const indexData = await fetchJson(notificationIndexUrl);
+    const baseUrl = notificationIndexUrl.replace(/\/[^\/]+$/, '/');
+    const collected = [];
+
+    if (indexData && Array.isArray(indexData.files)) {
+      const filesToFetch = indexData.files.slice(0, effectiveLimit);
+      await Promise.all(
+        filesToFetch.map(async (fileName) => {
+          if (typeof fileName !== 'string') return;
+          const fileUrl = new URL(fileName, baseUrl).href;
+          const payload = await fetchJson(fileUrl);
+          if (payload && Array.isArray(payload.notifications)) {
+            collected.push(...payload.notifications);
+          }
+        })
+      );
+    }
+
+    if (!indexData) {
+      console.warn('Notification loader: skipping indexed fetch because index was unavailable.');
+    }
+
+    const pinnedPayload = await fetchJson(new URL('pinned.json', baseUrl).href);
+    const pinnedNotifications = (pinnedPayload && Array.isArray(pinnedPayload.notifications))
+      ? pinnedPayload.notifications
+      : [];
+
+    const dynamicNotifications = collected
+      .filter(matchesNotificationTags)
+      .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+      .slice(0, effectiveLimit);
+
+    pinnedNotifications
+      .filter(matchesNotificationTags)
+      .forEach(addNotification);
+
+    dynamicNotifications.forEach(addNotification);
+  }
+
   // Load saved notifications on init
   loadNotificationsFromStorage();
   
   // Hide Alerts tab initially if no notifications
   updateNotificationBadge();
+  loadExternalNotifications();
 
   // Inject leaderboard if enabled
   if (showLeaderboard && chatWelcome) {

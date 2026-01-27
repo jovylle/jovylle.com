@@ -15,7 +15,11 @@ export default defineNuxtPlugin(() => {
   script.setAttribute('data-title', 'AI Assistant');
   script.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard for home page
   script.setAttribute('data-hide-portfolio', 'true');
+  script.setAttribute('data-auto-open-on-notifications', 'true');
   script.setAttribute('data-feedback-url', 'https://tally.so/r/WO9dWk');
+  script.setAttribute('data-notifications-index', 'https://pocket.uft1.com/notifications/index.json');
+  script.setAttribute('data-notifications-limit', '10');
+  script.setAttribute('data-notification-tags', 'jovylle.com,all');
   script.setAttribute('data-ai-context', `You are an AI assistant for Jovylle Bermudez's portfolio website. Help visitors learn about Jovylle's technical skills, solutions, experience, and projects.
 
 === TECHNICAL SKILLS & EXPERTISE ===
