@@ -161,12 +161,14 @@ const state = window.JovylleInlineWidget.state;
 | `data-feedback-url` | URL string | none | Custom feedback link |
 | `data-ai-context` | Text string | default | Custom AI instructions/context |
 | `data-chatbot-endpoint` | URL string | `https://jovylle.com/.netlify/functions/chatbot` | Override the chat API URL; production embeds always hit jovylle.com's backend. Only set this attribute when you need a custom proxy (e.g., local development). |
-| `data-notifications-index` | URL string | none | Endpoint that returns `{ "files": ["2026-01-27.json", ...] }` for the notification archive |
+| `data-notifications-index` | URL string | `https://pocket.uft1.com/notifications/index.json` (on `jovylle.com` family, otherwise none) | Endpoint that returns `{ "files": ["2026-01-27.json", ...] }` for the notification archive |
 | `data-notifications-limit` | number | 10 | Total dynamic notifications to fetch/display from the index |
 | `data-notification-tags` | csv | | Limit included notifications to entries whose `tags` array contains at least one of these values |
 | `data-notification-tab-title` | Text string | "Alerts" | Header text to display while the Notifications tab is active |
 
 By default the widget posts to `https://jovylle.com/.netlify/functions/chatbot`. Use `data-chatbot-endpoint` only if you need a different proxy (for example, pointing to `http://localhost:3000/api/chatbot` while running local tooling). This keeps third-party embeds on other domains hitting the centralized Jovylle backend.
+
+Dynamic notifications default to `https://pocket.uft1.com/notifications/index.json` only when the page is on `jovylle.com` or its subdomains; other hosts must opt in by providing `data-notifications-index`.
 
 ## 🗂️ Dynamic Notification Index
 

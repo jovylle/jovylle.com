@@ -18,7 +18,10 @@
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
-  const notificationIndexUrl = (script?.getAttribute('data-notifications-index') || '').trim() || null;
+  const explicitNotificationIndex = (script?.getAttribute('data-notifications-index') || '').trim();
+  const normalizedHost = location.hostname.replace(/^www\./, '');
+  const ownsNotificationIndex = normalizedHost === 'jovylle.com' || normalizedHost.endsWith('.jovylle.com');
+  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? 'https://pocket.uft1.com/notifications/index.json' : null);
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')
@@ -95,6 +98,8 @@
     .mystery-widget-button svg { width: 20px; height: 20px; }
 
     .mystery-widget-container {
+      margin-left: auto;
+      margin-right: auto;
       position: absolute; bottom: 80px; right: 0; width: ${dims.w}px;
       background: var(--widget-bg, #ffffff); border-radius: 8px;
       border: 3px dashed var(--widget-border, #e9ecef);
@@ -180,6 +185,8 @@
       border-radius: 0 !important;
       background: rgba(15,23,42,0.75);
       padding: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
