@@ -179,20 +179,19 @@
       left: 0 !important;
       border-radius: 0 !important;
       background: rgba(15,23,42,0.75);
-      padding: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     :host(.fullscreen) .mystery-widget-container {
-      width: 100% !important;
-      height: 100% !important;
-      max-height: none !important;
-      top: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
+      width: min(100%, 1280px) !important;
+      max-height: calc(100vh - 40px) !important;
+      height: min(100%, calc(100vh - 40px));
       border: none !important;
-      border-radius: 0 !important;
+      border-radius: 12px !important;
       position: relative;
-      box-shadow: none;
+      box-shadow: 0 20px 60px rgba(15,23,42,0.45);
     }
     :host(.fullscreen) .mystery-widget-button {
       display: none !important;
@@ -422,15 +421,15 @@
     host.style.setProperty('bottom', '0');
     host.style.setProperty('left', '0');
     host.style.setProperty('border-radius', '0');
-    panel.style.setProperty('top', '0');
-    panel.style.setProperty('bottom', '0');
-    panel.style.setProperty('left', '0');
-    panel.style.setProperty('right', '0');
-    panel.style.setProperty('width', '100%');
-    panel.style.setProperty('height', '100%');
-    panel.style.setProperty('max-height', 'none');
-    panel.style.setProperty('border-width', '0');
-    panel.style.setProperty('border-radius', '0');
+    panel.style.removeProperty('top');
+    panel.style.removeProperty('bottom');
+    panel.style.removeProperty('left');
+    panel.style.removeProperty('right');
+    panel.style.removeProperty('width');
+    panel.style.removeProperty('height');
+    panel.style.removeProperty('max-height');
+    panel.style.removeProperty('border-width');
+    panel.style.removeProperty('border-radius');
     lockBodyScroll(true);
     button.style.setProperty('display', 'none');
     updateFullPageButton();
