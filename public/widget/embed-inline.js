@@ -18,7 +18,10 @@
   const aiContext = script?.getAttribute('data-ai-context') || '';
   const widgetTitle = script?.getAttribute('data-title') || 'Widget';
   const showLeaderboard = script?.getAttribute('data-show-leaderboard') === 'true';
-  const notificationIndexUrl = (script?.getAttribute('data-notifications-index') || '').trim() || null;
+  const explicitNotificationIndex = (script?.getAttribute('data-notifications-index') || '').trim();
+  const normalizedHost = location.hostname.replace(/^www\./, '');
+  const ownsNotificationIndex = normalizedHost === 'jovylle.com' || normalizedHost.endsWith('.jovylle.com');
+  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? 'https://pocket.uft1.com/notifications/index.json' : null);
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')
