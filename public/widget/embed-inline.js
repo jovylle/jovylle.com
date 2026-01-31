@@ -27,6 +27,9 @@
   const autoOpenOnNotifications =
     script?.getAttribute('data-auto-open-on-notifications') === 'true';
   const notificationTabTitle = script?.getAttribute('data-notification-tab-title') || 'Alerts';
+  const customChatbotEndpoint = (script?.getAttribute('data-chatbot-endpoint') || '').trim();
+  const allowFullPage = script?.getAttribute('data-full-page') !== 'false';
+  const startFullPage = script?.getAttribute('data-start-full-page') === 'true';
   
   // Debug: Log AI context on load
   if (aiContext) {
@@ -107,6 +110,7 @@
     .mystery-widget-tabs { display:flex; gap: var(--tab-gap); }
     .mystery-widget-tab { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .mystery-widget-tab svg { width: 14px; height: 14px; stroke: currentColor; }
+    .mystery-widget-tab[data-action="fullscreen"] { font-size:13px; padding: var(--tab-pad); }
     .quick-btn { padding: var(--tab-pad); background:#ffffff; border:3px dashed #dee2e6; border-radius:4px; cursor:pointer; font-size:12px; font-weight:500; color:#6c757d; transition: background-color .2s ease, color .2s ease; }
     .mystery-widget-tab.active { color:#495057; background:#e9ecef; border-color:#adb5bd; }
     .mystery-widget-content { padding: var(--pad-content); flex: 1; overflow-y:auto; min-height: 0; }
@@ -166,6 +170,39 @@
     :host(.dark-theme) .notification-item.warning { background:#4a3a1a; border-color:#f39c12; color:#ffe066; }
     :host(.dark-theme) .notification-item.error { background:#4a1a1a; border-color:#e74c3c; color:#ffa8a8; }
     :host(.dark-theme) .notification-empty { color:#999999; }
+    :host(.fullscreen) {
+      width: 100vw !important;
+      height: 100vh !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      border-radius: 0 !important;
+      background: rgba(15,23,42,0.75);
+      padding: 0;
+    }
+    :host(.fullscreen) .mystery-widget-container {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      border: none !important;
+      border-radius: 0 !important;
+      position: relative;
+      box-shadow: none;
+    }
+    :host(.fullscreen) .mystery-widget-button {
+      display: none !important;
+    }
+    :host(.fullscreen) .mystery-widget-content {
+      height: 100%;
+    }
+    :host(.fullscreen) .chat-container {
+      height: 100%;
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .mystery-widget-button, .mystery-widget-container, .mystery-widget-tab, .mystery-widget-link { transition: none !important; transform: none !important; }
@@ -174,6 +211,9 @@
 
   const container = document.createElement('div');
   container.className = 'mystery-widget ' + (density === 'compact' ? 'compact' : 'comfortable');
+  const fullscreenTabButton = allowFullPage
+    ? `<button class="mystery-widget-tab" data-action="fullscreen" type="button" title="Expand to full page">⛶</button>`
+    : '';
   container.innerHTML = `
     <button class="mystery-widget-button" type="button" aria-label="Toggle quick menu" aria-expanded="false" aria-controls="widgetContainer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -190,6 +230,7 @@
             Alerts
             <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
           </button>
+          ${fullscreenTabButton}
           <button class="mystery-widget-tab" data-action="theme" type="button" title="Toggle theme">☾</button>
         </div>
       </div>
@@ -245,8 +286,11 @@
     notifications: [],
     unreadCount: 0,
     hasStartedChat: false,
+    isFullPage: startFullPage,
   };
   let hasAutoOpenedForNotifications = false;
+  let isFullPageMode = startFullPage;
+  let savedBodyOverflow = null;
 
   function setTheme(theme) {
     if (theme === 'dark') host.classList.add('dark-theme'); else host.classList.remove('dark-theme');
@@ -318,6 +362,7 @@
 
   // Apply position to button and panel inside the host
   (function applyPosition(){
+    if (isFullPageMode) return;
     // Reset
     Object.assign(button.style, { top: '', bottom: '', left: '', right: '' });
     Object.assign(panel.style, { top: '', bottom: '', left: '', right: '' });
@@ -344,6 +389,107 @@
     }
   })();
 
+  const fullPageToggleBtn = allowFullPage ? shadow.querySelector('[data-action="fullscreen"]') : null;
+
+  function lockBodyScroll(enable) {
+    if (enable) {
+      if (savedBodyOverflow === null) {
+        savedBodyOverflow = document.body.style.overflow;
+      }
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = savedBodyOverflow || '';
+      savedBodyOverflow = null;
+    }
+  }
+
+  function updateFullPageButton() {
+    if (!fullPageToggleBtn) return;
+    fullPageToggleBtn.textContent = isFullPageMode ? '×' : '⛶';
+    fullPageToggleBtn.setAttribute('title', isFullPageMode ? 'Exit full page view' : 'Expand to full page');
+    fullPageToggleBtn.setAttribute('aria-label', isFullPageMode ? 'Exit full page chat' : 'Enter full page chat');
+  }
+
+  function enterFullPageMode() {
+    if (!allowFullPage || isFullPageMode) return;
+    isFullPageMode = true;
+    state.isFullPage = true;
+    host.classList.add('fullscreen');
+    host.style.setProperty('width', '100vw');
+    host.style.setProperty('height', '100vh');
+    host.style.setProperty('top', '0');
+    host.style.setProperty('right', '0');
+    host.style.setProperty('bottom', '0');
+    host.style.setProperty('left', '0');
+    host.style.setProperty('border-radius', '0');
+    panel.style.setProperty('top', '0');
+    panel.style.setProperty('bottom', '0');
+    panel.style.setProperty('left', '0');
+    panel.style.setProperty('right', '0');
+    panel.style.setProperty('width', '100%');
+    panel.style.setProperty('height', '100%');
+    panel.style.setProperty('max-height', 'none');
+    panel.style.setProperty('border-width', '0');
+    panel.style.setProperty('border-radius', '0');
+    lockBodyScroll(true);
+    button.style.setProperty('display', 'none');
+    updateFullPageButton();
+    open();
+  }
+
+  function exitFullPageMode() {
+    if (!isFullPageMode) return;
+    isFullPageMode = false;
+    state.isFullPage = false;
+    host.classList.remove('fullscreen');
+    host.style.removeProperty('width');
+    host.style.removeProperty('height');
+    host.style.removeProperty('top');
+    host.style.removeProperty('right');
+    host.style.removeProperty('bottom');
+    host.style.removeProperty('left');
+    host.style.removeProperty('border-radius');
+    panel.style.removeProperty('top');
+    panel.style.removeProperty('bottom');
+    panel.style.removeProperty('left');
+    panel.style.removeProperty('right');
+    panel.style.removeProperty('width');
+    panel.style.removeProperty('height');
+    panel.style.removeProperty('max-height');
+    panel.style.removeProperty('border-width');
+    panel.style.removeProperty('border-radius');
+    lockBodyScroll(false);
+    button.style.removeProperty('display');
+    applyPosition();
+    updateFullPageButton();
+  }
+
+  function toggleFullPageMode() {
+    if (!allowFullPage) return;
+    return isFullPageMode ? exitFullPageMode() : enterFullPageMode();
+  }
+
+  if (allowFullPage) {
+    if (startFullPage) {
+      enterFullPageMode();
+    } else {
+      updateFullPageButton();
+    }
+  }
+
+  if (fullPageToggleBtn) {
+    fullPageToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleFullPageMode();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (allowFullPage && isFullPageMode && e.key === 'Escape') {
+      exitFullPageMode();
+    }
+  });
+
 
   async function loadAISolutions() {
     try {
@@ -364,6 +510,11 @@
   }
   loadAISolutions();
 
+  function getChatbotEndpoint() {
+    if (customChatbotEndpoint) return customChatbotEndpoint;
+    return 'https://jovylle.com/.netlify/functions/chatbot';
+  }
+
   async function sendChatMessage() {
     const message = chatInput.value.trim(); if (!message) return;
     
@@ -375,8 +526,7 @@
     
     addChatMessage(message, 'user'); chatInput.value = ''; chatSendBtn.disabled = true; typingIndicator.style.display = 'block';
     try {
-      let apiUrl = '/.netlify/functions/chatbot';
-      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') apiUrl = '/api/chatbot';
+      const apiUrl = getChatbotEndpoint();
       
       // Use custom AI context from host or default
       const context = aiContext || `You are a helpful assistant. Skills: ${state.skills.join(', ')}. Projects: ${state.projects.map(p => p.name).join(', ')}.`;
@@ -804,6 +954,9 @@ function handleAutoOpenForNotifications() {
     open, close, toggle, 
     switchTab, // 'chat' or 'notifications'
     setTheme,
+    toggleFullPage,
+    enterFullPage: () => allowFullPage && enterFullPageMode(),
+    exitFullPage: () => allowFullPage && exitFullPageMode(),
     // Notification API
     addNotification,
     removeNotification,
