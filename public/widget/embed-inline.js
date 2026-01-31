@@ -95,6 +95,8 @@
     .mystery-widget-button svg { width: 20px; height: 20px; }
 
     .mystery-widget-container {
+      margin-left: auto;
+      margin-right: auto;
       position: absolute; bottom: 80px; right: 0; width: ${dims.w}px;
       background: var(--widget-bg, #ffffff); border-radius: 8px;
       border: 3px dashed var(--widget-border, #e9ecef);
@@ -180,6 +182,8 @@
       border-radius: 0 !important;
       background: rgba(15,23,42,0.75);
       padding: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
