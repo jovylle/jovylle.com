@@ -6,16 +6,10 @@ const allProjects = projectsData?.projects || []
 // Reactive sorting and filtering
 const sortBy = ref('priority')
 const selectedCategory = ref('all')
-const showFavoritesOnly = ref(true) // Default to showing favorites only
 
 // Process and sort projects
 const projects = computed(() => {
   let filteredProjects = [...allProjects]
-  
-  // Filter by favorites if enabled
-  if (showFavoritesOnly.value) {
-    filteredProjects = filteredProjects.filter(project => project.fav === true)
-  }
   
   // Filter by category if selected
   if (selectedCategory.value !== 'all') {
@@ -118,19 +112,6 @@ useHead({
       <!-- Sorting and Filtering Controls -->
       <div class="mb-12 bg-white dark:bg-ternary-dark rounded-lg shadow-lg p-6 border dark:border-gray-700">
         <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
-          <!-- Favorites Filter -->
-          <div class="flex items-center gap-2">
-            <label class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
-              <input 
-                type="checkbox" 
-                v-model="showFavoritesOnly"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              >
-              <i class="bx bx-heart text-red-500"></i>
-              Favorites Only
-            </label>
-          </div>
-
           <!-- Sort By -->
           <div class="flex items-center gap-2">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Sort by:</label>
@@ -162,7 +143,6 @@ useHead({
           <!-- Results Count -->
           <div class="text-sm text-gray-600 dark:text-gray-400">
             Showing {{ projects.length }} of {{ allProjects.length }} projects
-            <span v-if="showFavoritesOnly" class="text-red-500">(favorites)</span>
           </div>
         </div>
       </div>
@@ -198,11 +178,6 @@ useHead({
                 >
                   P{{ project.priority_level }}
                 </span>
-                <i 
-                  v-if="project.fav" 
-                  class="bx bx-heart text-red-500 text-lg"
-                  title="Favorite Project"
-                ></i>
               </div>
               <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
                 {{ project.description || 'No description available' }}
@@ -221,7 +196,7 @@ useHead({
               
               <!-- Stars -->
               <span 
-                v-if="project.stars > 0"
+                v-if="project.stars > 10"
                 class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full flex items-center"
               >
                 <i class="bx bx-star mr-1"></i>
