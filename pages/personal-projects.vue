@@ -1,4 +1,6 @@
 <script setup>
+import { POCKET_ASSET_BASE } from '~/utils/config'
+
 // Fetch personal projects data from external API
 const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
 const allProjects = projectsData?.projects || []
@@ -86,6 +88,13 @@ const primaryLiveUrl = (project) => {
   return null
 }
 
+const resolveThumbnail = (thumbnail) => {
+  if (!thumbnail) return null
+  if (thumbnail.startsWith('http')) return thumbnail
+  if (thumbnail.startsWith('/')) return `${POCKET_ASSET_BASE}${thumbnail}`
+  return `${POCKET_ASSET_BASE}/${thumbnail}`
+}
+
 // Meta tags for SEO (but keep it unlisted)
 useHead({
   title: 'Personal Projects Archive - Jovylle',
@@ -159,7 +168,7 @@ useHead({
             <!-- Thumbnail -->
             <div v-if="project.thumbnail" class="mb-4">
               <img
-                :src="project.thumbnail"
+                :src="resolveThumbnail(project.thumbnail)"
                 :alt="project.title || project.name"
                 class="w-full h-40 object-cover rounded-md border dark:border-gray-700"
                 loading="lazy"
