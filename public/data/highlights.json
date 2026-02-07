@@ -1,56 +1,212 @@
-[
-  {
-    "title": "Chat Widget",
-    "tag": "Chatbot / AI",
-    "description": "A super-lightweight, open-source GPT-powered chatbot you can drop into any static site in seconds. Zero-config embed with just two `<script>` tags, serverless Netlify Function backend to proxy OpenAI calls, fully customizable UI, MIT-licensed, and supports per-user routes and analytics integrations.",
-    "link": "https://chat-widget.uft1.com"
-  },
-  {
-    "title": "Game Tools & Community Feedback",
-    "tag": "Game Dev Tools",
-    "description": "Built tools for Sunflower Land & Phaser games with high usage. Collected user feedback for UX improvement. See feedbacks at https://d1g.uk/feedbacks or join our Discord under Digging Discussion: https://discord.com/invite/sunflowerland",
-    "link": "https://d1g.uk/feedbacks"
-  },
-  {
-    "title": "Full Stack Deployment with Laravel & Next.js",
-    "tag": "DevOps / Full Stack",
-    "description": "Deployed full-stack apps on Linux/Nginx, managed MySQL, and used serverless APIs with Python + GCP.",
-    "link": ""
-  },
-  {
-    "title": "Frontend UI/UX Craftsmanship",
-    "tag": "Frontend",
-    "description": "Built mobile-first sites with Tailwind, Vue, Nuxt, and Next.js. Integrated animations and executed clean Figma designs.",
-    "link": ""
-  },
-  {
-    "title": "Real-Time API Integrations",
-    "tag": "API / Realtime",
-    "description": "Integrated OpenAI, OpenWeather, and game APIs. Automated data fetch with Puppeteer.",
-    "link": ""
-  },
-  {
-    "title": "Chrome Extensions with Game Automation",
-    "tag": "Extensions",
-    "description": "Created browser extensions for Melvor & Sunflower Land. Injected logic to DOM for automation. 100+ users.",
-    "link": ""
-  },
-  {
-    "title": "Content Workflows with Decap & CMS",
-    "tag": "CMS",
-    "description": "Implemented Decap CMS, headless workflows with Strapi/Sanity, Markdown, JSON, previews, and proxy servers.",
-    "link": ""
-  },
-  {
-    "title": "Backend Engineering with PHP, Python, and Node",
-    "tag": "Backend",
-    "description": "Built APIs and server logic using PHP (Laravel), Python (Flask), and Node. Handled auth, validation, jobs, and error logging.",
-    "link": ""
-  },
-  {
-    "title": "AI + Automation Projects with OpenAI & Puppeteer",
-    "tag": "AI / Automation",
-    "description": "Integrated OpenAI APIs (ChatGPT, embeddings) and built Puppeteer-based tools for scraping, automation, and UI bots.",
-    "link": ""
-  }
-]
+{
+  "highlights": [
+    {
+      "title": "QuickGPT (chat.uft1.com)",
+      "tag": "Chatbot / AI",
+      "year": "2026",
+      "technologies": [
+        "Vue 3",
+        "Netlify Functions",
+        "OpenAI API",
+        "Anthropic API"
+      ],
+      "description": "Multi-model chat studio that keeps friends online when chatgpt.com free tiers dry out. Sidebar persistence, regenerate/copy helpers, and Netlify functions proxy GPT-4o, GPT-3.5, and Claude models with transparent quota handling. The UI powers multiple users across chat.uft1.com, leveraging AI tooling for reliability.",
+      "links": [
+        {
+          "label": "Live chat",
+          "url": "https://chatgpt.uft1.com"
+        },
+        {
+          "label": "Download the update",
+          "url": "https://github.com/jovylle/chat/releases"
+        }
+      ]
+    },
+    {
+      "title": "Personal Projects Lab",
+      "tag": "AI tooling & automation",
+      "year": "2024–2026",
+      "technologies": [
+        "Vue 3",
+        "JSON data APIs",
+        "Netlify Functions"
+      ],
+      "description": "Single client experience (me) where dozens of AI tools, dashboards, and automation projects live. The catalog is curated for multiple users already relying on the tools and can be explored via the Personal Projects page.",
+      "links": [
+        {
+          "label": "Projects page",
+          "url": "/personal-projects"
+        },
+        {
+          "label": "JSON feed",
+          "url": "/data/personal-projects.json"
+        }
+      ]
+    },
+    {
+      "title": "Real-Time Web Tools & Community Systems",
+      "tag": "Web Applications",
+      "year": "2024–2025",
+      "technologies": [
+        "Vue 3",
+        "Vite",
+        "TailwindCSS",
+        "REST APIs"
+      ],
+      "description": "Built web applications used by hundreds of users daily. Implemented API integration, real-time calculations, responsive UX, and community feedback systems. Focused on performance optimization and user-centered design.",
+      "link": "https://sfl.uft1.com/feedbacks"
+    },
+    {
+      "title": "Full-Stack Deployment & Cloud",
+      "tag": "DevOps / Full Stack",
+      "year": "2023–2025",
+      "technologies": [
+        "Linux",
+        "Nginx",
+        "MySQL",
+        "Laravel",
+        "Next.js",
+        "AWS Lambda",
+        "DynamoDB",
+        "GCP"
+      ],
+      "description": "Deployed full-stack apps on Linux servers using Nginx, handled MySQL, and built serverless APIs using AWS Lambda, GCP and Python. Set up Storybook and CI pipelines for scalable deployments.",
+      "link": null
+    },
+    {
+      "title": "Frontend UI/UX Craftsmanship",
+      "tag": "Frontend",
+      "year": "2021–2025",
+      "technologies": [
+        "Vue 3",
+        "Nuxt",
+        "React",
+        "TailwindCSS",
+        "GSAP",
+        "Sal.js"
+      ],
+      "description": "Converted Figma designs to pixel-perfect responsive interfaces. Built smooth animations, mobile-first flows, and high-performance UI components.",
+      "link": null
+    },
+    {
+      "title": "Real-Time API Integrations & Automation",
+      "tag": "API / Realtime",
+      "year": "2023–2025",
+      "technologies": [
+        "Node.js",
+        "OpenAI API",
+        "OpenWeather",
+        "Puppeteer"
+      ],
+      "description": "Integrated third-party APIs and automated data workflows (scraping, task bots, headless UI automation) using Puppeteer and serverless endpoints.",
+      "link": null
+    },
+    {
+      "title": "Browser Extensions & DOM Automation",
+      "tag": "Extensions",
+      "year": "2021–2025",
+      "technologies": [
+        "JavaScript",
+        "Chrome API",
+        "DOM Automation"
+      ],
+      "description": "Built browser extensions with DOM injection, UI overlay systems, keybinds, and automation scripts. 200+ active users and 5.0★ ratings on Chrome Web Store.",
+      "link": null
+    },
+    {
+      "title": "Content Workflows & CMS Integrations",
+      "tag": "CMS",
+      "year": "2022–2025",
+      "technologies": [
+        "Decap CMS",
+        "Strapi",
+        "Sanity",
+        "Markdown",
+        "JSON"
+      ],
+      "description": "Implemented headless CMS workflows with live previews, Markdown content pipelines, and custom backend integrations.",
+      "link": null
+    },
+    {
+      "title": "AI-Powered CMS Automation",
+      "tag": "Automation / n8n",
+      "year": "2024–2025",
+      "technologies": [
+        "n8n",
+        "OpenAI",
+        "Netlify",
+        "GitHub JSON"
+      ],
+      "description": "Built n8n workflows that convert CMS JSON to published blog posts, including OpenAI summarization, formatting, publishing triggers, and auto-deployment.",
+      "link": null
+    },
+    {
+      "title": "Backend Engineering",
+      "tag": "Backend",
+      "year": "2018–2025",
+      "technologies": [
+        "Laravel",
+        "Node.js",
+        "Python",
+        "MySQL"
+      ],
+      "description": "Built APIs, auth flows, background jobs, and error handling systems using Laravel, Node.js, and Python.",
+      "link": null
+    },
+    {
+      "title": "Commercial Full-Stack Development",
+      "tag": "Enterprise / E-commerce",
+      "year": "2021–2024",
+      "technologies": [
+        "React",
+        "Laravel",
+        "MySQL",
+        "Redux",
+        "REST"
+      ],
+      "description": "3+ years on Fitbox (AU) member portal and admin tools. Improved UX and performance, integrated payments, and delivered pixel-accurate UIs from Figma designs.",
+      "link": null
+    },
+    {
+      "title": "Open Source & Code Reviews",
+      "tag": "Open Source",
+      "year": "2025–Present",
+      "technologies": [
+        "Vue",
+        "React",
+        "GitHub PRs"
+      ],
+      "description": "Contribute fixes, code reviews, and utility packages to open-source Vue and React communities. Mentor junior developers and guide debugging.",
+      "link": null
+    },
+    {
+      "title": "Early Full-Stack Foundation",
+      "tag": "Early Career",
+      "year": "2016–2020",
+      "technologies": [
+        "Laravel",
+        "CodeIgniter",
+        "React Native",
+        "jQuery",
+        "Node.js",
+        "SQL",
+        "WooCommerce"
+      ],
+      "description": "Built Laravel systems, WooCommerce sites, and a React Native app. Hands-on deployments using Git/FTP, solving real client issues, and shipping production features.",
+      "link": null
+    },
+    {
+      "title": "Client-Side Module Development & Reverse Engineering",
+      "tag": "Java / Modding",
+      "year": "2024–2025",
+      "technologies": [
+        "Java",
+        "Gradle",
+        "Client-Side APIs",
+        "Reverse Engineering"
+      ],
+      "description": "Developed custom client modules and extensions with minimal documentation. Enhanced existing functionality, implemented new features through API exploration, and solved complex integration challenges in live multiplayer environments.",
+      "link": "https://github.com/jovylle/Trouser-Streak-Clone"
+    }
+  ]
+}

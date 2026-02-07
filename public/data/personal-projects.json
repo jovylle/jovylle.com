@@ -1,0 +1,4612 @@
+{
+  "notes": [
+    ""
+  ],
+  "projects": [
+    {
+      "title": "sfl-crab",
+      "description": "SFL Desert Digging Assistant",
+      "repo": "https://github.com/jovylle/sfl-crab",
+      "stars": 1,
+      "updated_at": "2026-02-06T00:38:03Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": true,
+      "netlify_live": "beta.d1g.uk",
+      "netlify_status": "current",
+      "slug": "sfl-crab",
+      "name": "sfl-crab",
+      "live": null,
+      "category": "game-tools",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sfl-crab"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://beta.d1g.uk",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://beta.d1g.uk",
+          "type": "status"
+        }
+      ],
+      "priority_level": 5
+    },
+    {
+      "title": "my-json-database",
+      "description": "json database at https://app.netlify.com/projects/vue-static-db https://pocket.uft1.com/admin",
+      "repo": "https://github.com/jovylle/my-json-database",
+      "stars": 0,
+      "updated_at": "2026-02-05T16:00:28Z",
+      "language": "Vue",
+      "private": true,
+      "status": "published",
+      "fav": true,
+      "showcase": false,
+      "netlify_live": "pocket.uft1.com",
+      "netlify_status": "current",
+      "thumbnail": "/uploads/screenshot-2025-10-07-at-5.25.31 am.jpg",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/my-json-database"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://pocket.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://pocket.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "jovylle",
+      "description": "Config files for my GitHub profile.",
+      "repo": "https://github.com/jovylle/jovylle",
+      "stars": 3,
+      "updated_at": "2026-02-04T00:26:43Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/jovylle"
+        }
+      ]
+    },
+    {
+      "title": "playbase",
+      "description": "",
+      "repo": "https://github.com/jovylle/playbase",
+      "stars": 0,
+      "updated_at": "2026-02-03T22:09:30Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "fast.jovylle.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/playbase"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://fast.jovylle.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://fast.jovylle.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "chat",
+      "description": "chat.uft1.com or chatgpt.uft1.com",
+      "repo": "https://github.com/jovylle/chat",
+      "stars": 0,
+      "updated_at": "2026-02-03T17:45:16Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "chatgpt.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chat"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://chatgpt.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://chatgpt.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "quick-chatgpt",
+      "description": "Quick Chatbot A Simple Chatbot https://quickchatgpt.uft1.com/ https://gptfree.uft1.com/",
+      "repo": "https://github.com/jovylle/quick-chatgpt",
+      "stars": 0,
+      "updated_at": "2026-02-03T14:57:32Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/quick-chatgpt"
+        }
+      ]
+    },
+    {
+      "title": "wanabusful",
+      "description": "Hub of online tools",
+      "repo": "https://github.com/jovylle/wanabusful",
+      "stars": 1,
+      "updated_at": "2026-02-03T11:51:18Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": true,
+      "netlify_live": "other.uft1.com",
+      "netlify_status": "current",
+      "slug": "wanabusful",
+      "name": "wanabusful",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/wanabusful"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://other.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://other.uft1.com",
+          "type": "status"
+        }
+      ],
+      "priority_level": 4
+    },
+    {
+      "title": "fps-tree-game",
+      "description": "",
+      "repo": "https://github.com/jovylle/fps-tree-game",
+      "stars": 0,
+      "updated_at": "2026-02-01T08:50:00Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "fps-tree-game.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/fps-tree-game"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://fps-tree-game.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://fps-tree-game.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "hub",
+      "description": "Geeky is a free blog template built with NextJS & Tailwind  https://hub.jovylle.com/",
+      "repo": "https://github.com/jovylle/hub",
+      "stars": 0,
+      "updated_at": "2026-01-31T22:37:32Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/hub"
+        }
+      ]
+    },
+    {
+      "title": "jovylle.com",
+      "description": "",
+      "repo": "https://github.com/jovylle/jovylle.com",
+      "stars": 0,
+      "updated_at": "2026-01-31T22:23:37Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": true,
+      "netlify_live": "jovylle.com",
+      "netlify_status": "current",
+      "thumbnail": "/uploads/screenshot-2025-10-07-at-5.00.24 am.jpg",
+      "slug": "jovylle-com",
+      "name": "jovylle.com",
+      "live": "https://jovylle.com/",
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/jovylle.com"
+        },
+        {
+          "label": "Live",
+          "url": "https://jovylle.com/",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://jovylle.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "chatbot-widget",
+      "description": "",
+      "repo": "https://github.com/jovylle/chatbot-widget",
+      "stars": 0,
+      "updated_at": "2026-01-31T04:13:30Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "chat-widget-dev.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chatbot-widget"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://chat-widget-dev.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://chat-widget-dev.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "cebby-fork",
+      "description": "Events aggregator platform with a PWA front-facing app powered by Astro",
+      "repo": "https://github.com/jovylle/cebby-fork",
+      "stars": 1,
+      "updated_at": "2026-01-23T15:03:03Z",
+      "language": "Astro",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/cebby-fork"
+        }
+      ]
+    },
+    {
+      "title": "mini-projects",
+      "description": "",
+      "repo": "https://github.com/jovylle/mini-projects",
+      "stars": 0,
+      "updated_at": "2026-01-22T05:23:04Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "mini-projects.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/mini-projects"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://mini-projects.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://mini-projects.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "Trouser-Streak-Clone",
+      "description": "",
+      "repo": "https://github.com/jovylle/Trouser-Streak-Clone",
+      "stars": 0,
+      "updated_at": "2026-01-15T09:38:48Z",
+      "language": "Java",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/Trouser-Streak-Clone"
+        }
+      ]
+    },
+    {
+      "title": "ai-core-spec",
+      "description": "",
+      "repo": "https://github.com/jovylle/ai-core-spec",
+      "stars": 0,
+      "updated_at": "2026-01-12T18:16:15Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/ai-core-spec"
+        }
+      ]
+    },
+    {
+      "title": "cheatutils-minecraft-script-event",
+      "description": "",
+      "repo": "https://github.com/jovylle/cheatutils-minecraft-script-event",
+      "stars": 0,
+      "updated_at": "2025-12-17T10:08:53Z",
+      "language": "Java",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/cheatutils-minecraft-script-event"
+        }
+      ]
+    },
+    {
+      "title": "nbt-test-meteor-addon",
+      "description": "",
+      "repo": "https://github.com/jovylle/nbt-test-meteor-addon",
+      "stars": 0,
+      "updated_at": "2025-12-15T08:28:13Z",
+      "language": "Java",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nbt-test-meteor-addon"
+        }
+      ]
+    },
+    {
+      "title": "meteor-addon-template",
+      "description": "A template project to help people use the Meteor Client Addon API.",
+      "repo": "https://github.com/jovylle/meteor-addon-template",
+      "stars": 0,
+      "updated_at": "2025-12-15T07:54:57Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/meteor-addon-template"
+        }
+      ]
+    },
+    {
+      "title": "my-ai-brain-frontend",
+      "description": "",
+      "repo": "https://github.com/jovylle/my-ai-brain-frontend",
+      "stars": 0,
+      "updated_at": "2025-12-08T07:15:05Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "my-ai-brain-frontend.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/my-ai-brain-frontend"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://my-ai-brain-frontend.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://my-ai-brain-frontend.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "meteor-rejects",
+      "description": "An addon to Meteor Client with features that won't be added to Meteor. Because they were either rejected or are ports from other clients.",
+      "repo": "https://github.com/jovylle/meteor-rejects",
+      "stars": 0,
+      "updated_at": "2025-12-04T14:12:37Z",
+      "language": "Java",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/meteor-rejects"
+        }
+      ]
+    },
+    {
+      "title": "constantiam-minecraft",
+      "description": "",
+      "repo": "https://github.com/jovylle/constantiam-minecraft",
+      "stars": 0,
+      "updated_at": "2025-11-20T07:02:42Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "mc.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/constantiam-minecraft"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://mc.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://mc.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "neat-starter-decap-cms-template",
+      "description": "https://neat-starter-decap-cms-template.netlify.app/",
+      "repo": "https://github.com/jovylle/neat-starter-decap-cms-template",
+      "stars": 1,
+      "updated_at": "2025-11-20T06:21:48Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": false,
+      "netlify_live": "neat-starter-decap-cms-template.netlify.app",
+      "netlify_status": "current",
+      "slug": "neat-starter-decap-cms-template",
+      "name": "neat-starter-decap-cms-template",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/neat-starter-decap-cms-template"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://neat-starter-decap-cms-template.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://neat-starter-decap-cms-template.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "me",
+      "description": "",
+      "repo": "https://github.com/jovylle/me",
+      "stars": 0,
+      "updated_at": "2025-11-10T13:18:51Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "me.jovylle.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/me"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://me.jovylle.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://me.jovylle.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "add-as-search-engine",
+      "description": "",
+      "repo": "https://github.com/jovylle/add-as-search-engine",
+      "stars": 0,
+      "updated_at": "2025-10-29T17:39:59Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/add-as-search-engine"
+        }
+      ]
+    },
+    {
+      "title": "script-track",
+      "description": "",
+      "repo": "https://github.com/jovylle/script-track",
+      "stars": 0,
+      "updated_at": "2025-10-23T19:57:12Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/script-track"
+        }
+      ]
+    },
+    {
+      "title": "chatgpt-omnibox",
+      "description": "",
+      "repo": "https://github.com/jovylle/chatgpt-omnibox",
+      "stars": 0,
+      "updated_at": "2025-10-21T06:02:06Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chatgpt-omnibox"
+        }
+      ]
+    },
+    {
+      "title": "lambda-dynamodb",
+      "description": "",
+      "repo": "https://github.com/jovylle/lambda-dynamodb",
+      "stars": 0,
+      "updated_at": "2025-10-14T16:39:05Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/lambda-dynamodb"
+        }
+      ]
+    },
+    {
+      "title": "hey-mini",
+      "description": "",
+      "repo": "https://github.com/jovylle/hey-mini",
+      "stars": 0,
+      "updated_at": "2025-10-11T18:54:11Z",
+      "language": "Python",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "hey-mini",
+      "name": "hey-mini",
+      "live": null,
+      "category": "tools-extensions",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/hey-mini"
+        }
+      ]
+    },
+    {
+      "title": "py-pomodoro",
+      "description": "",
+      "repo": "https://github.com/jovylle/py-pomodoro",
+      "stars": 0,
+      "updated_at": "2025-10-07T04:48:18Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": true,
+      "showcase": true,
+      "netlify_live": null,
+      "netlify_status": null,
+      "thumbnail": "/uploads/screenshot-2025-10-07-at-5.02.12 am.png",
+      "slug": "py-pomodoro",
+      "name": "py-pomodoro",
+      "live": null,
+      "category": "tools-extensions",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/py-pomodoro"
+        }
+      ]
+    },
+    {
+      "title": "stickfolio",
+      "description": "Stick-figure, hand-drawn portfolio site. Built with plain HTML/CSS/JS, doodle-style SVG buttons, and a JSON API for projects.",
+      "repo": "https://github.com/jovylle/stickfolio",
+      "stars": 0,
+      "updated_at": "2025-10-06T07:25:30Z",
+      "language": "CSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "astounding-genie-600190.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/stickfolio"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://astounding-genie-600190.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://astounding-genie-600190.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "drawingandjs",
+      "description": "",
+      "repo": "https://github.com/jovylle/drawingandjs",
+      "stars": 0,
+      "updated_at": "2025-10-06T07:25:13Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "stickfigure.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/drawingandjs"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://stickfigure.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://stickfigure.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "obsidian-notes",
+      "description": "",
+      "repo": "https://github.com/jovylle/obsidian-notes",
+      "stars": 0,
+      "updated_at": "2025-09-19T05:43:21Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/obsidian-notes"
+        }
+      ]
+    },
+    {
+      "title": "userscripts-tampermonkey",
+      "description": "",
+      "repo": "https://github.com/jovylle/userscripts-tampermonkey",
+      "stars": 0,
+      "updated_at": "2025-09-18T16:37:48Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "userscripts-tampermonkey",
+      "name": "userscripts-tampermonkey",
+      "live": null,
+      "category": "tools-extensions",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/userscripts-tampermonkey"
+        }
+      ]
+    },
+    {
+      "title": "satellite-runner",
+      "description": "",
+      "repo": "https://github.com/jovylle/satellite-runner",
+      "stars": 0,
+      "updated_at": "2025-08-25T16:14:06Z",
+      "language": "Python",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "satellite-runner",
+      "name": "satellite-runner",
+      "live": null,
+      "category": "tools-extensions",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/satellite-runner"
+        }
+      ]
+    },
+    {
+      "title": "repository-with-docs-for-ai",
+      "description": "A template repo for adding a .project-mind folder to any project.",
+      "repo": "https://github.com/jovylle/repository-with-docs-for-ai",
+      "stars": 0,
+      "updated_at": "2025-08-10T08:23:32Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "repository-with-docs-for-ai",
+      "name": "repository-with-docs-for-ai",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/repository-with-docs-for-ai"
+        }
+      ]
+    },
+    {
+      "title": "testonly",
+      "description": "",
+      "repo": "https://github.com/jovylle/testonly",
+      "stars": 0,
+      "updated_at": "2025-08-10T08:22:27Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "testonly",
+      "name": "testonly",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/testonly"
+        }
+      ]
+    },
+    {
+      "title": "Overfocus",
+      "description": "",
+      "repo": "https://github.com/jovylle/Overfocus",
+      "stars": 0,
+      "updated_at": "2025-08-10T04:26:34Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/Overfocus"
+        }
+      ]
+    },
+    {
+      "title": "junrey-image-blog",
+      "description": "",
+      "repo": "https://github.com/jovylle/junrey-image-blog",
+      "stars": 0,
+      "updated_at": "2025-08-10T04:26:26Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "junreyudto.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/junrey-image-blog"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://junreyudto.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://junreyudto.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "devlog-solo",
+      "description": "",
+      "repo": "https://github.com/jovylle/devlog-solo",
+      "stars": 1,
+      "updated_at": "2025-08-06T11:19:46Z",
+      "language": "Svelte",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "whimsical-horse-87ee4a.netlify.app",
+      "netlify_status": "current",
+      "slug": "devlog-solo",
+      "name": "devlog-solo",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/devlog-solo"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://whimsical-horse-87ee4a.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://whimsical-horse-87ee4a.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "sunflower-land-fork",
+      "description": "",
+      "repo": "https://github.com/jovylle/sunflower-land-fork",
+      "stars": 0,
+      "updated_at": "2025-08-04T09:03:06Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "sfl-test-mode-alternative-offline.uft1.com",
+      "netlify_status": "current",
+      "slug": "sunflower-land-fork",
+      "name": "sunflower-land-fork",
+      "live": null,
+      "category": "game-tools",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sunflower-land-fork"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://sfl-test-mode-alternative-offline.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://sfl-test-mode-alternative-offline.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "Nuxt3-starter__Decap-cms",
+      "description": "",
+      "repo": "https://github.com/jovylle/Nuxt3-starter__Decap-cms",
+      "stars": 0,
+      "updated_at": "2025-07-29T11:57:06Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "meek-belekoy-c2f205.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/Nuxt3-starter__Decap-cms"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://meek-belekoy-c2f205.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://meek-belekoy-c2f205.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-starter-decap-cms",
+      "description": "",
+      "repo": "https://github.com/jovylle/gatsby-starter-decap-cms",
+      "stars": 0,
+      "updated_at": "2025-07-29T11:56:25Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-starter-decap-cms"
+        }
+      ]
+    },
+    {
+      "title": "one-click-hugo-cms",
+      "description": "Hugo template with Decap CMS",
+      "repo": "https://github.com/jovylle/one-click-hugo-cms",
+      "stars": 0,
+      "updated_at": "2025-07-29T11:56:09Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/one-click-hugo-cms"
+        }
+      ]
+    },
+    {
+      "title": "via",
+      "description": "",
+      "repo": "https://github.com/jovylle/via",
+      "stars": 0,
+      "updated_at": "2025-07-29T07:14:46Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "via-bermudez.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/via"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://via-bermudez.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://via-bermudez.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "auth-widget",
+      "description": "",
+      "repo": "https://github.com/jovylle/auth-widget",
+      "stars": 0,
+      "updated_at": "2025-07-18T16:36:54Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "auth-widget.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/auth-widget"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://auth-widget.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://auth-widget.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "rusty",
+      "description": "",
+      "repo": "https://github.com/jovylle/rusty",
+      "stars": 0,
+      "updated_at": "2025-06-26T11:42:59Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "rusty-limbo.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/rusty"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://rusty-limbo.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://rusty-limbo.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "sunflower-land-helper",
+      "description": "",
+      "repo": "https://github.com/jovylle/sunflower-land-helper",
+      "stars": 0,
+      "updated_at": "2025-06-13T03:04:13Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sunflower-land-helper"
+        }
+      ]
+    },
+    {
+      "title": "tools-fork",
+      "description": "Community tools for sfl.world",
+      "repo": "https://github.com/jovylle/tools-fork",
+      "stars": 0,
+      "updated_at": "2025-06-03T18:28:25Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/tools-fork"
+        }
+      ]
+    },
+    {
+      "title": "sunflower-land-site",
+      "description": "Sunflower Land Helper Extension",
+      "repo": "https://github.com/jovylle/sunflower-land-site",
+      "stars": 0,
+      "updated_at": "2025-05-30T08:34:51Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "sunflower-land-helper.jovylle.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sunflower-land-site"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://sunflower-land-helper.jovylle.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://sunflower-land-helper.jovylle.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "sfl-notes",
+      "description": "",
+      "repo": "https://github.com/jovylle/sfl-notes",
+      "stars": 0,
+      "updated_at": "2025-05-30T08:33:56Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sfl-notes"
+        }
+      ]
+    },
+    {
+      "title": "firecms",
+      "description": "Awesome Firebase/Firestore-based CMS. The missing admin panel for your Firebase project!",
+      "repo": "https://github.com/jovylle/firecms",
+      "stars": 0,
+      "updated_at": "2025-05-27T16:51:04Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/firecms"
+        }
+      ]
+    },
+    {
+      "title": "obs-backgroundremoval",
+      "description": "An OBS plugin for removing background in portrait images (video), making it easy to replace the background when recording or streaming.",
+      "repo": "https://github.com/jovylle/obs-backgroundremoval",
+      "stars": 0,
+      "updated_at": "2025-05-20T01:58:50Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/obs-backgroundremoval"
+        }
+      ]
+    },
+    {
+      "title": "prices-jquery-bootstrap",
+      "description": "",
+      "repo": "https://github.com/jovylle/prices-jquery-bootstrap",
+      "stars": 0,
+      "updated_at": "2025-05-14T10:24:55Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "willowy-mermaid-b671fa.netlify.app",
+      "netlify_status": "current",
+      "slug": "prices-jquery-bootstrap",
+      "name": "prices-jquery-bootstrap",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/prices-jquery-bootstrap"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://willowy-mermaid-b671fa.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://willowy-mermaid-b671fa.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "sfl-island-details",
+      "description": "",
+      "repo": "https://github.com/jovylle/sfl-island-details",
+      "stars": 0,
+      "updated_at": "2025-04-22T16:57:17Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "sfl-farm-viewer.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sfl-island-details"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://sfl-farm-viewer.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://sfl-farm-viewer.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "me-playing-sfl-game",
+      "description": "",
+      "repo": "https://github.com/jovylle/me-playing-sfl-game",
+      "stars": 0,
+      "updated_at": "2025-04-10T16:52:28Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "sfl-playing.jovylle.com",
+      "netlify_status": "current",
+      "slug": "me-playing-sfl-game",
+      "name": "me-playing-sfl-game",
+      "live": null,
+      "category": "game-tools",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/me-playing-sfl-game"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://sfl-playing.jovylle.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://sfl-playing.jovylle.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "mouse-move-fork",
+      "description": "This is application designed to demonstrate mouse control and logging using TypeScript. The application draws a square at the current mouse position and performs network ping checks.",
+      "repo": "https://github.com/jovylle/mouse-move-fork",
+      "stars": 0,
+      "updated_at": "2025-04-10T00:15:04Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/mouse-move-fork"
+        }
+      ]
+    },
+    {
+      "title": "lpb-pisowifi-custom-theme-1",
+      "description": "simple theme for pisowifi lpb only the main css and html",
+      "repo": "https://github.com/jovylle/lpb-pisowifi-custom-theme-1",
+      "stars": 0,
+      "updated_at": "2025-04-06T02:59:19Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "lpb-pisowifi-custom-theme-1",
+      "name": "lpb-pisowifi-custom-theme-1",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/lpb-pisowifi-custom-theme-1"
+        }
+      ]
+    },
+    {
+      "title": "SFL_World_Clone",
+      "description": "",
+      "repo": "https://github.com/jovylle/SFL_World_Clone",
+      "stars": 0,
+      "updated_at": "2025-03-28T05:13:41Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "sfl-world-clone.uft1.com",
+      "netlify_status": "current",
+      "slug": "sfl-world-clone",
+      "name": "SFL_World_Clone",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/SFL_World_Clone"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://sfl-world-clone.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://sfl-world-clone.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "block-w-extension",
+      "description": "",
+      "repo": "https://github.com/jovylle/block-w-extension",
+      "stars": 0,
+      "updated_at": "2025-03-24T07:03:55Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/block-w-extension"
+        }
+      ]
+    },
+    {
+      "title": "up-up",
+      "description": "",
+      "repo": "https://github.com/jovylle/up-up",
+      "stars": 0,
+      "updated_at": "2025-03-07T07:01:32Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/up-up"
+        }
+      ]
+    },
+    {
+      "title": "stampy-expo-forkonly",
+      "description": "",
+      "repo": "https://github.com/jovylle/stampy-expo-forkonly",
+      "stars": 0,
+      "updated_at": "2025-03-04T07:26:21Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "stampy-expo.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/stampy-expo-forkonly"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://stampy-expo.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://stampy-expo.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "delayed_voice_playback",
+      "description": "",
+      "repo": "https://github.com/jovylle/delayed_voice_playback",
+      "stars": 0,
+      "updated_at": "2025-02-21T06:49:45Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "startling-sprite-e06307.netlify.app",
+      "netlify_status": "current",
+      "slug": "delayed-voice-playback",
+      "name": "delayed_voice_playback",
+      "live": null,
+      "category": "tools-extensions",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/delayed_voice_playback"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://startling-sprite-e06307.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://startling-sprite-e06307.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "stampisot-nextjs",
+      "description": "",
+      "repo": "https://github.com/jovylle/stampisot-nextjs",
+      "stars": 0,
+      "updated_at": "2025-02-20T09:18:29Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/stampisot-nextjs"
+        }
+      ]
+    },
+    {
+      "title": "your_weather_app",
+      "description": "",
+      "repo": "https://github.com/jovylle/your_weather_app",
+      "stars": 0,
+      "updated_at": "2025-02-17T13:52:50Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "weather.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/your_weather_app"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://weather.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://weather.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "cms-frontend-firecms-firebase",
+      "description": "",
+      "repo": "https://github.com/jovylle/cms-frontend-firecms-firebase",
+      "stars": 0,
+      "updated_at": "2025-02-17T03:59:30Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/cms-frontend-firecms-firebase"
+        }
+      ]
+    },
+    {
+      "title": "frontend-firecmscloud-cms-frontend-firecms-firebase-netlify",
+      "description": "",
+      "repo": "https://github.com/jovylle/frontend-firecmscloud-cms-frontend-firecms-firebase-netlify",
+      "stars": 0,
+      "updated_at": "2025-02-17T03:59:03Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "frontend-firecms-firebase-netlify.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/frontend-firecmscloud-cms-frontend-firecms-firebase-netlify"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://frontend-firecms-firebase-netlify.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://frontend-firecms-firebase-netlify.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "firecms-community",
+      "description": "https://mecms.uft1.com/",
+      "repo": "https://github.com/jovylle/firecms-community",
+      "stars": 0,
+      "updated_at": "2025-02-17T03:58:44Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "mecms.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/firecms-community"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://mecms.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://mecms.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "flappy_flutter_bird",
+      "description": "",
+      "repo": "https://github.com/jovylle/flappy_flutter_bird",
+      "stars": 0,
+      "updated_at": "2025-02-12T08:50:54Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "flappy-bird.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/flappy_flutter_bird"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://flappy-bird.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://flappy-bird.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "igniteTestApp071",
+      "description": "",
+      "repo": "https://github.com/jovylle/igniteTestApp071",
+      "stars": 0,
+      "updated_at": "2025-02-05T02:46:07Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/igniteTestApp071"
+        }
+      ]
+    },
+    {
+      "title": "image-text-manager",
+      "description": "",
+      "repo": "https://github.com/jovylle/image-text-manager",
+      "stars": 0,
+      "updated_at": "2025-01-28T06:04:49Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "image-text.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/image-text-manager"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://image-text.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://image-text.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "smnd-test-deploy",
+      "description": "https://beamish-blini-8b5614.netlify.app/",
+      "repo": "https://github.com/jovylle/smnd-test-deploy",
+      "stars": 0,
+      "updated_at": "2025-01-28T02:32:59Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "beamish-blini-8b5614.netlify.app",
+      "netlify_status": "current",
+      "slug": "smnd-test-deploy",
+      "name": "smnd-test-deploy",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/smnd-test-deploy"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://beamish-blini-8b5614.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://beamish-blini-8b5614.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "high_tide_tracker",
+      "description": "",
+      "repo": "https://github.com/jovylle/high_tide_tracker",
+      "stars": 0,
+      "updated_at": "2025-01-10T08:58:19Z",
+      "language": "C++",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/high_tide_tracker"
+        }
+      ]
+    },
+    {
+      "title": "is-home-online",
+      "description": "",
+      "repo": "https://github.com/jovylle/is-home-online",
+      "stars": 0,
+      "updated_at": "2024-12-30T17:28:21Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "is-home-online.uft1.com",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/is-home-online"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://is-home-online.uft1.com",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://is-home-online.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "workstation-mess-threejs",
+      "description": "",
+      "repo": "https://github.com/jovylle/workstation-mess-threejs",
+      "stars": 0,
+      "updated_at": "2024-12-24T20:44:38Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/workstation-mess-threejs"
+        }
+      ]
+    },
+    {
+      "title": "reusable_flutter_simple",
+      "description": "",
+      "repo": "https://github.com/jovylle/reusable_flutter_simple",
+      "stars": 0,
+      "updated_at": "2024-12-20T13:48:03Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "reusable-flutter-simple.netlify.app",
+      "netlify_status": "current",
+      "slug": "reusable-flutter-simple",
+      "name": "reusable_flutter_simple",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/reusable_flutter_simple"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://reusable-flutter-simple.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://reusable-flutter-simple.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "flutter-hello-world",
+      "description": "",
+      "repo": "https://github.com/jovylle/flutter-hello-world",
+      "stars": 0,
+      "updated_at": "2024-12-18T08:32:12Z",
+      "language": "C++",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "flutter-jov-helloworld.netlify.app",
+      "netlify_status": "current",
+      "slug": "flutter-hello-world",
+      "name": "flutter-hello-world",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/flutter-hello-world"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://flutter-jov-helloworld.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://flutter-jov-helloworld.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "gcp-functions",
+      "description": "",
+      "repo": "https://github.com/jovylle/gcp-functions",
+      "stars": 0,
+      "updated_at": "2024-12-18T07:31:08Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gcp-functions"
+        }
+      ]
+    },
+    {
+      "title": "candy",
+      "description": "",
+      "repo": "https://github.com/jovylle/candy",
+      "stars": 0,
+      "updated_at": "2024-12-16T04:17:36Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "candy.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/candy"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://candy.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://candy.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "atcebu.win",
+      "description": "",
+      "repo": "https://github.com/jovylle/atcebu.win",
+      "stars": 0,
+      "updated_at": "2024-12-06T01:50:17Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/atcebu.win"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "awesome-uses",
+      "description": "A list of /uses pages detailing developer setups, gear, software and configs.",
+      "repo": "https://github.com/jovylle/awesome-uses",
+      "stars": 0,
+      "updated_at": "2024-10-24T03:20:34Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "awesome-uses",
+      "name": "awesome-uses",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/awesome-uses"
+        }
+      ]
+    },
+    {
+      "title": "mojam",
+      "description": "https://uft1.com",
+      "repo": "https://github.com/jovylle/mojam",
+      "stars": 0,
+      "updated_at": "2024-10-23T17:25:20Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "collection.uft1.com",
+      "netlify_status": "current",
+      "slug": "mojam",
+      "name": "mojam",
+      "live": "https://mojam.uft1.com/",
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/mojam"
+        },
+        {
+          "label": "Live",
+          "url": "https://mojam.uft1.com/",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://collection.uft1.com",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "geeky-nextjs",
+      "description": "Geeky is a free blog template built with NextJS & Tailwind",
+      "repo": "https://github.com/jovylle/geeky-nextjs",
+      "stars": 0,
+      "updated_at": "2024-10-18T15:56:53Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/geeky-nextjs"
+        }
+      ]
+    },
+    {
+      "title": "modulo-jamstack-deploy",
+      "description": "One-click deploy for Modulo Jamstack: A minimalist SSG with Decap / Netlify CMS and Markdown support",
+      "repo": "https://github.com/jovylle/modulo-jamstack-deploy",
+      "stars": 0,
+      "updated_at": "2024-10-15T06:23:39Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "modulo-jamstack-deploy",
+      "name": "modulo-jamstack-deploy",
+      "live": null,
+      "category": "experiments-utilities",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/modulo-jamstack-deploy"
+        }
+      ]
+    },
+    {
+      "title": "smnd",
+      "description": "A minimalist template for static sites using Next.js and Decap CMS, focused on efficient content management with Markdown.",
+      "repo": "https://github.com/jovylle/smnd",
+      "stars": 0,
+      "updated_at": "2024-10-14T07:23:31Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "smnd",
+      "name": "smnd",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/smnd"
+        }
+      ]
+    },
+    {
+      "title": "lapis-crud-flexbackend",
+      "description": "https://git.jovylle.com/lapis-crud-flexbackend/",
+      "repo": "https://github.com/jovylle/lapis-crud-flexbackend",
+      "stars": 0,
+      "updated_at": "2024-10-02T17:24:08Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "slug": "lapis-crud-flexbackend",
+      "name": "lapis-crud-flexbackend",
+      "live": null,
+      "category": "websites-cms",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/lapis-crud-flexbackend"
+        }
+      ]
+    },
+    {
+      "title": "firebasefunctions",
+      "description": "",
+      "repo": "https://github.com/jovylle/firebasefunctions",
+      "stars": 0,
+      "updated_at": "2024-09-30T05:13:06Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/firebasefunctions"
+        }
+      ]
+    },
+    {
+      "title": "admin-dashboard",
+      "description": "",
+      "repo": "https://github.com/jovylle/admin-dashboard",
+      "stars": 0,
+      "updated_at": "2024-09-26T17:42:13Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/admin-dashboard"
+        }
+      ]
+    },
+    {
+      "title": "admin-dashboard3",
+      "description": "",
+      "repo": "https://github.com/jovylle/admin-dashboard3",
+      "stars": 0,
+      "updated_at": "2024-09-26T17:21:45Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/admin-dashboard3"
+        }
+      ]
+    },
+    {
+      "title": "admin-dashboard2",
+      "description": "",
+      "repo": "https://github.com/jovylle/admin-dashboard2",
+      "stars": 0,
+      "updated_at": "2024-09-26T17:03:23Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/admin-dashboard2"
+        }
+      ]
+    },
+    {
+      "title": "maynardnextjsportfolio",
+      "description": "",
+      "repo": "https://github.com/jovylle/maynardnextjsportfolio",
+      "stars": 0,
+      "updated_at": "2024-09-26T12:44:57Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "maynard.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/maynardnextjsportfolio"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://maynard.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://maynard.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "jjv",
+      "description": "",
+      "repo": "https://github.com/jovylle/jjv",
+      "stars": 0,
+      "updated_at": "2024-09-24T08:01:44Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "jejeje.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/jjv"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://jejeje.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://jejeje.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "melvorite",
+      "description": "Melvor Idle 1.2 Helper Extensions https://chrome.google.com/webstore/search/jovylle",
+      "repo": "https://github.com/jovylle/melvorite",
+      "stars": 0,
+      "updated_at": "2024-09-23T10:07:16Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": true,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/melvorite"
+        }
+      ]
+    },
+    {
+      "title": "gitnotes",
+      "description": "",
+      "repo": "https://github.com/jovylle/gitnotes",
+      "stars": 0,
+      "updated_at": "2024-09-21T04:35:05Z",
+      "language": "Just",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gitnotes"
+        }
+      ]
+    },
+    {
+      "title": "langlang",
+      "description": "",
+      "repo": "https://github.com/jovylle/langlang",
+      "stars": 0,
+      "updated_at": "2024-09-20T16:12:57Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "langlang.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/langlang"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://langlang.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://langlang.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "portfolioalvin",
+      "description": "",
+      "repo": "https://github.com/jovylle/portfolioalvin",
+      "stars": 0,
+      "updated_at": "2024-09-17T12:10:53Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/portfolioalvin"
+        }
+      ]
+    },
+    {
+      "title": "phaserhelloworld",
+      "description": "",
+      "repo": "https://github.com/jovylle/phaserhelloworld",
+      "stars": 0,
+      "updated_at": "2024-09-16T10:26:17Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "flyingstickfigure.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/phaserhelloworld"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://flyingstickfigure.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://flyingstickfigure.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "reees",
+      "description": "",
+      "repo": "https://github.com/jovylle/reees",
+      "stars": 0,
+      "updated_at": "2024-09-14T05:00:26Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "reesgwapo.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/reees"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://reesgwapo.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://reesgwapo.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "justhtml",
+      "description": "",
+      "repo": "https://github.com/jovylle/justhtml",
+      "stars": 0,
+      "updated_at": "2024-09-12T10:51:10Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/justhtml"
+        }
+      ]
+    },
+    {
+      "title": "expo-keypair",
+      "description": "",
+      "repo": "https://github.com/jovylle/expo-keypair",
+      "stars": 0,
+      "updated_at": "2024-09-04T14:06:41Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "keypair.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/expo-keypair"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://keypair.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://keypair.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "Hush-VSCode-theme-light-low-contrast",
+      "description": "",
+      "repo": "https://github.com/jovylle/Hush-VSCode-theme-light-low-contrast",
+      "stars": 0,
+      "updated_at": "2024-08-09T01:48:39Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/Hush-VSCode-theme-light-low-contrast"
+        }
+      ]
+    },
+    {
+      "title": "static",
+      "description": "TicSta",
+      "repo": "https://github.com/jovylle/static",
+      "stars": 1,
+      "updated_at": "2024-08-08T09:53:53Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/static"
+        }
+      ]
+    },
+    {
+      "title": "NewTab-Redirect",
+      "description": "NewTab Redirect! is an extension for Google Chrome which allows the user to replace the page displayed when creating a new tab.",
+      "repo": "https://github.com/jovylle/NewTab-Redirect",
+      "stars": 0,
+      "updated_at": "2024-08-08T07:30:51Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/NewTab-Redirect"
+        }
+      ]
+    },
+    {
+      "title": "neat-starter-fraichedeli",
+      "description": "",
+      "repo": "https://github.com/jovylle/neat-starter-fraichedeli",
+      "stars": 0,
+      "updated_at": "2024-08-03T16:36:37Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "fraichedeli.atcebu.win",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/neat-starter-fraichedeli"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://fraichedeli.atcebu.win",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://fraichedeli.atcebu.win",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "decap-website",
+      "description": "Source of Decap website and docs",
+      "repo": "https://github.com/jovylle/decap-website",
+      "stars": 0,
+      "updated_at": "2024-08-01T04:13:53Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/decap-website"
+        }
+      ]
+    },
+    {
+      "title": "decaptest2",
+      "description": "",
+      "repo": "https://github.com/jovylle/decaptest2",
+      "stars": 0,
+      "updated_at": "2024-07-31T15:52:33Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/decaptest2"
+        }
+      ]
+    },
+    {
+      "title": "decaptest3",
+      "description": "",
+      "repo": "https://github.com/jovylle/decaptest3",
+      "stars": 0,
+      "updated_at": "2024-07-31T15:52:03Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "vocal-bombolone-5a385c.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/decaptest3"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://vocal-bombolone-5a385c.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://vocal-bombolone-5a385c.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "nextjs-netlify-blog-template",
+      "description": "Next.js blogging template for Netlify",
+      "repo": "https://github.com/jovylle/nextjs-netlify-blog-template",
+      "stars": 0,
+      "updated_at": "2024-07-28T02:14:52Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": "leafy-sorbet-8ce255.netlify.app",
+      "netlify_status": "current",
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nextjs-netlify-blog-template"
+        },
+        {
+          "label": "Netlify",
+          "url": "https://leafy-sorbet-8ce255.netlify.app",
+          "type": "live"
+        },
+        {
+          "label": "Netlify site",
+          "url": "https://leafy-sorbet-8ce255.netlify.app",
+          "type": "status"
+        }
+      ]
+    },
+    {
+      "title": "browser-sync",
+      "description": "Keep multiple browsers & devices in sync when building websites. https://browsersync.io",
+      "repo": "https://github.com/jovylle/browser-sync",
+      "stars": 0,
+      "updated_at": "2024-07-27T15:48:32Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/browser-sync"
+        }
+      ]
+    },
+    {
+      "title": "contribute",
+      "description": "> docs site for all things contributions. begin your contribution journey here. ",
+      "repo": "https://github.com/jovylle/contribute",
+      "stars": 0,
+      "updated_at": "2024-07-26T09:06:44Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/contribute"
+        }
+      ]
+    },
+    {
+      "title": "chrome-volume-manager",
+      "description": "A simple Chromium extension to control any tab's volume separately",
+      "repo": "https://github.com/jovylle/chrome-volume-manager",
+      "stars": 0,
+      "updated_at": "2024-07-24T13:04:46Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chrome-volume-manager"
+        }
+      ]
+    },
+    {
+      "title": "ui",
+      "description": "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
+      "repo": "https://github.com/jovylle/ui",
+      "stars": 0,
+      "updated_at": "2024-07-23T03:21:27Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/ui"
+        }
+      ]
+    },
+    {
+      "title": "jovylle.github.io",
+      "description": "Old Portfolio",
+      "repo": "https://github.com/jovylle/jovylle.github.io",
+      "stars": 2,
+      "updated_at": "2024-07-22T08:04:13Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/jovylle.github.io"
+        }
+      ]
+    },
+    {
+      "title": "7.css",
+      "description": "A JS-independent, tree-shakeable CSS framework for building faithful recreations of the Windows 7 UI.",
+      "repo": "https://github.com/jovylle/7.css",
+      "stars": 0,
+      "updated_at": "2024-07-21T09:37:02Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/7.css"
+        }
+      ]
+    },
+    {
+      "title": "vue3-simple-crud-html",
+      "description": "Simple Crud of Vuejs 3 with axios pagination nested Crud Comments Per Topics  https://vue3-simple-crud.netlify.app/",
+      "repo": "https://github.com/jovylle/vue3-simple-crud-html",
+      "stars": 0,
+      "updated_at": "2024-07-18T04:38:23Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vue3-simple-crud-html"
+        }
+      ]
+    },
+    {
+      "title": "hotnote",
+      "description": "",
+      "repo": "https://github.com/jovylle/hotnote",
+      "stars": 0,
+      "updated_at": "2024-07-07T07:03:11Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/hotnote"
+        }
+      ]
+    },
+    {
+      "title": "babylon1",
+      "description": "",
+      "repo": "https://github.com/jovylle/babylon1",
+      "stars": 0,
+      "updated_at": "2024-07-05T01:44:16Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/babylon1"
+        }
+      ]
+    },
+    {
+      "title": "all-the-skills-python",
+      "description": "Python exercises based on Django Girls' tutorial",
+      "repo": "https://github.com/jovylle/all-the-skills-python",
+      "stars": 0,
+      "updated_at": "2024-06-23T10:46:29Z",
+      "language": "Python",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/all-the-skills-python"
+        }
+      ]
+    },
+    {
+      "title": "vyns-and-tiney-wedding",
+      "description": "",
+      "repo": "https://github.com/jovylle/vyns-and-tiney-wedding",
+      "stars": 0,
+      "updated_at": "2024-06-23T10:34:25Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vyns-and-tiney-wedding"
+        }
+      ]
+    },
+    {
+      "title": "nginx",
+      "description": "",
+      "repo": "https://github.com/jovylle/nginx",
+      "stars": 0,
+      "updated_at": "2024-06-21T16:11:06Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nginx"
+        }
+      ]
+    },
+    {
+      "title": "homerails",
+      "description": "",
+      "repo": "https://github.com/jovylle/homerails",
+      "stars": 0,
+      "updated_at": "2024-06-21T10:33:35Z",
+      "language": "Ruby",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/homerails"
+        }
+      ]
+    },
+    {
+      "title": "assorted",
+      "description": "maybe configs or just texts that I need to save and update",
+      "repo": "https://github.com/jovylle/assorted",
+      "stars": 0,
+      "updated_at": "2024-06-18T00:03:48Z",
+      "language": "Shell",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/assorted"
+        }
+      ]
+    },
+    {
+      "title": "gcloud_punk_pyt",
+      "description": "",
+      "repo": "https://github.com/jovylle/gcloud_punk_pyt",
+      "stars": 0,
+      "updated_at": "2024-06-17T06:56:53Z",
+      "language": "Python",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gcloud_punk_pyt"
+        }
+      ]
+    },
+    {
+      "title": "use-RTL8188FTV-on-linux",
+      "description": " step by step and beginner friendly for those who want to use the Realtek RTL8188FTV WiFi adapter on Linux.",
+      "repo": "https://github.com/jovylle/use-RTL8188FTV-on-linux",
+      "stars": 0,
+      "updated_at": "2024-06-14T11:01:58Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/use-RTL8188FTV-on-linux"
+        }
+      ]
+    },
+    {
+      "title": "django-wedding-website",
+      "description": "A django-powered wedding website and guest-management system",
+      "repo": "https://github.com/jovylle/django-wedding-website",
+      "stars": 0,
+      "updated_at": "2024-06-11T23:20:21Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/django-wedding-website"
+        }
+      ]
+    },
+    {
+      "title": "umami",
+      "description": "",
+      "repo": "https://github.com/jovylle/umami",
+      "stars": 0,
+      "updated_at": "2024-05-22T11:31:17Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/umami"
+        }
+      ]
+    },
+    {
+      "title": "one-click-hugo-cms-test",
+      "description": "",
+      "repo": "https://github.com/jovylle/one-click-hugo-cms-test",
+      "stars": 0,
+      "updated_at": "2024-05-11T05:13:31Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/one-click-hugo-cms-test"
+        }
+      ]
+    },
+    {
+      "title": "open-interpreter",
+      "description": "OpenAI's Code Interpreter in your terminal, running locally",
+      "repo": "https://github.com/jovylle/open-interpreter",
+      "stars": 0,
+      "updated_at": "2024-03-20T23:17:18Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/open-interpreter"
+        }
+      ]
+    },
+    {
+      "title": "nuxt-portfolio-starter",
+      "description": "A simple portfolio starter theme for Nuxt.js static sites.",
+      "repo": "https://github.com/jovylle/nuxt-portfolio-starter",
+      "stars": 0,
+      "updated_at": "2024-03-01T12:27:15Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxt-portfolio-starter"
+        }
+      ]
+    },
+    {
+      "title": "rails6.1",
+      "description": "",
+      "repo": "https://github.com/jovylle/rails6.1",
+      "stars": 0,
+      "updated_at": "2024-02-23T06:39:26Z",
+      "language": "Ruby",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/rails6.1"
+        }
+      ]
+    },
+    {
+      "title": "nuxtjs2-todo-app",
+      "description": "",
+      "repo": "https://github.com/jovylle/nuxtjs2-todo-app",
+      "stars": 0,
+      "updated_at": "2024-02-06T06:47:13Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxtjs2-todo-app"
+        }
+      ]
+    },
+    {
+      "title": "zaiproty-property-management",
+      "description": "Build 16 or Version 3.3",
+      "repo": "https://github.com/jovylle/zaiproty-property-management",
+      "stars": 0,
+      "updated_at": "2023-11-16T04:42:58Z",
+      "language": "Blade",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/zaiproty-property-management"
+        }
+      ]
+    },
+    {
+      "title": "powershell_notion_scripts",
+      "description": "daily scripts ",
+      "repo": "https://github.com/jovylle/powershell_notion_scripts",
+      "stars": 0,
+      "updated_at": "2023-11-13T01:56:50Z",
+      "language": "PowerShell",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/powershell_notion_scripts"
+        }
+      ]
+    },
+    {
+      "title": "static-basic",
+      "description": "",
+      "repo": "https://github.com/jovylle/static-basic",
+      "stars": 0,
+      "updated_at": "2023-11-11T01:00:17Z",
+      "language": "Shell",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/static-basic"
+        }
+      ]
+    },
+    {
+      "title": "vue-basic",
+      "description": "",
+      "repo": "https://github.com/jovylle/vue-basic",
+      "stars": 0,
+      "updated_at": "2023-11-11T00:40:55Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vue-basic"
+        }
+      ]
+    },
+    {
+      "title": "az-nuxt",
+      "description": "",
+      "repo": "https://github.com/jovylle/az-nuxt",
+      "stars": 0,
+      "updated_at": "2023-11-11T00:36:57Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/az-nuxt"
+        }
+      ]
+    },
+    {
+      "title": "nodejs-serverless-function-express",
+      "description": "",
+      "repo": "https://github.com/jovylle/nodejs-serverless-function-express",
+      "stars": 0,
+      "updated_at": "2023-11-10T03:29:29Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nodejs-serverless-function-express"
+        }
+      ]
+    },
+    {
+      "title": "pyt-functions",
+      "description": "",
+      "repo": "https://github.com/jovylle/pyt-functions",
+      "stars": 0,
+      "updated_at": "2023-11-10T03:29:11Z",
+      "language": "Python",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/pyt-functions"
+        }
+      ]
+    },
+    {
+      "title": "gcloudtests",
+      "description": "",
+      "repo": "https://github.com/jovylle/gcloudtests",
+      "stars": 0,
+      "updated_at": "2023-11-08T09:44:58Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gcloudtests"
+        }
+      ]
+    },
+    {
+      "title": "mongodb-starter",
+      "description": "",
+      "repo": "https://github.com/jovylle/mongodb-starter",
+      "stars": 0,
+      "updated_at": "2023-11-08T05:04:03Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/mongodb-starter"
+        }
+      ]
+    },
+    {
+      "title": "activitywatch",
+      "description": "The best free and open-source automated time tracker. Cross-platform, extensible, privacy-focused.",
+      "repo": "https://github.com/jovylle/activitywatch",
+      "stars": 0,
+      "updated_at": "2023-11-04T16:38:15Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/activitywatch"
+        }
+      ]
+    },
+    {
+      "title": "desktop-tutorial",
+      "description": "GitHub Desktop tutorial repository",
+      "repo": "https://github.com/jovylle/desktop-tutorial",
+      "stars": 0,
+      "updated_at": "2023-11-02T18:29:03Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/desktop-tutorial"
+        }
+      ]
+    },
+    {
+      "title": "html3",
+      "description": "",
+      "repo": "https://github.com/jovylle/html3",
+      "stars": 0,
+      "updated_at": "2023-11-01T17:01:16Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/html3"
+        }
+      ]
+    },
+    {
+      "title": "remnants",
+      "description": "⚗️ A Jekyll boilerplate theme designed to be a starting point for any Jekyll website",
+      "repo": "https://github.com/jovylle/remnants",
+      "stars": 0,
+      "updated_at": "2023-11-01T17:00:22Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/remnants"
+        }
+      ]
+    },
+    {
+      "title": "html2",
+      "description": "",
+      "repo": "https://github.com/jovylle/html2",
+      "stars": 0,
+      "updated_at": "2023-11-01T02:39:36Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/html2"
+        }
+      ]
+    },
+    {
+      "title": "html",
+      "description": "",
+      "repo": "https://github.com/jovylle/html",
+      "stars": 0,
+      "updated_at": "2023-10-31T18:44:19Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/html"
+        }
+      ]
+    },
+    {
+      "title": "property-management",
+      "description": "",
+      "repo": "https://github.com/jovylle/property-management",
+      "stars": 0,
+      "updated_at": "2023-10-31T02:16:07Z",
+      "language": "Blade",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/property-management"
+        }
+      ]
+    },
+    {
+      "title": "portfolio-old",
+      "description": "jovyllebermudez.com jovylle.netlify.app",
+      "repo": "https://github.com/jovylle/portfolio-old",
+      "stars": 0,
+      "updated_at": "2023-10-30T00:43:05Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/portfolio-old"
+        }
+      ]
+    },
+    {
+      "title": "my-history",
+      "description": "",
+      "repo": "https://github.com/jovylle/my-history",
+      "stars": 0,
+      "updated_at": "2023-10-29T14:47:10Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/my-history"
+        }
+      ]
+    },
+    {
+      "title": "content-wind",
+      "description": "A lightweight Nuxt theme to build your portfolio in minutes.",
+      "repo": "https://github.com/jovylle/content-wind",
+      "stars": 0,
+      "updated_at": "2023-10-28T17:44:39Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/content-wind"
+        }
+      ]
+    },
+    {
+      "title": "laravel9",
+      "description": "",
+      "repo": "https://github.com/jovylle/laravel9",
+      "stars": 0,
+      "updated_at": "2023-10-27T18:29:29Z",
+      "language": "PHP",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/laravel9"
+        }
+      ]
+    },
+    {
+      "title": "hugoblowfish",
+      "description": "",
+      "repo": "https://github.com/jovylle/hugoblowfish",
+      "stars": 0,
+      "updated_at": "2023-10-27T14:18:51Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/hugoblowfish"
+        }
+      ]
+    },
+    {
+      "title": "nuxt-netlify-cms-boilerplate",
+      "description": "",
+      "repo": "https://github.com/jovylle/nuxt-netlify-cms-boilerplate",
+      "stars": 0,
+      "updated_at": "2023-10-20T20:03:30Z",
+      "language": "Vue",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxt-netlify-cms-boilerplate"
+        }
+      ]
+    },
+    {
+      "title": "VueDN",
+      "description": "",
+      "repo": "https://github.com/jovylle/VueDN",
+      "stars": 0,
+      "updated_at": "2023-10-19T10:27:10Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/VueDN"
+        }
+      ]
+    },
+    {
+      "title": "vuepress-test",
+      "description": "",
+      "repo": "https://github.com/jovylle/vuepress-test",
+      "stars": 0,
+      "updated_at": "2023-10-19T07:11:10Z",
+      "language": "TypeScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vuepress-test"
+        }
+      ]
+    },
+    {
+      "title": "vuepress-starter",
+      "description": "",
+      "repo": "https://github.com/jovylle/vuepress-starter",
+      "stars": 0,
+      "updated_at": "2023-10-19T06:55:26Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vuepress-starter"
+        }
+      ]
+    },
+    {
+      "title": "junudto",
+      "description": "",
+      "repo": "https://github.com/jovylle/junudto",
+      "stars": 0,
+      "updated_at": "2023-10-16T18:18:38Z",
+      "language": "SCSS",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/junudto"
+        }
+      ]
+    },
+    {
+      "title": "reactnative0615",
+      "description": "",
+      "repo": "https://github.com/jovylle/reactnative0615",
+      "stars": 0,
+      "updated_at": "2023-10-16T12:52:46Z",
+      "language": "Objective-C",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/reactnative0615"
+        }
+      ]
+    },
+    {
+      "title": "pytchat",
+      "description": "",
+      "repo": "https://github.com/jovylle/pytchat",
+      "stars": 0,
+      "updated_at": "2023-10-15T15:25:01Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/pytchat"
+        }
+      ]
+    },
+    {
+      "title": "chatbotfirebase",
+      "description": "",
+      "repo": "https://github.com/jovylle/chatbotfirebase",
+      "stars": 0,
+      "updated_at": "2023-10-14T20:16:29Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chatbotfirebase"
+        }
+      ]
+    },
+    {
+      "title": "roytang",
+      "description": "",
+      "repo": "https://github.com/jovylle/roytang",
+      "stars": 0,
+      "updated_at": "2023-10-11T09:35:16Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/roytang"
+        }
+      ]
+    },
+    {
+      "title": "laravelcebu-website",
+      "description": "Finally a website for the awesome Laravel community in Cebu",
+      "repo": "https://github.com/jovylle/laravelcebu-website",
+      "stars": 0,
+      "updated_at": "2023-10-10T16:00:18Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/laravelcebu-website"
+        }
+      ]
+    },
+    {
+      "title": "reactotron",
+      "description": "A desktop app for inspecting your React JS and React Native projects. macOS, Linux, and Windows.",
+      "repo": "https://github.com/jovylle/reactotron",
+      "stars": 0,
+      "updated_at": "2023-10-08T04:55:16Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/reactotron"
+        }
+      ]
+    },
+    {
+      "title": "BookTown",
+      "description": "Book Ordering Management System",
+      "repo": "https://github.com/jovylle/BookTown",
+      "stars": 0,
+      "updated_at": "2023-10-04T08:28:15Z",
+      "language": "HTML",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/BookTown"
+        }
+      ]
+    },
+    {
+      "title": "spotlight-html-template-tailwind",
+      "description": "https://app.netlify.com/sites/spotlight-html-template-tailwind/overview https://spotlight-html-template-tailwind.netlify.app/",
+      "repo": "https://github.com/jovylle/spotlight-html-template-tailwind",
+      "stars": 0,
+      "updated_at": "2023-10-02T12:28:00Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/spotlight-html-template-tailwind"
+        }
+      ]
+    },
+    {
+      "title": "sanity-project-unified-test",
+      "description": "",
+      "repo": "https://github.com/jovylle/sanity-project-unified-test",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:55:46Z",
+      "language": "TypeScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sanity-project-unified-test"
+        }
+      ]
+    },
+    {
+      "title": "sandbax-reactjs-ts",
+      "description": "Created with CodeSandbox",
+      "repo": "https://github.com/jovylle/sandbax-reactjs-ts",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:55:15Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sandbax-reactjs-ts"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-blog-2022",
+      "description": "Gatsby starter for a Contentful project from the community. ",
+      "repo": "https://github.com/jovylle/gatsby-blog-2022",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:54:18Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-blog-2022"
+        }
+      ]
+    },
+    {
+      "title": "sanity-gatsby-blog",
+      "description": "https://app.netlify.com/sites/sanity-gatsby-blog-web-jov/overview https://app.netlify.com/sites/sanity-gatsby-blog-studio-jov/overview",
+      "repo": "https://github.com/jovylle/sanity-gatsby-blog",
+      "stars": 0,
+      "updated_at": "2023-09-30T18:49:41Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sanity-gatsby-blog"
+        }
+      ]
+    },
+    {
+      "title": "sanity-gatsby-portfolio",
+      "description": "Portfolio with Gatsby https://app.netlify.com/sites/sanity-gatsby-portfolio-web-omuupcbb/overview https://app.netlify.com/sites/sanity-gatsby-portfolio-studio-x2f6shfd/overview",
+      "repo": "https://github.com/jovylle/sanity-gatsby-portfolio",
+      "stars": 0,
+      "updated_at": "2023-09-30T18:46:40Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sanity-gatsby-portfolio"
+        }
+      ]
+    },
+    {
+      "title": "sanity-gatsby-portfolio-test",
+      "description": "Portfolio with Gatsby Test https://app.netlify.com/sites/sanity-gatsby-portfolio-test-web-3ka7b8k6/overview",
+      "repo": "https://github.com/jovylle/sanity-gatsby-portfolio-test",
+      "stars": 0,
+      "updated_at": "2023-09-30T18:45:21Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/sanity-gatsby-portfolio-test"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-starter-minimal-blog",
+      "description": "Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.",
+      "repo": "https://github.com/jovylle/gatsby-starter-minimal-blog",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:16:42Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-starter-minimal-blog"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-starter-default-2nd-attempt",
+      "description": "The default Gatsby starter",
+      "repo": "https://github.com/jovylle/gatsby-starter-default-2nd-attempt",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:16:05Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-starter-default-2nd-attempt"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-starter-default",
+      "description": "The default Gatsby starter",
+      "repo": "https://github.com/jovylle/gatsby-starter-default",
+      "stars": 1,
+      "updated_at": "2023-09-30T18:12:50Z",
+      "language": null,
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-starter-default"
+        }
+      ]
+    },
+    {
+      "title": "fmobile",
+      "description": "",
+      "repo": "https://github.com/jovylle/fmobile",
+      "stars": 0,
+      "updated_at": "2023-09-28T18:29:39Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/fmobile"
+        }
+      ]
+    },
+    {
+      "title": "fitweb",
+      "description": "",
+      "repo": "https://github.com/jovylle/fitweb",
+      "stars": 0,
+      "updated_at": "2023-09-28T18:26:36Z",
+      "language": "PHP",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/fitweb"
+        }
+      ]
+    },
+    {
+      "title": "Image-Searcher",
+      "description": "Image Searcher 📷🌍",
+      "repo": "https://github.com/jovylle/Image-Searcher",
+      "stars": 0,
+      "updated_at": "2023-09-26T20:28:10Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/Image-Searcher"
+        }
+      ]
+    },
+    {
+      "title": "react-native-test2023",
+      "description": "",
+      "repo": "https://github.com/jovylle/react-native-test2023",
+      "stars": 0,
+      "updated_at": "2023-09-22T15:46:43Z",
+      "language": "Java",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/react-native-test2023"
+        }
+      ]
+    },
+    {
+      "title": "youtube-bookmarker-finished-code",
+      "description": "",
+      "repo": "https://github.com/jovylle/youtube-bookmarker-finished-code",
+      "stars": 0,
+      "updated_at": "2023-09-19T12:10:20Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/youtube-bookmarker-finished-code"
+        }
+      ]
+    },
+    {
+      "title": "github-readme-stats",
+      "description": ":zap: Dynamically generated stats for your github readmes",
+      "repo": "https://github.com/jovylle/github-readme-stats",
+      "stars": 0,
+      "updated_at": "2023-09-17T02:22:32Z",
+      "language": "JavaScript",
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/github-readme-stats"
+        }
+      ]
+    },
+    {
+      "title": "marinara",
+      "description": "Pomodoro® time management assistant for Chrome",
+      "repo": "https://github.com/jovylle/marinara",
+      "stars": 0,
+      "updated_at": "2023-09-15T17:40:03Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/marinara"
+        }
+      ]
+    },
+    {
+      "title": "vscode-colorize",
+      "description": "A vscode extension to help visualize css colors in files",
+      "repo": "https://github.com/jovylle/vscode-colorize",
+      "stars": 0,
+      "updated_at": "2023-09-12T05:42:39Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/vscode-colorize"
+        }
+      ]
+    },
+    {
+      "title": "random_powershell_scrips",
+      "description": "",
+      "repo": "https://github.com/jovylle/random_powershell_scrips",
+      "stars": 0,
+      "updated_at": "2023-08-25T05:00:52Z",
+      "language": "Shell",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/random_powershell_scrips"
+        }
+      ]
+    },
+    {
+      "title": "chatbot-ui",
+      "description": "An open source ChatGPT UI.",
+      "repo": "https://github.com/jovylle/chatbot-ui",
+      "stars": 0,
+      "updated_at": "2023-08-24T17:24:07Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/chatbot-ui"
+        }
+      ]
+    },
+    {
+      "title": "nuxt-content-theme-blog",
+      "description": "A blog theme for @nuxt/content",
+      "repo": "https://github.com/jovylle/nuxt-content-theme-blog",
+      "stars": 0,
+      "updated_at": "2023-06-22T12:18:31Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxt-content-theme-blog"
+        }
+      ]
+    },
+    {
+      "title": "test-angular",
+      "description": "",
+      "repo": "https://github.com/jovylle/test-angular",
+      "stars": 0,
+      "updated_at": "2023-04-08T07:27:11Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/test-angular"
+        }
+      ]
+    },
+    {
+      "title": "public-demo",
+      "description": "The code that powers the official public demo of Payload CMS. ",
+      "repo": "https://github.com/jovylle/public-demo",
+      "stars": 1,
+      "updated_at": "2023-03-10T06:59:12Z",
+      "language": null,
+      "private": false,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/public-demo"
+        }
+      ]
+    },
+    {
+      "title": "nuxt2-blog",
+      "description": "",
+      "repo": "https://github.com/jovylle/nuxt2-blog",
+      "stars": 0,
+      "updated_at": "2022-07-07T08:55:33Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxt2-blog"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-starter-minimal-blog-lekoarts",
+      "description": "",
+      "repo": "https://github.com/jovylle/gatsby-starter-minimal-blog-lekoarts",
+      "stars": 0,
+      "updated_at": "2022-06-20T02:57:35Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-starter-minimal-blog-lekoarts"
+        }
+      ]
+    },
+    {
+      "title": "unified_strapi",
+      "description": "",
+      "repo": "https://github.com/jovylle/unified_strapi",
+      "stars": 0,
+      "updated_at": "2022-06-11T16:31:46Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/unified_strapi"
+        }
+      ]
+    },
+    {
+      "title": "peerless-pressure-washing",
+      "description": "",
+      "repo": "https://github.com/jovylle/peerless-pressure-washing",
+      "stars": 0,
+      "updated_at": "2022-05-26T02:03:27Z",
+      "language": "Vue",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/peerless-pressure-washing"
+        }
+      ]
+    },
+    {
+      "title": "nuxtjs_portfolio",
+      "description": "",
+      "repo": "https://github.com/jovylle/nuxtjs_portfolio",
+      "stars": 0,
+      "updated_at": "2022-05-23T19:03:29Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxtjs_portfolio"
+        }
+      ]
+    },
+    {
+      "title": "nuxtjs_and_strapi_sb_project",
+      "description": "sarah-bryant",
+      "repo": "https://github.com/jovylle/nuxtjs_and_strapi_sb_project",
+      "stars": 0,
+      "updated_at": "2022-04-29T18:00:00Z",
+      "language": "Vue",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nuxtjs_and_strapi_sb_project"
+        }
+      ]
+    },
+    {
+      "title": "AnyReactJs",
+      "description": "",
+      "repo": "https://github.com/jovylle/AnyReactJs",
+      "stars": 0,
+      "updated_at": "2022-04-25T04:08:18Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/AnyReactJs"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-blog-sanity-connectiononly-no-studio",
+      "description": "",
+      "repo": "https://github.com/jovylle/gatsby-blog-sanity-connectiononly-no-studio",
+      "stars": 0,
+      "updated_at": "2022-04-20T18:03:43Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-blog-sanity-connectiononly-no-studio"
+        }
+      ]
+    },
+    {
+      "title": "jovheroko",
+      "description": "",
+      "repo": "https://github.com/jovylle/jovheroko",
+      "stars": 0,
+      "updated_at": "2022-04-20T18:03:28Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/jovheroko"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-test-pages",
+      "description": "gatsby-test-pages",
+      "repo": "https://github.com/jovylle/gatsby-test-pages",
+      "stars": 0,
+      "updated_at": "2022-04-20T18:03:01Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-test-pages"
+        }
+      ]
+    },
+    {
+      "title": "gatsby-template-jaydan",
+      "description": "",
+      "repo": "https://github.com/jovylle/gatsby-template-jaydan",
+      "stars": 0,
+      "updated_at": "2022-04-20T18:02:48Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/gatsby-template-jaydan"
+        }
+      ]
+    },
+    {
+      "title": "First-NextJs",
+      "description": "",
+      "repo": "https://github.com/jovylle/First-NextJs",
+      "stars": 0,
+      "updated_at": "2022-04-17T17:43:14Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/First-NextJs"
+        }
+      ]
+    },
+    {
+      "title": "nexseed_exam",
+      "description": "",
+      "repo": "https://github.com/jovylle/nexseed_exam",
+      "stars": 0,
+      "updated_at": "2022-02-10T08:18:48Z",
+      "language": "HTML",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/nexseed_exam"
+        }
+      ]
+    },
+    {
+      "title": "dopile-react",
+      "description": "React, NodeJs, Express, Mysql",
+      "repo": "https://github.com/jovylle/dopile-react",
+      "stars": 0,
+      "updated_at": "2021-09-22T17:46:17Z",
+      "language": "JavaScript",
+      "private": true,
+      "status": "published",
+      "fav": false,
+      "showcase": false,
+      "netlify_live": null,
+      "netlify_status": null,
+      "links": [
+        {
+          "label": "Repo",
+          "url": "https://github.com/jovylle/dopile-react"
+        }
+      ]
+    }
+  ]
+}

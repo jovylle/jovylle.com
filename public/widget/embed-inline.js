@@ -501,14 +501,28 @@
     try {
       const res = await fetch('https://pocket.uft1.com/data/highlights.json');
       const data = await res.json();
-      state.aiSolutions = Array.isArray(data.highlights) ? data.highlights : [];
+      state.aiSolutions = Array.isArray(data?.highlights)
+        ? data.highlights
+        : Array.isArray(data)
+          ? data
+          : [];
       if (aiSolutionsList) {
         const top = state.aiSolutions.slice(0, 3);
-        aiSolutionsList.innerHTML = top.map(h => `
-          <a ${h.link ? `href="${h.link}" target="_blank"` : ''} class="mystery-widget-link">
-            <strong>${h.title}</strong> · <span style="color:#6c757d;">${h.tag || ''}</span>
-          </a>
-        `).join('');
+        aiSolutionsList.innerHTML = top.map(h => {
+          const primaryLink = h.link || (Array.isArray(h.links) && h.links[0]?.url);
+          const tag = h.tag ? `<span style="color:#6c757d;">${h.tag}</span>` : '';
+          const year = h.year ? `<span style="color:#6c757d; margin-left:6px;">${h.year}</span>` : '';
+          const content = `
+            <strong>${h.title}</strong>
+            ${tag ? ' · ' + tag : ''}
+            ${year}
+          `;
+
+          if (primaryLink) {
+            return `<a href="${primaryLink}" target="_blank" class="mystery-widget-link">${content}</a>`;
+          }
+          return `<span class="mystery-widget-link">${content}</span>`;
+        }).join('');
       }
     } catch (e) {
       if (aiSolutionsList) aiSolutionsList.innerHTML = '<div style="color:#6c757d; font-size:14px;">AI Solutions unavailable</div>';

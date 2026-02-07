@@ -4,7 +4,7 @@ const projectsData = await $fetch('https://pocket.uft1.com/data/personal-project
 const allProjects = projectsData?.projects || []
 
 // Reactive sorting and filtering
-const sortBy = ref('recent')
+const sortBy = ref('priority')
 const selectedCategory = ref('all')
 const showFavoritesOnly = ref(true) // Default to showing favorites only
 
@@ -26,6 +26,8 @@ const projects = computed(() => {
   
   // Sort projects
   switch (sortBy.value) {
+    case 'priority':
+      return filteredProjects.sort((a, b) => (b.priority_level || 0) - (a.priority_level || 0))
     case 'recent':
       return filteredProjects.sort((a, b) => 
         new Date(b.updated_at) - new Date(a.updated_at)
@@ -69,6 +71,25 @@ const formatDate = (dateStr) => {
     month: 'short',
     day: 'numeric'
   })
+}
+
+// Normalize links array, keeping existing fields as fallback
+const projectLinks = (project) => {
+  if (Array.isArray(project?.links) && project.links.length) return project.links
+
+  const links = []
+  if (project?.repo) links.push({ label: 'Repo', url: project.repo, type: 'repo' })
+  if (project?.live) links.push({ label: 'Live', url: project.live, type: 'live' })
+  if (project?.netlify_live) links.push({ label: 'Netlify', url: `https://${project.netlify_live}`, type: 'live' })
+  return links
+}
+
+const primaryLiveUrl = (project) => {
+  const liveLink = projectLinks(project).find(link => link.type === 'live')
+  if (liveLink?.url) return liveLink.url
+  if (project?.live) return project.live
+  if (project?.netlify_live) return `https://${project.netlify_live}`
+  return null
 }
 
 // Meta tags for SEO (but keep it unlisted)
@@ -117,6 +138,7 @@ useHead({
               v-model="sortBy" 
               class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
+              <option value="priority">Priority level</option>
               <option value="recent">Most Recent</option>
               <option value="stars">Most Stars</option>
               <option value="name">Name (A-Z)</option>
@@ -154,12 +176,28 @@ useHead({
             :key="project.slug || project.name"
             class="bg-white dark:bg-ternary-dark rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border dark:border-gray-700"
           >
+            <!-- Thumbnail -->
+            <div v-if="project.thumbnail" class="mb-4">
+              <img
+                :src="project.thumbnail"
+                :alt="project.title || project.name"
+                class="w-full h-40 object-cover rounded-md border dark:border-gray-700"
+                loading="lazy"
+              />
+            </div>
+
             <!-- Project Header -->
             <div class="mb-4">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-lg font-semibold text-primary-dark dark:text-primary-light">
                   {{ project.title || project.name }}
                 </h3>
+                <span
+                  v-if="project.priority_level"
+                  class="ml-2 inline-flex items-center px-2 py-0.5 text-[11px] font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200"
+                >
+                  P{{ project.priority_level }}
+                </span>
                 <i 
                   v-if="project.fav" 
                   class="bx bx-heart text-red-500 text-lg"
@@ -198,28 +236,22 @@ useHead({
 
             <!-- Project Links -->
             <div class="flex flex-wrap gap-2">
-              <!-- GitHub Repo Link -->
               <a
-                v-if="project.repo"
-                :href="project.repo"
+                v-for="link in projectLinks(project)"
+                :key="link.url || link.label"
+                :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center px-3 py-1 text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 rounded-full transition-colors duration-200"
+                class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full transition-colors duration-200"
+                :class="[
+                  link.type === 'live'
+                    ? 'text-white bg-blue-600 hover:bg-blue-700'
+                    : 'text-white bg-gray-800 hover:bg-gray-900'
+                ]"
               >
-                <i class="bx bxl-github mr-1"></i>
-                GitHub
-              </a>
-
-              <!-- Live Site Link -->
-              <a
-                v-if="project.live || project.netlify_live"
-                :href="project.live ? project.live : `https://${project.netlify_live}`"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-colors duration-200"
-              >
-                <i class="bx bx-link-external mr-1"></i>
-                Live Site
+                <i v-if="link.type === 'repo'" class="bx bxl-github mr-1"></i>
+                <i v-else-if="link.type === 'live'" class="bx bx-link-external mr-1"></i>
+                {{ link.label || 'Link' }}
               </a>
 
               <!-- Netlify Status Badge (if available) -->
@@ -233,7 +265,7 @@ useHead({
 
               <!-- No Live Site Indicator -->
               <span
-                v-if="!project.live && !project.netlify_live"
+                v-if="!primaryLiveUrl(project)"
                 class="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded-full"
               >
                 <i class="bx bx-code-alt mr-1"></i>
