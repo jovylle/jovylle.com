@@ -11,6 +11,10 @@ const TECH_UNSPECIFIED = 'uncategorized'
 const sortBy = ref('priority')
 const selectedTech = ref('all')
 
+const rawPossibleTechFilters = Array.isArray(projectsData?.possible_techs)
+  ? projectsData.possible_techs.map((tech) => tech?.trim()).filter(Boolean)
+  : []
+
 const compareUpdated = (a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0)
 
 const enrichedProjects = computed(() =>
@@ -18,7 +22,9 @@ const enrichedProjects = computed(() =>
     const techTags = Array.isArray(project.tech)
       ? project.tech.map((tag) => tag?.trim()).filter(Boolean)
       : []
-    const normalizedTechs = techTags.length ? techTags : [TECH_UNSPECIFIED]
+    const normalizedTechs = techTags.length
+      ? Array.from(new Set(techTags))
+      : [TECH_UNSPECIFIED]
 
     return {
       ...project,
@@ -50,8 +56,6 @@ const projects = computed(() => {
       })
     case 'recent':
       return sortedProjects.sort(compareUpdated)
-    case 'stars':
-      return sortedProjects.sort((a, b) => (b.stars || 0) - (a.stars || 0))
     case 'name':
       return sortedProjects.sort((a, b) =>
         (a.displayTitle || '').localeCompare(b.displayTitle || '')
@@ -61,8 +65,12 @@ const projects = computed(() => {
   }
 })
 
-// Get unique tech filters from projects
+// Get unique tech filters from projects or API
 const availableTechFilters = computed(() => {
+  if (rawPossibleTechFilters.length) {
+    return Array.from(new Set(rawPossibleTechFilters))
+  }
+
   const techSets = new Set()
   enrichedProjects.value.forEach((project) => {
     project.techTags.forEach((tech) => techSets.add(tech))
@@ -155,9 +163,8 @@ useHead({
               v-model="sortBy" 
               class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
-              <option value="priority">Priority score</option>
+              <option value="priority">Default Priority</option>
               <option value="recent">Most Recent</option>
-              <option value="stars">Most Stars</option>
               <option value="name">Name (A-Z)</option>
             </select>
           </div>
@@ -227,26 +234,11 @@ useHead({
                 {{ techDisplayNames[tech] || tech }}
               </span>
 
-              <span 
-                v-if="project.stars > 0"
-                class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full flex items-center"
-              >
-                <i class="bx bx-star mr-1"></i>
-                {{ project.stars }}
-              </span>
-
               <span
                 v-if="project.draft_or_published"
                 class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded-full uppercase tracking-wide"
               >
                 {{ project.draft_or_published }}
-              </span>
-
-              <span
-                v-if="project.priority_score != null"
-                class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full uppercase tracking-wide"
-              >
-                Priority {{ project.priority_score }}
               </span>
 
               <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
@@ -275,13 +267,6 @@ useHead({
               </a>
 
               <!-- No Live Site Indicator -->
-              <span
-                v-if="!primaryLiveUrl(project)"
-                class="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded-full"
-              >
-                <i class="bx bx-code-alt mr-1"></i>
-                Code Only
-              </span>
             </div>
           </div>
         </div>
