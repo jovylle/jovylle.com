@@ -51,6 +51,12 @@
                 Uses
               </NuxtLink>
               <NuxtLink
+                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
+                to="/personal-projects"
+              >
+                Projects
+              </NuxtLink>
+              <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0 sm:hidden"
                 to="/contact"
               >

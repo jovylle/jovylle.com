@@ -41,6 +41,9 @@
             <NuxtLink to="/hub">
               <UiButton variant="outline-dashed">Blog & Hub</UiButton>
             </NuxtLink>
+            <NuxtLink to="/personal-projects">
+              <UiButton variant="outline-dashed">Projects Archive</UiButton>
+            </NuxtLink>
           </div>
         </div>
       </div>
