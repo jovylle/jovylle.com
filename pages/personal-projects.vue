@@ -3,60 +3,81 @@ import { POCKET_ASSET_BASE } from '~/utils/config'
 
 // Fetch personal projects data from external API
 const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
-const allProjects = projectsData?.projects || []
+const allProjects = projectsData?.projects ?? []
+
+const TECH_UNSPECIFIED = 'uncategorized'
 
 // Reactive sorting and filtering
 const sortBy = ref('priority')
-const selectedCategory = ref('all')
+const selectedTech = ref('all')
+
+const compareUpdated = (a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0)
+
+const enrichedProjects = computed(() =>
+  allProjects.map((project) => {
+    const techTags = Array.isArray(project.tech)
+      ? project.tech.map((tag) => tag?.trim()).filter(Boolean)
+      : []
+    const normalizedTechs = techTags.length ? techTags : [TECH_UNSPECIFIED]
+
+    return {
+      ...project,
+      techTags: normalizedTechs,
+      techLabel: normalizedTechs[0],
+      displayTitle: project.title?.trim() || 'Untitled Project'
+    }
+  })
+)
 
 // Process and sort projects
 const projects = computed(() => {
-  let filteredProjects = [...allProjects]
-  
-  // Filter by category if selected
-  if (selectedCategory.value !== 'all') {
-    filteredProjects = filteredProjects.filter(project => 
-      project.category === selectedCategory.value
+  let filteredProjects = enrichedProjects.value
+
+  if (selectedTech.value !== 'all') {
+    filteredProjects = filteredProjects.filter((project) =>
+      project.techTags.includes(selectedTech.value)
     )
   }
-  
-  // Sort projects
+
+  const sortedProjects = [...filteredProjects]
+
   switch (sortBy.value) {
     case 'priority':
-      return filteredProjects.sort((a, b) => (b.priority_level || 0) - (a.priority_level || 0))
+      return sortedProjects.sort((a, b) => {
+        const priorityDiff =
+          (b.priority_score ?? 0) - (a.priority_score ?? 0)
+        return priorityDiff || compareUpdated(a, b)
+      })
     case 'recent':
-      return filteredProjects.sort((a, b) => 
-        new Date(b.updated_at) - new Date(a.updated_at)
-      )
+      return sortedProjects.sort(compareUpdated)
     case 'stars':
-      return filteredProjects.sort((a, b) => (b.stars || 0) - (a.stars || 0))
+      return sortedProjects.sort((a, b) => (b.stars || 0) - (a.stars || 0))
     case 'name':
-      return filteredProjects.sort((a, b) => 
-        (a.title || a.name || '').localeCompare(b.title || b.name || '')
+      return sortedProjects.sort((a, b) =>
+        (a.displayTitle || '').localeCompare(b.displayTitle || '')
       )
     default:
-      return filteredProjects
+      return sortedProjects
   }
 })
 
-// Get unique categories from projects
-const availableCategories = computed(() => {
-  const categories = new Set()
-  allProjects.forEach(project => {
-    if (project.category) {
-      categories.add(project.category)
-    }
+// Get unique tech filters from projects
+const availableTechFilters = computed(() => {
+  const techSets = new Set()
+  enrichedProjects.value.forEach((project) => {
+    project.techTags.forEach((tech) => techSets.add(tech))
   })
-  return Array.from(categories).sort()
+
+  return Array.from(techSets).sort((a, b) => {
+    if (a === TECH_UNSPECIFIED) return 1
+    if (b === TECH_UNSPECIFIED) return -1
+    return a.localeCompare(b)
+  })
 })
 
-// Category display names
-const categoryNames = {
-  'tools-extensions': 'Tools & Extensions',
-  'websites-cms': 'Websites & CMS',
-  'game-tools': 'Game Tools',
-  'experiments-utilities': 'Experiments & Utilities',
-  'uncategorized': 'Other Projects'
+// Tech display names
+const techDisplayNames = {
+  [TECH_UNSPECIFIED]: 'General Projects'
 }
 
 // Format date helper
@@ -69,23 +90,29 @@ const formatDate = (dateStr) => {
   })
 }
 
+const classifyLinkType = (label, url) => {
+  const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
+  if (seed.includes('repo') || seed.includes('github')) return 'repo'
+  if (seed.includes('live') || seed.includes('demo') || seed.includes('app') || seed.includes('site')) return 'live'
+  return 'other'
+}
+
 // Normalize links array, keeping existing fields as fallback
 const projectLinks = (project) => {
-  if (Array.isArray(project?.links) && project.links.length) return project.links
+  if (!Array.isArray(project?.links)) return []
 
-  const links = []
-  if (project?.repo) links.push({ label: 'Repo', url: project.repo, type: 'repo' })
-  if (project?.live) links.push({ label: 'Live', url: project.live, type: 'live' })
-  if (project?.netlify_live) links.push({ label: 'Netlify', url: `https://${project.netlify_live}`, type: 'live' })
-  return links
+  return project.links
+    .filter((link) => link?.url)
+    .map((link) => ({
+      label: link.label || 'Link',
+      url: link.url,
+      type: classifyLinkType(link.label, link.url)
+    }))
 }
 
 const primaryLiveUrl = (project) => {
-  const liveLink = projectLinks(project).find(link => link.type === 'live')
-  if (liveLink?.url) return liveLink.url
-  if (project?.live) return project.live
-  if (project?.netlify_live) return `https://${project.netlify_live}`
-  return null
+  const liveLink = projectLinks(project).find((link) => link.type === 'live')
+  return liveLink?.url ?? null
 }
 
 const resolveThumbnail = (thumbnail) => {
@@ -100,7 +127,7 @@ useHead({
   title: 'Personal Projects Archive - Jovylle',
   meta: [
     { name: 'description', content: `A comprehensive collection of ${allProjects.length} personal projects and experiments` },
-    { name: 'robots', content: 'noindex, nofollow' }, // Keep it unlisted from search engines
+    { name: 'robots', content: 'noindex, nofollow' } // Keep it unlisted from search engines
   ]
 })
 </script>
@@ -128,7 +155,7 @@ useHead({
               v-model="sortBy" 
               class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
-              <option value="priority">Priority level</option>
+              <option value="priority">Priority score</option>
               <option value="recent">Most Recent</option>
               <option value="stars">Most Stars</option>
               <option value="name">Name (A-Z)</option>
@@ -137,14 +164,14 @@ useHead({
 
           <!-- Category Filter -->
           <div class="flex items-center gap-2">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Category:</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Technology:</label>
             <select 
-              v-model="selectedCategory" 
+              v-model="selectedTech" 
               class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
             >
-              <option value="all">All Categories</option>
-              <option v-for="category in availableCategories" :key="category" :value="category">
-                {{ categoryNames[category] || category }}
+              <option value="all">All Technologies</option>
+              <option v-for="tech in availableTechFilters" :key="tech" :value="tech">
+                {{ techDisplayNames[tech] || tech }}
               </option>
             </select>
           </div>
@@ -162,7 +189,7 @@ useHead({
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
             v-for="project in projects"
-            :key="project.slug || project.name"
+            :key="project.slug || project.title"
             class="bg-white dark:bg-ternary-dark rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border dark:border-gray-700"
           >
             <!-- Thumbnail -->
@@ -177,16 +204,13 @@ useHead({
 
             <!-- Project Header -->
             <div class="mb-4">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center justify-between mb-2 gap-2">
                 <h3 class="text-lg font-semibold text-primary-dark dark:text-primary-light">
-                  {{ project.title || project.name }}
+                  {{ project.displayTitle }}
                 </h3>
-                <span
-                  v-if="project.priority_level"
-                  class="ml-2 inline-flex items-center px-2 py-0.5 text-[11px] font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200"
-                >
-                  P{{ project.priority_level }}
-                </span>
+              </div>
+              <div class="text-xs uppercase tracking-[0.3em] text-secondary-dark dark:text-secondary-light mb-2">
+                {{ techDisplayNames[project.techLabel] || project.techLabel }}
               </div>
               <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
                 {{ project.description || 'No description available' }}
@@ -195,24 +219,36 @@ useHead({
 
             <!-- Project Meta Info -->
             <div class="mb-4 flex flex-wrap gap-2 text-xs">
-              <!-- Language -->
-              <span 
-                v-if="project.language"
-                class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
+              <span
+                v-for="tech in project.techTags"
+                :key="tech"
+                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full uppercase tracking-wide"
               >
-                {{ project.language }}
+                {{ techDisplayNames[tech] || tech }}
               </span>
-              
-              <!-- Stars -->
+
               <span 
-                v-if="project.stars > 10"
+                v-if="project.stars > 0"
                 class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full flex items-center"
               >
                 <i class="bx bx-star mr-1"></i>
                 {{ project.stars }}
               </span>
-              
-              <!-- Last Updated -->
+
+              <span
+                v-if="project.draft_or_published"
+                class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded-full uppercase tracking-wide"
+              >
+                {{ project.draft_or_published }}
+              </span>
+
+              <span
+                v-if="project.priority_score != null"
+                class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full uppercase tracking-wide"
+              >
+                Priority {{ project.priority_score }}
+              </span>
+
               <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
                 {{ formatDate(project.updated_at) }}
               </span>
@@ -237,15 +273,6 @@ useHead({
                 <i v-else-if="link.type === 'live'" class="bx bx-link-external mr-1"></i>
                 {{ link.label || 'Link' }}
               </a>
-
-              <!-- Netlify Status Badge (if available) -->
-              <span
-                v-if="project.netlify_status === 'current' && project.netlify_live"
-                class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900 rounded-full"
-              >
-                <i class="bx bx-check-circle mr-1"></i>
-                Deployed
-              </span>
 
               <!-- No Live Site Indicator -->
               <span
