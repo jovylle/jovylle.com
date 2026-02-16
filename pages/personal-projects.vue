@@ -3,7 +3,10 @@ import { POCKET_ASSET_BASE } from '~/utils/config'
 
 // Fetch personal projects data from external API
 const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
-const allProjects = projectsData?.projects ?? []
+// Only include published projects; drafts are excluded from display entirely
+const allProjects = (projectsData?.projects ?? []).filter(
+  (p) => (p.draft_or_published || '').toLowerCase() === 'published'
+)
 
 const TECH_UNSPECIFIED = 'uncategorized'
 
@@ -221,9 +224,6 @@ useHead({
                   {{ project.displayTitle }}
                 </h3>
               </div>
-              <div class="text-xs uppercase tracking-[0.3em] text-secondary-dark dark:text-secondary-light mb-2">
-                {{ techDisplayNames[project.techLabel] || project.techLabel }}
-              </div>
               <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
                 {{ project.description || 'No description available' }}
               </p>
@@ -239,39 +239,64 @@ useHead({
                 {{ techDisplayNames[tech] || tech }}
               </span>
 
-              <span
-                v-if="project.draft_or_published"
-                class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded-full uppercase tracking-wide"
-              >
-                {{ project.draft_or_published }}
-              </span>
-
               <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
                 {{ formatDate(project.updated_at) }}
               </span>
             </div>
 
-            <!-- Project Links -->
-            <div class="flex flex-wrap gap-2">
-              <a
-                v-for="link in projectLinks(project)"
-                :key="link.url || link.label"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full transition-colors duration-200"
-                :class="[
-                  link.type === 'live'
-                    ? 'text-white bg-blue-600 hover:bg-blue-700'
-                    : 'text-white bg-gray-800 hover:bg-gray-900'
-                ]"
-              >
-                <i v-if="link.type === 'repo'" class="bx bxl-github mr-1"></i>
-                <i v-else-if="link.type === 'live'" class="bx bx-link-external mr-1"></i>
-                {{ link.label || 'Link' }}
-              </a>
-
-              <!-- No Live Site Indicator -->
+            <!-- Project Links: clear separation between Live and Repo/Other -->
+            <div class="space-y-3">
+              <!-- Live / Demo links -->
+              <div v-if="projectLinks(project).some((l) => l.type === 'live')" class="space-y-1">
+                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Live</span>
+                <div class="flex flex-wrap gap-2">
+                  <a
+                    v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
+                    :key="link.url || link.label"
+                    :href="link.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
+                  >
+                    <i class="bx bx-link-external mr-1.5"></i>
+                    {{ link.label || 'View live' }}
+                  </a>
+                </div>
+              </div>
+              <!-- Repo / Code links -->
+              <div v-if="projectLinks(project).some((l) => l.type === 'repo')" class="space-y-1">
+                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Code</span>
+                <div class="flex flex-wrap gap-2">
+                  <a
+                    v-for="link in projectLinks(project).filter((l) => l.type === 'repo')"
+                    :key="link.url || link.label"
+                    :href="link.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 dark:bg-gray-600 text-white hover:bg-gray-900 dark:hover:bg-gray-500 transition-colors duration-200 border border-gray-700 dark:border-gray-500"
+                  >
+                    <i class="bx bxl-github mr-1.5"></i>
+                    {{ link.label || 'Repo' }}
+                  </a>
+                </div>
+              </div>
+              <!-- Other links -->
+              <div v-if="projectLinks(project).some((l) => l.type === 'other')" class="space-y-1">
+                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Links</span>
+                <div class="flex flex-wrap gap-2">
+                  <a
+                    v-for="link in projectLinks(project).filter((l) => l.type === 'other')"
+                    :key="link.url || link.label"
+                    :href="link.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-transparent text-gray-700 dark:text-gray-300 border border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                  >
+                    <i class="bx bx-link-alt mr-1.5"></i>
+                    {{ link.label || 'Link' }}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
