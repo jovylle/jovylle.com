@@ -105,11 +105,16 @@ const classifyLinkType = (label, url) => {
   return 'other'
 }
 
-// Normalize links array, keeping existing fields as fallback
+// Normalize links array from API; fallback to project.repo when links is missing/empty
 const projectLinks = (project) => {
-  if (!Array.isArray(project?.links)) return []
+  const raw =
+    Array.isArray(project?.links) && project.links.length > 0
+      ? project.links
+      : project?.repo
+        ? [{ label: 'Repo', url: project.repo }]
+        : []
 
-  return project.links
+  return raw
     .filter((link) => link?.url)
     .map((link) => ({
       label: link.label || 'Link',
