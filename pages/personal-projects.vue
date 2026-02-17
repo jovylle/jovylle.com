@@ -5,6 +5,13 @@ const GITHUB_API = 'https://api.github.com'
 const GITHUB_PER_PAGE = 100
 const POCKET_DATA_URL = 'https://pocket.uft1.com/data/personal-projects.json'
 
+function classifyLinkType(label, url) {
+  const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
+  if (seed.includes('repo') || seed.includes('github')) return 'repo'
+  if (seed.includes('live') || seed.includes('demo') || seed.includes('app') || seed.includes('site') || seed.includes('home')) return 'live'
+  return 'other'
+}
+
 async function fetchAllGitHubRepos() {
   const headers = {
     Accept: 'application/vnd.github.v3+json',
@@ -24,6 +31,13 @@ async function fetchAllGitHubRepos() {
       break
     }
 
+    console.log(
+      'personal-projects: github page fetched',
+      page,
+      'repos',
+      pageRepos.length
+    )
+
     collected.push(...pageRepos)
 
     if (pageRepos.length < GITHUB_PER_PAGE) {
@@ -36,83 +50,112 @@ async function fetchAllGitHubRepos() {
   return collected
 }
 
-// Fetch GitHub repos (all pages) and pocket data at build time
-const [githubRepos, projectsData] = await Promise.all([
-  fetchAllGitHubRepos().catch(() => []),
-  $fetch(POCKET_DATA_URL).catch(() => ({ projects: [] }))
-])
+async function fetchPersonalProjects() {
+  console.log('personal-projects: fetchPersonalProjects start')
+  const [githubRepos, projectsData] = await Promise.all([
+    fetchAllGitHubRepos().catch(() => []),
+    $fetch(POCKET_DATA_URL).catch(() => ({ projects: [] }))
+  ])
 
-// Only published pocket entries; index GitHub repos by id for matching
-const publishedPocket = (projectsData?.projects ?? []).filter(
-  (p) => (p.draft_or_published || '').toLowerCase() === 'published'
-)
-const githubById = Object.fromEntries(
-  (Array.isArray(githubRepos) ? githubRepos : []).map((r) => [r.id, r])
-)
+  const publishedPocket = (projectsData?.projects ?? []).filter(
+    (p) => (p.draft_or_published || '').toLowerCase() === 'published'
+  )
 
-// Merge: for each published pocket project, match by github.id and build merged project
-// From GitHub: name, repo link (html_url), description, homepage as "Home" link
-// From pocket: thumbnail, updated_at, tech, priority_score, slug, and extra links (e.g. Live)
-const allProjects = publishedPocket
-  .map((pocket) => {
-    const githubId = pocket.github?.id
-    const gh = githubId ? githubById[githubId] : null
-    if (!gh) return null
+  const githubById = Object.fromEntries(
+    (Array.isArray(githubRepos) ? githubRepos : []).map((r) => [r.id, r])
+  )
 
-    const repoUrl = gh.html_url || pocket.repo
-    const homeUrl = (gh.homepage || '').trim()
-    const pocketLinks = Array.isArray(pocket.links) ? pocket.links : []
+  const allProjects = publishedPocket
+    .map((pocket) => {
+      const githubId = pocket.github?.id
+      const gh = githubId ? githubById[githubId] : null
+      if (!gh) return null
 
-    const links = []
-    if (homeUrl) {
-      links.push({ label: 'Home', url: homeUrl, type: 'live' })
-    }
-    links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
-    pocketLinks.forEach((link) => {
-      if (!link?.url) return
-      const url = link.url.trim()
-      if (url === repoUrl || url === homeUrl) return
-      const type = classifyLinkType(link.label, url)
-      links.push({ label: link.label || 'Link', url, type })
-    })
+      const repoUrl = gh.html_url || pocket.repo
+      const homeUrl = (gh.homepage || '').trim()
+      const pocketLinks = Array.isArray(pocket.links) ? pocket.links : []
 
-    return {
-      slug: pocket.slug || gh.name,
-      title: gh.name,
-      displayTitle: (gh.name || pocket.title || '').trim() || 'Untitled Project',
-      description: (gh.description || pocket.description || '').trim() || '',
-      repo: repoUrl,
-      links,
-      thumbnail: pocket.thumbnail,
-      updated_at: pocket.updated_at || gh.updated_at,
-      tech: pocket.tech || [],
-      priority_score: pocket.priority_score ?? 100,
-      github: { ...pocket.github, id: gh.id }
-    }
+      const links = []
+      if (homeUrl) {
+        links.push({ label: 'Home', url: homeUrl, type: 'live' })
+      }
+      links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
+      pocketLinks.forEach((link) => {
+        if (!link?.url) return
+        const url = link.url.trim()
+        if (url === repoUrl || url === homeUrl) return
+        const type = classifyLinkType(link.label, url)
+        links.push({ label: link.label || 'Link', url, type })
+      })
+
+      return {
+        slug: pocket.slug || gh.name,
+        title: gh.name,
+        displayTitle: (gh.name || pocket.title || '').trim() || 'Untitled Project',
+        description: (gh.description || pocket.description || '').trim() || '',
+        repo: repoUrl,
+        links,
+        thumbnail: pocket.thumbnail,
+        updated_at: pocket.updated_at || gh.updated_at,
+        tech: pocket.tech || [],
+        priority_score: pocket.priority_score ?? 100,
+        github: { ...pocket.github, id: gh.id }
+      }
   })
   .filter(Boolean)
 
-const TECH_UNSPECIFIED = 'uncategorized'
+  const possibleTechs = Array.isArray(projectsData?.possible_techs)
+    ? projectsData.possible_techs.map((tech) => tech?.trim()).filter(Boolean)
+    : []
 
-function classifyLinkType(label, url) {
-  const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
-  if (seed.includes('repo') || seed.includes('github')) return 'repo'
-  if (seed.includes('live') || seed.includes('demo') || seed.includes('app') || seed.includes('site') || seed.includes('home')) return 'live'
-  return 'other'
+  console.log(
+    'personal-projects: github repos count',
+    Array.isArray(githubRepos) ? githubRepos.length : 0
+  )
+  console.log(
+    'personal-projects: pocket projects count',
+    Array.isArray(projectsData?.projects) ? projectsData.projects.length : 0
+  )
+  console.log(
+    'personal-projects: merged projects count',
+    allProjects.length,
+    'tech filters',
+    possibleTechs.length
+  )
+  console.log(
+    'personal-projects: pocket sample',
+    projectsData?.projects?.slice(0, 3) ?? []
+  )
+  console.log('personal-projects: merged sample', allProjects.slice(0, 3))
+
+  console.log('personal-projects: fetchPersonalProjects end')
+
+  return {
+    allProjects,
+    possibleTechs
+  }
 }
+
+const { data: personalProjectsData } = await useAsyncData(
+  'personal-projects-data',
+  fetchPersonalProjects,
+  { server: true }
+)
+
+const allProjects = computed(() => personalProjectsData.value?.allProjects ?? [])
+
+const TECH_UNSPECIFIED = 'uncategorized'
 
 // Reactive sorting and filtering
 const sortBy = ref('priority')
 const selectedTech = ref('all')
 
-const rawPossibleTechFilters = Array.isArray(projectsData?.possible_techs)
-  ? projectsData.possible_techs.map((tech) => tech?.trim()).filter(Boolean)
-  : []
+const rawPossibleTechFilters = computed(() => personalProjectsData.value?.possibleTechs ?? [])
 
 const compareUpdated = (a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0)
 
 const enrichedProjects = computed(() =>
-  allProjects.map((project) => {
+  allProjects.value.map((project) => {
     const techTags = Array.isArray(project.tech)
       ? project.tech.map((tag) => tag?.trim()).filter(Boolean)
       : []
@@ -161,8 +204,8 @@ const projects = computed(() => {
 
 // Get unique tech filters from projects or API
 const availableTechFilters = computed(() => {
-  if (rawPossibleTechFilters.length) {
-    return Array.from(new Set(rawPossibleTechFilters))
+  if (rawPossibleTechFilters.value.length) {
+    return Array.from(new Set(rawPossibleTechFilters.value))
   }
 
   const techSets = new Set()
@@ -215,11 +258,15 @@ const resolveThumbnail = (thumbnail) => {
   return `${POCKET_ASSET_BASE}/${thumbnail}`
 }
 
+const pageDescription = computed(() =>
+  `A comprehensive collection of ${allProjects.value.length} personal projects and experiments`
+)
+
 // Meta tags for SEO (but keep it unlisted)
 useHead({
   title: 'Personal Projects Archive - Jovylle',
   meta: [
-    { name: 'description', content: `A comprehensive collection of ${allProjects.length} personal projects and experiments` },
+    { name: 'description', content: pageDescription.value },
     { name: 'robots', content: 'noindex, nofollow' } // Keep it unlisted from search engines
   ]
 })

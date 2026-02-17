@@ -1,6 +1,6 @@
 <script setup>
   const items = await queryContent('other').find()
-  console.log("other",items)
+  // console.log("other",items)
   // https://content.nuxt.com/composables/query-content
 </script>
 

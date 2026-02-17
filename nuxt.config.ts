@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ["/", "/projects", "/contact", "/game"],
+      routes: ["/", "/projects", "/personal-projects", "/contact", "/game"],
     },
   },
   routeRules: {
