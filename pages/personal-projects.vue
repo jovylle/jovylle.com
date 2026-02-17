@@ -1,14 +1,79 @@
 <script setup>
 import { POCKET_ASSET_BASE } from '~/utils/config'
 
-// Fetch personal projects data from external API
-const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
-// Only include published projects; drafts are excluded from display entirely
-const allProjects = (projectsData?.projects ?? []).filter(
+const GITHUB_API = 'https://api.github.com'
+const POCKET_DATA_URL = 'https://pocket.uft1.com/data/personal-projects.json'
+
+// Fetch GitHub repos (primary: name, repo link, description, homepage) and pocket data (rest, matched by repo id)
+const [githubRepos, projectsData] = await Promise.all([
+  $fetch(`${GITHUB_API}/users/jovylle/repos`, {
+    params: { per_page: 100 },
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+      'User-Agent': 'jovylle.com-personal-projects'
+    }
+  }).catch(() => []),
+  $fetch(POCKET_DATA_URL).catch(() => ({ projects: [] }))
+])
+
+// Only published pocket entries; index GitHub repos by id for matching
+const publishedPocket = (projectsData?.projects ?? []).filter(
   (p) => (p.draft_or_published || '').toLowerCase() === 'published'
 )
+const githubById = Object.fromEntries(
+  (Array.isArray(githubRepos) ? githubRepos : []).map((r) => [r.id, r])
+)
+
+// Merge: for each published pocket project, match by github.id and build merged project
+// From GitHub: name, repo link (html_url), description, homepage as "Home" link
+// From pocket: thumbnail, updated_at, tech, priority_score, slug, and extra links (e.g. Live)
+const allProjects = publishedPocket
+  .map((pocket) => {
+    const githubId = pocket.github?.id
+    const gh = githubId ? githubById[githubId] : null
+    if (!gh) return null
+
+    const repoUrl = gh.html_url || pocket.repo
+    const homeUrl = (gh.homepage || '').trim()
+    const pocketLinks = Array.isArray(pocket.links) ? pocket.links : []
+
+    const links = []
+    if (homeUrl) {
+      links.push({ label: 'Home', url: homeUrl, type: 'live' })
+    }
+    links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
+    pocketLinks.forEach((link) => {
+      if (!link?.url) return
+      const url = link.url.trim()
+      if (url === repoUrl || url === homeUrl) return
+      const type = classifyLinkType(link.label, url)
+      links.push({ label: link.label || 'Link', url, type })
+    })
+
+    return {
+      slug: pocket.slug || gh.name,
+      title: gh.name,
+      displayTitle: (gh.name || pocket.title || '').trim() || 'Untitled Project',
+      description: (gh.description || pocket.description || '').trim() || '',
+      repo: repoUrl,
+      links,
+      thumbnail: pocket.thumbnail,
+      updated_at: pocket.updated_at || gh.updated_at,
+      tech: pocket.tech || [],
+      priority_score: pocket.priority_score ?? 100,
+      github: { ...pocket.github, id: gh.id }
+    }
+  })
+  .filter(Boolean)
 
 const TECH_UNSPECIFIED = 'uncategorized'
+
+function classifyLinkType(label, url) {
+  const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
+  if (seed.includes('repo') || seed.includes('github')) return 'repo'
+  if (seed.includes('live') || seed.includes('demo') || seed.includes('app') || seed.includes('site') || seed.includes('home')) return 'live'
+  return 'other'
+}
 
 // Reactive sorting and filtering
 const sortBy = ref('priority')
@@ -33,7 +98,7 @@ const enrichedProjects = computed(() =>
       ...project,
       techTags: normalizedTechs,
       techLabel: normalizedTechs[0],
-      displayTitle: project.title?.trim() || 'Untitled Project'
+      displayTitle: project.displayTitle || project.title?.trim() || 'Untitled Project'
     }
   })
 )
@@ -101,34 +166,20 @@ const formatDate = (dateStr) => {
   })
 }
 
-const classifyLinkType = (label, url) => {
-  const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
-  if (seed.includes('repo') || seed.includes('github')) return 'repo'
-  if (seed.includes('live') || seed.includes('demo') || seed.includes('app') || seed.includes('site')) return 'live'
-  return 'other'
-}
-
-// Normalize links array from API; fallback to project.repo when links is missing/empty
+// Links are already built on each merged project (Home from GitHub, Repo, + pocket extras)
 const projectLinks = (project) => {
-  const raw =
-    Array.isArray(project?.links) && project.links.length > 0
-      ? project.links
-      : project?.repo
-        ? [{ label: 'Repo', url: project.repo }]
-        : []
-
+  const raw = Array.isArray(project?.links) && project.links.length > 0
+    ? project.links
+    : project?.repo
+      ? [{ label: 'Repo', url: project.repo, type: 'repo' }]
+      : []
   return raw
     .filter((link) => link?.url)
     .map((link) => ({
       label: link.label || 'Link',
       url: link.url,
-      type: classifyLinkType(link.label, link.url)
+      type: link.type ?? classifyLinkType(link.label, link.url)
     }))
-}
-
-const primaryLiveUrl = (project) => {
-  const liveLink = projectLinks(project).find((link) => link.type === 'live')
-  return liveLink?.url ?? null
 }
 
 const resolveThumbnail = (thumbnail) => {
