@@ -2,17 +2,43 @@
 import { POCKET_ASSET_BASE } from '~/utils/config'
 
 const GITHUB_API = 'https://api.github.com'
+const GITHUB_PER_PAGE = 100
 const POCKET_DATA_URL = 'https://pocket.uft1.com/data/personal-projects.json'
 
-// Fetch GitHub repos (primary: name, repo link, description, homepage) and pocket data (rest, matched by repo id)
-const [githubRepos, projectsData] = await Promise.all([
-  $fetch(`${GITHUB_API}/users/jovylle/repos`, {
-    params: { per_page: 100 },
-    headers: {
-      Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'jovylle.com-personal-projects'
+async function fetchAllGitHubRepos() {
+  const headers = {
+    Accept: 'application/vnd.github.v3+json',
+    'User-Agent': 'jovylle.com-personal-projects'
+  }
+
+  const collected = []
+  let page = 1
+
+  while (true) {
+    const pageRepos = await $fetch(`${GITHUB_API}/users/jovylle/repos`, {
+      params: { per_page: GITHUB_PER_PAGE, page },
+      headers
+    }).catch(() => null)
+
+    if (!pageRepos || !Array.isArray(pageRepos) || !pageRepos.length) {
+      break
     }
-  }).catch(() => []),
+
+    collected.push(...pageRepos)
+
+    if (pageRepos.length < GITHUB_PER_PAGE) {
+      break
+    }
+
+    page += 1
+  }
+
+  return collected
+}
+
+// Fetch GitHub repos (all pages) and pocket data at build time
+const [githubRepos, projectsData] = await Promise.all([
+  fetchAllGitHubRepos().catch(() => []),
   $fetch(POCKET_DATA_URL).catch(() => ({ projects: [] }))
 ])
 

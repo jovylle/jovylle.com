@@ -974,7 +974,7 @@ function handleAutoOpenForNotifications() {
     open, close, toggle, 
     switchTab, // 'chat' or 'notifications'
     setTheme,
-    toggleFullPage,
+    toggleFullPage: toggleFullPageMode,
     enterFullPage: () => allowFullPage && enterFullPageMode(),
     exitFullPage: () => allowFullPage && exitFullPageMode(),
     // Notification API
@@ -987,5 +987,4 @@ function handleAutoOpenForNotifications() {
 
   if (openOnLoad) open();
 })();
-
 
