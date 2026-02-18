@@ -1,9 +1,10 @@
 <script setup>
 import { POCKET_ASSET_BASE } from '~/utils/config'
 
-const GITHUB_API = 'https://api.github.com'
-const GITHUB_PER_PAGE = 100
-const POCKET_DATA_URL = 'https://pocket.uft1.com/data/personal-projects.json'
+const API_URLS = {
+  dev: 'https://pmji7qzap2.execute-api.ap-southeast-1.amazonaws.com/dev',
+  prod: 'https://ltocvknz09.execute-api.ap-southeast-1.amazonaws.com/prod'
+}
 
 function classifyLinkType(label, url) {
   const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
@@ -12,109 +13,55 @@ function classifyLinkType(label, url) {
   return 'other'
 }
 
-async function fetchAllGitHubRepos() {
-  const headers = {
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent': 'jovylle.com-personal-projects'
-  }
-
-  const collected = []
-  let page = 1
-
-  while (true) {
-    const pageRepos = await $fetch(`${GITHUB_API}/users/jovylle/repos`, {
-      params: { per_page: GITHUB_PER_PAGE, page },
-      headers
-    }).catch(() => null)
-
-    if (!pageRepos || !Array.isArray(pageRepos) || !pageRepos.length) {
-      break
-    }
-
-    console.log(
-      'personal-projects: github page fetched',
-      page,
-      'repos',
-      pageRepos.length
-    )
-
-    collected.push(...pageRepos)
-
-    if (pageRepos.length < GITHUB_PER_PAGE) {
-      break
-    }
-
-    page += 1
-  }
-
-  return collected
-}
-
 async function fetchPersonalProjects() {
   console.log('personal-projects: fetchPersonalProjects start')
-  const [githubRepos, projectsData] = await Promise.all([
-    fetchAllGitHubRepos().catch(() => []),
-    $fetch(POCKET_DATA_URL).catch(() => ({ projects: [] }))
-  ])
+  const apiBaseUrl = process.dev ? API_URLS.dev : API_URLS.prod
+  const projectsData = await $fetch(`${apiBaseUrl}/projects`).catch(() => [])
+  const rawProjects = Array.isArray(projectsData)
+    ? projectsData
+    : (projectsData?.projects ?? [])
 
-  const publishedPocket = (projectsData?.projects ?? []).filter(
-    (p) => (p.draft_or_published || '').toLowerCase() === 'published'
+  const publishedProjects = rawProjects.filter(
+    (project) => !project?.status || project.status.toLowerCase() === 'published'
   )
 
-  const githubById = Object.fromEntries(
-    (Array.isArray(githubRepos) ? githubRepos : []).map((r) => [r.id, r])
-  )
-
-  const allProjects = publishedPocket
-    .map((pocket) => {
-      const githubId = pocket.github?.id
-      const gh = githubId ? githubById[githubId] : null
-      if (!gh) return null
-
-      const repoUrl = gh.html_url || pocket.repo
-      const homeUrl = (gh.homepage || '').trim()
-      const pocketLinks = Array.isArray(pocket.links) ? pocket.links : []
+  const allProjects = publishedProjects
+    .map((project) => {
+      const repoUrl = (project?.repo_url || '').trim()
+      const rawLinks = Array.isArray(project?.links) ? project.links : []
 
       const links = []
-      if (homeUrl) {
-        links.push({ label: 'Home', url: homeUrl, type: 'live' })
+      if (repoUrl) {
+        links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
       }
-      links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
-      pocketLinks.forEach((link) => {
+      rawLinks.forEach((link) => {
         if (!link?.url) return
         const url = link.url.trim()
-        if (url === repoUrl || url === homeUrl) return
-        const type = classifyLinkType(link.label, url)
+        if (!url || url === repoUrl) return
+        const type = link.type ?? classifyLinkType(link.label, url)
         links.push({ label: link.label || 'Link', url, type })
       })
 
       return {
-        slug: pocket.slug || gh.name,
-        title: gh.name,
-        displayTitle: (gh.name || pocket.title || '').trim() || 'Untitled Project',
-        description: (gh.description || pocket.description || '').trim() || '',
-        repo: repoUrl,
+        slug: project?.slug || project?.project_key || project?.external_id || project?.title,
+        title: (project?.title || '').trim() || 'Untitled Project',
+        displayTitle: (project?.title || '').trim() || 'Untitled Project',
+        description: (project?.description || '').trim() || '',
+        repo: repoUrl || null,
         links,
-        thumbnail: pocket.thumbnail,
-        updated_at: pocket.updated_at || gh.updated_at,
-        tech: pocket.tech || [],
-        priority_score: pocket.priority_score ?? 100,
-        github: { ...pocket.github, id: gh.id }
+        thumbnail: project?.thumbnail || null,
+        updated_at: project?.updated_at || null,
+        tech: Array.isArray(project?.tech) ? project.tech : [],
+        priority_score: project?.priority_score ?? 100
       }
-  })
-  .filter(Boolean)
+    })
+    .filter(Boolean)
 
-  const possibleTechs = Array.isArray(projectsData?.possible_techs)
-    ? projectsData.possible_techs.map((tech) => tech?.trim()).filter(Boolean)
-    : []
+  const possibleTechs = []
 
   console.log(
-    'personal-projects: github repos count',
-    Array.isArray(githubRepos) ? githubRepos.length : 0
-  )
-  console.log(
-    'personal-projects: pocket projects count',
-    Array.isArray(projectsData?.projects) ? projectsData.projects.length : 0
+    'personal-projects: api projects count',
+    rawProjects.length
   )
   console.log(
     'personal-projects: merged projects count',
@@ -123,8 +70,8 @@ async function fetchPersonalProjects() {
     possibleTechs.length
   )
   console.log(
-    'personal-projects: pocket sample',
-    projectsData?.projects?.slice(0, 3) ?? []
+    'personal-projects: api sample',
+    rawProjects.slice(0, 3)
   )
   console.log('personal-projects: merged sample', allProjects.slice(0, 3))
 
@@ -235,7 +182,7 @@ const formatDate = (dateStr) => {
   })
 }
 
-// Links are already built on each merged project (Home from GitHub, Repo, + pocket extras)
+// Links are already normalized from the projects API (repo + extra links)
 const projectLinks = (project) => {
   const raw = Array.isArray(project?.links) && project.links.length > 0
     ? project.links
