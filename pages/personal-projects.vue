@@ -6,6 +6,36 @@ const API_URLS = {
   prod: 'https://ltocvknz09.execute-api.ap-southeast-1.amazonaws.com/prod'
 }
 
+const GITHUB_USER = 'jovylle'
+const GITHUB_REPOS_URL = `https://api.github.com/users/${GITHUB_USER}/repos`
+
+/** Extract owner/repo from a GitHub URL (e.g. https://github.com/jovylle/jovylle.com -> "jovylle/jovylle.com") */
+function repoUrlToFullName(repoUrl) {
+  if (!repoUrl || typeof repoUrl !== 'string') return null
+  const trimmed = repoUrl.trim()
+  const match = trimmed.match(/github\.com[/:]([^/]+)\/([^/?#]+)/)
+  if (!match) return null
+  return `${match[1]}/${match[2].replace(/\.git$/, '')}`
+}
+
+/** Fetch all GitHub repos across all pages (per_page=100) */
+async function fetchAllGitHubRepos() {
+  const all = []
+  let page = 1
+  let hasMore = true
+  while (hasMore) {
+    const url = `${GITHUB_REPOS_URL}?per_page=100&page=${page}`
+    const chunk = await $fetch(url, {
+      headers: { Accept: 'application/vnd.github.v3+json' }
+    }).catch(() => [])
+    const list = Array.isArray(chunk) ? chunk : []
+    all.push(...list)
+    hasMore = list.length === 100
+    page += 1
+  }
+  return all
+}
+
 function classifyLinkType(label, url) {
   const seed = `${label ?? ''} ${url ?? ''}`.toLowerCase()
   if (seed.includes('repo') || seed.includes('github')) return 'repo'
@@ -15,21 +45,36 @@ function classifyLinkType(label, url) {
 
 async function fetchPersonalProjects() {
   console.log('personal-projects: fetchPersonalProjects start')
+
   const apiBaseUrl = process.dev ? API_URLS.dev : API_URLS.prod
-  const projectsData = await $fetch(`${apiBaseUrl}/projects`).catch(() => [])
+  const [projectsData, githubRepos] = await Promise.all([
+    $fetch(`${apiBaseUrl}/projects`).catch(() => []),
+    fetchAllGitHubRepos()
+  ])
+
   const rawProjects = Array.isArray(projectsData)
     ? projectsData
     : (projectsData?.projects ?? [])
 
+  // Only show projects that are in our API and have status=published.
+  // GitHub repos not in our API are treated as draft and not included.
   const publishedProjects = rawProjects.filter(
-    (project) => !project?.status || project.status.toLowerCase() === 'published'
+    (project) => project?.status && project.status.toLowerCase() === 'published'
+  )
+
+  const githubByFullName = new Map(
+    githubRepos.map((r) => [r.full_name, r])
   )
 
   const allProjects = publishedProjects
     .map((project) => {
       const repoUrl = (project?.repo_url || '').trim()
-      const rawLinks = Array.isArray(project?.links) ? project.links : []
+      const fullName = repoUrlToFullName(repoUrl)
+      const ghRepo = fullName ? githubByFullName.get(fullName) : null
+      const descriptionFromGitHub = ghRepo?.description?.trim() || ''
+      const description = descriptionFromGitHub || (project?.description || '').trim() || ''
 
+      const rawLinks = Array.isArray(project?.links) ? project.links : []
       const links = []
       if (repoUrl) {
         links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
@@ -46,11 +91,11 @@ async function fetchPersonalProjects() {
         slug: project?.slug || project?.project_key || project?.external_id || project?.title,
         title: (project?.title || '').trim() || 'Untitled Project',
         displayTitle: (project?.title || '').trim() || 'Untitled Project',
-        description: (project?.description || '').trim() || '',
+        description,
         repo: repoUrl || null,
         links,
         thumbnail: project?.thumbnail || null,
-        updated_at: project?.updated_at || null,
+        updated_at: project?.updated_at || ghRepo?.updated_at || null,
         tech: Array.isArray(project?.tech) ? project.tech : [],
         priority_score: project?.priority_score ?? 100
       }
@@ -61,19 +106,18 @@ async function fetchPersonalProjects() {
 
   console.log(
     'personal-projects: api projects count',
-    rawProjects.length
+    rawProjects.length,
+    'published',
+    publishedProjects.length
+  )
+  console.log(
+    'personal-projects: github repos (all pages)',
+    githubRepos.length
   )
   console.log(
     'personal-projects: merged projects count',
-    allProjects.length,
-    'tech filters',
-    possibleTechs.length
+    allProjects.length
   )
-  console.log(
-    'personal-projects: api sample',
-    rawProjects.slice(0, 3)
-  )
-  console.log('personal-projects: merged sample', allProjects.slice(0, 3))
 
   console.log('personal-projects: fetchPersonalProjects end')
 
