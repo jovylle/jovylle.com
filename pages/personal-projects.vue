@@ -56,10 +56,10 @@ async function fetchPersonalProjects() {
     ? projectsData
     : (projectsData?.projects ?? [])
 
-  // Only show projects that are in our API and have status=published.
+  // Only show projects that are in our API and have is_published=true.
   // GitHub repos not in our API are treated as draft and not included.
   const publishedProjects = rawProjects.filter(
-    (project) => project?.status && project.status.toLowerCase() === 'published'
+    (project) => project?.is_published === true
   )
 
   const githubByFullName = new Map(
