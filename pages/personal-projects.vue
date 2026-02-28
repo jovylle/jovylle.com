@@ -18,6 +18,41 @@ function repoUrlToFullName(repoUrl) {
   return `${match[1]}/${match[2].replace(/\.git$/, '')}`
 }
 
+/** Get first image URL from a repo's README (Markdown or HTML img). Used as thumbnail fallback when API has none. */
+async function getFirstImageFromGitHubReadme(owner, repo, defaultBranch = 'main') {
+  try {
+    const readme = await $fetch(
+      `https://api.github.com/repos/${owner}/${repo}/readme`,
+      { headers: { Accept: 'application/vnd.github.v3+json' } }
+    ).catch(() => null)
+    if (!readme?.content) return null
+    const raw =
+      typeof Buffer !== 'undefined'
+        ? Buffer.from(readme.content, 'base64').toString('utf8')
+        : (typeof atob !== 'undefined' ? atob(readme.content) : '')
+    const branch = defaultBranch || readme.url?.match(/ref=([^&]+)/)?.[1] || 'main'
+    // Markdown image: ![alt](url)
+    const mdMatch = raw.match(/!\[[^\]]*\]\s*\(\s*([^)\s]+)\s*\)/)
+    if (mdMatch) {
+      const url = mdMatch[1].trim()
+      if (/^https?:\/\//i.test(url)) return url
+      const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`
+      return new URL(url, base).href
+    }
+    // HTML img: <img ... src="url" ...>
+    const imgMatch = raw.match(/<img[^>]+src=["']([^"']+)["']/i)
+    if (imgMatch) {
+      const url = imgMatch[1].trim()
+      if (/^https?:\/\//i.test(url)) return url
+      const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`
+      return new URL(url, base).href
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
 /** Fetch all GitHub repos across all pages (per_page=100) */
 async function fetchAllGitHubRepos() {
   const all = []
@@ -66,41 +101,55 @@ async function fetchPersonalProjects() {
     githubRepos.map((r) => [r.full_name, r])
   )
 
-  const allProjects = publishedProjects
-    .map((project) => {
-      const repoUrl = (project?.repo_url || '').trim()
-      const fullName = repoUrlToFullName(repoUrl)
-      const ghRepo = fullName ? githubByFullName.get(fullName) : null
-      const descriptionFromGitHub = ghRepo?.description?.trim() || ''
-      const description = descriptionFromGitHub || (project?.description || '').trim() || ''
+  const allProjects = (
+    await Promise.all(
+      publishedProjects.map(async (project) => {
+        const repoUrl = (project?.repo_url || '').trim()
+        const fullName = repoUrlToFullName(repoUrl)
+        const ghRepo = fullName ? githubByFullName.get(fullName) : null
+        const descriptionFromGitHub = ghRepo?.description?.trim() || ''
+        const description = descriptionFromGitHub || (project?.description || '').trim() || ''
 
-      const rawLinks = Array.isArray(project?.links) ? project.links : []
-      const links = []
-      if (repoUrl) {
-        links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
-      }
-      rawLinks.forEach((link) => {
-        if (!link?.url) return
-        const url = link.url.trim()
-        if (!url || url === repoUrl) return
-        const type = link.type ?? classifyLinkType(link.label, url)
-        links.push({ label: link.label || 'Link', url, type })
+        const rawLinks = Array.isArray(project?.links) ? project.links : []
+        const links = []
+        if (repoUrl) {
+          links.push({ label: 'Repo', url: repoUrl, type: 'repo' })
+        }
+        rawLinks.forEach((link) => {
+          if (!link?.url) return
+          const url = link.url.trim()
+          if (!url || url === repoUrl) return
+          const type = link.type ?? classifyLinkType(link.label, url)
+          links.push({ label: link.label || 'Link', url, type })
+        })
+
+        let thumbnail = project?.thumbnail || null
+        if (!thumbnail && fullName) {
+          const [owner, repo] = fullName.split('/')
+          if (owner && repo) {
+            thumbnail = await getFirstImageFromGitHubReadme(
+              owner,
+              repo,
+              ghRepo?.default_branch || 'main'
+            )
+          }
+        }
+
+        return {
+          slug: project?.slug || project?.project_key || project?.external_id || project?.title,
+          title: (project?.title || '').trim() || 'Untitled Project',
+          displayTitle: (project?.title || '').trim() || 'Untitled Project',
+          description,
+          repo: repoUrl || null,
+          links,
+          thumbnail,
+          updated_at: project?.updated_at || ghRepo?.updated_at || null,
+          tech: Array.isArray(project?.tech) ? project.tech : [],
+          priority_score: project?.priority_score ?? 100
+        }
       })
-
-      return {
-        slug: project?.slug || project?.project_key || project?.external_id || project?.title,
-        title: (project?.title || '').trim() || 'Untitled Project',
-        displayTitle: (project?.title || '').trim() || 'Untitled Project',
-        description,
-        repo: repoUrl || null,
-        links,
-        thumbnail: project?.thumbnail || null,
-        updated_at: project?.updated_at || ghRepo?.updated_at || null,
-        tech: Array.isArray(project?.tech) ? project.tech : [],
-        priority_score: project?.priority_score ?? 100
-      }
-    })
-    .filter(Boolean)
+    )
+  ).filter(Boolean)
 
   const possibleTechs = []
 
