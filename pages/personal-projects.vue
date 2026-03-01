@@ -92,9 +92,11 @@ async function fetchPersonalProjects() {
     : (projectsData?.projects ?? [])
 
   // Only show projects that are in our API and have is_published=true.
-  // GitHub repos not in our API are treated as draft and not included.
+  // By default hide forked repos (github_raw.fork === true).
   const publishedProjects = rawProjects.filter(
-    (project) => project?.is_published === true
+    (project) =>
+      project?.is_published === true &&
+      project?.github_raw?.fork !== true
   )
 
   const githubByFullName = new Map(
@@ -135,6 +137,9 @@ async function fetchPersonalProjects() {
           }
         }
 
+        const createdAt = project?.github_raw?.created_at || null
+        const startedYear = createdAt ? new Date(createdAt).getFullYear() : null
+
         return {
           slug: project?.slug || project?.project_key || project?.external_id || project?.title,
           title: (project?.title || '').trim() || 'Untitled Project',
@@ -143,6 +148,8 @@ async function fetchPersonalProjects() {
           repo: repoUrl || null,
           links,
           thumbnail,
+          created_at: createdAt,
+          started_year: startedYear,
           updated_at: project?.updated_at || ghRepo?.updated_at || null,
           tech: Array.isArray(project?.tech) ? project.tech : [],
           priority_score: project?.priority_score ?? 100
@@ -403,6 +410,12 @@ useHead({
                 {{ techDisplayNames[tech] || tech }}
               </span>
 
+              <span
+                v-if="project.started_year"
+                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
+              >
+                Started {{ project.started_year }}
+              </span>
               <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
                 {{ formatDate(project.updated_at) }}
               </span>
