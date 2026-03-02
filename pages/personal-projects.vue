@@ -414,10 +414,7 @@ useHead({
                 v-if="project.started_year"
                 class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
               >
-                Started {{ project.started_year }}
-              </span>
-              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-                {{ formatDate(project.updated_at) }}
+                {{ project.started_year }}
               </span>
             </div>
 
