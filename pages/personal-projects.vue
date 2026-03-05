@@ -437,59 +437,44 @@ useHead({
               </span>
             </div>
 
-            <!-- Project Links: clear separation between Live and Repo/Other -->
-            <div class="space-y-3">
-              <!-- Live / Demo links -->
-              <div v-if="projectLinks(project).some((l) => l.type === 'live')" class="space-y-1">
-                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Live</span>
-                <div class="flex flex-wrap gap-2">
-                  <a
-                    v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
-                    :key="link.url || link.label"
-                    :href="link.url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
-                  >
-                    <i class="bx bx-link-external mr-1.5"></i>
-                    {{ link.label || 'View live' }}
-                  </a>
-                </div>
-              </div>
-              <!-- Repo / Code links -->
-              <div v-if="projectLinks(project).some((l) => l.type === 'repo')" class="space-y-1">
-                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Code</span>
-                <div class="flex flex-wrap gap-2">
-                  <a
-                    v-for="link in projectLinks(project).filter((l) => l.type === 'repo')"
-                    :key="link.url || link.label"
-                    :href="link.url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 dark:bg-gray-600 text-white hover:bg-gray-900 dark:hover:bg-gray-500 transition-colors duration-200 border border-gray-700 dark:border-gray-500"
-                  >
-                    <i class="bx bxl-github mr-1.5"></i>
-                    {{ link.label || 'Repo' }}
-                  </a>
-                </div>
-              </div>
-              <!-- Other links -->
-              <div v-if="projectLinks(project).some((l) => l.type === 'other')" class="space-y-1">
-                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block">Links</span>
-                <div class="flex flex-wrap gap-2">
-                  <a
-                    v-for="link in projectLinks(project).filter((l) => l.type === 'other')"
-                    :key="link.url || link.label"
-                    :href="link.url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-transparent text-gray-700 dark:text-gray-300 border border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
-                  >
-                    <i class="bx bx-link-alt mr-1.5"></i>
-                    {{ link.label || 'Link' }}
-                  </a>
-                </div>
-              </div>
+            <!-- Project Links: label only inside each button -->
+            <div class="flex flex-wrap gap-2">
+              <!-- Live / Demo -->
+              <a
+                v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
+                :key="link.url || link.label"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
+              >
+                <i class="bx bx-link-external"></i>
+                {{ link.label || 'View live' }}
+              </a>
+              <!-- Repo / Code -->
+              <a
+                v-for="link in projectLinks(project).filter((l) => l.type === 'repo')"
+                :key="link.url || link.label"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 dark:bg-gray-600 text-white hover:bg-gray-900 dark:hover:bg-gray-500 transition-colors duration-200 border border-gray-700 dark:border-gray-500"
+              >
+                <i class="bx bxl-github"></i>
+                {{ link.label || 'Repo' }}
+              </a>
+              <!-- Other -->
+              <a
+                v-for="link in projectLinks(project).filter((l) => l.type === 'other')"
+                :key="link.url || link.label"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-transparent text-gray-700 dark:text-gray-300 border border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+              >
+                <i class="bx bx-link-alt"></i>
+                {{ link.label || 'Link' }}
+              </a>
             </div>
           </div>
         </div>
