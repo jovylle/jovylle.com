@@ -18,7 +18,19 @@ function repoUrlToFullName(repoUrl) {
   return `${match[1]}/${match[2].replace(/\.git$/, '')}`
 }
 
-/** Get first image URL from a repo's README (Markdown or HTML img). Used as thumbnail fallback when API has none. */
+/** True if URL looks like a badge/SVG we don't want as thumbnail (e.g. License: MIT, shields.io). */
+function isBadgeOrSvg(url) {
+  if (!url || typeof url !== 'string') return true
+  const u = url.trim().toLowerCase()
+  return (
+    u.endsWith('.svg') ||
+    u.includes('img.shields.io') ||
+    u.includes('shields.io') ||
+    u.includes('badge')
+  )
+}
+
+/** Get first real image URL from a repo's README (skips SVGs and badge images). Used as thumbnail fallback when API has none. */
 async function getFirstImageFromGitHubReadme(owner, repo, defaultBranch = 'main') {
   try {
     const readme = await $fetch(
@@ -31,21 +43,28 @@ async function getFirstImageFromGitHubReadme(owner, repo, defaultBranch = 'main'
         ? Buffer.from(readme.content, 'base64').toString('utf8')
         : (typeof atob !== 'undefined' ? atob(readme.content) : '')
     const branch = defaultBranch || readme.url?.match(/ref=([^&]+)/)?.[1] || 'main'
-    // Markdown image: ![alt](url)
-    const mdMatch = raw.match(/!\[[^\]]*\]\s*\(\s*([^)\s]+)\s*\)/)
-    if (mdMatch) {
-      const url = mdMatch[1].trim()
-      if (/^https?:\/\//i.test(url)) return url
-      const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`
-      return new URL(url, base).href
+    const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`
+
+    /** Resolve relative URLs and return absolute href. */
+    function resolveUrl(url) {
+      const u = url.trim()
+      if (/^https?:\/\//i.test(u)) return u
+      try {
+        return new URL(u, base).href
+      } catch {
+        return u
+      }
     }
-    // HTML img: <img ... src="url" ...>
-    const imgMatch = raw.match(/<img[^>]+src=["']([^"']+)["']/i)
-    if (imgMatch) {
-      const url = imgMatch[1].trim()
-      if (/^https?:\/\//i.test(url)) return url
-      const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`
-      return new URL(url, base).href
+
+    // Collect all Markdown images: ![alt](url)
+    const mdImages = [...raw.matchAll(/!\[[^\]]*\]\s*\(\s*([^)\s]+)\s*\)/g)].map((m) => resolveUrl(m[1]))
+    for (const url of mdImages) {
+      if (!isBadgeOrSvg(url)) return url
+    }
+    // Collect all HTML img src
+    const htmlImages = [...raw.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)].map((m) => resolveUrl(m[1]))
+    for (const url of htmlImages) {
+      if (!isBadgeOrSvg(url)) return url
     }
     return null
   } catch {
