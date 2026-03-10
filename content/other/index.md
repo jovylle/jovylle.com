@@ -24,6 +24,7 @@ If you’re looking for a **Cebu web developer or software engineer** to help wi
 
 - Email: **me@jovylle.com**  
 - GitHub: **github.com/jovylle**  
+- LinkedIn: **linkedin.com/in/jovylle**  
 - Portfolio: **jovylle.com**  
 
 Tell me what you want to build, and I’ll suggest a practical approach and timeline.

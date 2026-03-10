@@ -45,7 +45,7 @@ export default defineNuxtConfig({
             url: "https://jovylle.com",
             sameAs: [
               "https://github.com/jovylle",
-              "https://www.linkedin.com/search/results/all/?keywords=Jovylle%20Bermudez",
+              "https://www.linkedin.com/in/jovylle/",
             ],
             address: {
               "@type": "PostalAddress",
