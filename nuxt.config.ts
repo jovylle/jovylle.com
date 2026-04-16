@@ -86,6 +86,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: ["/", "/projects", "/personal-projects", "/contact", "/game"],
+      ignore: ["/private", "/private/**"],
     },
   },
   routeRules: {

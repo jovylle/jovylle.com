@@ -112,11 +112,18 @@ async function fetchPersonalProjects() {
 
   // Only show projects that are in our API and have is_published=true.
   // By default hide forked repos (github_raw.fork === true).
-  const publishedProjects = rawProjects.filter(
-    (project) =>
+  const publishedProjects = rawProjects.filter((project) => {
+    const isPrivate =
+      project?.private === true ||
+      project?.is_private === true ||
+      project?.github_raw?.private === true
+
+    return (
       project?.is_published === true &&
-      project?.github_raw?.fork !== true
-  )
+      project?.github_raw?.fork !== true &&
+      !isPrivate
+    )
+  })
 
   const githubByFullName = new Map(
     githubRepos.map((r) => [r.full_name, r])
