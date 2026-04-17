@@ -92,6 +92,8 @@ export default defineNuxtConfig({
   routeRules: {
     "/game": { ssr: false },
     "/parallax": { ssr: false },
+    "/private": { prerender: false },
+    "/private/**": { prerender: false },
   },
   // routeRules: { // not sure with this
   //   // Homepage pre-rendered at build time

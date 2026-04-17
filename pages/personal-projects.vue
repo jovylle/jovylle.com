@@ -216,8 +216,102 @@ const { data: personalProjectsData } = await useAsyncData(
 )
 
 const allProjects = computed(() => personalProjectsData.value?.allProjects ?? [])
+const PRIORITY_HIGHLIGHT_THRESHOLD = 100
 
 const TECH_UNSPECIFIED = 'uncategorized'
+const SIMPLE_ICONS_BASE = 'https://cdn.jsdelivr.net/npm/simple-icons@v13/icons'
+const TECH_TAG_ICON_META = {
+  js: { iconClass: 'bxl-javascript' },
+  javascript: { iconClass: 'bxl-javascript' },
+  ts: { iconClass: 'bxl-typescript' },
+  typescript: { iconClass: 'bxl-typescript' },
+  vue: { iconClass: 'bxl-vuejs' },
+  vuejs: { iconClass: 'bxl-vuejs' },
+  nuxt: { iconImage: `${SIMPLE_ICONS_BASE}/nuxtdotjs.svg` },
+  nuxtjs: { iconImage: `${SIMPLE_ICONS_BASE}/nuxtdotjs.svg` },
+  playstore: { iconClass: 'bxl-play-store' },
+  'play-store': { iconClass: 'bxl-play-store' },
+  android: { iconClass: 'bxl-android' },
+  github: { iconClass: 'bxl-github' },
+  anthropic: { iconImage: `${SIMPLE_ICONS_BASE}/anthropic.svg` },
+  openai: { iconImage: `${SIMPLE_ICONS_BASE}/openai.svg` },
+  firebase: { iconClass: 'bxl-firebase' },
+  aws: { iconClass: 'bxl-aws' },
+  'aws-bedrock': { iconImage: `${SIMPLE_ICONS_BASE}/amazonwebservices.svg` },
+  'aws-s3': { iconImage: `${SIMPLE_ICONS_BASE}/amazons3.svg` },
+  vercel: { iconImage: `${SIMPLE_ICONS_BASE}/vercel.svg` },
+  node: { iconClass: 'bxl-nodejs' },
+  nodejs: { iconClass: 'bxl-nodejs' },
+  react: { iconClass: 'bxl-react' },
+  tailwindcss: { iconImage: `${SIMPLE_ICONS_BASE}/tailwindcss.svg` },
+  storybook: { iconImage: `${SIMPLE_ICONS_BASE}/storybook.svg` },
+  gsap: { iconImage: `${SIMPLE_ICONS_BASE}/greensock.svg` },
+  vite: { iconImage: `${SIMPLE_ICONS_BASE}/vite.svg` },
+  netlify: { iconClass: 'bxl-netlify' },
+  'aws-lambda': { iconImage: `${SIMPLE_ICONS_BASE}/awslambda.svg` },
+  n8n: { iconImage: `${SIMPLE_ICONS_BASE}/n8n.svg` },
+  'rest-api': { iconClass: 'bx-code-alt' },
+  graphql: { iconImage: `${SIMPLE_ICONS_BASE}/graphql.svg` },
+  laravel: { iconClass: 'bxl-laravel' },
+  php: { iconClass: 'bxl-php' },
+  mysql: { iconImage: `${SIMPLE_ICONS_BASE}/mysql.svg` },
+  dynamodb: { iconImage: `${SIMPLE_ICONS_BASE}/amazondynamodb.svg` },
+  redis: { iconClass: 'bxl-redis' },
+  rag: { iconClass: 'bx-code-alt' },
+  'prompt-engineering': { iconClass: 'bx-code-alt' },
+  json: { iconClass: 'bx-code-alt' },
+  [TECH_UNSPECIFIED]: { iconClass: 'bx-code-alt' }
+}
+const TECH_TAG_ALIASES = {
+  'vue-3': 'vuejs',
+  'vue-3-composition': 'vuejs',
+  'nuxt-js': 'nuxtjs',
+  'nuxtjs': 'nuxtjs',
+  'react-js': 'react',
+  'openai-api': 'openai',
+  'anthropic-api': 'anthropic',
+  'json-data-apis': 'json',
+  'netlify-functions': 'netlify',
+  'express-js': 'nodejs',
+  'node-js': 'nodejs',
+  'aws-lambda': 'aws-lambda',
+  'serverless-workflows': 'rest-api',
+  'rest-apis': 'rest-api',
+  graphql: 'graphql',
+  'aws-bedrock': 'aws-bedrock',
+  'aws-s3-knowledge-base': 'aws-s3',
+  'prompt-engineering': 'prompt-engineering'
+}
+
+const normalizeTechKey = (tech) =>
+  String(tech ?? '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+
+const compactTechKey = (tech) =>
+  String(tech ?? '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]/g, '')
+
+const resolveTechKey = (tech) => {
+  const normalized = normalizeTechKey(tech)
+  const compact = compactTechKey(tech)
+
+  return (
+    TECH_TAG_ALIASES[normalized] ||
+    TECH_TAG_ALIASES[compact] ||
+    normalized ||
+    compact
+  )
+}
+
+const techTagIconMeta = (tech) => {
+  const key = resolveTechKey(tech)
+  return TECH_TAG_ICON_META[key] || TECH_TAG_ICON_META[compactTechKey(tech)] || null
+}
 
 // Reactive sorting and filtering
 const sortBy = ref('priority')
@@ -331,6 +425,14 @@ const resolveThumbnail = (thumbnail) => {
   return `${POCKET_ASSET_BASE}/${thumbnail}`
 }
 
+const isHighlightedProject = (project) =>
+  (project?.priority_score ?? 0) > PRIORITY_HIGHLIGHT_THRESHOLD
+
+const visibleTechTags = (project) =>
+  isHighlightedProject(project)
+    ? project.techTags
+    : project.techTags.slice(0, 3)
+
 const pageDescription = computed(() =>
   `A comprehensive collection of ${allProjects.value.length} personal projects and experiments`
 )
@@ -402,7 +504,10 @@ useHead({
           <div
             v-for="project in projects"
             :key="project.slug || project.title"
-            class="bg-white dark:bg-ternary-dark rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border dark:border-gray-700"
+            class="rounded-lg border p-6 transition-all duration-300"
+            :class="isHighlightedProject(project)
+              ? 'bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl border-gray-200 dark:border-gray-700'
+              : 'bg-gray-100 dark:bg-gray-950 border-gray-300 dark:border-gray-800 shadow-md'"
           >
             <!-- Thumbnail -->
             <div v-if="project.thumbnail" class="mb-4">
@@ -417,7 +522,12 @@ useHead({
             <!-- Project Header -->
             <div class="mb-4">
               <div class="flex items-center justify-between mb-2 gap-2">
-                <h3 class="text-lg font-semibold text-primary-dark dark:text-primary-light">
+                <h3
+                  class="m-0 font-semibold"
+                  :class="isHighlightedProject(project)
+                    ? 'text-lg text-primary-dark dark:text-primary-light'
+                    : 'text-base text-gray-800 dark:text-gray-200'"
+                >
                   {{ project.displayTitle }}
                 </h3>
               </div>
@@ -429,11 +539,33 @@ useHead({
             <!-- Project Meta Info -->
             <div class="mb-4 flex flex-wrap gap-2 text-xs">
               <span
-                v-for="tech in project.techTags"
+                v-for="tech in visibleTechTags(project)"
                 :key="tech"
-                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full uppercase tracking-wide"
+                class="px-2 py-1 rounded-full uppercase tracking-wide"
+                :class="isHighlightedProject(project)
+                  ? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200'"
               >
+                <i
+                  v-if="techTagIconMeta(tech)?.iconClass"
+                  class="bx mr-1 align-middle text-sm"
+                  :class="techTagIconMeta(tech).iconClass"
+                  aria-hidden="true"
+                />
+                <img
+                  v-else-if="techTagIconMeta(tech)?.iconImage"
+                  :src="techTagIconMeta(tech).iconImage"
+                  :alt="`${tech} icon`"
+                  class="inline-block mr-1 h-3.5 w-3.5 align-middle"
+                  loading="lazy"
+                />
                 {{ techDisplayNames[tech] || tech }}
+              </span>
+              <span
+                v-if="!isHighlightedProject(project) && project.techTags.length > 3"
+                class="px-2 py-1 rounded-full uppercase tracking-wide bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+              >
+                +{{ project.techTags.length - 3 }} more
               </span>
 
               <span
@@ -448,7 +580,9 @@ useHead({
             <div class="flex flex-wrap gap-2">
               <!-- Live / Demo -->
               <a
-                v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
+                v-for="link in (isHighlightedProject(project)
+                  ? projectLinks(project).filter((l) => l.type === 'live')
+                  : [])"
                 :key="link.url || link.label"
                 :href="link.url"
                 target="_blank"
@@ -465,14 +599,19 @@ useHead({
                 :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 dark:bg-gray-600 text-white hover:bg-gray-900 dark:hover:bg-gray-500 transition-colors duration-200 border border-gray-700 dark:border-gray-500"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-200 border"
+                :class="isHighlightedProject(project)
+                  ? 'bg-gray-800 dark:bg-gray-600 text-white hover:bg-gray-900 dark:hover:bg-gray-500 border-gray-700 dark:border-gray-500'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600'"
               >
                 <i class="bx bxl-github"></i>
                 {{ link.label || 'Repo' }}
               </a>
               <!-- Other -->
               <a
-                v-for="link in projectLinks(project).filter((l) => l.type === 'other')"
+                v-for="link in (isHighlightedProject(project)
+                  ? projectLinks(project).filter((l) => l.type === 'other')
+                  : [])"
                 :key="link.url || link.label"
                 :href="link.url"
                 target="_blank"
