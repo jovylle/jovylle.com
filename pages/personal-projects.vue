@@ -402,6 +402,31 @@ const formatDate = (dateStr) => {
   })
 }
 
+/** Host + path + search for display, without scheme (e.g. https://d1g.uk/x -> d1g.uk/x). */
+function urlWithoutScheme(raw) {
+  const s = (raw || '').trim()
+  if (!s) return ''
+  try {
+    const u = new URL(/^https?:\/\//i.test(s) ? s : `https://${s}`)
+    let out = u.hostname + (u.port ? `:${u.port}` : '')
+    if (u.pathname && u.pathname !== '/') out += u.pathname
+    if (u.search) out += u.search
+    return out.replace(/\/$/, '') || u.hostname
+  } catch {
+    return s.replace(/^https?:\/\//i, '')
+  }
+}
+
+/** When the link label is "Live", show "Live · example.com" so the destination is visible. */
+function liveLinkButtonText(link) {
+  const label = (link?.label || '').trim()
+  const short = urlWithoutScheme(link?.url)
+  if (label.toLowerCase() === 'live' && short) {
+    return `Live · ${short}`
+  }
+  return label || 'View live'
+}
+
 // Links are already normalized from the projects API (repo + extra links)
 const projectLinks = (project) => {
   const raw = Array.isArray(project?.links) && project.links.length > 0
@@ -531,8 +556,32 @@ useHead({
                   {{ project.displayTitle }}
                 </h3>
               </div>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
-                {{ project.description || 'No description available' }}
+              <div
+                v-if="project.description"
+                class="group/desc relative mb-3 min-h-[2.75rem]"
+              >
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 cursor-help"
+                  :title="project.description"
+                >
+                  {{ project.description }}
+                </p>
+                <div
+                  class="pointer-events-none absolute inset-x-0 top-full z-30 pt-1"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="pointer-events-none max-h-72 overflow-y-auto rounded-md border border-gray-200 bg-white p-3 text-sm leading-relaxed text-gray-700 shadow-xl opacity-0 transition-opacity duration-150 invisible group-hover/desc:pointer-events-auto group-hover/desc:visible group-hover/desc:opacity-100 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200"
+                  >
+                    {{ project.description }}
+                  </div>
+                </div>
+              </div>
+              <p
+                v-else
+                class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[2.75rem]"
+              >
+                No description available
               </p>
             </div>
 
@@ -590,7 +639,7 @@ useHead({
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
               >
                 <i class="bx bx-link-external"></i>
-                {{ link.label || 'View live' }}
+                {{ liveLinkButtonText(link) }}
               </a>
               <!-- Repo / Code -->
               <a

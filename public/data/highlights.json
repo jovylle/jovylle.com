@@ -36,10 +36,6 @@
         {
           "label": "Projects page",
           "url": "/personal-projects"
-        },
-        {
-          "label": "JSON feed",
-          "url": "/data/personal-projects.json"
         }
       ]
     },
