@@ -255,6 +255,10 @@
                     <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v11H3z"/><path d="M8 7V5h8v2"/></svg></span>
                     Portfolio
                   </a>
+                  <a href="#support" class="mystery-widget-link support-link">
+                    <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18h.01"/><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"/></svg></span>
+                    Support
+                  </a>
                   <a href="#" class="mystery-widget-link feedback-link" target="_blank" style="display:none;">
                     <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
                     Feedback
@@ -320,6 +324,7 @@
   const buttonBadge = shadow.getElementById('buttonBadge');
   const chatWelcome = shadow.getElementById('chatWelcome');
   const headerTitle = shadow.querySelector('.mystery-widget-title');
+  const supportLink = shadow.querySelector('.support-link');
 
   function open() { state.isOpen = true; panel.classList.add('open'); button.setAttribute('aria-expanded','true'); }
   function close() { state.isOpen = false; panel.classList.remove('open'); button.setAttribute('aria-expanded','false'); }
@@ -331,6 +336,17 @@
     const clickedInside = Array.isArray(path) ? path.includes(host) : host.contains(e.target);
     if (state.isOpen && !clickedInside) close();
   });
+  if (supportLink) {
+    supportLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pm = window.ProjectMate;
+      if (pm && typeof pm.open === 'function') {
+        pm.open();
+      } else {
+        window.location.hash = 'support';
+      }
+    });
+  }
 
   tabButtons.forEach((tb) => {
     tb.addEventListener('click', () => switchTab(tb.getAttribute('data-tab')));

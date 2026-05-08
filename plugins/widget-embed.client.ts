@@ -1,7 +1,49 @@
 export default defineNuxtPlugin(() => {
   if (process.server) return;
 
-  // Avoid duplicate injection across navigations/HMR
+  const initProjectMate = () => {
+    const w = window as Window & {
+      ProjectMate?: {
+        init: (config: Record<string, unknown>) => void;
+      };
+    };
+    if (!w.ProjectMate?.init) return;
+    w.ProjectMate.init({
+      projectId: 'jovylle-com',
+      appUrl: 'https://projectmate.uft1.com/overlay/',
+      about: {
+        title: 'Jovylle.com',
+        description: 'Personal portfolio, projects, and quick support.',
+      },
+      features: {
+        chat: false,
+        feedback: true,
+        updates: true,
+        issues: false,
+        about: true,
+      },
+      launcher: {
+        hidden: true,
+      },
+      autoOpen: {
+        hash: 'support',
+      },
+    });
+  };
+
+  // Load ProjectMate host script once.
+  if (!document.querySelector('script[data-projectmate-embed="true"]')) {
+    const projectMateScript = document.createElement('script');
+    projectMateScript.src = 'https://projectmate.uft1.com/embed.js';
+    projectMateScript.async = true;
+    projectMateScript.setAttribute('data-projectmate-embed', 'true');
+    projectMateScript.addEventListener('load', initProjectMate, { once: true });
+    document.body.appendChild(projectMateScript);
+  } else {
+    initProjectMate();
+  }
+
+  // Avoid duplicate widget injection across navigations/HMR
   if (document.querySelector('script[data-jovylle-embed="true"]')) return;
 
   const script = document.createElement('script');
