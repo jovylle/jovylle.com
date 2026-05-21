@@ -1,65 +1,36 @@
 # Rebuild jovylle.com when content CDN updates
 
-When `content.jovylle.com` publishes new JSON, call this webhook so Netlify rebuilds jovylle.com and refreshes prerendered `/personal-projects`.
+`/personal-projects` is prerendered at build time. After you publish JSON to `content.jovylle.com`, trigger a Netlify rebuild so the site picks up the new data.
 
-## 1. Netlify env vars (jovylle.com site)
+## 1. Netlify build hook (jovylle.com site)
 
-In **Site configuration → Environment variables** (Production):
+**Site configuration → Build & deploy → Build hooks → Add build hook**
 
-| Variable | Description |
-|----------|-------------|
-| `NETLIFY_BUILD_HOOK_URL` | From **Build & deploy → Build hooks → Add build hook**. Paste the full hook URL (e.g. `https://api.netlify.com/build_hooks/...`). |
-| `REBUILD_WEBHOOK_SECRET` | Long random string you generate. Shared with the content repo only. |
+Copy the hook URL (looks like `https://api.netlify.com/build_hooks/...`).
 
-Redeploy once after setting these so the function sees the vars.
-
-## 2. Webhook URL
-
-```http
-POST https://jovylle.com/.netlify/functions/trigger-rebuild
-X-Rebuild-Secret: <REBUILD_WEBHOOK_SECRET>
-```
-
-Or:
-
-```http
-Authorization: Bearer <REBUILD_WEBHOOK_SECRET>
-```
-
-Success: `202` with `{ "ok": true, "message": "Netlify rebuild triggered" }`.
-
-## 3. Manual test
+Test:
 
 ```bash
-curl -sf -X POST \
-  -H "X-Rebuild-Secret: YOUR_SECRET" \
-  https://jovylle.com/.netlify/functions/trigger-rebuild
+curl -sf -X POST -d '{}' 'https://api.netlify.com/build_hooks/YOUR_HOOK_ID'
 ```
 
-## 4. GitHub Actions (content / CMS repo)
+You should see a new deploy under **Deploys**.
 
-After your workflow deploys `/data` to `content.jovylle.com`, add:
+## 2. GitHub Actions (content / CMS repo)
+
+Store the hook URL as a secret, e.g. `JOVYLLE_NETLIFY_BUILD_HOOK`.
+
+After your workflow deploys `/data` to the CDN:
 
 ```yaml
-- name: Rebuild jovylle.com (personal projects prerender)
+- name: Rebuild jovylle.com
   if: success()
-  env:
-    JOVYLLE_REBUILD_SECRET: ${{ secrets.JOVYLLE_REBUILD_SECRET }}
-  run: |
-    curl -sf -X POST \
-      -H "X-Rebuild-Secret: ${JOVYLLE_REBUILD_SECRET}" \
-      https://jovylle.com/.netlify/functions/trigger-rebuild
+  run: curl -sf -X POST -d '{}' "${{ secrets.JOVYLLE_NETLIFY_BUILD_HOOK }}"
 ```
 
-In the **content repo** GitHub settings → Secrets:
-
-- `JOVYLLE_REBUILD_SECRET` — same value as `REBUILD_WEBHOOK_SECRET` on Netlify.
-
-## 5. Direct build hook (alternative)
-
-You can POST to `NETLIFY_BUILD_HOOK_URL` from the content repo without this function. The function keeps the build hook URL off the content repo and adds a shared secret.
+No env vars or code changes needed on the jovylle.com Netlify site.
 
 ## Notes
 
-- `/personal-projects` is prerendered at build time; a rebuild is required for CDN JSON changes to appear there.
-- `/highlights` still fetches in the browser (separate URL); it does not need a rebuild unless you change site code.
+- Keep the hook URL in GitHub secrets only — do not commit it.
+- `/highlights` still loads JSON in the browser; only `/personal-projects` needs a rebuild for CDN JSON changes.
