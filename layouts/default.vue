@@ -3,6 +3,7 @@
     :class='" text-lg overflow-hidden flex flex-col tracking-wider " + (darkMode?"dark bg-ternary-dark":"bg-ternary-light ")'
     style="--accent:#9CA3AF;--divider:#E9ECEF;--divider-dark:#404040"
   >
+    <h1 class="sr-only">Jovylle Bermudez</h1>
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
       <section class="">
         <div class="container sm:mx-auto">
@@ -48,6 +49,12 @@
                 to="/uses"
               >
                 Uses
+              </NuxtLink>
+              <NuxtLink
+                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
+                to="/personal-projects"
+              >
+                Projects
               </NuxtLink>
               <NuxtLink
                 class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0 sm:hidden"

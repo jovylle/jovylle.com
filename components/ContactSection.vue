@@ -8,6 +8,9 @@
       </h2>
       
       <ContactForm />
+      <p class="text-center text-lg mt-6">
+        Or email me directly at <a class="underline font-medium" href="mailto:me@jovylle.com">me@jovylle.com</a>
+      </p>
       <div
         class="flex justify-center space-x-6 my-8 items-center text-4xl text-m1"
       >

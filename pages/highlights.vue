@@ -16,6 +16,12 @@
           <div class="flex items-center gap-2">
             <span class="font-semibold text-lg text-primary-dark dark:text-primary-light">{{ item.title }}</span>
             <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded px-2 py-0.5">{{ item.tag }}</span>
+            <span
+              v-if="item.year"
+              class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded px-2 py-0.5"
+            >
+              {{ item.year }}
+            </span>
           </div>
         </div>
         
@@ -37,22 +43,33 @@
         </div>
         
         <!-- Skills/Technologies Used -->
-        <div v-if="item.skills" class="mb-3">
-          <p class="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Technologies & Skills:</p>
+        <div v-if="item.technologies && item.technologies.length" class="mb-3">
+          <p class="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Technologies:</p>
           <div class="flex flex-wrap gap-1">
             <span 
-              v-for="skill in item.skills" 
-              :key="skill"
+              v-for="tech in item.technologies" 
+              :key="tech"
               class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded font-medium"
             >
-              {{ skill }}
+              {{ tech }}
             </span>
           </div>
         </div>
-        
-        <div class="flex gap-2">
-          <a v-if="item.link" :href="item.link" target="_blank">
-            <UiButton variant="outline-dashed">View Solution</UiButton>
+
+        <div class="flex gap-2 flex-wrap">
+          <template v-if="item.links && item.links.length">
+            <a
+              v-for="link in item.links"
+              :key="link.url || link.label"
+              :href="link.url"
+              target="_blank"
+              rel="noopener"
+            >
+              <UiButton variant="outline-dashed">{{ link.label || 'View' }}</UiButton>
+            </a>
+          </template>
+          <a v-else-if="item.link" :href="item.link" target="_blank" rel="noopener">
+            <UiButton variant="outline-dashed">View</UiButton>
           </a>
           <a v-if="item.github" :href="item.github" target="_blank">
             <UiButton variant="outline">Source Code</UiButton>

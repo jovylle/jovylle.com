@@ -1,7 +1,49 @@
 export default defineNuxtPlugin(() => {
   if (process.server) return;
 
-  // Avoid duplicate injection across navigations/HMR
+  const initProjectMate = () => {
+    const w = window as Window & {
+      ProjectMate?: {
+        init: (config: Record<string, unknown>) => void;
+      };
+    };
+    if (!w.ProjectMate?.init) return;
+    w.ProjectMate.init({
+      projectId: 'jovylle-com',
+      appUrl: 'https://projectmate.uft1.com/overlay/',
+      about: {
+        title: 'Jovylle.com',
+        description: 'Personal portfolio, projects, and quick support.',
+      },
+      features: {
+        chat: false,
+        feedback: true,
+        updates: true,
+        issues: false,
+        about: true,
+      },
+      launcher: {
+        hidden: true,
+      },
+      autoOpen: {
+        hash: 'support',
+      },
+    });
+  };
+
+  // Load ProjectMate host script once.
+  if (!document.querySelector('script[data-projectmate-embed="true"]')) {
+    const projectMateScript = document.createElement('script');
+    projectMateScript.src = 'https://projectmate.uft1.com/embed.js';
+    projectMateScript.async = true;
+    projectMateScript.setAttribute('data-projectmate-embed', 'true');
+    projectMateScript.addEventListener('load', initProjectMate, { once: true });
+    document.body.appendChild(projectMateScript);
+  } else {
+    initProjectMate();
+  }
+
+  // Avoid duplicate widget injection across navigations/HMR
   if (document.querySelector('script[data-jovylle-embed="true"]')) return;
 
   const script = document.createElement('script');
@@ -107,39 +149,8 @@ AI Solutionist - Using AI and modern technology to solve real-world problems. Fo
 
   document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(script);
-    
-    // Wait for widget to load, then show recent updates
-    setTimeout(() => {
-      if (window.JovylleInlineWidget) {
-        // Latest feature
-        window.JovylleInlineWidget.addNotification({
-          type: 'success',
-          title: '🆕 Nov 11: New Features!',
-          message: 'Optional leaderboard, custom widget titles, and AI & Solutions rebranding.',
-          persistent: false
-        });
-        
-        // Widget v2.0 launch
-        setTimeout(() => {
-          window.JovylleInlineWidget.addNotification({
-            type: 'info',
-            title: '🚀 Widget v2.0 Launched',
-            message: 'GPT-4o-mini AI, markdown support, notification system, custom AI context, and chat-first UI.',
-            persistent: true
-          });
-        }, 2000);
-        
-        // AI Solutionist positioning
-        setTimeout(() => {
-          window.JovylleInlineWidget.addNotification({
-            type: 'info',
-            title: '💡 AI Solutionist',
-            message: 'Now highlighting 5+ years of AI-powered solutions. Ask me about AI integration projects!',
-            persistent: true
-          });
-        }, 4000);
-      }
-    }, 2000);
+    // Notification content is loaded from https://pocket.uft1.com/notifications via
+    // data-notifications-index; embed-inline.js handles fetch and rendering.
   });
 });
 
