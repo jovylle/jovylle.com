@@ -1,10 +1,8 @@
 <script setup>
-import { POCKET_ASSET_BASE } from '~/utils/config'
+import { CONTENT_ASSET_BASE } from '~/utils/config'
 
-const API_URLS = {
-  dev: 'https://pmji7qzap2.execute-api.ap-southeast-1.amazonaws.com/dev',
-  prod: 'https://ltocvknz09.execute-api.ap-southeast-1.amazonaws.com/prod'
-}
+const PERSONAL_PROJECTS_JSON_URL =
+  'https://content.jovylle.com/data/personal-projects.json'
 
 const GITHUB_USER = 'jovylle'
 const GITHUB_REPOS_URL = `https://api.github.com/users/${GITHUB_USER}/repos`
@@ -97,30 +95,71 @@ function classifyLinkType(label, url) {
   return 'other'
 }
 
+/** Map content.jovylle.com JSON entries to the shape used by the page merger. */
+function normalizeContentProject(project) {
+  const repoUrl = (project?.repo_url || project?.repo || '').trim()
+  const links = Array.isArray(project?.links) ? [...project.links] : []
+
+  const addLiveLink = (raw) => {
+    const trimmed = (raw || '').trim()
+    if (!trimmed) return
+    const url = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`
+    if (!links.some((link) => link?.url === url)) {
+      links.push({ url, label: 'Live' })
+    }
+  }
+
+  addLiveLink(project?.live)
+  addLiveLink(project?.netlify_live)
+
+  const tech =
+    Array.isArray(project?.tech) && project.tech.length
+      ? project.tech
+      : project?.language
+        ? [project.language]
+        : []
+
+  return {
+    ...project,
+    repo_url: repoUrl,
+    links,
+    tech,
+    is_published: project?.is_published === true || project?.status === 'published',
+    private: project?.private === true || project?.is_private === true
+  }
+}
+
 async function fetchPersonalProjects() {
   console.log('personal-projects: fetchPersonalProjects start')
 
-  const apiBaseUrl = process.dev ? API_URLS.dev : API_URLS.prod
   const [projectsData, githubRepos] = await Promise.all([
-    $fetch(`${apiBaseUrl}/projects`).catch(() => []),
+    $fetch(PERSONAL_PROJECTS_JSON_URL).catch(() => ({ projects: [] })),
     fetchAllGitHubRepos()
   ])
 
-  const rawProjects = Array.isArray(projectsData)
-    ? projectsData
-    : (projectsData?.projects ?? [])
+  const rawProjects = (
+    Array.isArray(projectsData) ? projectsData : (projectsData?.projects ?? [])
+  ).map(normalizeContentProject)
 
-  // Only show projects that are in our API and have is_published=true.
-  // By default hide forked repos (github_raw.fork === true).
+  // Only show published, non-private projects; hide forks when GitHub metadata is available.
   const publishedProjects = rawProjects.filter((project) => {
+    const repoUrl = (project?.repo_url || '').trim()
+    const fullName = repoUrlToFullName(repoUrl)
+    const ghRepo = fullName
+      ? githubRepos.find((r) => r.full_name === fullName)
+      : null
+
     const isPrivate =
       project?.private === true ||
       project?.is_private === true ||
-      project?.github_raw?.private === true
+      project?.github_raw?.private === true ||
+      ghRepo?.private === true
+
+    const isFork = project?.github_raw?.fork === true || ghRepo?.fork === true
 
     return (
       project?.is_published === true &&
-      project?.github_raw?.fork !== true &&
+      isFork !== true &&
       !isPrivate
     )
   })
@@ -446,8 +485,8 @@ const projectLinks = (project) => {
 const resolveThumbnail = (thumbnail) => {
   if (!thumbnail) return null
   if (thumbnail.startsWith('http')) return thumbnail
-  if (thumbnail.startsWith('/')) return `${POCKET_ASSET_BASE}${thumbnail}`
-  return `${POCKET_ASSET_BASE}/${thumbnail}`
+  if (thumbnail.startsWith('/')) return `${CONTENT_ASSET_BASE}${thumbnail}`
+  return `${CONTENT_ASSET_BASE}/${thumbnail}`
 }
 
 const isHighlightedProject = (project) =>
