@@ -1,12 +1,12 @@
 <script setup>
 // Fetch personal projects data from external API
-const projectsData = await $fetch('https://pocket.uft1.com/data/personal-projects.json')
+const projectsData = await $fetch('https://content.jovylle.com/data/personal-projects.json')
 const allProjects = projectsData?.projects || []
 
 // Reactive sorting and filtering
 const sortBy = ref('recent')
 const selectedCategory = ref('all')
-const showFavoritesOnly = ref(true) // Default to showing favorites only
+const showFavoritesOnly = ref(false)
 
 // Process and sort projects
 const projects = computed(() => {
