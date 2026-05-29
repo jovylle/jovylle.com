@@ -668,9 +668,7 @@ useHead({
             <div class="flex flex-wrap gap-2">
               <!-- Live / Demo -->
               <a
-                v-for="link in (isHighlightedProject(project)
-                  ? projectLinks(project).filter((l) => l.type === 'live')
-                  : [])"
+                v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
                 :key="link.url || link.label"
                 :href="link.url"
                 target="_blank"
@@ -697,9 +695,7 @@ useHead({
               </a>
               <!-- Other -->
               <a
-                v-for="link in (isHighlightedProject(project)
-                  ? projectLinks(project).filter((l) => l.type === 'other')
-                  : [])"
+                v-for="link in projectLinks(project).filter((l) => l.type === 'other')"
                 :key="link.url || link.label"
                 :href="link.url"
                 target="_blank"
