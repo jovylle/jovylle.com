@@ -1,8 +1,6 @@
 ---
-layout: testss
 title: Ecosystem Architecture
-date: 2026-05-31T12:00:00.000Z
-thumbnail: /decap/images/uploads/jovylle.png
+description: How production projects connect as one intentional platform — shared ingress, embeds, and ops habits.
 ---
 
 # Ecosystem Architecture

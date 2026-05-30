@@ -85,11 +85,12 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ["/", "/projects", "/personal-projects", "/contact", "/game"],
+      routes: ["/", "/projects", "/personal-projects", "/ecosystem", "/contact", "/game"],
       ignore: ["/private", "/private/**"],
     },
   },
   routeRules: {
+    "/projects/2026-05-31-ecosystem-architecture": { redirect: "/ecosystem" },
     "/game": { ssr: false },
     "/parallax": { ssr: false },
     "/private": { prerender: false },

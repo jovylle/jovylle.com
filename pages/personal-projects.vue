@@ -522,6 +522,15 @@ useHead({
         <p class="text-lg text-secondary-dark dark:text-secondary-light">
           A comprehensive collection of {{ allProjects.length }} personal projects and experiments
         </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-4 max-w-xl mx-auto">
+          Overwhelmed by the list?
+          <NuxtLink
+            to="/ecosystem"
+            class="text-gray-800 dark:text-gray-200 underline decoration-dashed decoration-1 underline-offset-4"
+          >
+            See how the main products connect →
+          </NuxtLink>
+        </p>
       </div>
 
       <!-- Sorting and Filtering Controls -->

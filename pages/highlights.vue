@@ -3,6 +3,15 @@
     <div class="mb-6">
       <h2 class="text-3xl font-bold text-center">Skills & Solutions</h2>
       <p class="text-center text-gray-600 dark:text-gray-400">Technical challenges solved, features built, and technologies mastered</p>
+      <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-3 max-w-2xl mx-auto">
+        These projects run as one connected platform — shared embeds, CDN, and GitHub integrations.
+        <NuxtLink
+          to="/ecosystem"
+          class="text-gray-800 dark:text-gray-200 underline decoration-dashed decoration-1 underline-offset-4"
+        >
+          See Ecosystem Architecture →
+        </NuxtLink>
+      </p>
     </div>
     <div v-if="loading" class="text-gray-500 text-center">Loading...</div>
     <div v-else-if="error" class="text-red-500 text-center">Failed to load projects.</div>
