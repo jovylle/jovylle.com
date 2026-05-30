@@ -3,8 +3,6 @@ title: Ecosystem Architecture
 description: How production projects connect as one intentional platform — shared ingress, embeds, and ops habits.
 ---
 
-# Ecosystem Architecture
-
 These projects share ingress patterns, embeddable services, and repeatable ops habits—not five unrelated demos. The portfolio is the hub; production apps feed data back into it and into GitHub.
 
 ---
@@ -35,7 +33,10 @@ flowchart TB
 
   Obs["Umami analytics<br/>jovylle.com"]
 
-  Users --> Portfolio & Playbase & D1G & ChatW
+  Users --> Portfolio
+  Users --> Playbase
+  Users --> D1G
+  Users --> ChatW
   Portfolio --> Netlify
   Portfolio --> Playbase
   Portfolio --> Pocket
