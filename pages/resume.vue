@@ -142,7 +142,7 @@ useHead({
 const { resume, loading, error } = useResumeData()
 
 const privatePanelRef = ref(null)
-const hasResume = computed(() => Boolean(resume.value))
+const hasResume = computed(() => Boolean(resume.value?.personal?.name))
 const timeline = computed(() => resume.value?.timeline ?? [])
 const skillCategoryLabels = {
   languages: 'Languages',

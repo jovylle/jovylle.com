@@ -1,7 +1,7 @@
+import resumeData from '~/public/data/resume.json'
+
 export function useResumeData() {
-  const { data: resume, pending: loading, error } = useFetch('/data/resume.json', {
-    key: 'resume-data',
-  })
+  const { data: resume, pending: loading, error } = useAsyncData('resume-data', () => resumeData)
 
   return { resume, loading, error }
 }
