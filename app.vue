@@ -31,17 +31,7 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout :name="layout">
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      layout: 'default' // Example value, replace with your actual logic
-    }
-  }
-}
-</script>

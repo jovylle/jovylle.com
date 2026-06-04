@@ -640,21 +640,65 @@ button:hover {
   color: #475569;
 }
 
+
+@media (max-width: 768px) {
+  .resume-header {
+    flex-direction: column;
+  }
+
+  .panel-header h3 {
+    font-size: 1rem;
+  }
+}
+</style>
+
+<style>
 @media print {
-  .back-link,
-  .header-actions,
-  .private-panel,
-  .eyebrow {
-    display: none !important;
+  @page {
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide site nav, footer, widget — print resume content only */
+  body * {
+    visibility: hidden;
+  }
+
+  .resume-root,
+  .resume-root * {
+    visibility: visible;
   }
 
   .resume-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     padding: 0;
     box-shadow: none;
   }
 
+  .back-link,
+  .header-actions,
+  .private-panel,
+  .eyebrow,
+  .screen-only {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   .resume-header {
     display: block;
+    box-shadow: none;
   }
 
   .resume-header > div {
@@ -679,26 +723,12 @@ button:hover {
     box-shadow: none;
   }
 
-  .screen-only {
-    display: none !important;
-  }
-
   .public-name {
     display: none !important;
   }
 
   .print-name {
     display: inline !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .resume-header {
-    flex-direction: column;
-  }
-
-  .panel-header h3 {
-    font-size: 1rem;
   }
 }
 </style>
