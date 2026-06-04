@@ -1,0 +1,143 @@
+{
+  "personal": {
+    "name": "Jovylle B.",
+    "title": "Full-Stack Web Developer",
+    "location": "Philippines",
+    "website": "https://jovylle.com",
+    "linkedin": "https://linkedin.com/in/jovylle",
+    "projectsArchive": "https://jovylle.com/personal-projects/"
+  },
+  "summary": [
+    "Full-stack developer with 9+ years shipping production web apps, admin portals, and client-facing systems.",
+    "Strong background in Laravel, React, Vue, Node, and delivery across contract, in-house, and private remote work.",
+    "Remote-friendly and independent, with experience mentoring developers and building with cloud services, automation, and AI-assisted workflows."
+  ],
+  "skills": {
+    "languages": ["PHP", "JavaScript (ES6+)", "Java", "TypeScript", "Python", "HTML", "CSS"],
+    "frameworks": ["Vue.js", "Nuxt.js", "React.js", "Laravel", "CodeIgniter", "Node.js", "Express.js", "TailwindCSS", "GSAP", "Sal.js", "Gatsby.js", "Jest"],
+    "databases_and_apis": ["MySQL", "GraphQL", "GroQ", "REST", "OpenAI API", "Strapi", "PayloadCMS"],
+    "web_and_cloud": ["Chrome Extensions", "Web Performance Optimization", "SEO", "Serverless (Azure, GCP)", "Azure Pipelines", "AWS Bedrock", "AWS Kinesis Data Streams", "Amazon S3"],
+    "devops_and_version_control": ["Git", "GitHub", "SSH", "Netlify", "Vercel", "A2 Hosting"],
+    "other": ["AI Chatbots", "Automation (n8n, Serverless Workflows)", "Storybook", "AWS Lambda", "DynamoDB", "Code Reviews", "Mentorship", "UI/UX Design Collaboration"]
+  },
+  "timeline": [
+    {
+      "id": "confidential-company",
+      "company": "Confidential Company",
+      "role": "Full-Stack / Frontend Developer",
+      "range": "Oct 2024 – Present",
+      "start": "2024-10",
+      "end": null,
+      "location": "Philippines / Remote",
+      "short_description": "Mentoring Vue.js trainees while shipping production web work in a remote setting.",
+      "long_description": "● Mentor Vue.js trainees and support React.js development through code reviews and hands-on debugging.\n● Build and maintain production features using DynamoDB, AWS Lambda, Azure Pipelines, AWS Bedrock, AWS Kinesis Data Streams, and Amazon S3.\n● Contribute to internal systems with a focus on delivery quality, maintainability, and remote collaboration.",
+      "technologies": ["Vue.js", "React.js", "DynamoDB", "AWS Lambda", "Azure Pipelines", "AWS Bedrock", "AWS Kinesis Data Streams", "Amazon S3"],
+      "highlights": [
+        "Mentors junior developers while contributing to production systems.",
+        "Works with cloud services and AI tooling in a private remote environment."
+      ]
+    },
+    {
+      "id": "independent-bridge",
+      "company": "Independent / Freelance / Open Source",
+      "role": "Full-Stack Web Developer",
+      "range": "Jun 2024 – Sep 2024",
+      "start": "2024-06",
+      "end": "2024-09",
+      "location": "Remote",
+      "short_description": "Continued freelance delivery, open-source contributions, and side projects.",
+      "long_description": "● Continued freelance delivery and open-source contributions between contract roles.\n● Built and maintained side projects while expanding full-stack and cloud experience.\n● Kept this period focused on hands-on development and technical growth.",
+      "technologies": ["Freelance Delivery", "Open Source", "Vue.js", "React.js", "Node.js"],
+      "highlights": [
+        "Maintained active full-stack development work between roles.",
+        "Built side projects while continuing open-source contributions."
+      ]
+    },
+    {
+      "id": "fitbox",
+      "company": "Fitbox, AU (contract)",
+      "role": "Full Stack Developer",
+      "range": "Mar 2021 – May 2024",
+      "start": "2021-03",
+      "end": "2024-05",
+      "location": "Australia / Remote",
+      "short_description": "Led updates for the Member/Admin portals, focusing on payments and UX.",
+      "long_description": "● Fixed bugs and added features to the Member and Admin Portal with an integrated payment system.\n● Worked with React.js, Laravel (PHP), MySQL, RESTful APIs, Git, and SSH.\n● Converted Figma designs into responsive Laravel Blade + React interfaces.\n● Implemented Redux and integrated Node APIs, boosting performance and sales.",
+      "technologies": ["React.js", "Laravel", "MySQL", "Redux", "Node.js", "REST APIs"],
+      "highlights": [
+        "Stabilized critical payment workflows and admin reporting dashboards.",
+        "Improved UX through Figma-to-code implementation and performance tuning."
+      ]
+    },
+    {
+      "id": "pincoder",
+      "company": "Pincoder, PH",
+      "role": "Freelance Mobile / Back-End Developer",
+      "range": "Nov 2020 – Dec 2020",
+      "start": "2020-11",
+      "end": "2020-12",
+      "location": "Cebu, Philippines",
+      "short_description": "Short-term mobile and back-end work for a local Cebu project.",
+      "long_description": "● Worked on both front and back end for a React Native mobile app using Node.js, React.js, and hosted on A2 Hosting.\n● Supported a short-term local project with focused delivery and quick turnaround.",
+      "technologies": ["React Native", "React.js", "Node.js", "A2 Hosting"],
+      "highlights": [
+        "Handled mobile UI updates and backend APIs within a short-term contract."
+      ]
+    },
+    {
+      "id": "proweaver",
+      "company": "Proweaver, Inc.",
+      "role": "Full Stack Developer",
+      "range": "Jul 2018 – Oct 2020",
+      "start": "2018-07",
+      "end": "2020-10",
+      "location": "Cebu, Philippines",
+      "short_description": "Built Laravel/CodeIgniter + React Native solutions for clients.",
+      "long_description": "● Used Laravel, CodeIgniter, React Native, and Node.js to build client sites and mobile apps.\n● Handled SQL, WooCommerce, and front-end design deliverables while deploying via GitHub and FTP.",
+      "technologies": ["Laravel", "CodeIgniter", "React Native", "Node.js", "WooCommerce", "GitHub"],
+      "highlights": [
+        "Managed both backend systems and deployments across projects."
+      ]
+    },
+    {
+      "id": "metrowear",
+      "company": "Metrowear, Inc. / Onsavii, Inc.",
+      "role": "Intern Developer / Tech Support",
+      "range": "Aug 2016 – Oct 2017",
+      "start": "2016-08",
+      "end": "2017-10",
+      "location": "Cebu, Philippines",
+      "short_description": "Troubleshot and built inventory tooling.",
+      "long_description": "● Troubleshot site and hardware issues and helped develop an inventory system using Laravel, PHP, and jQuery.",
+      "technologies": ["Laravel", "PHP", "jQuery"],
+      "highlights": [
+        "Blended tech support with custom inventory development."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "AI Chatbot Deployment",
+      "description": "Built and deployed a Nuxt.js + OpenAI chatbot for a client site with optimized latency and UX."
+    },
+    {
+      "title": "Vuejs/Nuxtjs — sfl.uft1.com",
+      "description": "Real-time Vue 3 tool (Sunflower Land) used daily by hundreds of users."
+    },
+    {
+      "title": "Chrome Extensions (Melvorite & Sunflower Land Tools)",
+      "description": "Automated browser-based gameplay via JavaScript and Chrome APIs with a 5.0 community rating."
+    }
+  ],
+  "education": {
+    "institution": "University of Cebu",
+    "location": "Cebu, Philippines",
+    "range": "2013 – 2017",
+    "degree": "Bachelor of Information Technology",
+    "highlights": [
+      "2nd Runner-up, 2016 Programming Competition",
+      "Competent in TESDA 2D Animation NC-III",
+      "Competed in IoT Challenge using Arduino (C++)"
+    ]
+  }
+}
