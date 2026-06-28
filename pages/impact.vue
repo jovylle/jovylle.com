@@ -49,10 +49,6 @@ useHead({
           Only tools above a traffic threshold appear here.
         </template>
       </p>
-      <p class="mt-4 text-sm text-gray-500 dark:text-gray-500">
-        Share this link on LinkedIn:
-        <a href="https://jovylle.com/impact" class="underline decoration-dashed">jovylle.com/impact</a>
-      </p>
     </header>
 
     <div v-if="pending && !hasSites" class="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-6 text-sm text-gray-600 dark:text-gray-400">
