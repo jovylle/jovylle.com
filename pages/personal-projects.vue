@@ -1,5 +1,6 @@
 <script setup>
 import { CONTENT_ASSET_BASE } from '~/utils/config'
+import { findMetricForProject } from '~/utils/usageMetrics'
 
 const PERSONAL_PROJECTS_JSON_URL =
   'https://content.jovylle.com/data/personal-projects.json'
@@ -202,7 +203,11 @@ async function fetchPersonalProjects() {
           }
         }
 
-        const createdAt = project?.github_raw?.created_at || null
+        const createdAt =
+          project?.created_at ||
+          project?.github_raw?.created_at ||
+          ghRepo?.created_at ||
+          null
         const startedYear = createdAt ? new Date(createdAt).getFullYear() : null
 
         return {
@@ -253,6 +258,10 @@ const { data: personalProjectsData } = await useAsyncData(
   fetchPersonalProjects,
   { server: true }
 )
+
+const { metrics, windowDays } = useUsageMetrics()
+
+const metricForProject = (project) => findMetricForProject(project, metrics.value)
 
 const allProjects = computed(() => personalProjectsData.value?.allProjects ?? [])
 const PRIORITY_HIGHLIGHT_THRESHOLD = 100
@@ -594,7 +603,7 @@ useHead({
 
             <!-- Project Header -->
             <div class="mb-4">
-              <div class="flex items-center justify-between mb-2 gap-2">
+              <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
                 <h3
                   class="m-0 font-semibold"
                   :class="isHighlightedProject(project)
@@ -603,6 +612,11 @@ useHead({
                 >
                   {{ project.displayTitle }}
                 </h3>
+                <UsageMetricBadge
+                  v-if="metricForProject(project)"
+                  :site="metricForProject(project)"
+                  :window-days="windowDays"
+                />
               </div>
               <div
                 v-if="project.description"
@@ -720,7 +734,13 @@ useHead({
       </div>
 
       <!-- Footer Note -->
-      <div class="text-center mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <div class="text-center mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 space-y-3">
+        <p class="text-sm">
+          <NuxtLink to="/impact" class="text-emerald-700 dark:text-emerald-400 underline decoration-dashed font-medium">
+            Live usage metrics
+          </NuxtLink>
+          <span class="text-gray-600 dark:text-gray-400"> — verified Cloudflare traffic, updated daily</span>
+        </p>
         <p class="text-sm text-gray-600 dark:text-gray-400">
           This is a comprehensive archive of personal projects. Some may be experimental or incomplete.
         </p>

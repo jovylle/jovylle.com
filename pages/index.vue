@@ -44,6 +44,9 @@
             <NuxtLink to="/personal-projects">
               <UiButton variant="outline-dashed">Projects Archive</UiButton>
             </NuxtLink>
+            <NuxtLink to="/impact">
+              <UiButton variant="outline-dashed">Live Usage</UiButton>
+            </NuxtLink>
           </div>
         </div>
       </div>

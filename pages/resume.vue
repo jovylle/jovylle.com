@@ -118,6 +118,20 @@
         </article>
       </section>
 
+      <section v-if="hasLiveUsage" class="live-usage-section screen-only">
+        <div class="live-usage-head">
+          <h2>Selected projects — live usage</h2>
+          <NuxtLink to="/impact" class="live-usage-link">Full metrics →</NuxtLink>
+        </div>
+        <ul class="live-usage-list">
+          <li v-for="site in usageSites" :key="site.id">
+            <a :href="site.url" target="_blank" rel="noopener">{{ site.label }}</a>
+            <span>{{ formatDailyVisitors(displayDailyAvg(site)) }} ({{ windowDays }}d)</span>
+          </li>
+        </ul>
+        <p v-if="usageUpdatedLabel" class="live-usage-note">Cloudflare Analytics · updated {{ usageUpdatedLabel }}</p>
+      </section>
+
       <NuxtLink to="/" class="back-link">← Back to portfolio</NuxtLink>
     </div>
   </div>
@@ -125,6 +139,7 @@
 
 <script setup>
 import { marked } from 'marked'
+import { formatDailyVisitors, formatUpdatedAt, displayDailyAvg } from '~/utils/usageMetrics'
 
 definePageMeta({ layout: 'resume' })
 
@@ -140,6 +155,9 @@ useHead({
 })
 
 const { resume, loading, error } = useResumeData()
+const { sites: usageSites, hasSites: hasLiveUsage, updatedAt, windowDays } = useUsageMetrics()
+
+const usageUpdatedLabel = computed(() => formatUpdatedAt(updatedAt.value))
 
 const privatePanelRef = ref(null)
 const hasResume = computed(() => Boolean(resume.value?.personal?.name))
@@ -633,6 +651,65 @@ button:hover {
   margin-top: 1rem;
   color: #1d4ed8;
   font-weight: 600;
+}
+
+.live-usage-section {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+}
+
+.live-usage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.live-usage-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.live-usage-link {
+  font-size: 0.875rem;
+  color: #059669;
+  text-decoration: none;
+}
+
+.live-usage-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.live-usage-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9375rem;
+}
+
+.live-usage-list a {
+  color: #111827;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.live-usage-list span {
+  color: #047857;
+  white-space: nowrap;
+}
+
+.live-usage-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: #6b7280;
 }
 
 .panel-foot {
