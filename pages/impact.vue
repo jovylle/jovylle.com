@@ -48,7 +48,10 @@ useHead({
       v-else-if="error"
       class="rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-700 p-6 text-sm text-amber-900 dark:text-amber-200"
     >
-      Usage metrics are not available right now. Check back after the daily sync runs.
+      <p class="font-medium mb-1">Usage metrics are not available right now.</p>
+      <p class="text-xs opacity-90">
+        The portfolio loads stats from content.jovylle.com after each sync. If you just ran the workflow, wait for the content CDN deploy to finish, then refresh.
+      </p>
     </div>
 
     <UsageMetricsPanel
