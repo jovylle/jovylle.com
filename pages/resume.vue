@@ -126,7 +126,7 @@
         <ul class="live-usage-list">
           <li v-for="site in usageSites" :key="site.id">
             <a :href="site.url" target="_blank" rel="noopener">{{ site.label }}</a>
-            <span>{{ formatDailyVisitors(displayDailyAvg(site)) }} ({{ windowDays }}d)</span>
+            <span>{{ formatMonthlyVisits(site) }} ({{ windowDays }}d)</span>
           </li>
         </ul>
         <p v-if="usageUpdatedLabel" class="live-usage-note">Cloudflare Analytics · updated {{ usageUpdatedLabel }}</p>
@@ -139,7 +139,7 @@
 
 <script setup>
 import { marked } from 'marked'
-import { formatDailyVisitors, formatUpdatedAt, displayDailyAvg } from '~/utils/usageMetrics'
+import { formatMonthlyVisits, formatUpdatedAt, displayDailyAvg } from '~/utils/usageMetrics'
 
 definePageMeta({ layout: 'resume' })
 

@@ -32,15 +32,39 @@ export function displayDailyAvg(site) {
   return Number(site?.daily_avg) || 0
 }
 
-/** Human-readable daily line for badges and resume. */
+export function displayMonthlyVisits(site) {
+  const v = Number(site?.visits_30d)
+  if (Number.isFinite(v) && v > 0) return v
+  const daily = displayDailyAvg(site)
+  if (daily > 0) return daily * 30
+  return 0
+}
+
+/** Human-readable monthly visits for badges and cards. */
+export function formatMonthlyVisits(site) {
+  const n = displayMonthlyVisits(site)
+  if (!n) return ''
+  if (n >= 1000) {
+    const rounded = Math.round(n / 100) / 10
+    return `~${rounded}k visits/mo`
+  }
+  return `~${n} visits/mo`
+}
+
+/** @deprecated kept for resume.vue compat — use formatMonthlyVisits */
 export function formatDailyVisitors(dailyAvg) {
   const n = Number(dailyAvg)
   if (!Number.isFinite(n) || n < 1) return ''
   if (n >= 1000) {
     const rounded = Math.round(n / 100) / 10
-    return `~${rounded}k visits/day`
+    return `~${rounded}k visits/mo`
   }
-  return `~${n} visits/day`
+  const monthly = n * 30
+  if (monthly >= 1000) {
+    const rounded = Math.round(monthly / 100) / 10
+    return `~${rounded}k visits/mo`
+  }
+  return `~${monthly} visits/mo`
 }
 
 export function formatMonthlyUniques(count) {
@@ -54,9 +78,9 @@ export function formatMonthlyUniques(count) {
 }
 
 export function formatMetricBadge(site, windowDays = 30) {
-  const daily = formatDailyVisitors(displayDailyAvg(site))
-  if (!daily) return ''
-  return `${daily} · ${windowDays}d`
+  const label = formatMonthlyVisits(site)
+  if (!label) return ''
+  return `${label} · ${windowDays}d`
 }
 
 export function findMetricForProject(project, metricsData) {

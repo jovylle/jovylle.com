@@ -1,9 +1,8 @@
 <script setup>
 import {
-  formatDailyVisitors,
+  formatMonthlyVisits,
   formatMonthlyUniques,
   formatUpdatedAt,
-  displayDailyAvg,
 } from '~/utils/usageMetrics'
 
 const props = defineProps({
@@ -47,15 +46,11 @@ const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
         </div>
         <dl class="usage-card__stats">
           <div>
-            <dt>Daily visits</dt>
-            <dd>{{ formatDailyVisitors(displayDailyAvg(site)) || '—' }}</dd>
-          </div>
-          <div>
-            <dt>{{ windowDays }}-day visits</dt>
-            <dd>{{ site.visits_30d ? site.visits_30d.toLocaleString() : '—' }}</dd>
+            <dt>Monthly visits</dt>
+            <dd>{{ formatMonthlyVisits(site) || '—' }}</dd>
           </div>
           <div v-if="site.unique_visitors_30d && !site.grouped">
-            <dt>{{ windowDays }}-day uniques</dt>
+            <dt>Monthly uniques</dt>
             <dd>{{ formatMonthlyUniques(site.unique_visitors_30d) || '—' }}</dd>
           </div>
         </dl>

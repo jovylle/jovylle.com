@@ -1,5 +1,5 @@
 <script setup>
-import { formatMetricBadge, displayDailyAvg } from '~/utils/usageMetrics'
+import { formatMetricBadge, formatMonthlyVisits } from '~/utils/usageMetrics'
 
 const props = defineProps({
   site: { type: Object, required: true },
@@ -17,6 +17,6 @@ const label = computed(() => formatMetricBadge(props.site, props.windowDays))
     :title="`${site.label} — Cloudflare unique visitors, ${windowDays}-day average`"
   >
     <i class="bx bx-trending-up text-sm" aria-hidden="true" />
-    <span>{{ compact ? `~${displayDailyAvg(site)}/day` : label }}</span>
+    <span>{{ compact ? formatMonthlyVisits(site) : label }}</span>
   </span>
 </template>
