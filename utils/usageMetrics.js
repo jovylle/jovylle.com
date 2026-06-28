@@ -1,6 +1,10 @@
 import { CONTENT_ASSET_BASE } from '~/utils/config'
 
-export const USAGE_METRICS_URL = `${CONTENT_ASSET_BASE}/data/usage-metrics.json`
+/** Browser-safe same-origin proxy (avoids CDN CORS). */
+export const USAGE_METRICS_URL = '/api/usage-metrics'
+
+/** Direct CDN URL — server-side only. */
+export const USAGE_METRICS_UPSTREAM = `${CONTENT_ASSET_BASE}/data/usage-metrics.json`
 
 export function normalizeHost(value) {
   if (!value) return ''
