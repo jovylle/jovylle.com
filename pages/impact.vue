@@ -1,5 +1,14 @@
 <script setup>
-const { sites, hasSites, updatedAt, windowDays, pending, error } = useUsageMetrics()
+const {
+  sites,
+  hasSites,
+  updatedAt,
+  windowDays,
+  pending,
+  error,
+  isSnapshot,
+  snapshotNote,
+} = useUsageMetrics({ preferSnapshot: true })
 
 useHead({
   title: 'Live Usage — Jovylle Bermudez',
@@ -7,7 +16,7 @@ useHead({
     {
       name: 'description',
       content:
-        'Verified daily traffic for production tools — pulled from Cloudflare Analytics and updated automatically.',
+        'Verified daily traffic for production tools — from Cloudflare Analytics.',
     },
     {
       property: 'og:title',
@@ -31,8 +40,14 @@ useHead({
       </p>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">Live product usage</h1>
       <p class="text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-        This page shows <strong>actual visitor counts</strong> from Cloudflare — not estimates.
-        Every hostname across your Cloudflare account is scanned; only tools above a traffic threshold appear here and update daily.
+        <template v-if="isSnapshot">
+          These numbers are a <strong>verified snapshot</strong> from Cloudflare Analytics (bots excluded, 30-day window).
+          Live auto-sync will replace this once the pipeline is stable.
+        </template>
+        <template v-else>
+          This page shows <strong>actual visitor counts</strong> from Cloudflare — synced daily.
+          Only tools above a traffic threshold appear here.
+        </template>
       </p>
       <p class="mt-4 text-sm text-gray-500 dark:text-gray-500">
         Share this link on LinkedIn:
@@ -40,7 +55,7 @@ useHead({
       </p>
     </header>
 
-    <div v-if="pending" class="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-6 text-sm text-gray-600 dark:text-gray-400">
+    <div v-if="pending && !hasSites" class="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-6 text-sm text-gray-600 dark:text-gray-400">
       Loading latest usage metrics…
     </div>
 
@@ -54,12 +69,29 @@ useHead({
       </p>
     </div>
 
-    <UsageMetricsPanel
+    <div
       v-else-if="hasSites"
-      :sites="sites"
-      :updated-at="updatedAt"
-      :window-days="windowDays"
-    />
+      class="space-y-4"
+    >
+      <p
+        v-if="isSnapshot"
+        class="rounded-lg border border-emerald-200 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-800 px-4 py-3 text-sm text-emerald-900 dark:text-emerald-100"
+      >
+        Showing verified snapshot{{ snapshotNote ? ` — ${snapshotNote}` : '' }}
+      </p>
+      <UsageMetricsPanel
+        :sites="sites"
+        :updated-at="updatedAt"
+        :window-days="windowDays"
+        :show-source="!isSnapshot"
+      />
+      <p
+        v-if="isSnapshot"
+        class="text-xs text-gray-500 dark:text-gray-500"
+      >
+        Source: Cloudflare Analytics dashboard · {{ windowDays }}-day window · snapshot as of {{ updatedAt?.slice(0, 10) }}
+      </p>
+    </div>
 
     <div
       v-else
