@@ -5,77 +5,77 @@
   >
     <h1 class="sr-only">Jovylle Bermudez</h1>
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
-      <section v-if="!isHomePage" class="site-header-wrap">
-        <div class="container sm:mx-auto">
-          <div class="site-header-bar">
-            <NuxtLink to="/" class="nav-home">Home</NuxtLink>
-            <button
-              type="button"
-              class="site-menu-btn sm:hidden"
-              aria-label="Toggle navigation menu"
-              :aria-expanded="isMenuOpen"
-              @click="isMenuOpen = !isMenuOpen"
+      <header v-if="!isHomePage" class="site-header">
+        <div class="site-header__inner">
+          <NuxtLink to="/" class="brand" aria-label="Home">
+            <span class="brand__mark">JB</span>
+            <span class="brand__name">Jovylle</span>
+          </NuxtLink>
+
+          <nav class="site-nav" aria-label="Main">
+            <NuxtLink
+              v-for="item in navItems"
+              :key="item.to"
+              :to="item.to"
+              class="nav-link"
+              :class="{ 'nav-link--active': isNavActive(item.to) }"
             >
-              <i v-if="isMenuOpen" class="bx bx-x" aria-hidden="true"></i>
-              <i v-else class="bx bx-menu" aria-hidden="true"></i>
-            </button>
-            <nav
-              :class="['site-nav', isMenuOpen ? 'site-nav--open' : '']"
-              aria-label="Main"
+              {{ item.label }}
+            </NuxtLink>
+            <a
+              class="nav-link nav-link--external"
+              href="https://hub.jovylle.com"
+              target="_blank"
+              rel="noopener"
             >
-              <NuxtLink
-                to="/highlights"
-                class="nav-link"
-                :class="{ 'nav-link--active': isNavActive('/highlights') }"
-                @click="closeMenu"
-              >
-                AI & Solutions
-              </NuxtLink>
-              <NuxtLink
-                to="/personal-projects"
-                class="nav-link"
-                :class="{ 'nav-link--active': isNavActive('/personal-projects') }"
-                @click="closeMenu"
-              >
-                Projects
-              </NuxtLink>
-              <NuxtLink
-                to="/impact"
-                class="nav-link"
-                :class="{ 'nav-link--active': isNavActive('/impact') }"
-                @click="closeMenu"
-              >
-                Impact
-              </NuxtLink>
-              <NuxtLink
-                to="/uses"
-                class="nav-link"
-                :class="{ 'nav-link--active': isNavActive('/uses') }"
-                @click="closeMenu"
-              >
-                Uses
-              </NuxtLink>
-              <a
-                class="nav-link nav-link--external"
-                href="https://hub.jovylle.com"
-                target="_blank"
-                rel="noopener"
-                @click="closeMenu"
-              >
-                Blog & Hub ↗
-              </a>
-              <NuxtLink
-                to="/contact"
-                class="nav-link sm:hidden"
-                :class="{ 'nav-link--active': isNavActive('/contact') }"
-                @click="closeMenu"
-              >
-                Contact
-              </NuxtLink>
-            </nav>
-          </div>
+              Blog & Hub
+              <span aria-hidden="true" class="nav-link__ext">↗</span>
+            </a>
+          </nav>
+
+          <button
+            type="button"
+            class="menu-btn"
+            aria-label="Toggle navigation menu"
+            :aria-expanded="isMenuOpen"
+            @click="isMenuOpen = !isMenuOpen"
+          >
+            <span class="menu-btn__bar" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
+            <span class="menu-btn__bar menu-btn__bar--mid" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
+            <span class="menu-btn__bar" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
+          </button>
         </div>
-      </section>
+
+        <div class="mobile-nav" :class="{ 'mobile-nav--open': isMenuOpen }">
+          <NuxtLink
+            v-for="item in navItems"
+            :key="item.to"
+            :to="item.to"
+            class="mobile-nav__link"
+            :class="{ 'mobile-nav__link--active': isNavActive(item.to) }"
+            @click="closeMenu"
+          >
+            {{ item.label }}
+          </NuxtLink>
+          <a
+            class="mobile-nav__link"
+            href="https://hub.jovylle.com"
+            target="_blank"
+            rel="noopener"
+            @click="closeMenu"
+          >
+            Blog & Hub ↗
+          </a>
+          <NuxtLink
+            to="/contact"
+            class="mobile-nav__link"
+            :class="{ 'mobile-nav__link--active': isNavActive('/contact') }"
+            @click="closeMenu"
+          >
+            Contact
+          </NuxtLink>
+        </div>
+      </header>
       <section class="flex-1">
         <slot />
       </section>
@@ -107,7 +107,13 @@ export default {
     return {
       darkMode: false,
       currentYear: new Date().getFullYear(),
-      isMenuOpen: false
+      isMenuOpen: false,
+      navItems: [
+        { to: '/highlights', label: 'AI & Solutions' },
+        { to: '/personal-projects', label: 'Projects' },
+        { to: '/impact', label: 'Impact' },
+        { to: '/uses', label: 'Uses' }
+      ]
     };
   },
   computed: {
@@ -151,151 +157,233 @@ export default {
 </script>
 
 <style scoped>
-.site-header-wrap {
-  padding: 1rem 0 0.5rem;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: 0 -1rem 1rem;
+  padding: 0 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
 }
 
-@media (min-width: 640px) {
-  .site-header-wrap {
-    padding: 1.5rem 0 0.75rem;
-  }
+.dark .site-header {
+  background: rgba(17, 24, 39, 0.72);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
-.site-header-bar {
+.site-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  position: relative;
+  height: 56px;
 }
 
-.nav-home {
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: rgb(55 65 81);
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
+  color: inherit;
 }
 
-.dark .nav-home {
-  color: rgb(229 231 235);
-}
-
-.nav-home:hover {
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-underline-offset: 4px;
-}
-
-.site-menu-btn {
+.brand__mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.375rem 0.5rem;
-  font-size: 1.25rem;
-  line-height: 1;
-  color: rgb(75 85 99);
-  background: transparent;
-  border: 2px dashed var(--divider);
-  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgb(255 255 255);
+  background: rgb(17 24 39);
+  border-radius: 8px;
 }
 
-.dark .site-menu-btn {
-  color: rgb(209 213 219);
-  border-color: var(--divider-dark);
+.dark .brand__mark {
+  color: rgb(17 24 39);
+  background: rgb(243 244 246);
+}
+
+.brand__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgb(17 24 39);
+}
+
+.dark .brand__name {
+  color: rgb(243 244 246);
 }
 
 .site-nav {
   display: none;
-  flex-direction: column;
-  gap: 0.25rem;
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  z-index: 40;
-  min-width: 11rem;
-  padding: 0.5rem;
-  background: rgb(255 255 255);
-  border: 2px dashed var(--divider);
-  border-radius: 6px;
 }
 
-.dark .site-nav {
-  background: rgb(31 41 55);
-  border-color: var(--divider-dark);
-}
-
-.site-nav--open {
-  display: flex;
-}
-
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .site-nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 0.25rem 1rem;
-    position: static;
-    min-width: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    gap: 0.125rem;
+    padding: 0.25rem;
+    background: rgba(17, 24, 39, 0.04);
+    border-radius: 999px;
   }
 
   .dark .site-nav {
-    background: transparent;
-    border: none;
+    background: rgba(255, 255, 255, 0.06);
   }
 }
 
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 0.625rem;
-  font-size: 0.875rem;
+  gap: 0.25rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.825rem;
   font-weight: 500;
-  line-height: 1.25;
-  color: rgb(107 114 128);
+  line-height: 1;
+  color: rgb(75 85 99);
   text-decoration: none;
-  border-radius: 4px;
-  transition: color 0.15s ease;
-}
-
-@media (min-width: 640px) {
-  .nav-link {
-    padding: 0.25rem 0.125rem;
-  }
+  border-radius: 999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
 }
 
 .dark .nav-link {
-  color: rgb(156 163 175);
+  color: rgb(209 213 219);
 }
 
 .nav-link:hover {
-  color: rgb(55 65 81);
+  color: rgb(17 24 39);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .dark .nav-link:hover {
-  color: rgb(243 244 246);
+  color: rgb(255 255 255);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-link--active {
   color: rgb(17 24 39);
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-underline-offset: 4px;
-  text-decoration-color: var(--accent);
+  background: rgb(255 255 255);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 0 0 1px rgba(17, 24, 39, 0.04);
 }
 
 .dark .nav-link--active {
-  color: rgb(255 255 255);
+  color: rgb(17 24 39);
+  background: rgb(243 244 246);
+  box-shadow: none;
 }
 
-.nav-link--external {
-  white-space: nowrap;
+.nav-link__ext {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.menu-btn {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dark .menu-btn {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (min-width: 768px) {
+  .menu-btn {
+    display: none;
+  }
+}
+
+.menu-btn__bar {
+  width: 16px;
+  height: 1.5px;
+  background: rgb(55 65 81);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.dark .menu-btn__bar {
+  background: rgb(229 231 235);
+}
+
+.menu-btn__bar--open:nth-child(1),
+.menu-btn__bar:first-child.menu-btn__bar--open {
+  transform: translateY(5.5px) rotate(45deg);
+}
+
+.menu-btn__bar--mid.menu-btn__bar--open {
+  opacity: 0;
+}
+
+.menu-btn__bar--open:last-child {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+}
+
+.mobile-nav--open {
+  max-height: 420px;
+  padding: 0.5rem 0 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+.mobile-nav__link {
+  display: block;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgb(55 65 81);
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.dark .mobile-nav__link {
+  color: rgb(209 213 219);
+}
+
+.mobile-nav__link:hover {
+  background: rgba(17, 24, 39, 0.04);
+}
+
+.dark .mobile-nav__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mobile-nav__link--active {
+  color: rgb(17 24 39);
+  background: rgba(17, 24, 39, 0.05);
+}
+
+.dark .mobile-nav__link--active {
+  color: rgb(255 255 255);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .chatbot-toggle-button {
