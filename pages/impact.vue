@@ -42,34 +42,24 @@ const totalMonthlyVisits = computed(() =>
       <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 mb-3">
         For recruiters &amp; collaborators
       </p>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">Live product usage</h1>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">Real visitors on the things I've built</h1>
       <p class="text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-        <template v-if="isSnapshot">
-          These numbers are a <strong>verified snapshot</strong> from Cloudflare Analytics
-          (bots excluded, {{ windowDays }}-day window). Live auto-sync will replace this once the pipeline is stable.
-        </template>
-        <template v-else>
-          This page shows <strong>actual visitor counts</strong> from Cloudflare — synced daily.
-          Only tools above a traffic threshold appear here.
-        </template>
+        These are real visitor counts from the last {{ windowDays }} days, pulled from my analytics
+        dashboard with bots filtered out. Only sites with steady traffic show up here.
       </p>
 
       <!-- Summary stat strip -->
       <dl
         v-if="hasSites"
-        class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3"
+        class="mt-6 grid grid-cols-2 gap-3"
       >
         <div class="rounded-lg p-4 bg-white dark:bg-ternary-dark border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]">
-          <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Tools tracked</dt>
+          <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Live tools</dt>
           <dd class="text-2xl font-bold">{{ sites.length }}</dd>
         </div>
         <div class="rounded-lg p-4 bg-white dark:bg-ternary-dark border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]">
-          <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Monthly visits</dt>
+          <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Visitors (last {{ windowDays }} days)</dt>
           <dd class="text-2xl font-bold">{{ totalMonthlyVisits.toLocaleString() }}</dd>
-        </div>
-        <div class="col-span-2 sm:col-span-1 rounded-lg p-4 bg-white dark:bg-ternary-dark border-[3px] border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]">
-          <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Window</dt>
-          <dd class="text-2xl font-bold">{{ windowDays }} days</dd>
         </div>
       </dl>
     </header>
@@ -101,7 +91,7 @@ const totalMonthlyVisits = computed(() =>
         class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 border-2 border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]"
       >
         <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" aria-hidden="true" />
-        Verified snapshot<template v-if="snapshotNote"> — {{ snapshotNote }}</template>
+        Numbers updated manually for now<template v-if="updatedAt"> — {{ updatedAt.slice(0, 10) }}</template>
       </p>
 
       <UsageMetricsPanel

@@ -1,6 +1,5 @@
 <script setup>
 import {
-  formatMonthlyVisits,
   formatMonthlyUniques,
   formatUpdatedAt,
 } from '~/utils/usageMetrics'
@@ -19,14 +18,7 @@ const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
   <section v-if="sites.length" class="flex flex-col gap-5">
     <header class="flex flex-wrap justify-between gap-x-6 gap-y-3">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 mb-1">
-          Live usage
-        </p>
-        <h2 class="text-2xl font-bold mb-2">Tools with real traffic</h2>
-        <p class="max-w-2xl text-gray-600 dark:text-gray-400 leading-relaxed">
-          Visitor counts from Cloudflare zone analytics. Only products above a traffic threshold
-          appear here — low-traffic experiments stay hidden automatically.
-        </p>
+        <h2 class="text-2xl font-bold mb-2">Per-site breakdown</h2>
       </div>
       <p v-if="formattedDate" class="self-start text-sm text-gray-500 dark:text-gray-400">
         Updated {{ formattedDate }}
@@ -52,12 +44,8 @@ const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
           <UsageMetricBadge :site="site" :window-days="windowDays" compact />
         </div>
 
-        <dl class="grid grid-cols-2 gap-3 m-0">
+        <dl v-if="site.unique_visitors_30d && !site.grouped" class="grid grid-cols-2 gap-3 m-0">
           <div>
-            <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0.5">Monthly visits</dt>
-            <dd class="m-0 text-base font-bold">{{ formatMonthlyVisits(site) || '—' }}</dd>
-          </div>
-          <div v-if="site.unique_visitors_30d && !site.grouped">
             <dt class="text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0.5">Monthly uniques</dt>
             <dd class="m-0 text-base font-bold">{{ formatMonthlyUniques(site.unique_visitors_30d) || '—' }}</dd>
           </div>
@@ -78,7 +66,7 @@ const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
     </ul>
 
     <p v-if="showSource" class="text-xs text-gray-500 dark:text-gray-400">
-      Source: Cloudflare Analytics · {{ windowDays }}-day rolling window · synced daily
+      Source: Cloudflare Analytics, updated daily
     </p>
   </section>
 </template>
