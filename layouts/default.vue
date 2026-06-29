@@ -5,77 +5,74 @@
   >
     <h1 class="sr-only">Jovylle Bermudez</h1>
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
-      <section class="">
+      <section v-if="!isHomePage" class="site-header-wrap">
         <div class="container sm:mx-auto">
-          <div
-            class="py-6 md:py-9 flex items-center justify-between flex-col sm:flex-row"
-          >
-            <div
-              class="font-bold flex text-xl sm:text-3xl my_hover px-2 justify-between w-full sm:w-auto"
+          <div class="site-header-bar">
+            <NuxtLink to="/" class="nav-home">Home</NuxtLink>
+            <button
+              type="button"
+              class="site-menu-btn sm:hidden"
+              aria-label="Toggle navigation menu"
+              :aria-expanded="isMenuOpen"
+              @click="isMenuOpen = !isMenuOpen"
             >
-              <!-- <div class="sm:hidden">
-                <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
-              </div> -->
-              <NuxtLink class="text-center" v-if="!isHomePage" to="/"> Home </NuxtLink>
-              <div v-if="!isHomePage" class="block sm:hidden text-right">
-                <button
-                  aria-label="show menu button"
-                  @click="isMenuOpen = !isMenuOpen"
-                  class="px-3 "
-                >
-                  <i v-if="isMenuOpen" class="bx bx-x my-1"></i>
-                  <i v-if="!isMenuOpen" class="bx bx-menu my-1"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              v-if="!isHomePage" 
-              :class="['font-bold sm:flex my-5 sm:my-0 space-x-0 sm:space-x-3 md:space-x-10  divide-y sm:justify-center divide-gray-200 sm:divide-y-0 w-[100vw] shadow-lg sm:shadow-none',isMenuOpen?'block':'hidden']"
+              <i v-if="isMenuOpen" class="bx bx-x" aria-hidden="true"></i>
+              <i v-else class="bx bx-menu" aria-hidden="true"></i>
+            </button>
+            <nav
+              :class="['site-nav', isMenuOpen ? 'site-nav--open' : '']"
+              aria-label="Main"
             >
               <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/highlights"
+                class="nav-link"
+                :class="{ 'nav-link--active': isNavActive('/highlights') }"
+                @click="closeMenu"
               >
                 AI & Solutions
               </NuxtLink>
-              <a
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
-                href="https://hub.jovylle.com" target="_blank" rel="noopener"
-              >
-                Blog & Hub ↗
-              </a>
               <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
-                to="/uses"
-              >
-                Uses
-              </NuxtLink>
-              <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0"
                 to="/personal-projects"
+                class="nav-link"
+                :class="{ 'nav-link--active': isNavActive('/personal-projects') }"
+                @click="closeMenu"
               >
                 Projects
               </NuxtLink>
               <NuxtLink
-                class="flex_center text-xl my_hover1 inline-flex py-3 sm:py-0 sm:hidden"
+                to="/impact"
+                class="nav-link"
+                :class="{ 'nav-link--active': isNavActive('/impact') }"
+                @click="closeMenu"
+              >
+                Impact
+              </NuxtLink>
+              <NuxtLink
+                to="/uses"
+                class="nav-link"
+                :class="{ 'nav-link--active': isNavActive('/uses') }"
+                @click="closeMenu"
+              >
+                Uses
+              </NuxtLink>
+              <a
+                class="nav-link nav-link--external"
+                href="https://hub.jovylle.com"
+                target="_blank"
+                rel="noopener"
+                @click="closeMenu"
+              >
+                Blog & Hub ↗
+              </a>
+              <NuxtLink
                 to="/contact"
+                class="nav-link sm:hidden"
+                :class="{ 'nav-link--active': isNavActive('/contact') }"
+                @click="closeMenu"
               >
                 Contact
               </NuxtLink>
-            </div>
-            <div class="hidden sm:flex sm:items-center text-base text-primary-light space-x-2">
-              <!-- <div class="">
-                <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
-              </div> -->
-              <!-- <NuxtLink class="" to="/contact">
-                <button
-                  id="contactbutton"
-                  class=" scale-90 rounded-lg p-3 my_hover  bg-m4 px-4  "
-                >
-                  Contacts
-                </button>
-              </NuxtLink> -->
-            </div>
+            </nav>
           </div>
         </div>
       </section>
@@ -88,7 +85,6 @@
             class="pt-12 pb-10 flex-col sm:flex-row flex text-center justify-between"
           >
             <div class="my_hover">No Copyright © {{currentYear}}</div>
-            <!-- <div class="my_hover">No Copyright © {{currentYear}} Jovylle</div> -->
             <div class="my_hover">
               <div class="">
                 <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
@@ -98,15 +94,12 @@
         </div>
       </section>
     </div>
-    
-    
-    <!-- Quick Menu Widget via embed.js -->
+
     <div id="embedded-quick-menu"></div>
   </div>
 </template>
 
 <script>
- 
 
 export default {
   components: { },
@@ -122,14 +115,24 @@ export default {
       return this.$route.path === '/' || this.$route.path === '/home';
     }
   },
+  watch: {
+    '$route.path'() {
+      this.isMenuOpen = false;
+    }
+  },
   methods: {
     toggleDarkMode() {
       this.darkMode = !this.darkMode;
     },
-    
+    closeMenu() {
+      this.isMenuOpen = false;
+    },
+    isNavActive(path) {
+      const current = this.$route.path;
+      return current === path || current.startsWith(`${path}/`);
+    }
   },
   mounted() {
-    // Load the embeddable quick menu widget (inline, no iframe)
     if (!document.querySelector('script[data-jovylle-embed]')) {
       const s = document.createElement('script');
       s.src = '/widget/embed-inline.js';
@@ -137,17 +140,164 @@ export default {
       s.setAttribute('data-jovylle-embed', 'true');
       s.setAttribute('data-position', 'top-right');
       s.setAttribute('data-size', 'medium');
-      s.setAttribute('data-show-leaderboard', 'true'); // Enable leaderboard
+      s.setAttribute('data-show-leaderboard', 'true');
       document.body.appendChild(s);
     }
   },
   beforeDestroy() {
-    
+
   }
 }
 </script>
 
 <style scoped>
+.site-header-wrap {
+  padding: 1rem 0 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .site-header-wrap {
+    padding: 1.5rem 0 0.75rem;
+  }
+}
+
+.site-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+}
+
+.nav-home {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgb(55 65 81);
+  text-decoration: none;
+}
+
+.dark .nav-home {
+  color: rgb(229 231 235);
+}
+
+.nav-home:hover {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+}
+
+.site-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: rgb(75 85 99);
+  background: transparent;
+  border: 2px dashed var(--divider);
+  border-radius: 4px;
+}
+
+.dark .site-menu-btn {
+  color: rgb(209 213 219);
+  border-color: var(--divider-dark);
+}
+
+.site-nav {
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 40;
+  min-width: 11rem;
+  padding: 0.5rem;
+  background: rgb(255 255 255);
+  border: 2px dashed var(--divider);
+  border-radius: 6px;
+}
+
+.dark .site-nav {
+  background: rgb(31 41 55);
+  border-color: var(--divider-dark);
+}
+
+.site-nav--open {
+  display: flex;
+}
+
+@media (min-width: 640px) {
+  .site-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.25rem 1rem;
+    position: static;
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  .dark .site-nav {
+    background: transparent;
+    border: none;
+  }
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgb(107 114 128);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+@media (min-width: 640px) {
+  .nav-link {
+    padding: 0.25rem 0.125rem;
+  }
+}
+
+.dark .nav-link {
+  color: rgb(156 163 175);
+}
+
+.nav-link:hover {
+  color: rgb(55 65 81);
+}
+
+.dark .nav-link:hover {
+  color: rgb(243 244 246);
+}
+
+.nav-link--active {
+  color: rgb(17 24 39);
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--accent);
+}
+
+.dark .nav-link--active {
+  color: rgb(255 255 255);
+}
+
+.nav-link--external {
+  white-space: nowrap;
+}
+
 .chatbot-toggle-button {
   position: fixed;
   top: 20px;
