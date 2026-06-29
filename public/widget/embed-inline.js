@@ -53,6 +53,7 @@
   host.setAttribute('data-jovylle-inline-widget', '');
   host.style.cssText = `
     position: fixed; z-index: 2147483647; width: ${dims.w}px; height: ${dims.h}px;
+    pointer-events: none;
   `;
   const posMap = {
     'bottom-right': () => { host.style.bottom = '20px'; host.style.right = '20px'; },
@@ -73,8 +74,11 @@
   // Styles (copied/adapted from mystery-widget.html, tuned for shadow root)
   const style = document.createElement('style');
   style.textContent = `
-    :host { all: initial; }
-    .mystery-widget { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    :host { all: initial; pointer-events: none; }
+    .mystery-widget { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; pointer-events: none; }
+    .mystery-widget-button, .mystery-widget-container { pointer-events: auto; }
+    :host(.fullscreen) { pointer-events: auto; }
+    :host(.fullscreen) .mystery-widget { pointer-events: auto; }
     .comfortable { --pad-header: 8px 12px; --tab-gap: 8px; --tab-pad: 8px 10px; --pad-content: 8px 12px; --section-mb: 8px; --link-pad: 8px 12px; --leader-pad: 6px 12px; }
     .compact { --pad-header: 4px 8px; --tab-gap: 6px; --tab-pad: 6px 8px; --pad-content: 4px 8px; --section-mb: 4px; --link-pad: 4px 8px; --leader-pad: 4px 8px; }
     .mystery-widget-button {
