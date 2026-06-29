@@ -21,8 +21,8 @@ flowchart TB
   end
 
   subgraph shared["Shared services"]
-    CDN["content.jovylle.com<br/>Project catalog JSON"]
-    Pocket["pocket.uft1.com<br/>Notifications + highlights"]
+    CDN["content.jovylle.com<br/>Project catalog + notifications"]
+    Pocket["pocket.uft1.com<br/>Highlights JSON"]
     PMate["projectmate.uft1.com<br/>Feedback & updates overlay"]
   end
 
@@ -48,7 +48,7 @@ flowchart TB
   Users --> Obs
 ```
 
-*Alt text: Architecture diagram showing browsers connecting to portfolio, Playbase, d1g.uk, and chat-widget; shared CDN and notification services; Netlify and GitHub as platform; Umami for site analytics.*
+*Alt text: Architecture diagram showing browsers connecting to portfolio, Playbase, d1g.uk, and chat-widget; content.jovylle.com for catalog + notifications, pocket.uft1.com for highlights, projectmate.uft1.com for feedback; Netlify and GitHub as platform; Umami for site analytics.*
 
 ---
 
@@ -78,9 +78,7 @@ flowchart TB
 
 **Problem:** A lightweight, replayable skill game that keeps score across sessions and surfaces results outside the game tab.
 
-**Role in the platform:** Gamification layer. Reaction-test game with an all-time leaderboard JSON API (`/reaction/top.json`). The portfolio widget proxies this via `/api/leaderboard` and links directly to play. Repo describes an automated seasonal leaderboard synced through GitHub Actions.
-
-**Note:** Live game is at `fast.jovylle.com`. A `playbase.jovylle.com` hostname is planned in ecosystem docs but not verified in current deployment config.
+**Role in the platform:** Gamification layer. Reaction-test game with an all-time leaderboard JSON API (`/reaction/top.json`). The portfolio widget proxies this via `/api/leaderboard` and links directly to play. Seasonal leaderboard is synced through GitHub Actions.
 
 **Case study:** [GitHub — playbase](https://github.com/jovylle/playbase)
 
@@ -91,8 +89,6 @@ flowchart TB
 **Problem:** Drop a GPT-powered chatbot onto any site without rebuilding the host app.
 
 **Role in the platform:** Reusable embed product (separate from the portfolio's own AI widget). Standalone script + Netlify/serverless backend pattern, same "one script tag" philosophy as ProjectMate.
-
-**Consumer sites:** TBD — embed is site-agnostic; confirm specific hosts before listing publicly.
 
 **Case study:** [GitHub — chatbot-widget](https://github.com/jovylle/chatbot-widget)
 
@@ -112,12 +108,14 @@ flowchart TB
 
 - **Netlify for jovylle.com** — static Nuxt build, `/.netlify/functions/chatbot` for production AI chat, `/api/leaderboard` proxy in dev and prod.
 - **Decoupled content CDN** — project catalog at `content.jovylle.com`; portfolio rebuild triggered by GitHub Actions → Netlify build hook after CDN publish (hook URL in GitHub secrets, not in git).
-- **Notification bus** — `content.jovylle.com/notifications/index.json` feeds the portfolio widget's alert tab; highlights JSON on the same host powers `/highlights`.
+- **Notification bus** — `content.jovylle.com/notifications/index.json` feeds the portfolio widget's alert tab.
+- **Highlights feed** — `pocket.uft1.com/data/highlights.json` powers `/highlights` and the widget highlights view.
 - **Embeds over iframes where it matters** — ProjectMate overlay, portfolio widget (`embed-inline.js`), and chat-widget each ship as a single async script.
 - **Secrets out of repo** — `OPENAI_API_KEY` via Netlify env; build hooks via GitHub Actions secrets.
 - **Prerender vs live fetch** — `/personal-projects` prerendered from CDN JSON at build time; `/highlights` fetches live at runtime (different freshness tradeoffs, intentional).
 - **GitHub as integration bus** — profile automation repo (`jovylle/jovylle`, GitHub Actions), content rebuild webhooks, and Playbase leaderboard automation.
-- **Edge / CDN provider for uft1.com & d1g.uk:** TBD — confirm Cloudflare (or other) before claiming in public docs.
+
+> Edge/CDN provider for `uft1.com` and `d1g.uk`, and chat-widget consumer sites, are intentionally not listed publicly until confirmed.
 
 ---
 
@@ -135,12 +133,11 @@ flowchart TB
 1. Player opens [d1g.uk](https://d1g.uk) for today's Desert grid visualization.
 2. Tool runs as a Nuxt/serverless front-end (repo: `sfl-crab`); optional feedback via [d1g.uk/feedbacks](https://d1g.uk/feedbacks).
 3. Community history and shared grids live on [hub.d1g.uk](https://hub.d1g.uk) (separate repo: `sfl-digging-hub`).
-4. Backend/data-store details per environment: TBD in public docs.
 
 ### 3. Support & notifications on portfolio
 
-1. Visitor lands on jovylle.com; widget loads notifications from `pocket.uft1.com`.
-2. `#support` hash or support action opens ProjectMate overlay (`projectmate.uft1.com`) for feedback and release notes.
+1. Visitor lands on jovylle.com; widget loads notifications from `content.jovylle.com/notifications/index.json`.
+2. Support action opens the ProjectMate overlay (`projectmate.uft1.com`) for feedback and release notes.
 3. AI chat tab calls Netlify serverless function with portfolio context (when enabled); widget itself carries no third-party analytics.
 
 ---
@@ -153,9 +150,8 @@ flowchart TB
 | Portfolio traffic | Umami (`jovylle.com`) | Regular daily usage; no public DAU/WAU figure |
 | Playbase leaderboard | `fast.jovylle.com/reaction/top.json` | Public JSON; all-time archive on game site |
 | Content freshness | GitHub Actions → Netlify hook | Rebuild after `content.jovylle.com` JSON updates |
-| Widget notification reach | `pocket.uft1.com` index | Tag-filtered (`jovylle.com,all`) on portfolio |
+| Widget notification reach | `content.jovylle.com/notifications/index.json` | Tag-filtered (`jovylle.com,all`) on portfolio |
 | chat-widget adoption | TBD | Confirm embed domains before publishing counts |
-| Cloudflare Web Analytics | TBD | Not wired on jovylle.com today (Umami in use) |
 
 ---
 
