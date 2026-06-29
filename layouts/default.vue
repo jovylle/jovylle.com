@@ -7,10 +7,7 @@
     <div class="container mx-auto px-4 max-w-6xl flex flex-col min-h-[100vh] text-primary-dark dark:text-primary-light">
       <header v-if="!isHomePage" class="site-header">
         <div class="site-header__inner">
-          <NuxtLink to="/" class="brand" aria-label="Home">
-            <span class="brand__mark">JB</span>
-            <span class="brand__name">Jovylle</span>
-          </NuxtLink>
+          <NuxtLink to="/" class="brand" aria-label="Home">Home</NuxtLink>
 
           <nav class="site-nav" aria-label="Main">
             <NuxtLink
@@ -28,7 +25,7 @@
               target="_blank"
               rel="noopener"
             >
-              Blog & Hub
+              Blog &amp; Hub
               <span aria-hidden="true" class="nav-link__ext">↗</span>
             </a>
           </nav>
@@ -40,9 +37,8 @@
             :aria-expanded="isMenuOpen"
             @click="isMenuOpen = !isMenuOpen"
           >
-            <span class="menu-btn__bar" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
-            <span class="menu-btn__bar menu-btn__bar--mid" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
-            <span class="menu-btn__bar" :class="{ 'menu-btn__bar--open': isMenuOpen }"></span>
+            <i v-if="isMenuOpen" class="bx bx-x" aria-hidden="true"></i>
+            <i v-else class="bx bx-menu" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -64,7 +60,7 @@
             rel="noopener"
             @click="closeMenu"
           >
-            Blog & Hub ↗
+            Blog &amp; Hub ↗
           </a>
           <NuxtLink
             to="/contact"
@@ -158,20 +154,15 @@ export default {
 
 <style scoped>
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  margin: 0 -1rem 1rem;
-  padding: 0 1rem;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px);
-  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  padding: 1rem 0 0.75rem;
+  /* leave room for the fixed top-right widget (~80px wide + 20px right offset) */
+  padding-right: 96px;
+  border-bottom: 2px dashed var(--divider);
+  margin-bottom: 1.25rem;
 }
 
 .dark .site-header {
-  background: rgba(17, 24, 39, 0.72);
-  border-bottom-color: rgba(255, 255, 255, 0.06);
+  border-bottom-color: var(--divider-dark);
 }
 
 .site-header__inner {
@@ -179,45 +170,32 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  height: 56px;
+  position: relative;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: inherit;
-}
-
-.brand__mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  color: rgb(255 255 255);
-  background: rgb(17 24 39);
-  border-radius: 8px;
-}
-
-.dark .brand__mark {
-  color: rgb(17 24 39);
-  background: rgb(243 244 246);
-}
-
-.brand__name {
-  font-size: 0.95rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  color: rgb(17 24 39);
+  letter-spacing: 0.02em;
+  color: rgb(55 65 81);
+  text-decoration: none;
+  border: 2px dashed transparent;
+  border-radius: 4px;
 }
 
-.dark .brand__name {
-  color: rgb(243 244 246);
+.dark .brand {
+  color: rgb(229 231 235);
+}
+
+.brand:hover {
+  border-color: var(--divider);
+}
+
+.dark .brand:hover {
+  border-color: var(--divider-dark);
 }
 
 .site-nav {
@@ -228,14 +206,7 @@ export default {
   .site-nav {
     display: inline-flex;
     align-items: center;
-    gap: 0.125rem;
-    padding: 0.25rem;
-    background: rgba(17, 24, 39, 0.04);
-    border-radius: 999px;
-  }
-
-  .dark .site-nav {
-    background: rgba(255, 255, 255, 0.06);
+    gap: 0.25rem;
   }
 }
 
@@ -243,14 +214,15 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.4rem 0.85rem;
+  padding: 0.35rem 0.7rem;
   font-size: 0.825rem;
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.2;
   color: rgb(75 85 99);
   text-decoration: none;
-  border-radius: 999px;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  border: 2px dashed transparent;
+  border-radius: 4px;
+  transition: color 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
 }
 
@@ -260,24 +232,24 @@ export default {
 
 .nav-link:hover {
   color: rgb(17 24 39);
-  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--divider);
 }
 
 .dark .nav-link:hover {
   color: rgb(255 255 255);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--divider-dark);
 }
 
-.nav-link--active {
+.nav-link--active,
+.nav-link--active:hover {
   color: rgb(17 24 39);
-  background: rgb(255 255 255);
-  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 0 0 1px rgba(17, 24, 39, 0.04);
+  border-color: var(--accent);
 }
 
-.dark .nav-link--active {
-  color: rgb(17 24 39);
-  background: rgb(243 244 246);
-  box-shadow: none;
+.dark .nav-link--active,
+.dark .nav-link--active:hover {
+  color: rgb(255 255 255);
+  border-color: var(--accent);
 }
 
 .nav-link__ext {
@@ -287,20 +259,22 @@ export default {
 
 .menu-btn {
   display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   width: 36px;
   height: 36px;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: rgb(75 85 99);
   background: transparent;
-  border: 1px solid rgba(17, 24, 39, 0.1);
-  border-radius: 10px;
+  border: 2px dashed var(--divider);
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .dark .menu-btn {
-  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(209 213 219);
+  border-color: var(--divider-dark);
 }
 
 @media (min-width: 768px) {
@@ -309,43 +283,25 @@ export default {
   }
 }
 
-.menu-btn__bar {
-  width: 16px;
-  height: 1.5px;
-  background: rgb(55 65 81);
-  border-radius: 2px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.dark .menu-btn__bar {
-  background: rgb(229 231 235);
-}
-
-.menu-btn__bar--open:nth-child(1),
-.menu-btn__bar:first-child.menu-btn__bar--open {
-  transform: translateY(5.5px) rotate(45deg);
-}
-
-.menu-btn__bar--mid.menu-btn__bar--open {
-  opacity: 0;
-}
-
-.menu-btn__bar--open:last-child {
-  transform: translateY(-5.5px) rotate(-45deg);
-}
-
 .mobile-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: 0.25rem;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease, padding 0.25s ease;
+  transition: max-height 0.25s ease, padding 0.25s ease, margin 0.25s ease;
 }
 
 .mobile-nav--open {
-  max-height: 420px;
-  padding: 0.5rem 0 0.75rem;
+  max-height: 480px;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  border: 2px dashed var(--divider);
+  border-radius: 4px;
+}
+
+.dark .mobile-nav--open {
+  border-color: var(--divider-dark);
 }
 
 @media (min-width: 768px) {
@@ -356,12 +312,13 @@ export default {
 
 .mobile-nav__link {
   display: block;
-  padding: 0.625rem 0.75rem;
-  font-size: 0.9rem;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: rgb(55 65 81);
+  color: rgb(75 85 99);
   text-decoration: none;
-  border-radius: 8px;
+  border: 2px dashed transparent;
+  border-radius: 4px;
 }
 
 .dark .mobile-nav__link {
@@ -369,21 +326,25 @@ export default {
 }
 
 .mobile-nav__link:hover {
-  background: rgba(17, 24, 39, 0.04);
+  color: rgb(17 24 39);
+  border-color: var(--divider);
 }
 
 .dark .mobile-nav__link:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.mobile-nav__link--active {
-  color: rgb(17 24 39);
-  background: rgba(17, 24, 39, 0.05);
-}
-
-.dark .mobile-nav__link--active {
   color: rgb(255 255 255);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--divider-dark);
+}
+
+.mobile-nav__link--active,
+.mobile-nav__link--active:hover {
+  color: rgb(17 24 39);
+  border-color: var(--accent);
+}
+
+.dark .mobile-nav__link--active,
+.dark .mobile-nav__link--active:hover {
+  color: rgb(255 255 255);
+  border-color: var(--accent);
 }
 
 .chatbot-toggle-button {
