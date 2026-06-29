@@ -112,7 +112,7 @@ flowchart TB
 
 - **Netlify for jovylle.com** — static Nuxt build, `/.netlify/functions/chatbot` for production AI chat, `/api/leaderboard` proxy in dev and prod.
 - **Decoupled content CDN** — project catalog at `content.jovylle.com`; portfolio rebuild triggered by GitHub Actions → Netlify build hook after CDN publish (hook URL in GitHub secrets, not in git).
-- **Notification bus** — `pocket.uft1.com/notifications/index.json` feeds the portfolio widget's alert tab; highlights JSON on the same host powers `/highlights`.
+- **Notification bus** — `content.jovylle.com/notifications/index.json` feeds the portfolio widget's alert tab; highlights JSON on the same host powers `/highlights`.
 - **Embeds over iframes where it matters** — ProjectMate overlay, portfolio widget (`embed-inline.js`), and chat-widget each ship as a single async script.
 - **Secrets out of repo** — `OPENAI_API_KEY` via Netlify env; build hooks via GitHub Actions secrets.
 - **Prerender vs live fetch** — `/personal-projects` prerendered from CDN JSON at build time; `/highlights` fetches live at runtime (different freshness tradeoffs, intentional).

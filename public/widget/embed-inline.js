@@ -21,7 +21,7 @@
   const explicitNotificationIndex = (script?.getAttribute('data-notifications-index') || '').trim();
   const normalizedHost = location.hostname.replace(/^www\./, '');
   const ownsNotificationIndex = normalizedHost === 'jovylle.com' || normalizedHost.endsWith('.jovylle.com');
-  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? 'https://pocket.uft1.com/notifications/index.json' : null);
+  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? 'https://content.jovylle.com/notifications/index.json' : null);
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')

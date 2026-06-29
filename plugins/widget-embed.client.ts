@@ -60,7 +60,7 @@ export default defineNuxtPlugin(() => {
   script.setAttribute('data-auto-open-on-notifications', 'true');
   script.setAttribute('data-notification-tab-title', 'Alerts');
   script.setAttribute('data-feedback-url', 'https://tally.so/r/WO9dWk');
-  script.setAttribute('data-notifications-index', 'https://pocket.uft1.com/notifications/index.json');
+  script.setAttribute('data-notifications-index', 'https://content.jovylle.com/notifications/index.json');
   script.setAttribute('data-notifications-limit', '10');
   script.setAttribute('data-notification-tags', 'jovylle.com,all');
   script.setAttribute('data-ai-context', `You are an AI assistant for Jovylle Bermudez's portfolio website. Help visitors learn about Jovylle's technical skills, solutions, experience, and projects.
@@ -149,7 +149,7 @@ AI Solutionist - Using AI and modern technology to solve real-world problems. Fo
 
   document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(script);
-    // Notification content is loaded from https://pocket.uft1.com/notifications via
+    // Notification content is loaded from https://content.jovylle.com/notifications via
     // data-notifications-index; embed-inline.js handles fetch and rendering.
   });
 });
