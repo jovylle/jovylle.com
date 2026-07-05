@@ -586,7 +586,7 @@ useHead({
           <div
             v-for="project in projects"
             :key="project.slug || project.title"
-            class="rounded-lg border p-6 transition-all duration-300"
+            class="min-w-0 rounded-lg border p-6 transition-all duration-300"
             :class="isHighlightedProject(project)
               ? 'bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl border-gray-200 dark:border-gray-700'
               : 'bg-gray-100 dark:bg-gray-950 border-gray-300 dark:border-gray-800 shadow-md'"
@@ -688,7 +688,7 @@ useHead({
             </div>
 
             <!-- Project Links: label only inside each button -->
-            <div class="flex flex-wrap gap-2">
+            <div class="flex min-w-0 w-full flex-wrap gap-2">
               <!-- Live / Demo -->
               <a
                 v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
@@ -696,10 +696,11 @@ useHead({
                 :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
+                :title="liveLinkButtonText(link)"
+                class="inline-flex max-w-full min-w-0 items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 border border-blue-600"
               >
-                <i class="bx bx-link-external"></i>
-                {{ liveLinkButtonText(link) }}
+                <i class="bx bx-link-external shrink-0"></i>
+                <span class="truncate">{{ liveLinkButtonText(link) }}</span>
               </a>
               <!-- Repo / Code -->
               <a
