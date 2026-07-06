@@ -80,9 +80,9 @@ if (import.meta.client) {
 
 .theme-switcher__dropdown {
   position: absolute;
-  top: 100%;
+  bottom: 100%;
   right: 0;
-  margin-top: 4px;
+  margin-bottom: 4px;
   background: var(--theme-dropdown-bg, #fff);
   border: 1px solid var(--theme-dropdown-border, #e5e7eb);
   border-radius: 8px;
