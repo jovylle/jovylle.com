@@ -30,16 +30,18 @@
             </a>
           </nav>
 
-          <button
-            type="button"
-            class="menu-btn"
-            aria-label="Toggle navigation menu"
-            :aria-expanded="isMenuOpen"
-            @click="isMenuOpen = !isMenuOpen"
-          >
-            <i v-if="isMenuOpen" class="bx bx-x" aria-hidden="true"></i>
-            <i v-else class="bx bx-menu" aria-hidden="true"></i>
-          </button>
+           <ThemeSwitcher />
+
+           <button
+             type="button"
+             class="menu-btn"
+             aria-label="Toggle navigation menu"
+             :aria-expanded="isMenuOpen"
+             @click="isMenuOpen = !isMenuOpen"
+           >
+             <i v-if="isMenuOpen" class="bx bx-x" aria-hidden="true"></i>
+             <i v-else class="bx bx-menu" aria-hidden="true"></i>
+           </button>
         </div>
 
         <div class="mobile-nav" :class="{ 'mobile-nav--open': isMenuOpen }">
@@ -81,11 +83,10 @@
             class="pt-12 pb-10 flex-col sm:flex-row flex text-center justify-between"
           >
             <div class="my_hover">No Copyright © {{currentYear}}</div>
-            <div class="my_hover">
-              <div class="">
-                <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
-              </div>
-            </div>
+            <div class="flex items-center gap-4">
+               <ThemeSwitcher />
+               <DarkmodeBtn :toggleDarkMode="toggleDarkMode" />
+             </div>
           </div>
         </div>
       </section>
@@ -98,7 +99,7 @@
 <script>
 
 export default {
-  components: { },
+  components: { ThemeSwitcher: () => import('~/components/ThemeSwitcher.vue') },
   data() {
     return {
       darkMode: false,
