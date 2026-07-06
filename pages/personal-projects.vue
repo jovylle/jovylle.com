@@ -259,7 +259,7 @@ const { data: personalProjectsData } = await useAsyncData(
   { server: true }
 )
 
-const { metrics, windowDays } = useUsageMetrics()
+const { metrics, windowDays, peakTrackingSince } = useUsageMetrics()
 
 const metricForProject = (project) => findMetricForProject(project, metrics.value)
 
@@ -616,6 +616,8 @@ useHead({
                   v-if="metricForProject(project)"
                   :site="metricForProject(project)"
                   :window-days="windowDays"
+                  :peak-tracking-since="peakTrackingSince"
+                  variant="peak"
                 />
               </div>
               <div

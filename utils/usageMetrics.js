@@ -40,6 +40,60 @@ export function displayMonthlyVisits(site) {
   return 0
 }
 
+/** Compact visit count, e.g. 33111 → ~33.1k */
+export function formatVisitCount(n) {
+  const num = Number(n)
+  if (!Number.isFinite(num) || num < 1) return ''
+  if (num >= 1000) {
+    const rounded = Math.round(num / 100) / 10
+    return `~${rounded}k`
+  }
+  return `~${num}`
+}
+
+/** All-time high stats (falls back to current window if peak not tracked yet). */
+export function peakStats(site) {
+  const peak = site?.peak
+  if (peak?.visits_30d > 0) {
+    return {
+      visits_30d: Number(peak.visits_30d),
+      visits_daily_avg: Number(peak.visits_daily_avg) || 0,
+      recorded_at: peak.recorded_at ?? null,
+      window_days: peak.window_days ?? 30,
+      source: peak.source ?? null,
+    }
+  }
+  const monthly = displayMonthlyVisits(site)
+  if (!monthly) return null
+  return {
+    visits_30d: monthly,
+    visits_daily_avg: displayDailyAvg(site),
+    recorded_at: null,
+    window_days: site?.window_days ?? 30,
+    source: null,
+  }
+}
+
+/** Employer-facing badge: all-time high in a 30-day window. */
+export function formatPeakBadge(site) {
+  const peak = peakStats(site)
+  if (!peak?.visits_30d) return ''
+  return `Peak ${formatVisitCount(peak.visits_30d)}/mo`
+}
+
+export function formatPeakTooltip(site, trackingSince) {
+  const peak = peakStats(site)
+  if (!peak?.visits_30d) return ''
+  const monthly = peak.visits_30d.toLocaleString('en-US')
+  const daily = peak.visits_daily_avg.toLocaleString('en-US')
+  const when = peak.recorded_at ? formatUpdatedAt(peak.recorded_at) : null
+  const since = trackingSince ? formatUpdatedAt(trackingSince) : null
+  let text = `All-time high: ${monthly} visits in a ${peak.window_days}-day window (~${daily}/day).`
+  if (when) text += ` Recorded ${when}.`
+  if (since) text += ` Tracked via Cloudflare since ${since}.`
+  return text
+}
+
 /** Human-readable monthly visits for badges and cards. */
 export function formatMonthlyVisits(site) {
   const n = displayMonthlyVisits(site)

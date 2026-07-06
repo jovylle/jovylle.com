@@ -28,6 +28,9 @@ export function useUsageMetrics(options = {}) {
   const hasSites = computed(() => sites.value.length > 0)
   const updatedAt = computed(() => activeMetrics.value?.updated_at ?? null)
   const windowDays = computed(() => activeMetrics.value?.window_days ?? 30)
+  const peakTrackingSince = computed(
+    () => activeMetrics.value?.peak_tracking_since ?? null,
+  )
   const snapshotNote = computed(() =>
     isSnapshot.value ? usageMetricsSnapshot.note ?? null : null,
   )
@@ -38,6 +41,7 @@ export function useUsageMetrics(options = {}) {
     hasSites,
     updatedAt,
     windowDays,
+    peakTrackingSince,
     isSnapshot,
     snapshotNote,
     pending,

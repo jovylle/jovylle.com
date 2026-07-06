@@ -8,7 +8,10 @@ const {
   error,
   isSnapshot,
   snapshotNote,
+  metrics,
 } = useUsageMetrics({ preferSnapshot: true })
+
+const peakTrackingSince = computed(() => metrics.value?.peak_tracking_since ?? null)
 
 useHead({
   title: 'Live Usage — Jovylle Bermudez',
@@ -98,6 +101,7 @@ const totalMonthlyVisits = computed(() =>
         :sites="sites"
         :updated-at="updatedAt"
         :window-days="windowDays"
+        :peak-tracking-since="peakTrackingSince"
         :show-source="!isSnapshot"
       />
 

@@ -1,6 +1,7 @@
 <script setup>
 import {
   formatMonthlyUniques,
+  formatPeakBadge,
   formatUpdatedAt,
 } from '~/utils/usageMetrics'
 
@@ -9,6 +10,7 @@ const props = defineProps({
   updatedAt: { type: String, default: null },
   windowDays: { type: Number, default: 30 },
   showSource: { type: Boolean, default: true },
+  peakTrackingSince: { type: String, default: null },
 })
 
 const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
@@ -41,8 +43,21 @@ const formattedDate = computed(() => formatUpdatedAt(props.updatedAt))
             {{ site.label }}
             <i class="bx bx-link-external text-sm opacity-70" aria-hidden="true" />
           </a>
-          <UsageMetricBadge :site="site" :window-days="windowDays" compact />
+          <UsageMetricBadge
+            :site="site"
+            :window-days="windowDays"
+            :peak-tracking-since="peakTrackingSince"
+            variant="current"
+            compact
+          />
         </div>
+
+        <p
+          v-if="formatPeakBadge(site)"
+          class="m-0 mb-3 text-xs text-emerald-700 dark:text-emerald-400 font-medium"
+        >
+          {{ formatPeakBadge(site) }} all-time high
+        </p>
 
         <dl v-if="site.unique_visitors_30d && !site.grouped" class="grid grid-cols-2 gap-3 m-0">
           <div>
