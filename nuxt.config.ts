@@ -58,7 +58,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ["~/assets/css/themes.css"],
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
   content: {

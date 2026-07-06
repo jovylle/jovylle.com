@@ -1,6 +1,4 @@
 <script setup>
-import { DEFAULT_THEME, THEME_STORAGE_KEY, isValidTheme } from '~/utils/themes'
-
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -10,12 +8,6 @@ const personSchema = {
   jobTitle: 'Full-Stack Web Developer',
   addressCountry: 'PH',
   sameAs: ['https://facebook.com/twero'],
-}
-
-if (import.meta.client) {
-  const stored = localStorage.getItem(THEME_STORAGE_KEY)
-  const theme = stored && isValidTheme(stored) ? stored : DEFAULT_THEME
-  document.documentElement.setAttribute('data-theme', theme)
 }
 
 useHead({
