@@ -96,7 +96,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useHead } from '@vueuse/head'; // Ensure to import useHead if required
+import { useHead } from '@vueuse/head';
+import { CONTENT_ASSET_BASE } from '~/utils/config';
 
 const highlights = ref([]);
 const loading = ref(true);
@@ -104,7 +105,7 @@ const error = ref(false);
 
 onMounted(async () => {
   try {
-    const res = await fetch('https://pocket.uft1.com/data/highlights.json');
+    const res = await fetch(`${CONTENT_ASSET_BASE}/data/highlights.json`);
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
     highlights.value = data.highlights || [];
