@@ -25,7 +25,7 @@
               target="_blank"
               rel="noopener"
             >
-              Hub
+              Blog &amp; Hub
               <span aria-hidden="true" class="nav-link__ext">↗</span>
             </a>
           </nav>
@@ -60,7 +60,7 @@
             rel="noopener"
             @click="closeMenu"
           >
-            Hub ↗
+            Blog &amp; Hub ↗
           </a>
           <NuxtLink
             to="/contact"
@@ -107,7 +107,6 @@ export default {
       navItems: [
         { to: '/highlights', label: 'AI & Solutions' },
         { to: '/personal-projects', label: 'Projects' },
-        { to: '/blog', label: 'Blog' },
         { to: '/impact', label: 'Impact' },
         { to: '/uses', label: 'Uses' }
       ]
