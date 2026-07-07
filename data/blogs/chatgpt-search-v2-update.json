@@ -1,0 +1,21 @@
+{
+  "excerpt": "ChatGPT Search v2.0.1 is on the Chrome Web Store — auto-send prompts from ?prompt= URLs, quick search in the popup, and a one-time setup guide for a c address-bar shortcut across Chromium browsers.",
+  "private": false,
+  "author": "Jovylle Bermudez",
+  "slug": "chatgpt-search-v2-update",
+  "featured": true,
+  "date": "2026-06-29",
+  "status": "published",
+  "title": "ChatGPT Search v2: auto-send, quick search, and a c shortcut",
+  "tags": [
+    "chrome-extension",
+    "chatgpt",
+    "search",
+    "browser",
+    "side-project"
+  ],
+  "thumbnail": "https://content.jovylle.com/images/post/chat.png",
+  "load_readme_from_this_repo": "https://github.com/jovylle/add-as-search-engine",
+  "content": "# ChatGPT Search v2: auto-send, quick search, and a c shortcut\n\n**ChatGPT Search v2.0.1** is live on the [Chrome Web Store](https://chromewebstore.google.com/detail/chatgpt-search/apeckljcdhfjjanmjbceanoneldpdndm). This release repurposes the extension around what actually works in Chromium browsers today: **auto-send** when ChatGPT opens with a `?prompt=` URL, **quick search** from the popup, and a **one-time setup guide** so you can type `c` in the address bar and jump straight into ChatGPT.\n\n**Repo:** [github.com/jovylle/add-as-search-engine](https://github.com/jovylle/add-as-search-engine)\n\n## What changed in v2\n\nEarlier versions leaned on omnibox APIs and redirect tricks. Browsers block extensions from adding search engines programmatically — that is a malware vector — and omnibox-only flows do not cover every Chromium browser. v2 strips that complexity and focuses on three things that ship cleanly and stay store-safe:\n\n- **Auto-send** — open `https://chatgpt.com/?prompt=your+question` and the extension clicks Send for you (toggle in the popup)\n- **Quick search** — type a prompt in the popup and go\n- **Setup guide** — copy-paste values to add ChatGPT as a site search engine once (Name: `ChatGPT`, Shortcut: `c`, URL: `https://chatgpt.com/?prompt=%s`)\n\nRemoved in v2: omnibox API, `chrome_settings_overrides`, background service worker, and any owned redirect server. Queries go **directly to ChatGPT**.\n\n## How to use it\n\n1. Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/chatgpt-search/apeckljcdhfjjanmjbceanoneldpdndm) (works in Chrome, Edge, Brave, Opera, and Vivaldi)\n2. Open the extension popup and follow the **one-time setup** for your browser\n3. Type `c`, press Tab, enter your question, press Enter\n4. ChatGPT opens with your prompt; auto-send fires if you left it on\n\nOr skip the shortcut and use **Quick search** in the popup whenever you want.\n\n## Permissions (and why they are minimal)\n\n| Permission | Purpose |\n|----------|--------|\n| `storage` | Saves auto-send on/off locally — no telemetry |\n| `chatgpt.com` host + content script | Clicks Send when the page loads with `?prompt=` |\n\nNo analytics, no middleman server, no default search engine override.\n\n## What it is not\n\n- Does **not** replace your default search engine\n- Does **not** add the search engine for you — you paste values once in browser settings\n- Not affiliated with OpenAI or ChatGPT\n\n## Why manual setup beats magic\n\nChromium only lets **users** register site search engines. Extensions cannot do it on your behalf. Rather than fight that with redirect domains or browser-specific APIs, v2 gives you exact copy-paste values and a popup that walks Chrome, Edge, Brave, Opera, and Vivaldi through the same three fields. After that, `c` + Tab behaves like a native shortcut everywhere the manual entry works.\n\n---\n\n*Side-project ship log. If you want ChatGPT in the address bar without a redirect server, grab v2.0.1 from the store or load unpacked from the repo.*\n",
+  "body": "---\ntitle: \"ChatGPT Search v2: auto-send, quick search, and a c shortcut\"\ndate: 2026-06-29T12:00:00Z\ndescription: \"ChatGPT Search v2.0.1 is on the Chrome Web Store — auto-send prompts from ?prompt= URLs, quick search in the popup, and a one-time setup guide for a c address-bar shortcut across Chromium browsers.\"\ncategories: [\"chrome-extension\",\"chatgpt\",\"search\",\"browser\",\"side-project\"]\nfeatured: true\ndraft: false\nauthor: \"Jovylle Bermudez\"\n---\n"
+}

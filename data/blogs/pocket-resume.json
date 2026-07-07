@@ -1,0 +1,19 @@
+{
+  "excerpt": "Pocket resume gives me a print-ready career page at https://content.jovylle.com/resume and turns form data into a complete resume PDF.",
+  "private": false,
+  "author": "Jovylle Bermudez",
+  "slug": "pocket-resume",
+  "featured": true,
+  "date": "2026-02-14",
+  "status": "published",
+  "title": "Pocket resume: print-ready career page",
+  "tags": [
+    "tools",
+    "web",
+    "resume"
+  ],
+  "thumbnail": "https://content.jovylle.com/images/post/resume.png",
+  "load_readme_from_this_repo": "",
+  "content": "",
+  "body": "---\ntitle: \"Pocket resume: print-ready career page\"\ndate: 2026-02-14T08:00:00Z\ncategories: [\"tools\",\"web\",\"resume\"]\nfeatured: true\ndraft: false\n---\n\nPocket resume is what I open when I need a clean, print-ready view of my career story. The live page mirrors the structure of a polished resume—experience, projects, highlights—so it looks perfect on-screen and when exported to PDF. It knows exactly what to emphasize without extra navigation because the entire layout is a single job-sheet that fits on one well-designed page.\n\nIf I want to keep a copy for myself or share it, I fill the form with the private details I care about (contact info, personal notes, extra project context). Those entries get added to the same page so the resume PDF contains the full story, no matter how much I tweak the supporting data. Every time I revisit, the resume is already formatted and ready to print or export with the latest information.\n"
+}

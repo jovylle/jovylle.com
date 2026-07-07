@@ -1,0 +1,24 @@
+{
+  "slug": "llm-full-stack-portfolio-ai-lab",
+  "title": "LLM Full Stack Portfolio — three live demos on a Mac Mini",
+  "excerpt": "I finished a three-track AI lab aimed at LLM full-stack interviews: RAG PDF chat, a tool-calling agent, and an eval dashboard that benchmarks both. Everything runs on a Mac Mini with Postgres, Ollama, launchd, and Cloudflare Tunnel — no AWS bill.",
+  "author": "Jovylle Bermudez",
+  "date": "2026-06-29",
+  "status": "published",
+  "private": false,
+  "featured": true,
+  "tags": [
+    "ai-lab",
+    "rag",
+    "agents",
+    "evaluation",
+    "nuxt",
+    "fastapi",
+    "ollama",
+    "homelab"
+  ],
+  "thumbnail": "https://lab.uft1.com/",
+  "load_readme_from_this_repo": "",
+  "content": "",
+  "body": "---\ntitle: \"LLM Full Stack Portfolio — three live demos on a Mac Mini\"\ndate: 2026-06-29T16:00:00Z\ncategories: [\"ai-lab\",\"rag\",\"agents\",\"homelab\"]\nfeatured: true\ndraft: false\n---\n\nThe north star for this build was simple: become credible for an **LLM Full Stack Engineer** role with portfolio proof — not by studying everything, but by shipping **three projects** that each answer one interview question.\n\nThey're all live now at **[lab.uft1.com](https://lab.uft1.com)**.\n\n## The three tracks\n\n### Track 1 — RAG ([rag.uft1.com](https://rag.uft1.com))\n\n**Interview question:** *\"Walk me through your RAG pipeline.\"*\n\nUpload a PDF → chunk → embed with OpenAI → store in Postgres + pgvector → ask questions → answer with source citations.\n\nStack: Nuxt 3 UI, FastAPI API, pgvector, Ollama for local chat.\n\n### Track 2 — Tool Agent ([agent.uft1.com](https://agent.uft1.com))\n\n**Interview question:** *\"When should an LLM use a tool vs answer directly?\"*\n\nAn agent loop that picks tools when the model needs live data, precision math, or external APIs. Three tools shipped: calculator (AST-safe eval), weather (wttr.in), and job search (local JSON).\n\nThe UI shows the full tool trace — every call, args, and result — so you can see the orchestration, not just the final answer.\n\n### Track 3 — AI Eval ([eval.uft1.com](https://eval.uft1.com))\n\n**Interview question:** *\"How do you know your AI got better?\"*\n\nFixed test suites that fire questions against the live RAG and agent APIs, then score accuracy (keyword + tool-call matching), latency, and cost. Run a suite, get a before/after baseline — that's how you prove a retrieval tweak or model swap actually helped.\n\n## Infrastructure ($0 hosting)\n\n```text\nInternet\n  → Cloudflare Tunnel (mac-mini-local)\n  → localhost:PORT (launchd)\n  → Postgres / Ollama / FastAPI / Nuxt\n```\n\n| Piece | Choice |\n|-------|--------|\n| Inference | Ollama on M1 — free |\n| Embeddings | OpenAI `text-embedding-3-small` — pennies |\n| Database | Postgres + pgvector via Homebrew |\n| Deploy | rsync to boot volume + launchd plists |\n| Public HTTPS | `*.uft1.com` on Cloudflare Tunnel |\n\nNo Docker, no AWS, no monthly bill. I already had homelab experience — this was about proving I can wire AI apps end-to-end on real infra.\n\n## What I'd say in an interview\n\n> I built a RAG app with citations over pgvector, a tool-calling agent with visible orchestration, and an eval harness that benchmarks both with fixed test suites. All three are live demos on my homelab, exposed through Cloudflare Tunnel.\n\nThree sentences. Three URLs. One story.\n\n## Links\n\n- **Hub:** [lab.uft1.com](https://lab.uft1.com)\n- **RAG:** [rag.uft1.com](https://rag.uft1.com)\n- **Agent:** [agent.uft1.com](https://agent.uft1.com)\n- **Eval:** [eval.uft1.com](https://eval.uft1.com)\n- **Repo:** [github.com/jovylle/ai-lab](https://github.com/jovylle/ai-lab)\n"
+}

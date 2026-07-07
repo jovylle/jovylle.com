@@ -83,9 +83,17 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    preset: 'cloudflare_pages',
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+      wrangler: {
+        placement: { mode: "smart" },
+      },
+    },
     prerender: {
       crawlLinks: true,
-      routes: ["/", "/projects", "/personal-projects", "/ecosystem", "/contact", "/game", "/resume", "/impact"],
+      routes: ["/", "/projects", "/personal-projects", "/ecosystem", "/contact", "/game", "/resume", "/impact", "/blog"],
       ignore: ["/private", "/private/**"],
     },
   },
@@ -95,6 +103,7 @@ export default defineNuxtConfig({
     "/parallax": { ssr: false },
     "/private": { prerender: false },
     "/private/**": { prerender: false },
+    "/_nuxt/**": { headers: { "cache-control": "public, max-age=3600, must-revalidate" } },
   },
   // routeRules: { // not sure with this
   //   // Homepage pre-rendered at build time

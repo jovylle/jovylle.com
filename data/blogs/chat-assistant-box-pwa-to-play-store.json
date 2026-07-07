@@ -1,0 +1,22 @@
+{
+  "excerpt": "Chat Assistant Box started as a PWA at chat.uft1.com. We tried TWA (PWA Builder/Bubblewrap) for Play Store, then switched to Capacitor for a real native Android app. Release 1.4 is signed and ready for Google Play.",
+  "private": false,
+  "author": "Jovylle Bermudez",
+  "slug": "chat-assistant-box-pwa-to-play-store",
+  "featured": true,
+  "date": "2026-02-16",
+  "status": "published",
+  "title": "Chat Assistant Box: From PWA to Play Store (Capacitor 1.4)",
+  "tags": [
+    "chatbot",
+    "pwa",
+    "android",
+    "capacitor",
+    "play-store",
+    "chat.uft1.com"
+  ],
+  "thumbnail": "https://content.jovylle.com/images/post/chat.png",
+  "load_readme_from_this_repo": "https://github.com/jovylle/chat",
+  "content": "# Chat Assistant Box: From PWA to Play Store (Capacitor 1.4)\n\nChat Assistant Box started as a progressive web app: a single live site at **chat.uft1.com** with a manifest, service worker, and install prompt. To ship it on Google Play you need an Android package (AAB or APK), so the first approach was to turn the PWA into an app using the usual PWA-to-Android route: **PWA Builder** and **Bubblewrap** (TWA). Both produce a package that wraps your PWA in a Trusted Web Activity—effectively a Chrome custom tab that loads your URL and can be signed and uploaded to the store. We added the Bubblewrap manifest, asset links, and signed AABs (v1.1, v1.2) and got something that worked, but it never felt fully \"native.\"\n\n## Why TWA felt wrong\n\nEven with TWA done correctly, the app still showed its browser roots. There could be a \"Running in Chrome\"–style toast, Chrome's UI or behavior peeking through, or the feeling that it was a tab in a browser rather than its own app. That trace of \"this is a browser\" was annoying and didn't match the experience we wanted, so we started looking for a different way to ship the same web UI on Android without that TWA/browser feel.\n\n## Switching to Capacitor\n\nWe moved that path to the **capacitor-shell** branch and switched to **Capacitor**: a native Android app that uses an embedded WebView and loads the same `public/` assets (the existing HTML/JS/CSS). It's not a Chrome custom tab and it's not TWA—it's a real app shell that draws your UI inside a WebView. No asset links, no \"Running in Chrome,\" and no reliance on Chrome's TWA behavior. We locked the shell to the production API, fixed the input container and fullscreen/reading-mode behavior for the native shell, and made sure the app opens fullscreen and feels like a standalone app.\n\n## Release 1.4 and signing\n\nFor the **1.4** release we made the split explicit in the docs: Capacitor builds are not TWA. We bumped the app to version **1.4** (versionCode 5, versionName \"1.4\", package.json 1.4.0), updated the main README and releases/README.md to describe the Capacitor (non-TWA) path and where the AAB lives. Play requires signed bundles, so we wired release signing to the existing `android.keystore` (alias android, password in a gitignored `keystore.properties`), added a `keystore.properties.example` for other machines, and made `./gradlew bundleRelease` produce a properly signed AAB. The result is **releases/chat-assistant-box-1.4.aab**, signed and ready to upload—no more \"all uploaded bundles must be signed\" from the Play Console.\n\n## TL;DR\n\nWe went from **PWA → PWA-to-APK (TWA via PWA Builder/Bubblewrap) → annoyed by browser traces → Capacitor WebView shell** on capacitor-shell. The same web app now ships as a real Android app with no TWA/Chrome UI, and the **1.4 AAB** is built and signed with our keystore for Play.\n\n**Live:** [chat.uft1.com](https://chat.uft1.com) · **Repo:** [github.com/jovylle/chat](https://github.com/jovylle/chat)",
+  "body": "---\ntitle: \"Chat Assistant Box: From PWA to Play Store (Capacitor 1.4)\"\ndate: 2026-02-16T00:00:00Z\ncategories: [\"chatbot\",\"pwa\",\"android\",\"capacitor\",\"play-store\",\"chat.uft1.com\"]\nfeatured: true\ndraft: false\n---\n"
+}
