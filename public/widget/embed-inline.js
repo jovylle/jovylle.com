@@ -552,7 +552,7 @@
 
   function getChatbotEndpoint() {
     if (customChatbotEndpoint) return customChatbotEndpoint;
-    return 'https://jovylle.com/.netlify/functions/chatbot';
+    return 'https://jovylle.com/api/chatbot';
   }
 
   async function sendChatMessage() {

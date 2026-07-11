@@ -1,36 +1,46 @@
 # Rebuild jovylle.com when content CDN updates
 
-`/personal-projects` is prerendered at build time. After you publish JSON to `content.jovylle.com`, trigger a Netlify rebuild so the site picks up the new data.
+`/personal-projects` is prerendered at build time. After you publish JSON to `content.jovylle.com`, trigger a Cloudflare Pages rebuild so the site picks up the new data.
 
-## 1. Netlify build hook (jovylle.com site)
+## 1. Cloudflare Pages Deploy Hook
 
-**Site configuration → Build & deploy → Build hooks → Add build hook**
+**Cloudflare Dashboard → Workers & Pages → jovylle-com → Settings → Build hooks → Add deploy hook**
 
-Copy the hook URL (looks like `https://api.netlify.com/build_hooks/...`).
+Give it a name (e.g. "content-cdn-rebuild") and copy the hook URL.
 
 Test:
 
 ```bash
-curl -sf -X POST -d '{}' 'https://api.netlify.com/build_hooks/YOUR_HOOK_ID'
+curl -sf -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/YOUR_HOOK_ID"
 ```
-
-You should see a new deploy under **Deploys**.
 
 ## 2. GitHub Actions (content / CMS repo)
 
-Store the hook URL as a secret, e.g. `JOVYLLE_NETLIFY_BUILD_HOOK`.
+Store the hook URL as a secret, e.g. `JOVYLLE_CF_DEPLOY_HOOK`.
 
 After your workflow deploys `/data` to the CDN:
 
 ```yaml
 - name: Rebuild jovylle.com
   if: success()
-  run: curl -sf -X POST -d '{}' "${{ secrets.JOVYLLE_NETLIFY_BUILD_HOOK }}"
+  run: curl -sf -X POST "${{ secrets.JOVYLLE_CF_DEPLOY_HOOK }}"
 ```
 
-No env vars or code changes needed on the jovylle.com Netlify site.
+No env vars or code changes needed on the jovylle.com Cloudflare Pages project.
 
 ## Notes
 
-- Keep the hook URL in GitHub secrets only — do not commit it.
+- Keep the deploy hook URL in GitHub secrets only — do not commit it.
 - `/highlights` still loads JSON in the browser; only `/personal-projects` needs a rebuild for CDN JSON changes.
+- The deploy hook triggers a new deployment of the latest commit (it does NOT rebuild from scratch — you need a new commit for that).
+
+## Alternative: Deploy via API
+
+To trigger a full build from a specific branch:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/jovylle-com/deploy" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"branch": "main"}'
+```

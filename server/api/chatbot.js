@@ -1,7 +1,17 @@
-import { defineEventHandler, readBody, createError } from 'h3';
-import fetch from 'node-fetch';
+import { defineEventHandler, readBody, createError, setHeader } from 'h3';
 
 export default defineEventHandler(async (event) => {
+  setHeader(event, 'Access-Control-Allow-Origin', '*');
+  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type');
+  setHeader(event, 'Access-Control-Allow-Methods', 'POST, OPTIONS');
+
+  if (event.method === 'OPTIONS') {
+    return '';
+  }
+
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY
+    || event.context?._platform?.cloudflare?.env?.OPENAI_API_KEY;
+
   try {
     const body = await readBody(event);
     const { message, context: customContext, skills, projects, aiSolutions, profile } = body;
@@ -13,8 +23,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check if API key is available
-    if (!process.env.OPENAI_API_KEY) {
+    if (!OPENAI_API_KEY) {
       throw createError({
         statusCode: 500,
         message: 'OpenAI API key not configured'
@@ -84,7 +93,7 @@ Keep responses concise (under 150 words), friendly, and helpful. If asked about 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',

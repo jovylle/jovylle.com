@@ -38,9 +38,11 @@
             <NuxtLink to="/highlights">
               <UiButton variant="outline-dashed">AI & Solutions</UiButton>
             </NuxtLink>
-            <NuxtLink to="/hub">
-              <UiButton variant="outline-dashed">Blog & Hub</UiButton>
-            </NuxtLink>
+            <a href="https://hub.jovylle.com" target="_blank" rel="noopener noreferrer">
+              <UiButton variant="outline-dashed">
+                Blog & Hub <span aria-hidden="true" class="text-xs opacity-60 ml-0.5">↗</span>
+              </UiButton>
+            </a>
             <NuxtLink to="/personal-projects">
               <UiButton variant="outline-dashed">Projects Archive</UiButton>
             </NuxtLink>

@@ -155,7 +155,7 @@ useHead({
 })
 
 const { resume, loading, error } = useResumeData()
-const { sites: usageSites, hasSites: hasLiveUsage, updatedAt, windowDays } = useUsageMetrics()
+const { sites: usageSites, hasSites: hasLiveUsage, updatedAt, windowDays } = useUsageMetrics({ preferSnapshot: true })
 
 const usageUpdatedLabel = computed(() => formatUpdatedAt(updatedAt.value))
 
