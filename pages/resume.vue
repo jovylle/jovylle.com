@@ -121,7 +121,7 @@
       <section v-if="hasLiveUsage" class="live-usage-section screen-only">
         <div class="live-usage-head">
           <h2>Selected projects — live usage</h2>
-          <NuxtLink to="/impact" class="live-usage-link">Full metrics →</NuxtLink>
+          <NuxtLink to="/impact/" class="live-usage-link">Full metrics →</NuxtLink>
         </div>
         <ul class="live-usage-list">
           <li v-for="site in usageSites" :key="site.id">

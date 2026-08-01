@@ -32,10 +32,10 @@
           </p>
           <UiDivider />
           <div class="flex items-center gap-3">
-            <NuxtLink to="/contact">
+            <NuxtLink to="/contact/">
               <UiButton variant="primary">Get in touch</UiButton>
             </NuxtLink>
-            <NuxtLink to="/highlights">
+            <NuxtLink to="/highlights/">
               <UiButton variant="outline-dashed">AI & Solutions</UiButton>
             </NuxtLink>
             <a href="https://hub.jovylle.com" target="_blank" rel="noopener noreferrer">
@@ -43,7 +43,7 @@
                 Blog & Hub <span aria-hidden="true" class="text-xs opacity-60 ml-0.5">↗</span>
               </UiButton>
             </a>
-            <NuxtLink to="/personal-projects">
+            <NuxtLink to="/personal-projects/">
               <UiButton variant="outline-dashed">Projects Archive</UiButton>
             </NuxtLink>
           </div>
@@ -78,12 +78,5 @@
   // console.log(ress);
   // console.log('server apis');
 
-  useHead({
-    title: 'Jovylle',
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
-    meta: [{ name: 'description', content: 'Welcome to Jovylle\'s portfolio, showcasing skills as a Full-Stack web developer.' }]
-  });
-  
 </script>
 <style></style>

@@ -6,7 +6,7 @@
       <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-3 max-w-2xl mx-auto">
         These projects run as one connected platform — shared embeds, CDN, and GitHub integrations.
         <NuxtLink
-          to="/ecosystem"
+          to="/ecosystem/"
           class="text-gray-800 dark:text-gray-200 underline decoration-dashed decoration-1 underline-offset-4"
         >
           See Ecosystem Architecture →

@@ -123,13 +123,13 @@ const totalMonthlyVisits = computed(() =>
 
     <footer class="mt-12 pt-8 border-t-2 border-dashed border-[color:var(--divider)] dark:border-[color:var(--divider-dark)]">
       <div class="flex flex-wrap gap-3">
-        <NuxtLink to="/personal-projects">
+        <NuxtLink to="/personal-projects/">
           <UiButton variant="outline-dashed">Projects archive</UiButton>
         </NuxtLink>
-        <NuxtLink to="/ecosystem">
+        <NuxtLink to="/ecosystem/">
           <UiButton variant="outline-dashed">Ecosystem</UiButton>
         </NuxtLink>
-        <NuxtLink to="/resume">
+        <NuxtLink to="/resume/">
           <UiButton variant="outline-dashed">Resume</UiButton>
         </NuxtLink>
       </div>

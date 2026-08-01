@@ -534,7 +534,7 @@ useHead({
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-4 max-w-xl mx-auto">
           Overwhelmed by the list?
           <NuxtLink
-            to="/ecosystem"
+            to="/ecosystem/"
             class="text-gray-800 dark:text-gray-200 underline decoration-dashed decoration-1 underline-offset-4"
           >
             See how the main products connect →
@@ -739,7 +739,7 @@ useHead({
       <!-- Footer Note -->
       <div class="text-center mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 space-y-3">
         <p class="text-sm">
-          <NuxtLink to="/impact" class="text-emerald-700 dark:text-emerald-400 underline decoration-dashed font-medium">
+          <NuxtLink to="/impact/" class="text-emerald-700 dark:text-emerald-400 underline decoration-dashed font-medium">
             Live usage metrics
           </NuxtLink>
           <span class="text-gray-600 dark:text-gray-400"> — verified Cloudflare traffic, updated daily</span>

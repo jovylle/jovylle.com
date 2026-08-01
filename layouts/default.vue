@@ -63,9 +63,9 @@
             Blog &amp; Hub ↗
           </a>
           <NuxtLink
-            to="/contact"
+            to="/contact/"
             class="mobile-nav__link"
-            :class="{ 'mobile-nav__link--active': isNavActive('/contact') }"
+            :class="{ 'mobile-nav__link--active': isNavActive('/contact/') }"
             @click="closeMenu"
           >
             Contact
@@ -105,9 +105,9 @@ export default {
       currentYear: new Date().getFullYear(),
       isMenuOpen: false,
       navItems: [
-        { to: '/highlights', label: 'AI & Solutions' },
-        { to: '/personal-projects', label: 'Projects' },
-        { to: '/impact', label: 'Impact' },
+        { to: '/highlights/', label: 'AI & Solutions' },
+        { to: '/personal-projects/', label: 'Projects' },
+        { to: '/impact/', label: 'Impact' },
         { to: '/uses', label: 'Uses' }
       ]
     };

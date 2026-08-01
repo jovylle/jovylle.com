@@ -25,6 +25,11 @@ export default defineNuxtConfig({
             "Cebu-based full-stack web developer and AI solutionist helping businesses ship modern, fast, and AI-powered web applications.",
         },
         { property: "og:type", content: "website" },
+        { property: "og:image", content: "https://jovylle.com/android-chrome-512x512.png" },
+        { property: "og:url", content: "https://jovylle.com" },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:title", content: "Cebu Web Developer & AI Solutionist | Jovylle Bermudez" },
+        { name: "twitter:description", content: "Cebu-based full-stack web developer and AI solutionist helping businesses ship modern, fast, and AI-powered web applications." },
       ],
       script: [
         {
