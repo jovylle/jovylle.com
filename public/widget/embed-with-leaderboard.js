@@ -100,30 +100,17 @@
     el.innerHTML = '<div style="text-align:center;color:#6c757d;font-size:12px;padding:4px;">Loading...</div>';
     
     try {
-      let data;
-      
-      // Try local API first
-      try {
-        const r = await fetch('/api/leaderboard');
-        if (r.ok) {
-          data = await r.json();
-        }
-      } catch {}
-      
-      // Fallback to direct API
-      if (!data) {
-        const r = await fetch('https://fast.jovylle.com/reaction/top.json');
-        data = await r.json();
-      }
-      
-      const top = (data.top || []).slice(0, 3);
-      
+      const r = await fetch('https://fast.jovylle.com/api/scores?game=reaction&limit=3');
+      const data = await r.json();
+
+      const top = (data.scores || []).slice(0, 3);
+
       if (!top.length) throw new Error('no data');
-      
+
       el.innerHTML = top.map((p, i) => `
         <div class="leaderboard-row">
           <span class="rank-num">${i + 1}.</span>
-          <span>${p.playerName}</span>
+          <span>${p.player_name}</span>
           <span>${p.ms}ms</span>
         </div>
       `).join('');

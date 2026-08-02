@@ -3,7 +3,7 @@ title: Ecosystem Architecture
 description: How production projects connect as one intentional platform — shared ingress, embeds, and ops habits.
 ---
 
-These projects share ingress patterns, embeddable services, and repeatable ops habits—not five unrelated demos. The portfolio is the hub; production apps feed data back into it and into GitHub.
+These projects share a content backbone, embeddable services, and repeatable ops habits — not a pile of unrelated demos. The portfolio is the front door; a shared encrypted CMS and database are the backbone underneath it.
 
 ---
 
@@ -15,40 +15,50 @@ flowchart TB
 
   subgraph apps["Apps"]
     Portfolio["jovylle.com<br/>Nuxt portfolio + widget"]
-    Playbase["fast.jovylle.com<br/>Playbase reaction game"]
+    Playbase["fast.jovylle.com / play.jovylle.com<br/>Playbase mini-games"]
     D1G["d1g.uk<br/>Desert digging tool"]
+    Hub["hub.jovylle.com<br/>Next.js engineering blog"]
     ChatW["chat-widget.uft1.com<br/>Embeddable GPT chat"]
   end
 
-  subgraph shared["Shared services"]
-    CDN["content.jovylle.com<br/>Project catalog + notifications"]
-    Pocket["pocket.uft1.com<br/>Highlights JSON"]
+  subgraph cms["Content backbone"]
+    CMS["content.jovylle.com<br/>Encrypted git CMS<br/>(Cloudflare Worker)"]
+    DB[("cms-db<br/>Cloudflare D1")]
+  end
+
+  subgraph shared["Other shared services"]
     PMate["projectmate.uft1.com<br/>Feedback & updates overlay"]
   end
 
   subgraph platform["Platform layer"]
-    Netlify["Netlify<br/>Build + serverless functions"]
+    CF["Cloudflare Pages / Workers"]
+    Netlify["Netlify<br/>hub, chat-widget, ProjectMate"]
     GH["GitHub<br/>Repos + Actions"]
   end
 
-  Obs["Umami analytics<br/>jovylle.com"]
+  Obs["Cloudflare Analytics<br/>jovylle.com, d1g.uk"]
 
   Users --> Portfolio
   Users --> Playbase
   Users --> D1G
+  Users --> Hub
   Users --> ChatW
-  Portfolio --> Netlify
-  Portfolio --> Playbase
-  Portfolio --> Pocket
+  Portfolio --> CF
+  Portfolio --> CMS
   Portfolio --> PMate
-  Portfolio --> CDN
-  Playbase --> GH
-  GH --> CDN
-  GH --> Netlify
+  Hub --> CMS
+  Hub --> Netlify
+  ChatW --> Netlify
+  Playbase --> CF
+  Playbase --> DB
+  CMS --> DB
+  CMS --> CF
+  GH --> CMS
+  GH --> CF
   Users --> Obs
 ```
 
-*Alt text: Architecture diagram showing browsers connecting to portfolio, Playbase, d1g.uk, and chat-widget; content.jovylle.com for catalog + notifications, pocket.uft1.com for highlights, projectmate.uft1.com for feedback; Netlify and GitHub as platform; Umami for site analytics.*
+*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, and chat-widget; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers and Netlify as platform, with GitHub as the source of truth and CI.*
 
 ---
 
@@ -58,9 +68,21 @@ flowchart TB
 
 **Problem:** Recruiters need one place to see shipped work, not a scatter of repos.
 
-**Role in the platform:** Central hub. Nuxt 3 site on Netlify with a floating widget (AI chat, Playbase leaderboard, notifications), ProjectMate embed for feedback/updates, and a prerendered project archive fed by `content.jovylle.com`.
+**Role in the platform:** Front door. Nuxt 3 site statically generated and deployed to Cloudflare Pages, with a floating widget (AI chat, Playbase leaderboard, notifications), a ProjectMate embed for feedback/updates, and a prerendered project archive fed by `content.jovylle.com`.
 
 **Case study:** [Personal projects archive](/personal-projects) · [GitHub](https://github.com/jovylle/jovylle.com)
+
+---
+
+### Content CMS — [content.jovylle.com](https://content.jovylle.com)
+
+**Problem:** Several independent sites need one source of truth for posts, project metadata, and app data — without a plaintext CMS repo or a heavyweight headless CMS subscription.
+
+**Role in the platform:** The ecosystem's backbone. Content is authored locally, AES-256-GCM encrypted client-side, and only the ciphertext is committed to git — the decrypt key never leaves the server. A Cloudflare Worker either live-decrypts collections on request or exports filtered public JSON at build time. It also fronts a shared Cloudflare D1 database (`cms-db`) with a public HTTP API (feature flags, contacts, comments, likes, conversations) that any consumer can call directly — CORS is wide open by design.
+
+**Consumers:** [jovylle.com](https://jovylle.com) (prerender), [Hub](https://hub.jovylle.com) (live fetch), [Playbase](https://fast.jovylle.com) (shares the same D1 database directly). Successor to the retired `pocket.uft1.com` / `my-json-database`.
+
+**Case study:** [GitHub — static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms)
 
 ---
 
@@ -68,19 +90,29 @@ flowchart TB
 
 **Problem:** Sunflower Land players need a fast, visual way to plan Desert digs when the in-game API only shows today.
 
-**Role in the platform:** Highest-traffic standalone product in the ecosystem. Companion hub at [hub.d1g.uk](https://hub.d1g.uk) for saved/shared community grids. Shares the uft1/d1g domain family with other tools.
+**Role in the platform:** Highest-traffic standalone product in the ecosystem — the only tool with steady, verified daily traffic (see [live usage](/impact)). Companion hub at [hub.d1g.uk](https://hub.d1g.uk) for saved/shared community grids. Shares the uft1/d1g domain family with other tools.
 
 **Case study:** [GitHub — sfl-crab](https://github.com/jovylle/sfl-crab) · [User feedback](https://d1g.uk/feedbacks)
 
 ---
 
-### Playbase — [fast.jovylle.com](https://fast.jovylle.com)
+### Playbase — [fast.jovylle.com](https://fast.jovylle.com) / [play.jovylle.com](https://play.jovylle.com)
 
-**Problem:** A lightweight, replayable skill game that keeps score across sessions and surfaces results outside the game tab.
+**Problem:** Lightweight, replayable skill games that keep score across sessions and surface results outside the game tab.
 
-**Role in the platform:** Gamification layer. Reaction-test game with an all-time leaderboard JSON API (`/reaction/top.json`). The portfolio widget proxies this via `/api/leaderboard` and links directly to play. Seasonal leaderboard is synced through GitHub Actions.
+**Role in the platform:** Gamification layer. Four browser games (Reaction Tester, Number Memory, Chimp Test, Aim Trainer) running on a Cloudflare Worker. Scores read/write directly against the shared `cms-db` D1 database — no JSON file or HTTP proxy hop, since it runs on the same platform as the CMS. Public API at `/api/scores` and `/api/games`.
 
 **Case study:** [GitHub — playbase](https://github.com/jovylle/playbase)
+
+---
+
+### Hub — [hub.jovylle.com](https://hub.jovylle.com)
+
+**Problem:** Longer-form engineering notes and project write-ups need a home separate from the portfolio's project-archive format.
+
+**Role in the platform:** Next.js/MDX engineering blog ("jovhub"). Fetches posts and images live from `content.jovylle.com`'s CMS API rather than storing content locally — a proving ground for the CMS's public-consumer contract.
+
+**Case study:** [GitHub — hub](https://github.com/jovylle/hub)
 
 ---
 
@@ -88,7 +120,7 @@ flowchart TB
 
 **Problem:** Drop a GPT-powered chatbot onto any site without rebuilding the host app.
 
-**Role in the platform:** Reusable embed product (separate from the portfolio's own AI widget). Standalone script + Netlify/serverless backend pattern, same "one script tag" philosophy as ProjectMate.
+**Role in the platform:** Reusable embed product (separate from the portfolio's own AI widget). Standalone script + serverless backend pattern, same "one script tag" philosophy as ProjectMate.
 
 **Case study:** [GitHub — chatbot-widget](https://github.com/jovylle/chatbot-widget)
 
@@ -106,16 +138,16 @@ flowchart TB
 
 ## Infrastructure highlights
 
-- **Netlify for jovylle.com** — static Nuxt build, `/.netlify/functions/chatbot` for production AI chat, `/api/leaderboard` proxy in dev and prod.
-- **Decoupled content CDN** — project catalog at `content.jovylle.com`; portfolio rebuild triggered by GitHub Actions → Netlify build hook after CDN publish (hook URL in GitHub secrets, not in git).
+- **jovylle.com on Cloudflare Pages** — static Nuxt build deployed via `wrangler pages deploy` (migrated off Netlify). GitHub Actions builds and deploys on push to `master`.
+- **Encrypted git as a database** — `static-encrypted-git-cms` keeps plaintext content local-only and commits only AES-256-GCM ciphertext; a Cloudflare Worker holds the only copy of the decrypt key.
+- **One shared D1 database, two access patterns** — `cms-db` is exposed as an open-CORS HTTP API for external consumers (Hub, browser apps) and as a direct Worker binding for same-account services (Playbase) that don't need the HTTP hop.
 - **Notification bus** — `content.jovylle.com/notifications/index.json` feeds the portfolio widget's alert tab.
-- **Highlights feed** — `pocket.uft1.com/data/highlights.json` powers `/highlights` and the widget highlights view.
 - **Embeds over iframes where it matters** — ProjectMate overlay, portfolio widget (`embed-inline.js`), and chat-widget each ship as a single async script.
-- **Secrets out of repo** — `OPENAI_API_KEY` via Netlify env; build hooks via GitHub Actions secrets.
-- **Prerender vs live fetch** — `/personal-projects` prerendered from CDN JSON at build time; `/highlights` fetches live at runtime (different freshness tradeoffs, intentional).
+- **Secrets out of repo** — CMS decrypt key and admin credentials are Worker secrets; portfolio's Cloudflare deploy token lives in GitHub Actions secrets.
+- **Prerender vs live fetch** — `/personal-projects` prerenders from CMS JSON at build time; the Hub blog fetches live at runtime (different freshness tradeoffs, intentional).
 - **GitHub as integration bus** — profile automation repo (`jovylle/jovylle`, GitHub Actions), content rebuild webhooks, and Playbase leaderboard automation.
 
-> Edge/CDN provider for `uft1.com` and `d1g.uk`, and chat-widget consumer sites, are intentionally not listed publicly until confirmed.
+> Edge/CDN provider for `uft1.com`, and chat-widget consumer sites, are intentionally not listed publicly until confirmed.
 
 ---
 
@@ -123,9 +155,9 @@ flowchart TB
 
 ### 1. Play → score → portfolio (and GitHub)
 
-1. User plays the reaction test at [fast.jovylle.com](https://fast.jovylle.com).
-2. Score is persisted server-side; top entries exposed at `https://fast.jovylle.com/reaction/top.json`.
-3. Portfolio widget on [jovylle.com](https://jovylle.com) fetches via `/api/leaderboard` and shows live top players with a "Play now" link.
+1. User plays a game at [fast.jovylle.com](https://fast.jovylle.com) or [play.jovylle.com](https://play.jovylle.com).
+2. Score is written directly to the shared `cms-db` D1 database; top entries exposed at `/api/scores`.
+3. The portfolio widget on [jovylle.com](https://jovylle.com) surfaces recent scores with a "Play now" link.
 4. GitHub profile README updated by Actions in the Playbase / profile automation repos (exact pipeline: see [playbase](https://github.com/jovylle/playbase) and [jovylle/jovylle](https://github.com/jovylle/jovylle)).
 
 ### 2. Visitor uses d1g.uk
@@ -134,11 +166,17 @@ flowchart TB
 2. Tool runs as a Nuxt/serverless front-end (repo: `sfl-crab`); optional feedback via [d1g.uk/feedbacks](https://d1g.uk/feedbacks).
 3. Community history and shared grids live on [hub.d1g.uk](https://hub.d1g.uk) (separate repo: `sfl-digging-hub`).
 
-### 3. Support & notifications on portfolio
+### 3. Content authored once, read by three apps
+
+1. A post or project entry is written locally against `static-encrypted-git-cms`, validated, and encrypted before it ever touches git.
+2. The Cloudflare Worker at `content.jovylle.com` decrypts on request (or exports filtered JSON at build time).
+3. [jovylle.com](https://jovylle.com) prerenders its project archive from that JSON; [Hub](https://hub.jovylle.com) fetches the same API live at request time for blog posts and images.
+
+### 4. Support & notifications on portfolio
 
 1. Visitor lands on jovylle.com; widget loads notifications from `content.jovylle.com/notifications/index.json`.
 2. Support action opens the ProjectMate overlay (`projectmate.uft1.com`) for feedback and release notes.
-3. AI chat tab calls Netlify serverless function with portfolio context (when enabled); widget itself carries no third-party analytics.
+3. AI chat tab calls a serverless function with portfolio context (when enabled); widget itself carries no third-party analytics.
 
 ---
 
@@ -146,10 +184,10 @@ flowchart TB
 
 | Metric | Source | Note |
 |--------|--------|------|
-| d1g.uk daily visitors | Project catalog metadata | ~300/day (self-reported in CMS catalog; verify with analytics export) |
-| Portfolio traffic | Umami (`jovylle.com`) | Regular daily usage; no public DAU/WAU figure |
-| Playbase leaderboard | `fast.jovylle.com/reaction/top.json` | Public JSON; all-time archive on game site |
-| Content freshness | GitHub Actions → Netlify hook | Rebuild after `content.jovylle.com` JSON updates |
+| d1g.uk visitors | Cloudflare Analytics | Verified export, bots excluded — see [live usage](/impact) for the current number |
+| Portfolio traffic | Cloudflare Analytics | Regular daily usage; no public DAU/WAU figure |
+| Playbase leaderboard | `cms-db` (Cloudflare D1) via `/api/scores` | Public JSON API; four games tracked |
+| Content freshness | GitHub → Cloudflare Worker | Encrypted commit → decrypt-on-read or build-time export |
 | Widget notification reach | `content.jovylle.com/notifications/index.json` | Tag-filtered (`jovylle.com,all`) on portfolio |
 | chat-widget adoption | TBD | Confirm embed domains before publishing counts |
 
@@ -157,9 +195,9 @@ flowchart TB
 
 ## What I'd improve next
 
-1. **Single observability layer** — Umami covers the portfolio; d1g.uk, Playbase, and uft1 subdomains lack a unified dashboard. I'd add consistent uptime checks and error logging across the ecosystem, not just the main site.
-2. **Hostname clarity** — Playbase (`fast.jovylle.com` vs `playbase.jovylle.com`) and the three embed products (portfolio widget, chat-widget, ProjectMate) need a public map so integrators know which script to use.
-3. **Document cross-repo data contracts** — leaderboard JSON, notification index, and CDN project schema are integration APIs today but undocumented for external consumers; I'd version and publish them.
+1. **Single observability layer** — Cloudflare Analytics covers jovylle.com and d1g.uk, but Playbase and the Hub blog lack a unified dashboard. I'd add consistent uptime checks and error logging across the ecosystem, not just the main site.
+2. **Retire the stale leaderboard fallback** — the portfolio widget still has a hardcoded fallback to a legacy static JSON snapshot from before Playbase moved to D1; it should call the live `/api/scores` endpoint directly instead.
+3. **Publish the data contracts** — the D1 API (feature flags, comments, likes, scores) is documented internally in the CMS repo but not versioned or published for outside consumers; I'd formalize and publish it.
 
 ---
 
@@ -168,16 +206,18 @@ flowchart TB
 **Live**
 
 - [jovylle.com](https://jovylle.com) — Portfolio & widget hub
+- [content.jovylle.com](https://content.jovylle.com) — Encrypted git CMS & shared data API
 - [d1g.uk](https://d1g.uk) — Desert digging tool
 - [hub.d1g.uk](https://hub.d1g.uk) — Community digging hub
-- [fast.jovylle.com](https://fast.jovylle.com) — Playbase reaction game
+- [fast.jovylle.com](https://fast.jovylle.com) / [play.jovylle.com](https://play.jovylle.com) — Playbase mini-games
+- [hub.jovylle.com](https://hub.jovylle.com) — Engineering blog
 - [chat-widget.uft1.com](https://chat-widget.uft1.com) — Embeddable chatbot
 - [projectmate.uft1.com](https://projectmate.uft1.com) — Feedback & updates overlay
 - [uft1.com](https://uft1.com) — Utility tools hub
 
 **GitHub**
 
-- [jovylle.com](https://github.com/jovylle/jovylle.com) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [Profile automation](https://github.com/jovylle/jovylle)
+- [jovylle.com](https://github.com/jovylle/jovylle.com) · [static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [hub](https://github.com/jovylle/hub) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [Profile automation](https://github.com/jovylle/jovylle)
 
 ---
 
