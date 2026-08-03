@@ -101,7 +101,8 @@ Keep responses concise (under 150 words), friendly, and helpful. If asked about 
           { role: 'system', content: systemMessage },
           { role: 'user', content: message }
         ],
-        max_completion_tokens: 150
+        reasoning_effort: 'minimal',
+        max_completion_tokens: 400
       })
     });
 
