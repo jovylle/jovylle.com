@@ -88,6 +88,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    preset: "cloudflare-pages",
     prerender: {
       crawlLinks: true,
       routes: ["/", "/projects", "/personal-projects", "/ecosystem", "/contact", "/game", "/resume", "/impact"],

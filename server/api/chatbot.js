@@ -96,13 +96,12 @@ Keep responses concise (under 150 words), friendly, and helpful. If asked about 
         'Authorization': `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-nano',
         messages: [
           { role: 'system', content: systemMessage },
           { role: 'user', content: message }
         ],
-        max_tokens: 150,
-        temperature: 0.7
+        max_completion_tokens: 150
       })
     });
 
