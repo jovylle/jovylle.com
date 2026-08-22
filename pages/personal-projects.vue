@@ -491,6 +491,16 @@ const projectLinks = (project) => {
     }))
 }
 
+const onImgError = (e) => {
+  e.target.src = '/placeholder-project.svg'
+  e.target.onerror = null // prevent infinite loop
+}
+
+const onIconError = (e) => {
+  e.target.style.display = 'none'
+  e.target.onerror = null
+}
+
 const resolveThumbnail = (thumbnail) => {
   if (!thumbnail) return null
   if (thumbnail.startsWith('http')) return thumbnail
@@ -598,6 +608,7 @@ useHead({
                 :alt="project.title || project.name"
                 class="w-full h-40 object-cover rounded-md border dark:border-gray-700"
                 loading="lazy"
+                @error="onImgError"
               />
             </div>
 
@@ -671,6 +682,7 @@ useHead({
                   :alt="`${tech} icon`"
                   class="inline-block mr-1 h-3.5 w-3.5 align-middle"
                   loading="lazy"
+                  @error="onIconError"
                 />
                 {{ techDisplayNames[tech] || tech }}
               </span>

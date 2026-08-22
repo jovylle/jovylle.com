@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3f4f6"/>
+      <stop offset="100%" stop-color="#e5e7eb"/>
+    </linearGradient>
+    <linearGradient id="bga" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e5e7eb" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#d1d5db" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g stroke="#d1d5db" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="50" x2="400" y2="50"/>
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="150" x2="400" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/>
+    <line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="300" y1="0" x2="300" y2="200"/>
+  </g>
+
+  <!-- Project card icon -->
+  <g transform="translate(200,95)" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif">
+    <!-- Frame -->
+    <rect x="-44" y="-36" width="88" height="72" rx="6" fill="#9ca3af" opacity="0.4"/>
+    <rect x="-40" y="-32" width="80" height="64" rx="4" fill="white" opacity="0.85"/>
+
+    <!-- Header bar -->
+    <rect x="-36" y="-28" width="72" height="3" rx="1.5" fill="#cbd5e1"/>
+
+    <!-- Image area -->
+    <rect x="-36" y="-21" width="72" height="26" rx="2" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.5"/>
+    <!-- Image icon -->
+    <g transform="translate(0,-8)" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="-10" y="-7" width="20" height="16" rx="2"/>
+      <circle cx="-3" cy="-1" r="2.5"/>
+      <path d="M-10 6 l6-6 4 3 4-4 6 7"/>
+    </g>
+
+    <!-- Text lines -->
+    <rect x="-36" y="10" width="72" height="3" rx="1.5" fill="#e2e8f0"/>
+    <rect x="-30" y="16" width="60" height="3" rx="1.5" fill="#f1f5f9"/>
+    <rect x="-24" y="22" width="48" height="3" rx="1.5" fill="#f1f5f9"/>
+  </g>
+</svg>

@@ -25,11 +25,32 @@ export default defineNuxtConfig({
             "Cebu-based full-stack web developer and AI solutionist helping businesses ship modern, fast, and AI-powered web applications.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "https://jovylle.com/android-chrome-512x512.png" },
+        { property: "og:site_name", content: "Jovylle Bermudez" },
         { property: "og:url", content: "https://jovylle.com" },
-        { name: "twitter:card", content: "summary" },
+        {
+          property: "og:image",
+          content: "https://jovylle.com/og-default.png",
+        },
+        {
+          property: "og:image:width",
+          content: "1200",
+        },
+        {
+          property: "og:image:height",
+          content: "630",
+        },
+        {
+          property: "og:image:alt",
+          content: "Jovylle Bermudez — Cebu Web Developer & AI Solutionist",
+        },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: "Cebu Web Developer & AI Solutionist | Jovylle Bermudez" },
-        { name: "twitter:description", content: "Cebu-based full-stack web developer and AI solutionist helping businesses ship modern, fast, and AI-powered web applications." },
+        {
+          name: "twitter:description",
+          content:
+            "Cebu-based full-stack web developer and AI solutionist building modern, fast, AI-powered web applications.",
+        },
+        { name: "twitter:image", content: "https://jovylle.com/og-default.png" },
       ],
       script: [
         {
@@ -48,9 +69,21 @@ export default defineNuxtConfig({
             description:
               "Cebu-based software engineer specializing in modern web development and AI-powered solutions.",
             url: "https://jovylle.com",
+            image: "https://jovylle.com/og-default.png",
+            knowsAbout: [
+              "Full-stack web development",
+              "AI agents and automation",
+              "Cloudflare Workers",
+              "Developer tools",
+            ],
+            worksFor: {
+              "@type": "Organization",
+              name: "Jovylle Bermudez (Independent)",
+            },
             sameAs: [
               "https://github.com/jovylle",
               "https://www.linkedin.com/in/jovylle/",
+              "https://hub.jovylle.com",
             ],
             address: {
               "@type": "PostalAddress",
@@ -91,7 +124,17 @@ export default defineNuxtConfig({
     preset: "cloudflare-pages",
     prerender: {
       crawlLinks: true,
-      routes: ["/", "/projects", "/personal-projects", "/ecosystem", "/contact", "/game", "/resume", "/impact"],
+      routes: [
+        "/",
+        "/personal-projects",
+        "/ecosystem",
+        "/contact",
+        "/game",
+        "/resume",
+        "/impact",
+        "/sitemap.xml",
+        "/feed.xml",
+      ],
       ignore: ["/private", "/private/**"],
     },
   },
@@ -101,6 +144,8 @@ export default defineNuxtConfig({
     "/parallax": { ssr: false },
     "/private": { prerender: false },
     "/private/**": { prerender: false },
+    "/sitemap.xml": { prerender: true },
+    "/feed.xml": { prerender: true },
   },
   // routeRules: { // not sure with this
   //   // Homepage pre-rendered at build time
