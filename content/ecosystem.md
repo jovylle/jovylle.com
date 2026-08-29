@@ -141,7 +141,7 @@ flowchart TB
 - **jovylle.com on Cloudflare Pages** — static Nuxt build deployed via `wrangler pages deploy` (migrated off Netlify). GitHub Actions builds and deploys on push to `master`.
 - **Encrypted git as a database** — `static-encrypted-git-cms` keeps plaintext content local-only and commits only AES-256-GCM ciphertext; a Cloudflare Worker holds the only copy of the decrypt key.
 - **One shared D1 database, two access patterns** — `cms-db` is exposed as an open-CORS HTTP API for external consumers (Hub, browser apps) and as a direct Worker binding for same-account services (Playbase) that don't need the HTTP hop.
-- **Notification bus** — `content.jovylle.com/notifications/index.json` feeds the portfolio widget's alert tab.
+- **Notification bus** — `content.jovylle.com/data/notifications.json` (index) + `content.jovylle.com/data/notifications/<slug>.json` (bundles) feeds the portfolio widget's alert tab. Legacy `content.jovylle.com/notifications/index.json` is still tried as a fallback for older embeds.
 - **Embeds over iframes where it matters** — ProjectMate overlay, portfolio widget (`embed-inline.js`), and chat-widget each ship as a single async script.
 - **Secrets out of repo** — CMS decrypt key and admin credentials are Worker secrets; portfolio's Cloudflare deploy token lives in GitHub Actions secrets.
 - **Prerender vs live fetch** — `/personal-projects` prerenders from CMS JSON at build time; the Hub blog fetches live at runtime (different freshness tradeoffs, intentional).
@@ -174,7 +174,7 @@ flowchart TB
 
 ### 4. Support & notifications on portfolio
 
-1. Visitor lands on jovylle.com; widget loads notifications from `content.jovylle.com/notifications/index.json`.
+1. Visitor lands on jovylle.com; widget loads notifications from `content.jovylle.com/data/notifications.json` (with `pinned.json` fallback for legacy embeds).
 2. Support action opens the ProjectMate overlay (`projectmate.uft1.com`) for feedback and release notes.
 3. AI chat tab calls a serverless function with portfolio context (when enabled); widget itself carries no third-party analytics.
 
@@ -188,7 +188,7 @@ flowchart TB
 | Portfolio traffic | Cloudflare Analytics | Regular daily usage; no public DAU/WAU figure |
 | Playbase leaderboard | `cms-db` (Cloudflare D1) via `/api/scores` | Public JSON API; four games tracked |
 | Content freshness | GitHub → Cloudflare Worker | Encrypted commit → decrypt-on-read or build-time export |
-| Widget notification reach | `content.jovylle.com/notifications/index.json` | Tag-filtered (`jovylle.com,all`) on portfolio |
+| Widget notification reach | `content.jovylle.com/data/notifications.json` + `/data/notifications/<slug>.json` | Tag-filtered (`jovylle.com,all`) on portfolio |
 | chat-widget adoption | TBD | Confirm embed domains before publishing counts |
 
 ---

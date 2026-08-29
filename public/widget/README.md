@@ -66,7 +66,7 @@ That's it! 🎉
 ## ✨ Features
 
 - 🔔 **Smart Notifications** - 4 types with badge on button
-- 🤖 **AI Chat (GPT-4o-mini)** - Customizable AI assistant
+- 🤖 **AI Chat (GPT-5.6 Luna)** - Customizable AI assistant at $0.20/$1.20 per 1M tokens
 - 💬 **Custom AI Context** - Host websites provide their own context
 - 📝 **Markdown Support** - Bold, italic, code, links in responses
 - 🎨 **Dark Mode** - Beautiful light & dark themes
@@ -161,29 +161,28 @@ const state = window.JovylleInlineWidget.state;
 | `data-feedback-url` | URL string | none | Custom feedback link |
 | `data-ai-context` | Text string | default | Custom AI instructions/context |
 | `data-chatbot-endpoint` | URL string | `https://jovylle.com/.netlify/functions/chatbot` | Override the chat API URL; production embeds always hit jovylle.com's backend. Only set this attribute when you need a custom proxy (e.g., local development). |
-| `data-notifications-index` | URL string | `https://content.jovylle.com/notifications/index.json` (on `jovylle.com` family, otherwise none) | Endpoint that returns `{ "files": ["2026-01-27.json", ...] }` for the notification archive |
+| `data-notifications-index` | URL string | `https://content.jovylle.com/data/notifications.json` (on `jovylle.com` family, otherwise none) | Endpoint that returns `{ "notifications": [{ "slug": "2026-08-22", ... }] }` — widget then fetches each `slug` at `/data/notifications/<slug>.json`. Legacy `https://content.jovylle.com/notifications/index.json` with `{ "files": [...] }` still works as fallback. |
 | `data-notifications-limit` | number | 10 | Total dynamic notifications to fetch/display from the index |
 | `data-notification-tags` | csv | | Limit included notifications to entries whose `tags` array contains at least one of these values |
 | `data-notification-tab-title` | Text string | "Alerts" | Header text to display while the Notifications tab is active |
 
 By default the widget posts to `https://jovylle.com/.netlify/functions/chatbot`. Use `data-chatbot-endpoint` only if you need a different proxy (for example, pointing to `http://localhost:3000/api/chatbot` while running local tooling). This keeps third-party embeds on other domains hitting the centralized Jovylle backend.
 
-Dynamic notifications default to `https://content.jovylle.com/notifications/index.json` only when the page is on `jovylle.com` or its subdomains; other hosts must opt in by providing `data-notifications-index`.
+Dynamic notifications default to `https://content.jovylle.com/data/notifications.json` only when the page is on `jovylle.com` or its subdomains; other hosts must opt in by providing `data-notifications-index`. The endpoint returns `{ "notifications": [{ "slug": "2026-08-22", "title": "...", "count": 1, "date": "2026-08-22" }] }` and the widget fetches each bundle at `https://content.jovylle.com/data/notifications/<slug>.json`. Legacy static `https://content.jovylle.com/notifications/index.json` (`{ "files": [...] }`) is still supported.
 
 ## 🗂️ Dynamic Notification Index
 
-- Host a small JSON index (e.g., `https://content.jovylle.com/notifications/index.json`) that looks like:
+- The vault now hosts the index at `https://content.jovylle.com/data/notifications.json` that looks like:
   ```json
   {
-    "files": [
-      "2026-01-27.json",
-      "2026-01-24.json"
+    "notifications": [
+      { "slug": "pinned", "title": "Quick start", "count": 2, "date": "" },
+      { "slug": "2026-08-22", "title": "hermes-opencode-acp", "count": 1, "date": "2026-08-22" }
     ]
   }
   ```
-- Store each referenced file in the same directory and expose `{ "notifications": [/* widget notification objects */] }`.
-- Add an optional `pinned.json` file for evergreen alerts; it is always fetched even when the limit is reached.
-- Use `data-notifications-index` to point the widget at your index, `data-notifications-limit` to cap how many recent entries are displayed, and `data-notification-tags` to scope alerts per site (e.g., `jovylle.com,all`).
+- Store each bundle at `https://content.jovylle.com/data/notifications/<slug>.json` and expose `{ "notifications": [/* widget notification objects */] }`. `pinned.json` is now just another slug (`pinned`) in the index and is always fetched.
+- Use `data-notifications-index` to point the widget at your index, `data-notifications-limit` to cap how many recent entries are displayed, and `data-notification-tags` to scope alerts per site (e.g., `jovylle.com,all`). Legacy `{ "files": [...] }` with per-file `*.json` at the same directory still works as a fallback.
 - Use `data-notification-tab-title` (default `Alerts`) if you want the header to rename itself while showing the notifications tab.
 
 ---
@@ -229,7 +228,7 @@ Works in all modern browsers:
 - ✅ **Custom AI Context** - Host websites provide their own AI instructions
 - ✅ **Markdown Support** - AI responses support formatting (bold, italic, code, links)
 - ✅ **Notification System** - Complete alert system with persistence
-- ✅ **GPT-4o-mini** - Upgraded from GPT-3.5-turbo (60% cheaper!)
+- ✅ **GPT-5.6 Luna** - Upgraded from GPT-4o-mini / GPT-5-nano (87% cheaper than GPT-5.4 mini at $0.20/$1.20 per 1M tokens!)
 - ✅ **Smart Tab** - Alerts tab auto-hides when empty
 - ✅ **Button Badge** - Red alert badge on floating widget button
 

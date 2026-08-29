@@ -31,7 +31,7 @@ Create a **subtle, lowkey widget** that prioritizes **viewer interest over self-
 
 ### Core Technologies
 - **HTML/CSS/JavaScript**: Standalone, no dependencies
-- **OpenAI GPT-3.5-turbo**: AI chat backend (via Netlify functions)
+- **OpenAI GPT-5.6 Luna**: AI chat backend (via Cloudflare Pages Function at `/api/chatbot`; $0.20/$1.20 per 1M tokens, 87% cheaper than GPT-5.4 mini)
 - **Reaction Test API**: Live leaderboard from `fast.jovylle.com`
 
 ### File Structure
@@ -56,7 +56,7 @@ server/api/
 
 ### Current Features
 1. **Reaction Test Leaderboard**: Top 3 players with real-time data
-2. **AI Chat**: Portfolio-focused assistant using GPT-3.5-turbo
+2. **AI Chat**: Portfolio-focused assistant using GPT-5.6 Luna
 3. **Quick Links**: Portfolio access for employers
 4. **Responsive Design**: Works on all devices
 5. **Tab Navigation**: Links and AI Chat tabs
@@ -68,8 +68,8 @@ server/api/
 4. **Analytics**: Event tracking for insights
 5. **Content Configuration**: Hide/show specific elements (chat, portfolio, sections)
 6. **Smart Embedding**: Different configurations for different use cases
-7. **Notification System**: Host websites can push alerts/messages to visitors
-8. **AI Chat (GPT-4o-mini)**: Upgraded from GPT-3.5-turbo for better responses at lower cost
+7. **Notification System**: Host websites can push alerts/messages to visitors — now backed by `content.jovylle.com/data/notifications.json` + per-slug bundles (with legacy `notifications/index.json` fallback)
+8. **AI Chat (GPT-5.6 Luna)**: Upgraded from GPT-4o-mini / GPT-3.5-turbo for better responses at ~87% lower cost than GPT-5.4 mini ($0.20/$1.20 per 1M tokens)
 
 ## Embedding Methods
 
@@ -140,7 +140,7 @@ Density options:
 ### Notification Behavior
 
 - `data-auto-open-on-notifications`: true/false (defaults to `false`) — automatically opens the widget and switches to the Notifications tab whenever unread alerts exist, so time-sensitive messages are visible immediately.
-- `data-notifications-index`: URL — point the widget at a lightweight JSON index that lists files (`{ "files": ["2026-01-27.json", ...] }`) hosted on your static database (e.g., `https://pocket.uft1.com/notifications/index.json`).
+- `data-notifications-index`: URL — point the widget at a JSON index. Current vault default is `https://content.jovylle.com/data/notifications.json` which returns `{ "notifications": [{ "slug": "2026-08-22", ... }] }` and per-slug bundles at `https://content.jovylle.com/data/notifications/<slug>.json` (each `{ "notifications": [...] }`). Legacy `https://content.jovylle.com/notifications/index.json` with `{ "files": [...] }` is still supported as a fallback.
 - `data-notifications-limit`: number (defaults to `10`) — caps how many of the most recent dynamic notifications are added from the index so you never flood the tab.
 - `data-notification-tags`: comma-separated list — the widget only shows notifications whose `tags` array includes at least one of the provided values, letting a shared database serve multiple sites (e.g., `jovylle.com,all`).
 - `data-notification-tab-title`: text — change the header title while the Alerts tab is visible (default `Alerts`).
@@ -244,11 +244,12 @@ window.JovylleInlineWidget.clearAllNotifications();
 ## Technology Updates
 
 ### AI Chat Model
-- **Current**: GPT-4o-mini (OpenAI)
-- **Previous**: GPT-3.5-turbo
+- **Current**: GPT-5.6 Luna (OpenAI) — `gpt-5.6-luna` at $0.20/$1.20 per 1M tokens
+- **Previous**: GPT-4o-mini -> GPT-5-nano
 - **Benefits**: Better responses, lower cost, improved context understanding
-- **Cost**: ~60% cheaper than GPT-3.5-turbo
+- **Cost**: ~87% cheaper than GPT-5.4 mini; Luna is now cheaper than GPT-4.1 mini
 - **Performance**: Significantly better at nuanced conversations
+- **Env override**: Set `OPENAI_MODEL` (Cloudflare Pages env or `.env`) to pin a different id without a redeploy of the widget itself
 
 ## Future Considerations
 
@@ -264,8 +265,8 @@ window.JovylleInlineWidget.clearAllNotifications();
 - Keep the widget lightweight and fast
 - Maintain security-first approach
 - Regular updates to game integration
-- Monitor AI chat quality and costs (GPT-4o-mini = excellent cost/performance)
-- Monitor notification storage limits
+- Monitor AI chat quality and costs (GPT-5.6 Luna = excellent cost/performance at $0.20/$1.20 per 1M)
+- Monitor notification storage limits — vault is now `/data/notifications.json` + `/data/notifications/<slug>.json`, legacy `/notifications/index.json` kept as fallback
 
 ---
 

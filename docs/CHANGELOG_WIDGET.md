@@ -1,7 +1,13 @@
 # Jovylle Widget - Changelog
 
 **Official Name:** Jovylle Widget  
-**Current Version:** 2.0
+**Current Version:** 2.1
+
+## August 2026 - Vault + Luna Update 🔧
+
+- **Notifications fix**: Vault moved from `public/notifications/index.json` static export to encrypted CMS at `/data/notifications.json` (index of `{slug}`) + `/data/notifications/<slug>.json` bundles. `embed-inline.js` now handles both formats, normalizes `announcement` → `info`, sorts by `timestamp || date`, and falls back to the legacy URL if the new one 404s. Default changed to `https://content.jovylle.com/data/notifications.json`.
+- **Chat model**: `server/api/chatbot.js` now uses `gpt-5.6-luna` ($0.20/$1.20 per 1M, 87% cheaper than GPT-5.4 mini) with `OPENAI_MODEL` env override for both `process.env` and Cloudflare `event.context.cloudflare.env`.
+- **Docs**: `widget_overview.md`, `public/widget/README.md`, `content/ecosystem.md` all updated to the new endpoints and Luna pricing.
 
 ## November 2025 - Major Update 🚀
 
@@ -32,19 +38,21 @@ window.JovylleInlineWidget.getNotifications()
 ```
 
 #### 🤖 AI Chat Model Upgrade
-Upgraded from GPT-3.5-turbo to **GPT-4o-mini**
+Upgraded from GPT-4o-mini / GPT-5-nano to **GPT-5.6 Luna (`gpt-5.6-luna`)**
 
 **Benefits:**
-- ~60% cheaper than GPT-3.5-turbo
+- ~87% cheaper than GPT-5.4 mini at $0.20/$1.20 per 1M tokens (cheaper than GPT-4.1 mini)
 - Better context understanding
 - More nuanced conversations
 - Improved response quality
 - Lower latency
+- Env override via `OPENAI_MODEL` without redeploy
 
 ### Files Modified
 
-1. **netlify/functions/chatbot.js**
-   - Updated model from `gpt-3.5-turbo` to `gpt-4o-mini`
+1. **server/api/chatbot.js** (Cloudflare Pages Function)
+   - Updated model from `gpt-5-nano` to `gpt-5.6-luna` with `OPENAI_MODEL` env override
+   - Fix: vault notifications moved to `/data/notifications.json` + `/data/notifications/<slug>.json`, legacy `/notifications/index.json` kept as fallback
 
 2. **public/widget/embed-inline.js**
    - Added notification system state management

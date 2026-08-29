@@ -96,7 +96,11 @@ Keep responses concise (under 150 words), friendly, and helpful. If asked about 
         'Authorization': `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'gpt-5-nano',
+        // GPT-5.6 Luna is the cheapest of the 5.6 tier at $0.20/$1.20 per 1M tokens.
+        // Allow override via OPENAI_MODEL env (Cloudflare or host).
+        model: process.env.OPENAI_MODEL
+          || event.context?._platform?.cloudflare?.env?.OPENAI_MODEL
+          || 'gpt-5.6-luna',
         messages: [
           { role: 'system', content: systemMessage },
           { role: 'user', content: message }

@@ -170,13 +170,13 @@ The widget integrates with the **Reaction Test Game** hosted at `fast.jovylle.co
 
 ### 🤖 AI Chat Backend
 
-The AI chat uses OpenAI GPT-3.5-turbo and provides information about:
+The AI chat uses OpenAI GPT-5.6 Luna (`gpt-5.6-luna` at $0.20/$1.20 per 1M tokens) and provides information about:
 - Developer skills and technologies
 - Project portfolio
 - General development questions
 
 **Local Development**: Uses Nuxt API route `/api/chatbot`  
-**Production**: Uses Netlify function `/.netlify/functions/chatbot`
+**Production**: Uses Cloudflare Pages Function `/api/chatbot` (override model via `OPENAI_MODEL` env)
 
 ### 📱 Responsive Design
 

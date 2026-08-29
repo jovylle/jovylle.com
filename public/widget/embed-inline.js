@@ -21,7 +21,11 @@
   const explicitNotificationIndex = (script?.getAttribute('data-notifications-index') || '').trim();
   const normalizedHost = location.hostname.replace(/^www\./, '');
   const ownsNotificationIndex = normalizedHost === 'jovylle.com' || normalizedHost.endsWith('.jovylle.com');
-  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? 'https://content.jovylle.com/notifications/index.json' : null);
+  // Updated 2026-08-28: vault moved from /notifications/index.json (static) to
+  // /data/notifications.json (encrypted CMS). Keep fallback for old embeds.
+  const NEW_NOTIFICATION_INDEX = 'https://content.jovylle.com/data/notifications.json';
+  const LEGACY_NOTIFICATION_INDEX = 'https://content.jovylle.com/notifications/index.json';
+  const notificationIndexUrl = explicitNotificationIndex || (ownsNotificationIndex ? NEW_NOTIFICATION_INDEX : null);
   const notificationLimit = parseInt(script?.getAttribute('data-notifications-limit') || '10', 10);
   const notificationTagFilters = (script?.getAttribute('data-notification-tags') || '')
     .split(',')
@@ -868,11 +872,56 @@ function handleAutoOpenForNotifications() {
       return;
     }
     const effectiveLimit = Number.isFinite(notificationLimit) && notificationLimit > 0 ? notificationLimit : 10;
-    const indexData = await fetchJson(notificationIndexUrl);
-    const baseUrl = notificationIndexUrl.replace(/\/[^\/]+$/, '/');
+    let indexData = await fetchJson(notificationIndexUrl);
+    // For NEW_NOTIFICATION_INDEX ( /data/notifications.json ) the bundles live at
+    // /data/notifications/<slug>.json — so base is .../data/notifications/.
+    // For legacy (.../notifications/index.json) base is .../notifications/.
+    function baseForUrl(url) {
+      if (url === NEW_NOTIFICATION_INDEX) return 'https://content.jovylle.com/data/notifications/';
+      if (url.endsWith('/data/notifications.json')) return url.replace(/\/[^\/]+$/, '/').replace(/\/data\/$/, '/data/notifications/');
+      return url.replace(/\/[^\/]+$/, '/');
+    }
+    let baseUrl = baseForUrl(notificationIndexUrl);
     const collected = [];
 
-    if (indexData && Array.isArray(indexData.files)) {
+    // Fallback: if the new endpoint 404s and caller used the new URL implicitly,
+    // try the legacy path once (and vice-versa). Keeps old embeds alive.
+    if (!indexData && !explicitNotificationIndex) {
+      const fallbackUrl = notificationIndexUrl === NEW_NOTIFICATION_INDEX
+        ? LEGACY_NOTIFICATION_INDEX
+        : NEW_NOTIFICATION_INDEX;
+      console.warn(`Notification loader: ${notificationIndexUrl} unavailable, trying ${fallbackUrl}`);
+      indexData = await fetchJson(fallbackUrl);
+      if (indexData) baseUrl = baseForUrl(fallbackUrl);
+    }
+
+    // New vault format: { notifications: [{ slug, title, count, date }] }
+    // One fetch per slug at /data/notifications/<slug>.json
+    if (indexData && Array.isArray(indexData.notifications) && indexData.notifications[0]?.slug) {
+      // Separate pinned and dated bundles. Pinned has date === '' and should always load.
+      const entries = indexData.notifications;
+      const pinnedEntries = entries.filter(e => e.slug === 'pinned');
+      const datedEntries = entries.filter(e => e.slug !== 'pinned')
+        .sort((a, b) => (b.date || b.slug).localeCompare(a.date || a.slug))
+        .slice(0, effectiveLimit);
+
+      // Always include pinned first (if not already limited out)
+      const slugsToFetch = [...pinnedEntries.map(e => e.slug), ...datedEntries.map(e => e.slug)];
+      // Dedup and cap total fetches to limit + pinned
+      const uniqueSlugs = [...new Set(slugsToFetch)].slice(0, effectiveLimit + pinnedEntries.length);
+
+      await Promise.all(
+        uniqueSlugs.map(async (slug) => {
+          const fileUrl = new URL(`${slug}.json`, baseUrl).href;
+          const payload = await fetchJson(fileUrl);
+          if (payload && Array.isArray(payload.notifications)) {
+            collected.push(...payload.notifications);
+          }
+        })
+      );
+      // No extra pinned fetch needed — already included
+    } else if (indexData && Array.isArray(indexData.files)) {
+      // Legacy static format: { files: ["pinned.json", "2026-08-22.json", ...] }
       const filesToFetch = indexData.files.slice(0, effectiveLimit);
       await Promise.all(
         filesToFetch.map(async (fileName) => {
@@ -890,15 +939,31 @@ function handleAutoOpenForNotifications() {
       console.warn('Notification loader: skipping indexed fetch because index was unavailable.');
     }
 
-    const pinnedPayload = await fetchJson(new URL('pinned.json', baseUrl).href);
-    const pinnedNotifications = (pinnedPayload && Array.isArray(pinnedPayload.notifications))
-      ? pinnedPayload.notifications
-      : [];
+    // For legacy format, pinned.json is fetched separately. For new format it's
+    // already in collected, but re-fetch as fallback if we got nothing.
+    let pinnedNotifications = [];
+    const alreadyHasPinned = collected.some(n => n.id && String(n.id).includes('pinned'));
+    if (!alreadyHasPinned) {
+      const pinnedPayload = await fetchJson(new URL('pinned.json', baseUrl).href);
+      pinnedNotifications = (pinnedPayload && Array.isArray(pinnedPayload.notifications))
+        ? pinnedPayload.notifications
+        : [];
+    }
 
     const dynamicNotifications = collected
+      .filter(n => !String(n.id || '').includes('pinned'))
       .filter(matchesNotificationTags)
-      .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+      .sort((a, b) => new Date(b.timestamp || b.date || 0) - new Date(a.timestamp || a.date || 0))
       .slice(0, effectiveLimit);
+
+    // Normalize types: CMS may emit "announcement" etc. — map to widget's 4 colors.
+    function normalizeType(t) {
+      const allowed = ['info', 'success', 'warning', 'error'];
+      if (allowed.includes(t)) return t;
+      if (t === 'announcement') return 'info';
+      return 'info';
+    }
+    [...pinnedNotifications, ...dynamicNotifications].forEach(n => { if (n.type) n.type = normalizeType(n.type); });
 
     pinnedNotifications
       .filter(matchesNotificationTags)
