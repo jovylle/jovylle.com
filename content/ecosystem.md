@@ -19,6 +19,7 @@ flowchart TB
     D1G["d1g.uk<br/>Desert digging tool"]
     Hub["hub.jovylle.com<br/>Next.js engineering blog"]
     ChatW["chat-widget.uft1.com<br/>Embeddable GPT chat"]
+    Factory["factory.uft1.com<br/>Project Factory — 478 AI-built apps"]
   end
 
   subgraph cms["Content backbone"]
@@ -43,6 +44,7 @@ flowchart TB
   Users --> D1G
   Users --> Hub
   Users --> ChatW
+  Users --> Factory
   Portfolio --> CF
   Portfolio --> CMS
   Portfolio --> PMate
@@ -51,6 +53,7 @@ flowchart TB
   ChatW --> Netlify
   Playbase --> CF
   Playbase --> DB
+  Factory --> CF
   CMS --> DB
   CMS --> CF
   GH --> CMS
@@ -58,7 +61,7 @@ flowchart TB
   Users --> Obs
 ```
 
-*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, and chat-widget; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers and Netlify as platform, with GitHub as the source of truth and CI.*
+*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, chat-widget, and Project Factory; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers and Netlify as platform, with GitHub as the source of truth and CI.*
 
 ---
 
@@ -106,6 +109,16 @@ flowchart TB
 
 ---
 
+### Project Factory — [factory.uft1.com](https://factory.uft1.com)
+
+**Problem:** Proving an agent pipeline ships *finished* software rather than demos takes volume — hundreds of independent apps, each gated on a real build and a boot smoke test, with cost held inside free tiers.
+
+**Role in the platform:** Autonomous-build showcase and a browsable app catalog. One orchestrator pushed 501 specs through an OpenCode worker (Vite + React + TypeScript + Tailwind, no backend, localStorage only), verifying `npm run build` plus a preview-server smoke test before capturing a thumbnail and deploying each result. 478 shipped; the rest are parked for human review. The monitoring site is a single Cloudflare Pages project — static SPA, pre-bundled project builds, and one `pages/_worker.js` handling the API, auth, and KV-backed votes — with no origin server, tunnel, or host dependency.
+
+**Case study:** [Live catalog](https://factory.uft1.com) · [GitHub — factory](https://github.com/jovylle/factory)
+
+---
+
 ### Hub — [hub.jovylle.com](https://hub.jovylle.com)
 
 **Problem:** Longer-form engineering notes and project write-ups need a home separate from the portfolio's project-archive format.
@@ -145,6 +158,7 @@ flowchart TB
 - **Embeds over iframes where it matters** — ProjectMate overlay, portfolio widget (`embed-inline.js`), and chat-widget each ship as a single async script.
 - **Secrets out of repo** — CMS decrypt key and admin credentials are Worker secrets; portfolio's Cloudflare deploy token lives in GitHub Actions secrets.
 - **Prerender vs live fetch** — `/personal-projects` prerenders from CMS JSON at build time; the Hub blog fetches live at runtime (different freshness tradeoffs, intentional).
+- **Edge-only service pattern** — Project Factory runs as one Cloudflare Pages project: a static SPA, pre-bundled project builds, and a single `pages/_worker.js` that serves the API, auth, and KV-backed votes. No origin process, no tunnel, no host to keep alive.
 - **GitHub as integration bus** — profile automation repo (`jovylle/jovylle`, GitHub Actions), content rebuild webhooks, and Playbase leaderboard automation.
 
 > Edge/CDN provider for `uft1.com`, and chat-widget consumer sites, are intentionally not listed publicly until confirmed.
@@ -190,6 +204,7 @@ flowchart TB
 | Content freshness | GitHub → Cloudflare Worker | Encrypted commit → decrypt-on-read or build-time export |
 | Widget notification reach | `content.jovylle.com/data/notifications.json` + `/data/notifications/<slug>.json` | Tag-filtered (`jovylle.com,all`) on portfolio |
 | chat-widget adoption | TBD | Confirm embed domains before publishing counts |
+| Apps shipped by Factory | `factory.uft1.com/api/stats` (projects.json) | 478 of 501 specs built spec→deploy with no human-written app code; each gated on build + smoke test |
 
 ---
 
@@ -212,12 +227,13 @@ flowchart TB
 - [fast.jovylle.com](https://fast.jovylle.com) / [play.jovylle.com](https://play.jovylle.com) — Playbase mini-games
 - [hub.jovylle.com](https://hub.jovylle.com) — Engineering blog
 - [chat-widget.uft1.com](https://chat-widget.uft1.com) — Embeddable chatbot
+- [factory.uft1.com](https://factory.uft1.com) — Project Factory: 478 agent-built browser apps
 - [projectmate.uft1.com](https://projectmate.uft1.com) — Feedback & updates overlay
 - [uft1.com](https://uft1.com) — Utility tools hub
 
 **GitHub**
 
-- [jovylle.com](https://github.com/jovylle/jovylle.com) · [static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [hub](https://github.com/jovylle/hub) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [Profile automation](https://github.com/jovylle/jovylle)
+- [jovylle.com](https://github.com/jovylle/jovylle.com) · [static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [factory](https://github.com/jovylle/factory) · [hub](https://github.com/jovylle/hub) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [Profile automation](https://github.com/jovylle/jovylle)
 
 ---
 
