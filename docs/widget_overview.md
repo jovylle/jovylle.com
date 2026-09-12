@@ -40,11 +40,9 @@ public/widget/
 ├── mystery-widget.html    # Main widget (embeddable)
 └── embed.js              # JavaScript embed script
 
-netlify/functions/
-└── chatbot.js            # AI chat backend
-
 server/api/
-└── leaderboard.js        # Leaderboard proxy (local dev)
+├── chatbot.js            # AI chat backend
+└── leaderboard.js        # Leaderboard proxy
 ```
 
 ### Security Model

@@ -10,7 +10,7 @@ A modern personal portfolio website built with Nuxt.js, featuring a floating wid
 
 The **Quick Menu Widget** is a floating, embeddable component that provides:
 - 🎮 **Reaction Test Game** leaderboard and direct play access
-- 🤖 **AI Chat** about the developer's portfolio (when deployed on Netlify)
+- 🤖 **AI Chat** about the developer's portfolio (via `/api/chatbot`)
 - 🔗 **Quick Links** to portfolio and projects
 - 📱 **Responsive design** that works on any website
 
@@ -93,10 +93,10 @@ Control which elements to show/hide:
 
 ### ⚡ Features & Compatibility
 
-| Feature | Local Development | Netlify Deployment | External Websites |
+| Feature | Local Development | Production (Cloudflare Pages) | External Websites |
 |---------|------------------|-------------------|-------------------|
 | **Leaderboard** | ✅ (via `/api/leaderboard`) | ✅ (via `/api/leaderboard`) | ✅ (direct API call) |
-| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/.netlify/functions/chatbot`) | ⚠️ (CORS dependent) |
+| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ (CORS dependent) |
 | **Quick Links** | ✅ | ✅ | ✅ |
 | **Game Play Button** | ✅ | ✅ | ✅ |
 
@@ -125,11 +125,10 @@ Control which elements to show/hide:
 
 ### 🌐 Deployment
 
-#### Netlify Deployment
-1. **Connect your repository** to Netlify
-2. **Set environment variables**:
-   - `OPENAI_API_KEY`: Your OpenAI API key for the AI chat
-3. **Deploy**: Netlify will automatically build and deploy
+#### Cloudflare Pages Deployment
+1. **Build**: `npm run build`
+2. **Set secrets**: `OPENAI_API_KEY` as a Cloudflare Pages secret for the AI chat
+3. **Deploy**: `npm run deploy` (`wrangler pages deploy dist --project-name=jovylle-com`)
 
 #### Environment Variables
 Create a `.env` file (copy from `.env.example`):
@@ -154,9 +153,8 @@ jovylle.com/
 ├── public/widget/           # Widget files
 │   ├── mystery-widget.html  # Main widget (embeddable)
 │   └── embed.js            # Embed script
-├── netlify/functions/      # Serverless functions
-│   └── chatbot.js         # AI chat backend
-├── server/api/            # Nuxt API routes
+├── server/api/            # API routes (dev + Cloudflare Pages prod)
+│   ├── chatbot.js         # AI chat backend
 │   └── leaderboard.js     # Leaderboard proxy
 └── components/            # Vue components
 ```

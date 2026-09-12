@@ -48,13 +48,13 @@ const projects = await queryContent('projects').find()
 ## Content Management Workflow
 
 ### Decap CMS Configuration
-- **Backend**: Git Gateway with Netlify integration
-- **Local Development**: Run `npx netlify-cms-proxy-server` for local backend
+- **Backend**: retired with the Netlify hosting — edit markdown directly
+- **Local Development**: `npm run dev`, content in `content/`
 - **Media**: Stored in `public/decap/images/uploads/`
 - **Collections**: `blog` (posts), `projects`, and `test1` (experimental)
 
 ### Adding New Content
-1. Use Decap CMS admin at `/admin` or create markdown files directly
+1. Create markdown files directly (Decap admin retired with Netlify hosting)
 2. Follow naming convention: `YYYY-MM-DD-title.md` for date-based content
 3. Include required frontmatter fields based on collection schema
 4. Images uploaded via CMS are automatically optimized and stored correctly

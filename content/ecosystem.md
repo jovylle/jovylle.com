@@ -33,7 +33,8 @@ flowchart TB
 
   subgraph platform["Platform layer"]
     CF["Cloudflare Pages / Workers"]
-    Netlify["Netlify<br/>hub, chat-widget, ProjectMate"]
+    Vercel["Vercel<br/>hub"]
+    Netlify["Netlify<br/>chat-widget"]
     GH["GitHub<br/>Repos + Actions"]
   end
 
@@ -49,7 +50,7 @@ flowchart TB
   Portfolio --> CMS
   Portfolio --> PMate
   Hub --> CMS
-  Hub --> Netlify
+  Hub --> Vercel
   ChatW --> Netlify
   Playbase --> CF
   Playbase --> DB
@@ -61,7 +62,7 @@ flowchart TB
   Users --> Obs
 ```
 
-*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, chat-widget, and Project Factory; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers and Netlify as platform, with GitHub as the source of truth and CI.*
+*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, chat-widget, and Project Factory; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers, Vercel, and Netlify as platform, with GitHub as the source of truth and CI.*
 
 ---
 

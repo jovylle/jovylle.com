@@ -23,7 +23,7 @@ This document explains the purpose, UI rules, and high-level architecture for th
 ## Architecture Overview
 - App: Nuxt.js site with pages and components.
 - Widget: embeddable HTML file and JS embed script under `public/widget/`.
-- AI Chat: local `/api/chatbot` for dev; Netlify `/.netlify/functions/chatbot` for prod.
+- AI Chat: Nuxt server route `/api/chatbot` for dev and Cloudflare Pages prod.
 - Game: external reaction game with top 3 leaderboard display.
 - Theming: light/dark toggle; preference stored in localStorage.
 

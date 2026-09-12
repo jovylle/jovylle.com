@@ -14,7 +14,7 @@
 
 <script setup>
 const DIAGRAM_ALT =
-  'Architecture diagram: browsers to portfolio, Playbase, d1g.uk, and chat-widget; shared CDN and notifications; Netlify and GitHub; Umami analytics.';
+  'Architecture diagram: browsers to portfolio, Playbase, d1g.uk, and chat-widget; shared CDN and notifications; Cloudflare, Vercel, Netlify, and GitHub; Cloudflare analytics.';
 
 const { data: page } = await useAsyncData('ecosystem-page', () =>
   queryContent('/ecosystem').findOne()
