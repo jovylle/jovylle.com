@@ -38,6 +38,8 @@ flowchart TB
     GH["GitHub<br/>Repos + Actions"]
   end
 
+  Free1kk["free.1kk.uk<br/>Self-serve subdomains<br/>(Worker + D1 + Queue)"]
+
   Obs["Cloudflare Analytics<br/>jovylle.com, d1g.uk"]
 
   Users --> Portfolio
@@ -46,6 +48,10 @@ flowchart TB
   Users --> Hub
   Users --> ChatW
   Users --> Factory
+  Users --> Free1kk
+  Free1kk --> CF
+  Free1kk --> DB
+  Free1kk --> GH
   Portfolio --> CF
   Portfolio --> CMS
   Portfolio --> PMate
@@ -62,7 +68,7 @@ flowchart TB
   Users --> Obs
 ```
 
-*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, chat-widget, and Project Factory; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers, Vercel, and Netlify as platform, with GitHub as the source of truth and CI.*
+*Alt text: Architecture diagram showing browsers connecting to the portfolio, Playbase, d1g.uk, the Hub blog, chat-widget, Project Factory, and free.1kk.uk self-serve subdomains; content.jovylle.com (an encrypted git CMS on a Cloudflare Worker) and its shared cms-db D1 database as the content backbone; projectmate.uft1.com as a feedback overlay; Cloudflare Pages/Workers, Vercel, and Netlify as platform, with GitHub as the source of truth and CI.*
 
 ---
 
@@ -150,6 +156,16 @@ flowchart TB
 
 ---
 
+### Free Subdomains — [free.1kk.uk](https://free.1kk.uk)
+
+**Problem:** Handing out subdomains (for demos, client previews, friend projects) used to mean a manual DNS detour per name. Existing free-subdomain models need a fork + PR + human review per claim.
+
+**Role in the platform:** Self-serve DNS minter for the disposable offer zone `1kk.uk`. GitHub OAuth claim → target-ownership proof (verify token) → Cloudflare Worker publishes the CNAME via Queue in seconds. Provisional/verified/quarantine lifecycle with audit trail; subdomains get no email, ever.
+
+**Case study:** [Live service](https://free.1kk.uk) · [GitHub — subdomain-service](https://github.com/jovylle/subdomain-service)
+
+---
+
 ## Infrastructure highlights
 
 - **jovylle.com on Cloudflare Pages** — static Nuxt build deployed via `wrangler pages deploy` (migrated off Netlify). GitHub Actions builds and deploys on push to `master`.
@@ -230,11 +246,12 @@ flowchart TB
 - [chat-widget.uft1.com](https://chat-widget.uft1.com) — Embeddable chatbot
 - [factory.uft1.com](https://factory.uft1.com) — Project Factory: 478 agent-built browser apps
 - [projectmate.uft1.com](https://projectmate.uft1.com) — Feedback & updates overlay
+- [free.1kk.uk](https://free.1kk.uk) — Self-serve subdomains on the 1kk.uk offer zone
 - [uft1.com](https://uft1.com) — Utility tools hub
 
 **GitHub**
 
-- [jovylle.com](https://github.com/jovylle/jovylle.com) · [static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [factory](https://github.com/jovylle/factory) · [hub](https://github.com/jovylle/hub) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [Profile automation](https://github.com/jovylle/jovylle)
+- [jovylle.com](https://github.com/jovylle/jovylle.com) · [static-encrypted-git-cms](https://github.com/jovylle/static-encrypted-git-cms) · [sfl-crab](https://github.com/jovylle/sfl-crab) · [playbase](https://github.com/jovylle/playbase) · [factory](https://github.com/jovylle/factory) · [hub](https://github.com/jovylle/hub) · [chatbot-widget](https://github.com/jovylle/chatbot-widget) · [projectmate-embedded-app](https://github.com/jovylle/projectmate-embedded-app) · [subdomain-service](https://github.com/jovylle/subdomain-service) · [Profile automation](https://github.com/jovylle/jovylle)
 
 ---
 
