@@ -11,7 +11,8 @@
     "deploy": "npx wrangler pages deploy dist --project-name=jovylle-com"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
+    "@nuxt/devtools": "^3.4.4",
+    "@nuxtjs/mdc": "^0.9.5",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@tailwindcss/typography": "^0.5.10",
     "nuxt": "^3.8.0",
@@ -24,5 +25,10 @@
     "@sanity/image-url": "^1.0.2",
     "howler": "^2.2.4",
     "marked": "^15.0.7"
+  },
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.5"
+    }
   }
 }
