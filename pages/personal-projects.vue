@@ -13,7 +13,8 @@
 //      It runs only when the JSON has no thumbnail.
 //
 // Merge precedence:
-//   - Inclusion: JSON is_published must be true. The repo must not be a fork or
+//   - Inclusion: JSON is_published must be true (status === 'published' also counts, via
+//     normalizeContentProject). The repo must not be a fork or
 //     private, checked against JSON flags and, when available, the GitHub record.
 //   - description: GitHub description wins over the JSON description.
 //   - created_at: JSON created_at, then JSON github_raw.created_at, then GitHub.

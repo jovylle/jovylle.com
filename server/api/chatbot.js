@@ -4,7 +4,7 @@
 // WARNING (known issue, intentionally NOT fixed here):
 // - This endpoint is open. No auth, no origin check, no rate limit, and no cap on
 //   input size. Any website or script can call it and spend the OpenAI key.
-// - Line below sets Access-Control-Allow-Origin to '*'. This is why any origin can
+// - The handler (line 18) sets Access-Control-Allow-Origin to '*'. This is why any origin can
 //   call it from a browser. Restricting it is a behavior change, so do it deliberately.
 // - The request body's `context` field is prepended to the system prompt (see
 //   systemMessage below). Any caller can therefore replace the assistant's instructions.

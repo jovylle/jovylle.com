@@ -17,7 +17,7 @@ This document highlights the most important files for understanding the project.
    - **Purpose**: Nuxt modules, the Nitro `cloudflare-pages` preset, prerender routes, and route rules (SSR off for `/game` and `/parallax`).
 
 5. **tailwind.config.js**
-   - **Purpose**: Tailwind theme extensions. Adds the site's `primary`, `secondary`, `ternary`, and `accent` colors, with light and dark variants.
+   - **Purpose**: Tailwind theme extensions. Adds the site's `primary`, `secondary`, and `ternary` colors (light and dark variants), the `m1`–`m5` palette, and a single `accent` color (no dark variant).
 
 6. **tsconfig.json**
    - **Purpose**: TypeScript configuration for the Nuxt project.

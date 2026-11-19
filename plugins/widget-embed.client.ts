@@ -3,7 +3,7 @@
 //   - This plugin: appends public/widget/embed-inline.js with bottom-right, small,
 //     and the notification/AI settings below. It does this inside a DOMContentLoaded
 //     listener (see the end of this file).
-//   - layouts/default.vue (mounted hook, ~line 140): appends the same script with
+//   - layouts/default.vue (mounted hook, ~line 162): appends the same script with
 //     top-right and medium, but only if no `script[data-jovylle-embed]` exists yet.
 // embed-inline.js sets window.jovylleInlineWidgetLoaded and returns early on a second
 // load, so whichever script executes first wins and the other one's settings are

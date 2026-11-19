@@ -100,7 +100,8 @@
 //
 // /home special case: isHomePage (below) is true for "/" and "/home". The site header
 // (v-if="!isHomePage") is hidden on both. There is no pages/home.vue and no alias in
-// nuxt.config.ts, so "/home" is not a route this repo serves. The check is leftover
+// nuxt.config.ts, so "/home" is not a route this repo serves. A request for /home falls
+// through to pages/[...slug].vue, which renders the 404 from ContentDoc. The check is leftover
 // defensive code; keep it unless you confirm nothing links to /home.
 //
 // /contact/ link: it exists only in the mobile nav (hard-coded below the menu items).

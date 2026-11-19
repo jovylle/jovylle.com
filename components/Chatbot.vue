@@ -3,6 +3,7 @@
   (checked with a grep for "Chatbot" across the project, including pages/ and layouts/).
   The live chat is the widget in public/widget/embed-inline.js, which calls /api/chatbot.
   Kept on purpose; do not delete without checking. Do not assume it is the chat UI.
+  Note: components/HomeCards.vue dispatches a `toggle-chatbot` window event; nothing listens for it.
 -->
 <template>
   <div class="chatbot-container rounded-2xl p-4">

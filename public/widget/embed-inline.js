@@ -32,7 +32,7 @@
 //   data-notification-tab-title    title of the notifications tab [Alerts]
 //   data-auto-open-on-notifications "true" opens the widget once when notifications arrive
 //
-// Gotcha: loadAISolutions (~line 524) fetches highlights from the hard-coded host
+// Gotcha: loadAISolutions (~line 559) fetches highlights from the hard-coded host
 // pocket.uft1.com, not from content.jovylle.com. There is no attribute to change it.
 (function() {
   'use strict';

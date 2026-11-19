@@ -13,10 +13,12 @@ Read `AGENTS.md` first. It has the commands, hard rules, and known issues. Read 
 - Content documents are rendered by `pages/[...slug].vue` through `<ContentDoc>`.
 - Prerendered: the routes listed in `nitro.prerender.routes` in `nuxt.config.ts`.
 - Client-only (`ssr: false`): `/game` and `/parallax`. `/private` is excluded from prerendering.
+- Unverified: `nuxt.config.ts` lists `/game` in `nitro.prerender.routes` and also sets `ssr: false` for `/game` in `routeRules`. These two settings may conflict. Not checked in a build.
 
 ## Content
 - Markdown lives in `content/`: `post/` (blog posts), `projects/` (project entries), `other/` (miscellaneous pages).
-- Filenames for dated content use `YYYY-MM-DD-title.md`. Check neighboring files for the frontmatter fields in use.
+- Filenames for dated content use `YYYY-MM-DD-title.md`.
+- Frontmatter: no field is required by code. There is no content schema (`@nuxt/content` 2.13.4, no `content.config`), and `documentDriven` is off, so `layout` does not select a layout. Fields used across the 29 files in `post/`, `projects/`, and `other/`: `title` (26 files), `date` (14), `description` (13), `layout` (11), `image` (9), `thumbnail` (7), `url` (1), `tags` (1). Code reads `title` in `pages/others.vue` and `description` from `content/ecosystem.md` in `pages/ecosystem.vue` (with a fallback).
 - `/personal-projects` is built from `content.jovylle.com` JSON plus the GitHub API at build time. Changes to that JSON take effect only after a rebuild.
 
 ## Conventions

@@ -42,7 +42,8 @@ public/widget/
 └── embed.js               # Loader that builds the iframe URL
 
 server/api/
-└── chatbot.js            # AI chat backend (open endpoint; see file header)
+├── chatbot.js            # AI chat backend (open endpoint; see file header)
+└── usage-metrics.js      # Usage metrics proxy (upstream content.jovylle.com)
 ```
 
 The leaderboard is not proxied by this repo. `embed-inline.js` calls `fast.jovylle.com/api/scores` directly.

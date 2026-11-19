@@ -44,3 +44,5 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/p
   -H "Content-Type: application/json" \
   -d '{"branch": "master"}'
 ```
+
+Confirm this matches the production branch in the Cloudflare Pages project settings.
