@@ -12,7 +12,7 @@ description: 'Sudo mysql without needing password'
 - worked on Ubuntu 22 and I tried on Ubuntu 18 it didn't not sure yet why.
 
 ## Optional,
-- phpmyadmin 4.9.9 (not 5.0 or up due to its requirement of php 7)
+- phpmyadmin 4.9.9 (not 5.0 or up due to its requirement of PHP 7)
 
 
 ## install multipass
@@ -47,7 +47,7 @@ check if its ready `apt-cache policy mysql-server`
 you should see the 5.7
 ![image](https://github.com/jovylle/jovylle.com/assets/73716444/01795839-6a78-47e7-aa4d-1a36b64fd529)
 
-You can now install whats needed `sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*`
+You can now install what's needed `sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*`
 
 It will then ask for the mysql's root password to be set.
 
@@ -77,11 +77,11 @@ reference: https://vitux.com/how-to-install-php5-php8-on-ubuntu/
 `sudo add-apt-repository ppa:ondrej/php`
 `sudo apt update`
 `sudo apt install -y php5.6`
-test if php ready `php -v` should show PHPH 5.6....
+test if php ready `php -v` should show PHP 5.6....
 Install commonly used php extension, which is needed for this project too.
 `sudo apt-get install php5.6-gd php5.6-mysql php5.6-imap php5.6-curl php5.6-intl php5.6-pspell php5.6-recode php5.6-sqlite3 php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-zip php5.6-mbstring php5.6-soap php5.6-opcache libicu65 php5.6-common php5.6-json php5.6-readline php5.6-xml php5.6-bcmath`
 
-## Install Composer verion 1
+## Install Composer version 1
 
 `curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.27`
 

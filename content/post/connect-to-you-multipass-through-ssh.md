@@ -23,7 +23,7 @@ from your host do try ssh now.
 
 say `yes` if it asks for fingerprint, input your password.
 
-And it shoud work by now.
+And it should work by now.
 
 if not try this
 `multipass shell foo`
