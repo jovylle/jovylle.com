@@ -1,4 +1,37 @@
 <script setup>
+// Overview for maintainers and agents. Read before editing this page.
+//
+// Data comes from three sources, merged in fetchPersonalProjects():
+//   1. content.jovylle.com/data/personal-projects.json (PERSONAL_PROJECTS_JSON_URL).
+//      The list of projects. If the fetch fails, the list silently becomes empty.
+//   2. api.github.com/users/jovylle/repos, all pages (fetchAllGitHubRepos).
+//      Unauthenticated. Supplies description, updated_at, and fork/private flags.
+//      The loop stops at the first short page, and a failed page is swallowed
+//      as an empty list.
+//   3. README image scraping (getFirstImageFromGitHubReadme). One unauthenticated
+//      call per repo to the readme API; the image URLs it finds are not fetched.
+//      It runs only when the JSON has no thumbnail.
+//
+// Merge precedence:
+//   - Inclusion: JSON is_published must be true. The repo must not be a fork or
+//     private, checked against JSON flags and, when available, the GitHub record.
+//   - description: GitHub description wins over the JSON description.
+//   - created_at: JSON created_at, then JSON github_raw.created_at, then GitHub.
+//   - updated_at: JSON, then GitHub.
+//   - thumbnail: JSON thumbnail, then the first non-badge README image.
+//   - links: the repo URL first, then JSON links. Only the repo URL is de-duplicated.
+//
+// Build-time, not runtime: /personal-projects is listed in nitro.prerender.routes
+// (nuxt.config.ts), and the data is fetched during prerender. The generated HTML
+// freezes the snapshot until the next build. Editing the JSON on the CDN changes
+// nothing until a rebuild runs (see docs/content-rebuild-webhook.md).
+//
+// Rate limit gotcha: unauthenticated GitHub API calls share a small per-IP quota
+// (60 requests per hour, GitHub's documented limit). When it runs out, the calls fail,
+// the .catch handlers swallow the errors, and the build still succeeds. The output
+// then silently loses fork/private filtering, GitHub descriptions, and README
+// thumbnails. Check the build logs for the 'personal-projects:' counts to tell.
+
 import { CONTENT_ASSET_BASE } from '~/utils/config'
 import { findMetricForProject } from '~/utils/usageMetrics'
 

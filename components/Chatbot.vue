@@ -1,3 +1,9 @@
+<!--
+  DEAD CODE: this component is not imported or rendered anywhere in the repo
+  (checked with a grep for "Chatbot" across the project, including pages/ and layouts/).
+  The live chat is the widget in public/widget/embed-inline.js, which calls /api/chatbot.
+  Kept on purpose; do not delete without checking. Do not assume it is the chat UI.
+-->
 <template>
   <div class="chatbot-container rounded-2xl p-4">
     <div class="chatbot-header">

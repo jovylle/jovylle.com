@@ -37,18 +37,20 @@ Create a **subtle, lowkey widget** that prioritizes **viewer interest over self-
 ### File Structure
 ```
 public/widget/
-├── mystery-widget.html    # Main widget (embeddable)
-└── embed.js              # JavaScript embed script
+├── embed-inline.js        # Shadow-DOM widget used by the site (data-* API at top of file)
+├── mystery-widget.html    # Standalone page for iframe embeds
+└── embed.js               # Loader that builds the iframe URL
 
 server/api/
-├── chatbot.js            # AI chat backend
-└── leaderboard.js        # Leaderboard proxy
+└── chatbot.js            # AI chat backend (open endpoint; see file header)
 ```
+
+The leaderboard is not proxied by this repo. `embed-inline.js` calls `fast.jovylle.com/api/scores` directly.
 
 ### Security Model
 - **iframe embedding**: Complete sandboxing for security
 - **JavaScript embedding**: Convenience option for trusted sites
-- **CORS handling**: Proper cross-origin request management
+- **CORS**: `/api/chatbot` sends `Access-Control-Allow-Origin: *`. Any origin can call it, and it has no auth or rate limit. See the warnings in `server/api/chatbot.js`.
 
 ## Features
 
@@ -161,6 +163,8 @@ Density options:
 - `dark`: Dark backgrounds with light text
 
 ### Content Configuration
+> **Note:** `embed-inline.js` reads `data-hide-chat` and `data-show-only` but never uses them, so those two options have no effect there. `mystery-widget.html` does not read URL parameters either (see the README note). Check the code before relying on these.
+
 - `hideChat`: true/false - Hide AI Chat tab entirely
 - `hidePortfolio`: true/false - Hide portfolio link from Quick Links
 - `showOnly`: comma-separated - Only show specified sections (leaderboard,links,chat)

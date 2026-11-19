@@ -1,102 +1,46 @@
 # Copilot Instructions for jovylle.com
 
-## Architecture Overview
+Read `AGENTS.md` first. It has the commands, hard rules, and known issues. Read the header comments of `layouts/default.vue`, `plugins/widget-embed.client.ts`, `pages/personal-projects.vue`, and `server/api/chatbot.js` before editing them.
 
-This is a **Nuxt 3 + Nuxt Content** portfolio site with **Decap CMS** integration for content management. The site showcases projects, blog posts, and interactive features while maintaining performance through static generation.
+## Stack and Hosting
+- Nuxt 3 with `@nuxt/content` v2 and `@nuxtjs/tailwindcss`. Node 22.
+- Nitro `cloudflare-pages` preset. Deployed by `.github/workflows/deploy.yml` on push to `master`.
+- There is no CMS. Content is edited as Markdown files. Decap CMS and Netlify are retired and must not be reintroduced.
 
-### Key Components
+## Routes
+- Defined by `pages/` (file-based). `/` is `pages/index.vue`. `/about`, `/contact`, `/resume`, `/impact`, `/ecosystem`, and `/personal-projects` have their own pages.
+- `/projects` is a redirect to `/highlights`. There is no `/posts` route.
+- Content documents are rendered by `pages/[...slug].vue` through `<ContentDoc>`.
+- Prerendered: the routes listed in `nitro.prerender.routes` in `nuxt.config.ts`.
+- Client-only (`ssr: false`): `/game` and `/parallax`. `/private` is excluded from prerendering.
 
-- **Content Management**: Markdown files in `content/` directories managed via Decap CMS at `/admin`
-- **Dynamic Routing**: `pages/[...slug].vue` handles all content pages using Nuxt Content's `<ContentDoc>`
-- **Layout System**: Single `layouts/default.vue` with responsive navigation and dark mode toggle
-- **Component Architecture**: Reusable Vue components in `components/` for cards, forms, and interactive features
+## Content
+- Markdown lives in `content/`: `post/` (blog posts), `projects/` (project entries), `other/` (miscellaneous pages).
+- Filenames for dated content use `YYYY-MM-DD-title.md`. Check neighboring files for the frontmatter fields in use.
+- `/personal-projects` is built from `content.jovylle.com` JSON plus the GitHub API at build time. Changes to that JSON take effect only after a rebuild.
 
-## Development Patterns
+## Conventions
+- Styling is Tailwind. Shared hover animation is the `my_hover` class in `assets/css/tailwind.css`. Dark mode uses the `dark:` variant, driven by the `darkMode` data property in `layouts/default.vue`. That state is not saved.
+- Internal links use `<NuxtLink>`. External links open in a new tab.
+- Icons: Boxicons, loaded from unpkg in `app.vue`.
+- Audio: Howler is used in `pages/noises.vue`.
+- Analytics: the Umami script is in `nuxt.config.ts`.
+- `@nuxt/image` is not installed. Use plain `<img>` tags, or add the module first.
 
-### Content Structure
-```
-content/
-├── post/          # Blog posts (layout: blog)
-├── projects/      # Project showcases (layout: testss)
-└── other/         # Utility pages and documentation
-```
+## Components
+- `components/` holds reusable pieces: cards (`HomeCards.vue`, `ProjectCard.vue`), `ContactForm.vue`, and games such as `MinesweeperGame.vue`.
+- `components/Chatbot.vue` is not imported anywhere. It is dead code. The live chat is the widget (`public/widget/embed-inline.js`), which calls `/api/chatbot`.
 
-Content files use frontmatter with required fields: `layout`, `title`, `date`, and optional `thumbnail`.
-
-### Page Generation Strategy
-- **Static pages**: `/`, `/projects`, `/about`, `/contact`, `/posts`, `/game` (prerendered)
-- **Dynamic content**: All content pages via `[...slug].vue`
-- **Client-only**: `/game` and `/parallax` (ssr: false)
-
-### Component Patterns
-
-**Data Fetching**: Use `queryContent()` composable for content queries:
-```vue
-const projects = await queryContent('projects').find()
-```
-
-**Styling**: Tailwind CSS with custom classes in `assets/css/tailwind.css`:
-- `my_hover` / `my_hover1` for link animations
-- Dark mode: `dark:` prefixes with `darkMode` data property
-- Responsive: Mobile-first approach with `sm:`, `md:`, `lg:` breakpoints
-
-**External Dependencies**:
-- Boxicons via CDN in `app.vue`
-- Umami analytics in `nuxt.config.ts`
-- Howler.js for audio features
-
-## Content Management Workflow
-
-### Decap CMS Configuration
-- **Backend**: retired with the Netlify hosting — edit markdown directly
-- **Local Development**: `npm run dev`, content in `content/`
-- **Media**: Stored in `public/decap/images/uploads/`
-- **Collections**: `blog` (posts), `projects`, and `test1` (experimental)
-
-### Adding New Content
-1. Create markdown files directly (Decap admin retired with Netlify hosting)
-2. Follow naming convention: `YYYY-MM-DD-title.md` for date-based content
-3. Include required frontmatter fields based on collection schema
-4. Images uploaded via CMS are automatically optimized and stored correctly
-
-## Component Integration
-
-### Interactive Features
-- **Chatbot**: `components/Chatbot.vue` with OpenAI integration and markdown rendering
-- **Games**: Minesweeper and other games with client-side only rendering
-- **Audio**: Howler.js integration for ambient sounds and audio tools
-
-### Reusable Patterns
-- **Card Components**: `HomeCards.vue`, `ProjectCard.vue` with consistent grid layouts
-- **Form Handling**: `ContactForm.vue` with validation and submission logic
-- **Navigation**: Responsive hamburger menu with smooth transitions
-
-## Development Commands
-
+## Commands
 ```bash
-npm run dev          # Development server
-npm run build        # Production build
-npm run generate     # Static site generation
-npm run preview      # Preview generated site
+npm ci               # install (use Node 22)
+npm run dev          # dev server
+npm run build        # production build (must pass on Node 22)
+npm run preview      # preview the build
 ```
+There are no test or lint scripts.
 
-## Key Configuration Files
-
-- `nuxt.config.ts`: SSR rules, prerender routes, content highlighting themes
-- `tailwind.config.js`: Custom theme colors and responsive breakpoints
-- `public/admin/config.yml`: Decap CMS collections and field definitions
-- `tsconfig.json`: TypeScript configuration for Nuxt 3
-
-## Performance Considerations
-
-- **Image Optimization**: Use Nuxt's built-in image optimization for content images
-- **Code Splitting**: Components are automatically code-split by Nuxt
-- **Static Generation**: Content pages are statically generated for optimal performance
-- **Dark Mode**: Implemented via Tailwind with reactive data properties
-
-## Content Conventions
-
-- **Projects**: Include technology badges, screenshots, and detailed descriptions
-- **Blog Posts**: Use `layout: blog` with proper date formatting
-- **Images**: Store in appropriate subdirectories under `public/` or use Decap CMS uploads
-- **Links**: External links should open in new tabs, internal links use `<NuxtLink>`
+## Do Not
+- Do not change `/api/chatbot` behavior without asking. It is an open endpoint (see the file header warnings).
+- Do not commit `.env` or any API key.
+- Do not run `npm run deploy` unless asked.
