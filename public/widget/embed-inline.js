@@ -311,7 +311,7 @@
             </div>
             <div class="typing-indicator" id="typingIndicator" style="display:none; padding:8px 12px; color:#6c757d; font-style:italic; font-size:13px;">AI is typing...</div>
             <div class="chat-input-container" style="display:flex; gap:8px; flex-shrink:0;">
-              <input class="chat-input" id="chatInput" placeholder="Ask me anything..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
+              <input class="chat-input" id="chatInput" maxlength="2000" placeholder="Ask me anything..." style="flex:1; padding:8px 12px; border:1px solid #dee2e6; border-radius:6px; font-size:14px; outline:none;" />
               <button class="chat-send" type="button" style="padding:8px 16px; background:#6c757d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">Send</button>
             </div>
           </div>

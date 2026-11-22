@@ -166,7 +166,7 @@ const state = window.JovylleInlineWidget.state;
 | `data-notification-tags` | csv | | Limit included notifications to entries whose `tags` array contains at least one of these values |
 | `data-notification-tab-title` | Text string | "Alerts" | Header text to display while the Notifications tab is active |
 
-By default the widget posts to `https://jovylle.com/api/chatbot`. Use `data-chatbot-endpoint` only if you need a different proxy (for example, pointing to `http://localhost:3000/api/chatbot` while running local tooling). This keeps third-party embeds on other domains hitting the centralized Jovylle backend.
+By default the widget posts to `https://jovylle.com/api/chatbot`. Use `data-chatbot-endpoint` only if you need a different proxy (for example, pointing to `http://localhost:3000/api/chatbot` while running local tooling). This keeps third-party embeds on other domains hitting the centralized Jovylle backend. Note: `/api/chatbot` only accepts browser origins listed in the `CHATBOT_ALLOWED_ORIGINS` env var (see the README). A third-party embed's chat fails with 403 until its origin is added there.
 
 Dynamic notifications default to `https://content.jovylle.com/data/notifications.json` only when the page is on `jovylle.com` or its subdomains; other hosts must opt in by providing `data-notifications-index`. The endpoint returns `{ "notifications": [{ "slug": "2026-08-22", "title": "...", "count": 1, "date": "2026-08-22" }] }` and the widget fetches each bundle at `https://content.jovylle.com/data/notifications/<slug>.json`. Legacy static `https://content.jovylle.com/notifications/index.json` (`{ "files": [...] }`) is still supported.
 

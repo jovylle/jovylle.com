@@ -98,7 +98,7 @@ Control which elements to show/hide:
 | Feature | Local Development | Production (Cloudflare Pages) | External Websites |
 |---------|------------------|-------------------|-------------------|
 | **Leaderboard** | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct API call) |
-| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ (CORS dependent) |
+| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ Blocked unless the site's origin is in `CHATBOT_ALLOWED_ORIGINS` |
 | **Quick Links** | ✅ | ✅ | ✅ |
 | **Game Play Button** | ✅ | ✅ | ✅ |
 
@@ -185,6 +185,11 @@ The AI chat uses OpenAI GPT-5.6 Luna (`gpt-5.6-luna` at $0.20/$1.20 per 1M token
 **Local Development**: Uses Nuxt API route `/api/chatbot`  
 **Production**: Uses Cloudflare Pages Function `/api/chatbot` (override model via `OPENAI_MODEL` env)
 
+**Chat env vars**:
+- `CHATBOT_ALLOWED_ORIGINS` (optional): comma-separated browser origins allowed to call `/api/chatbot`. Unset, it defaults to `https://jovylle.com`, `https://www.jovylle.com`, `https://hub.jovylle.com`, `http://localhost:3000`, `http://localhost:3001`, `http://localhost:3999`, `http://127.0.0.1:3000`, and `http://127.0.0.1:3999`. Setting it replaces the default list, so include jovylle.com yourself. Other origins get 403. Third-party embeds stop working unless their origin is listed.
+- Limits: request body 32 KB (413), message 2000 characters (400), and a best-effort rate limit of 20 requests per 10 minutes per IP (429). The rate limit is per isolate on Cloudflare, so use Cloudflare rate limiting rules for a hard limit. Requests with no client IP share one bucket of 200 per 10 minutes.
+- Caller `context` is capped at 4000 characters (extra text is cut). It is sent as a delimited user message, not in the system prompt. The `<<<CONTEXT` and `CONTEXT>>>` markers are removed from it first.
+
 ### 📱 Responsive Design
 
 The widget is fully responsive and works on:
@@ -197,7 +202,7 @@ The widget is fully responsive and works on:
 
 - ✅ No tracking or analytics in the widget
 - ✅ API keys stored securely in environment variables
-- ⚠️ `/api/chatbot` sends `Access-Control-Allow-Origin: *`, has no auth or rate limit, and lets the request body override the system prompt. See the warnings in `server/api/chatbot.js`.
+- ⚠️ `/api/chatbot` has no auth. Browser requests must come from an origin in `CHATBOT_ALLOWED_ORIGINS`, but requests with no Origin header (curl, server-to-server) are also allowed. Since a non-browser caller can skip the origin check, the per-IP rate limit is the only spend control for them. Size limits apply too, and caller `context` is not placed in the system prompt. See the header of `server/api/chatbot.js`.
 - ✅ No personal data collection
 - ✅ iframe embedding provides complete sandboxing
 
