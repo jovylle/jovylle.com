@@ -4,20 +4,51 @@
 // WARNING (known issue, intentionally NOT fixed here):
 // - This endpoint is open. No auth, no origin check, no rate limit, and no cap on
 //   input size. Any website or script can call it and spend the OpenAI key.
-// - The handler (line 18) sets Access-Control-Allow-Origin to '*'. This is why any origin can
-//   call it from a browser. Restricting it is a behavior change, so do it deliberately.
+// - CORS is an allowlist (CHATBOT_ALLOWED_ORIGINS, see the handler). Other browser origins get 403.
+//   Third-party sites that embed the widget are blocked unless their origin is added to that env var.
 // - The request body's `context` field is prepended to the system prompt (see
 //   systemMessage below). Any caller can therefore replace the assistant's instructions.
 // - The OpenAI key is read from process.env first, then from the Cloudflare
 //   binding at event.context._platform.cloudflare.env (the Pages deployment path).
 //   The same fallback applies to OPENAI_MODEL.
-import { defineEventHandler, readBody, createError, setHeader } from 'h3';
+import { defineEventHandler, readBody, createError, setHeader, getRequestHeader } from 'h3';
+
+// CORS allowlist. CHATBOT_ALLOWED_ORIGINS (comma-separated) replaces this default list when set.
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://jovylle.com',
+  'https://www.jovylle.com',
+  'http://localhost:3000',
+  'http://localhost:3999'
+];
+
+function getEnv(event, name) {
+  return process.env[name] || event.context?._platform?.cloudflare?.env?.[name] || '';
+}
+
+function getAllowedOrigins(event) {
+  const origins = getEnv(event, 'CHATBOT_ALLOWED_ORIGINS')
+    .split(',')
+    .map(o => o.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+  return origins.length ? origins : DEFAULT_ALLOWED_ORIGINS;
+}
 
 export default defineEventHandler(async (event) => {
-  // WARNING: wildcard CORS, see the file header. Any origin is allowed.
-  setHeader(event, 'Access-Control-Allow-Origin', '*');
-  setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type');
-  setHeader(event, 'Access-Control-Allow-Methods', 'POST, OPTIONS');
+  // CORS policy: echo the request Origin only when it is on the allowlist.
+  // A browser cross-origin request with an origin not on the list gets 403 (including preflight).
+  // Requests with no Origin header (curl, server-to-server) are allowed through: browsers always
+  // send Origin on cross-origin POSTs, so a web page cannot use this exemption. Anyone can still
+  // send a request without Origin, which is why the per-IP rate limit exists.
+  const origin = getRequestHeader(event, 'origin');
+  setHeader(event, 'Vary', 'Origin');
+  if (origin) {
+    if (!getAllowedOrigins(event).includes(origin)) {
+      throw createError({ statusCode: 403, message: 'Origin not allowed' });
+    }
+    setHeader(event, 'Access-Control-Allow-Origin', origin);
+    setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type');
+    setHeader(event, 'Access-Control-Allow-Methods', 'POST, OPTIONS');
+  }
 
   if (event.method === 'OPTIONS') {
     return '';
