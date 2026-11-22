@@ -98,7 +98,7 @@ Control which elements to show/hide:
 | Feature | Local Development | Production (Cloudflare Pages) | External Websites |
 |---------|------------------|-------------------|-------------------|
 | **Leaderboard** | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct API call) |
-| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ (CORS dependent) |
+| **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ Blocked unless the site's origin is in `CHATBOT_ALLOWED_ORIGINS` |
 | **Quick Links** | ✅ | ✅ | ✅ |
 | **Game Play Button** | ✅ | ✅ | ✅ |
 
@@ -185,6 +185,10 @@ The AI chat uses OpenAI GPT-5.6 Luna (`gpt-5.6-luna` at $0.20/$1.20 per 1M token
 **Local Development**: Uses Nuxt API route `/api/chatbot`  
 **Production**: Uses Cloudflare Pages Function `/api/chatbot` (override model via `OPENAI_MODEL` env)
 
+**Chat env vars**:
+- `CHATBOT_ALLOWED_ORIGINS` (optional): comma-separated browser origins allowed to call `/api/chatbot`. Unset, it defaults to `https://jovylle.com`, `https://www.jovylle.com`, `http://localhost:3000`, and `http://localhost:3999`. Setting it replaces the default list, so include jovylle.com yourself. Other origins get 403. Third-party embeds stop working unless their origin is listed.
+- Limits: request body 32 KB (413), message 2000 characters (400), and a best-effort rate limit of 20 requests per 10 minutes per IP (429). The rate limit is per isolate on Cloudflare, so use Cloudflare rate limiting rules for a hard limit.
+
 ### 📱 Responsive Design
 
 The widget is fully responsive and works on:
@@ -197,7 +201,7 @@ The widget is fully responsive and works on:
 
 - ✅ No tracking or analytics in the widget
 - ✅ API keys stored securely in environment variables
-- ⚠️ `/api/chatbot` sends `Access-Control-Allow-Origin: *`, has no auth or rate limit, and lets the request body override the system prompt. See the warnings in `server/api/chatbot.js`.
+- ⚠️ `/api/chatbot` has no auth. It allows only the origins in `CHATBOT_ALLOWED_ORIGINS` and applies size and rate limits. Caller `context` is not placed in the system prompt. See the header of `server/api/chatbot.js`.
 - ✅ No personal data collection
 - ✅ iframe embedding provides complete sandboxing
 

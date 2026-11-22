@@ -51,7 +51,7 @@ The leaderboard is not proxied by this repo. `embed-inline.js` calls `fast.jovyl
 ### Security Model
 - **iframe embedding**: Complete sandboxing for security
 - **JavaScript embedding**: Convenience option for trusted sites
-- **CORS**: `/api/chatbot` sends `Access-Control-Allow-Origin: *`. Any origin can call it, and it has no auth or rate limit. See the warnings in `server/api/chatbot.js`.
+- **CORS**: `/api/chatbot` echoes only origins listed in `CHATBOT_ALLOWED_ORIGINS` (default: jovylle.com, www, and localhost dev). Other origins get 403. It has no auth, and its size and rate limits are described in the README. See the header of `server/api/chatbot.js`.
 
 ## Features
 
