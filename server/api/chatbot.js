@@ -15,8 +15,19 @@
 import { defineEventHandler, createError, setHeader, getRequestHeader, getRequestIP, readRawBody } from 'h3';
 
 // Request limits. The widget's real requests are far below these (message plus a persona of about 3 KB).
+// Body size: the Content-Length pre-check only stops well-behaved clients (chunked or dishonest
+// requests skip it). The body is then buffered in full before the byte check below. The real bound
+// is the platform's request body limit. A hard limit needs Cloudflare WAF rules. A streaming
+// counter was not added: Node (req stream) and Cloudflare (web Request) read bodies differently.
 const MAX_BODY_BYTES = 32 * 1024;
 const MAX_MESSAGE_CHARS = 2000;
+
+// Caps for caller-supplied aiSolutions and profile (the widget sends the highlights list).
+// Real highlights: 14 items, descriptions up to 318 characters, at most 8 technologies.
+const MAX_SOLUTIONS = 20;
+const MAX_TECHS = 20;
+const MAX_TECH_CHARS = 100;
+const MAX_FIELD_CHARS = 500;
 
 // Best-effort per-IP rate limit: 20 requests per 10 minutes. The Map lives in memory.
 // WARNING: on Cloudflare Workers/Pages each isolate has its own Map, so the limit is per isolate
@@ -60,6 +71,47 @@ function getAllowedOrigins(event) {
     .map(o => o.trim().replace(/\/+$/, ''))
     .filter(Boolean);
   return origins.length ? origins : DEFAULT_ALLOWED_ORIGINS;
+}
+
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+// Only strings and numbers are kept. Anything else becomes '' (no "undefined" or "[object Object]").
+function toText(value, max = MAX_FIELD_CHARS) {
+  if (typeof value !== 'string' && typeof value !== 'number') return '';
+  return String(value).slice(0, max);
+}
+
+// Keeps only plain-object items, with string fields. Items that are null, arrays or primitives are
+// skipped, so a malformed item cannot throw and turn the request into a 500.
+function sanitizeSolutions(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw.slice(0, MAX_SOLUTIONS).filter(isPlainObject).map(item => ({
+    tag: toText(item.tag),
+    title: toText(item.title),
+    year: toText(item.year),
+    description: toText(item.description),
+    link: toText(item.link),
+    technologies: Array.isArray(item.technologies)
+      ? item.technologies
+        .filter(t => typeof t === 'string')
+        .slice(0, MAX_TECHS)
+        .map(t => t.slice(0, MAX_TECH_CHARS))
+      : []
+  }));
+}
+
+function sanitizeProfile(raw) {
+  if (!isPlainObject(raw)) return null;
+  const profile = {
+    title: toText(raw.title),
+    short_bio: toText(raw.short_bio),
+    tone: toText(raw.tone),
+    availability: toText(raw.availability),
+    contact_path: toText(raw.contact_path)
+  };
+  return Object.values(profile).some(Boolean) ? profile : null;
 }
 
 export default defineEventHandler(async (event) => {
@@ -125,7 +177,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // The client sends one `message` string (no message history). Limit its length.
-    // Total content is bounded by construction: 2000 (message) + 4000 (context) = 6000 characters.
+    // Message is capped at 2000 characters and context at 4000 (see below). aiSolutions and profile
+    // have no character cap of their own: they are limited by item count and per-field caps, and
+    // in practice by the 32 KB body cap.
     if (typeof message !== 'string' || message.length > MAX_MESSAGE_CHARS) {
       throw createError({
         statusCode: 400,
@@ -144,15 +198,16 @@ export default defineEventHandler(async (event) => {
     let skillsContext = '';
     let projectsContext = '';
     
-    if (aiSolutions && Array.isArray(aiSolutions) && aiSolutions.length > 0) {
+    const solutions = sanitizeSolutions(aiSolutions);
+    if (solutions.length > 0) {
       // Parse with full details: technologies, years, descriptions
-      skillsContext = aiSolutions.map(item => {
-        const techs = item.technologies ? ` (${item.technologies.join(', ')})` : '';
+      skillsContext = solutions.map(item => {
+        const techs = item.technologies.length ? ` (${item.technologies.join(', ')})` : '';
         const year = item.year ? ` [${item.year}]` : '';
         return `${item.tag}: ${item.title}${year}${techs} - ${item.description}`;
       }).join('\n\n');
-      
-      projectsContext = aiSolutions.filter(item => item.link).map(item =>
+
+      projectsContext = solutions.filter(item => item.link).map(item =>
         `- ${item.title} (${item.tag}): ${item.description} → ${item.link}`
       ).join('\n');
     } else {
@@ -163,8 +218,9 @@ export default defineEventHandler(async (event) => {
 - Full-stack commercial projects`;
     }
     
-    const profileContext = profile
-      ? `Profile Summary:\n- ${profile.title}: ${profile.short_bio}\n- Tone: ${profile.tone}\n- Availability: ${profile.availability}\n- Contact path: ${profile.contact_path}\n`
+    const profileFields = sanitizeProfile(profile);
+    const profileContext = profileFields
+      ? `Profile Summary:\n- ${profileFields.title}: ${profileFields.short_bio}\n- Tone: ${profileFields.tone}\n- Availability: ${profileFields.availability}\n- Contact path: ${profileFields.contact_path}\n`
       : `Profile Summary:\n- Full-Stack Web Developer focused on modern web experiences and developer tools.\n- Appreciates clean code, thoughtful design, and solving complex technical problems.\n- Availability: Open to opportunities.`;
 
     const roleInstructions = `
