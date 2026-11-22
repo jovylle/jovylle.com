@@ -2,7 +2,7 @@
 
 ## What this is
 jovylle.com: Jovylle Bermudez's personal portfolio. Nuxt 3, `@nuxt/content` v2, Tailwind.
-It is deployed to Cloudflare Pages (Nitro `cloudflare-pages` preset) by GitHub Actions on push to `master`.
+It is deployed to Cloudflare Pages (Nitro `cloudflare-pages` preset) by the Cloudflare Pages Git integration (the `Cloudflare Pages` check). `.github/workflows/deploy.yml` also runs on push to `master` but fails on every push, because no `CLOUDFLARE_API_TOKEN` secret is set. A red X from that workflow on a merge is expected.
 It also ships an embeddable quick-menu widget (`public/widget/embed-inline.js`) and an OpenAI-backed `/api/chatbot`.
 
 ## Layout
