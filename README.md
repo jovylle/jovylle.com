@@ -187,7 +187,8 @@ The AI chat uses OpenAI GPT-5.6 Luna (`gpt-5.6-luna` at $0.20/$1.20 per 1M token
 
 **Chat env vars**:
 - `CHATBOT_ALLOWED_ORIGINS` (optional): comma-separated browser origins allowed to call `/api/chatbot`. Unset, it defaults to `https://jovylle.com`, `https://www.jovylle.com`, `http://localhost:3000`, `http://localhost:3001`, `http://localhost:3999`, `http://127.0.0.1:3000`, and `http://127.0.0.1:3999`. Setting it replaces the default list, so include jovylle.com yourself. Other origins get 403. Third-party embeds stop working unless their origin is listed.
-- Limits: request body 32 KB (413), message 2000 characters (400), and a best-effort rate limit of 20 requests per 10 minutes per IP (429). The rate limit is per isolate on Cloudflare, so use Cloudflare rate limiting rules for a hard limit.
+- Limits: request body 32 KB (413), message 2000 characters (400), and a best-effort rate limit of 20 requests per 10 minutes per IP (429). The rate limit is per isolate on Cloudflare, so use Cloudflare rate limiting rules for a hard limit. Requests with no client IP share one bucket of 200 per 10 minutes.
+- Caller `context` is capped at 4000 characters (extra text is cut). It is sent as a delimited user message, not in the system prompt. The `<<<CONTEXT` and `CONTEXT>>>` markers are removed from it first.
 
 ### 📱 Responsive Design
 
@@ -201,7 +202,7 @@ The widget is fully responsive and works on:
 
 - ✅ No tracking or analytics in the widget
 - ✅ API keys stored securely in environment variables
-- ⚠️ `/api/chatbot` has no auth. It allows only the origins in `CHATBOT_ALLOWED_ORIGINS` and applies size and rate limits. Caller `context` is not placed in the system prompt. See the header of `server/api/chatbot.js`.
+- ⚠️ `/api/chatbot` has no auth. Browser requests must come from an origin in `CHATBOT_ALLOWED_ORIGINS`, but requests with no Origin header (curl, server-to-server) are also allowed. Since a non-browser caller can skip the origin check, the per-IP rate limit is the only spend control for them. Size limits apply too, and caller `context` is not placed in the system prompt. See the header of `server/api/chatbot.js`.
 - ✅ No personal data collection
 - ✅ iframe embedding provides complete sandboxing
 
