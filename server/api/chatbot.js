@@ -319,7 +319,8 @@ Keep responses concise (under 150 words), friendly, and helpful. If asked about 
           ...(contextMessage ? [{ role: 'user', content: contextMessage }] : []),
           { role: 'user', content: message }
         ],
-        reasoning_effort: 'minimal',
+        // The model only accepts none/low/medium/high/xhigh; 'none' keeps hidden reasoning from using up the 400-token output budget.
+        reasoning_effort: 'none',
         max_completion_tokens: 400
       })
     });
