@@ -82,6 +82,7 @@ function clientIp(event) {
 const DEFAULT_ALLOWED_ORIGINS = [
   'https://jovylle.com',
   'https://www.jovylle.com',
+  'https://hub.jovylle.com',
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:3999',
