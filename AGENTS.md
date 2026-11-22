@@ -35,7 +35,7 @@ Use Node 22. `engines` in `package.json` pins `>=22 <23`. CI hardcodes `node-ver
 - When behavior changes, update the header comment or docs in the same change.
 
 ## Known issues
-- Open chat endpoint: `/api/chatbot` allows any origin (`Access-Control-Allow-Origin: *`), has no auth or rate limit, and lets the request body's `context` replace the assistant's instructions. Anyone can spend the OpenAI key. Fixing it is a product decision.
+- Chat endpoint: `/api/chatbot` has no auth. CORS is an allowlist (`CHATBOT_ALLOWED_ORIGINS`), caller `context` goes in a user message (not the system prompt), and there are size and per-IP rate limits (best effort, per isolate on Cloudflare). A hard spend cap needs Cloudflare rate-limiting rules. Third-party embeds need their origin in the allowlist. The `aiSolutions` and `profile` body fields still reach the system prompt.
 - Duplicate widget loaders: `plugins/widget-embed.client.ts` and `layouts/default.vue` both inject `embed-inline.js` with different settings. The first one to run wins.
 - Two 17 MB MP3 files in `public/` (`audio_257112ce99.mp3`, `soft-rain-ambient-111154.mp3`) are byte-identical (same git blob, `8619f230`). Check whether they are referenced before removing anything.
 - 17 npm audit findings (2 critical, 13 moderate, 2 low) as of 2026-11-19. Not triaged.
