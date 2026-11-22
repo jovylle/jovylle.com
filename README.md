@@ -186,7 +186,7 @@ The AI chat uses OpenAI GPT-5.6 Luna (`gpt-5.6-luna` at $0.20/$1.20 per 1M token
 **Production**: Uses Cloudflare Pages Function `/api/chatbot` (override model via `OPENAI_MODEL` env)
 
 **Chat env vars**:
-- `CHATBOT_ALLOWED_ORIGINS` (optional): comma-separated browser origins allowed to call `/api/chatbot`. Unset, it defaults to `https://jovylle.com`, `https://www.jovylle.com`, `http://localhost:3000`, and `http://localhost:3999`. Setting it replaces the default list, so include jovylle.com yourself. Other origins get 403. Third-party embeds stop working unless their origin is listed.
+- `CHATBOT_ALLOWED_ORIGINS` (optional): comma-separated browser origins allowed to call `/api/chatbot`. Unset, it defaults to `https://jovylle.com`, `https://www.jovylle.com`, `http://localhost:3000`, `http://localhost:3001`, `http://localhost:3999`, `http://127.0.0.1:3000`, and `http://127.0.0.1:3999`. Setting it replaces the default list, so include jovylle.com yourself. Other origins get 403. Third-party embeds stop working unless their origin is listed.
 - Limits: request body 32 KB (413), message 2000 characters (400), and a best-effort rate limit of 20 requests per 10 minutes per IP (429). The rate limit is per isolate on Cloudflare, so use Cloudflare rate limiting rules for a hard limit.
 
 ### 📱 Responsive Design

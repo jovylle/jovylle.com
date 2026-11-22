@@ -83,7 +83,10 @@ const DEFAULT_ALLOWED_ORIGINS = [
   'https://jovylle.com',
   'https://www.jovylle.com',
   'http://localhost:3000',
-  'http://localhost:3999'
+  'http://localhost:3001',
+  'http://localhost:3999',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:3999'
 ];
 
 function getEnv(event, name) {
