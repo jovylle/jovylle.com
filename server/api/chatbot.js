@@ -3,7 +3,8 @@
 //
 // WARNING (known issue, intentionally NOT fixed here):
 // - This endpoint has no auth. Limits: body 32 KB (413), message 2000 chars (400), and a
-//   best-effort per-IP rate limit of 20 per 10 min (429, per isolate on Cloudflare). A caller
+//   best-effort per-IP rate limit of 20 per 10 min (429, per isolate on Cloudflare; 200 per 10 min
+//   shared bucket when no client IP is known). A caller
 //   without a browser can still spend the OpenAI key within those limits.
 // - CORS is an allowlist (CHATBOT_ALLOWED_ORIGINS, see the handler). Other browser origins get 403.
 //   Third-party sites that embed the widget are blocked unless their origin is added to that env var.
@@ -35,22 +36,46 @@ const MAX_FIELD_CHARS = 500;
 // counter in KV or a Durable Object. Neither is added here: no new dependencies or config.
 const RATE_LIMIT_MAX = 20;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+// When the client IP cannot be determined, all such requests share one 'unknown' bucket. Its
+// limit is higher, so one anonymous caller cannot lock out every other caller at 20.
+const UNKNOWN_IP_RATE_LIMIT_MAX = 200;
+// The Map is capped. Over the cap, expired buckets are pruned, then the oldest entries (Map
+// insertion order) are evicted. An attacker rotating IPs can then only evict the oldest buckets.
+const RATE_LIMIT_MAX_KEYS = 10000;
 const rateBuckets = new Map();
 
-function withinRateLimit(ip) {
+function pruneRateBuckets(now) {
+  for (const [key, bucket] of rateBuckets) {
+    if (bucket.resetAt <= now) rateBuckets.delete(key);
+  }
+  while (rateBuckets.size >= RATE_LIMIT_MAX_KEYS) {
+    rateBuckets.delete(rateBuckets.keys().next().value);
+  }
+}
+
+function withinRateLimit(key, limit) {
   const now = Date.now();
-  if (rateBuckets.size > 5000) {
-    for (const [key, bucket] of rateBuckets) {
-      if (bucket.resetAt <= now) rateBuckets.delete(key);
-    }
+  const existing = rateBuckets.get(key);
+  if (existing && existing.resetAt > now) {
+    existing.count += 1;
+    return existing.count <= limit;
   }
-  let bucket = rateBuckets.get(ip);
-  if (!bucket || bucket.resetAt <= now) {
-    bucket = { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
-    rateBuckets.set(ip, bucket);
+  if (existing) {
+    rateBuckets.delete(key);
+  } else if (rateBuckets.size >= RATE_LIMIT_MAX_KEYS) {
+    pruneRateBuckets(now);
   }
-  bucket.count += 1;
-  return bucket.count <= RATE_LIMIT_MAX;
+  rateBuckets.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+  return true;
+}
+
+// cf-connecting-ip is only trusted on Cloudflare, where Cloudflare sets it at the edge. Anywhere
+// else a client can send that header itself, so the socket address is used instead.
+// Returns '' when no IP can be determined.
+function clientIp(event) {
+  const onCloudflare = Boolean(event.context?._platform?.cloudflare || event.context?.cloudflare);
+  if (onCloudflare) return getRequestHeader(event, 'cf-connecting-ip') || '';
+  return getRequestIP(event) || '';
 }
 
 // CORS allowlist. CHATBOT_ALLOWED_ORIGINS (comma-separated) replaces this default list when set.
@@ -136,10 +161,11 @@ export default defineEventHandler(async (event) => {
   }
 
   // Rate limit before reading the body, so abusive clients are rejected cheaply.
-  // cf-connecting-ip is set by Cloudflare and overwritten at its edge. Elsewhere, getRequestIP
-  // is the socket address, and a client could forge cf-connecting-ip there.
-  const ip = getRequestHeader(event, 'cf-connecting-ip') || getRequestIP(event) || 'unknown';
-  if (!withinRateLimit(ip)) {
+  const ip = clientIp(event);
+  const allowed = ip
+    ? withinRateLimit(ip, RATE_LIMIT_MAX)
+    : withinRateLimit('unknown', UNKNOWN_IP_RATE_LIMIT_MAX);
+  if (!allowed) {
     throw createError({ statusCode: 429, message: 'Too many requests. Try again later.' });
   }
 
