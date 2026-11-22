@@ -1,3 +1,25 @@
+// Client-only Nuxt plugin that loads the floating widget on every page.
+// Two widget loaders exist in this repo, and they are not coordinated:
+//   - This plugin: appends public/widget/embed-inline.js with bottom-right, small,
+//     and the notification/AI settings below. It does this inside a DOMContentLoaded
+//     listener (see the end of this file).
+//   - layouts/default.vue (mounted hook, ~line 162): appends the same script with
+//     top-right and medium, but only if no `script[data-jovylle-embed]` exists yet.
+// embed-inline.js sets window.jovylleInlineWidgetLoaded and returns early on a second
+// load, so whichever script executes first wins and the other one's settings are
+// ignored. Which one runs first has not been verified in a browser.
+//
+// UNVERIFIED GOTCHA: the widget is appended only from a DOMContentLoaded listener. If
+// this plugin runs after DOMContentLoaded has already fired (possible if hydration is
+// late), that listener never runs and this plugin adds no widget. Only the layout
+// loader would remain. Not tested in a browser; confirm before relying on either path.
+//
+// Also loaded here: the ProjectMate host script (projectmate.uft1.com/embed.js). It is
+// an external dependency and is injected once, guarded by data-projectmate-embed.
+//
+// The inline comment "Enable leaderboard for home page" on data-show-leaderboard is
+// misleading. This plugin runs once for the whole app, so the widget and its leaderboard
+// setting apply site-wide, not only to the home page.
 export default defineNuxtPlugin(() => {
   if (process.server) return;
 

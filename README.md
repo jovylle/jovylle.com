@@ -38,6 +38,8 @@ The **Quick Menu Widget** is a floating, embeddable component that provides:
 
 ### 🎛️ Customization Options
 
+> **Note:** `public/widget/mystery-widget.html` does not read URL query parameters (no `location` or `URLSearchParams` use in the file). The `?position=`, `?size=`, `hideChat`, `hidePortfolio`, and `showOnly` options below are passed by `public/widget/embed.js` but are not applied by that page. The site itself uses `public/widget/embed-inline.js`, whose data-attribute API is documented at the top of that file. Verify any option before relying on it.
+
 #### Position Configuration
 Control where the widget appears on the page:
 - `bottom-right` (default)
@@ -55,7 +57,7 @@ Choose the widget size:
 The widget includes a built-in theme toggle:
 - **Light theme**: Clean, neutral colors (default)
 - **Dark theme**: Dark backgrounds with light text
-- Theme preference is saved in localStorage
+- The widget saves its theme preference in localStorage (`jovylle-widget-theme`). The site's own dark mode is not saved.
 
 #### Content Configuration
 Control which elements to show/hide:
@@ -95,7 +97,7 @@ Control which elements to show/hide:
 
 | Feature | Local Development | Production (Cloudflare Pages) | External Websites |
 |---------|------------------|-------------------|-------------------|
-| **Leaderboard** | ✅ (via `/api/leaderboard`) | ✅ (via `/api/leaderboard`) | ✅ (direct API call) |
+| **Leaderboard** | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct call to `fast.jovylle.com`) | ✅ (direct API call) |
 | **AI Chat** | ✅ (via `/api/chatbot`) | ✅ (via `/api/chatbot`) | ⚠️ (CORS dependent) |
 | **Quick Links** | ✅ | ✅ | ✅ |
 | **Game Play Button** | ✅ | ✅ | ✅ |
@@ -150,19 +152,26 @@ We welcome contributions!
 
 ```
 jovylle.com/
-├── public/widget/           # Widget files
-│   ├── mystery-widget.html  # Main widget (embeddable)
-│   └── embed.js            # Embed script
-├── server/api/            # API routes (dev + Cloudflare Pages prod)
-│   ├── chatbot.js         # AI chat backend
-│   └── leaderboard.js     # Leaderboard proxy
-└── components/            # Vue components
+├── app.vue, nuxt.config.ts            # App shell; Nuxt/Nitro config (cloudflare-pages preset)
+├── pages/                             # File-based routes; [...slug].vue renders content/ markdown
+├── layouts/default.vue                # Global layout: header, nav, footer, widget loader
+├── components/                        # Vue components (Chatbot.vue is unused)
+├── plugins/widget-embed.client.ts     # Client-only plugin that loads the site widget
+├── content/                           # Markdown content: post/, projects/, other/
+├── public/widget/                     # Widget files
+│   ├── embed-inline.js                # Shadow-DOM widget used by the site (data-* API at top of file)
+│   ├── mystery-widget.html            # Standalone page for iframe embeds
+│   └── embed.js                       # Loader that builds the iframe URL
+├── server/api/                        # Server routes (dev + Cloudflare Pages prod)
+│   ├── chatbot.js                     # AI chat backend (open endpoint; see file header)
+│   └── usage-metrics.js               # Proxies content.jovylle.com usage metrics (GET)
+└── docs/                              # Project notes (AGENTS.md is the agent entry point)
 ```
 
 ### 🎮 Game Integration
 
 The widget integrates with the **Reaction Test Game** hosted at `fast.jovylle.com`:
-- **Leaderboard API**: `https://fast.jovylle.com/reaction/top.json`
+- **Leaderboard API**: `https://fast.jovylle.com/api/scores?game=reaction&limit=3` (called by `public/widget/embed-inline.js`)
 - **Game URL**: `https://fast.jovylle.com`
 - **Features**: Real-time top 3 players, direct play access
 
@@ -188,7 +197,7 @@ The widget is fully responsive and works on:
 
 - ✅ No tracking or analytics in the widget
 - ✅ API keys stored securely in environment variables
-- ✅ CORS properly configured for cross-origin requests
+- ⚠️ `/api/chatbot` sends `Access-Control-Allow-Origin: *`, has no auth or rate limit, and lets the request body override the system prompt. See the warnings in `server/api/chatbot.js`.
 - ✅ No personal data collection
 - ✅ iframe embedding provides complete sandboxing
 

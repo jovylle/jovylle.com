@@ -96,6 +96,32 @@
 </template>
 
 <script>
+// Global layout for every page (Options API). Read before editing.
+//
+// /home special case: isHomePage (below) is true for "/" and "/home". The site header
+// (v-if="!isHomePage") is hidden on both. There is no pages/home.vue and no alias in
+// nuxt.config.ts, so "/home" is not a route this repo serves. A request for /home falls
+// through to pages/[...slug].vue, which renders the 404 from ContentDoc. The check is leftover
+// defensive code; keep it unless you confirm nothing links to /home.
+//
+// /contact/ link: it exists only in the mobile nav (hard-coded below the menu items).
+// The desktop nav is driven by navItems, which does not include Contact. A desktop
+// visitor has no header link to /contact.
+//
+// Header padding: the 96px right padding on .site-header (see the <style> block) keeps
+// the header text clear of the widget. The widget launcher is a 60px circle (embed-inline.js)
+// placed 20px from the right edge, so it covers about 80px. The extra 16px is spacing.
+//
+// Dark mode is NOT persisted. `darkMode` is plain component data that starts as false on
+// every page load, and nothing writes it to localStorage or a cookie. The widget keeps its
+// own theme in localStorage ('jovylle-widget-theme'), so the page and widget themes can
+// differ.
+//
+// Widget injection: mounted() appends embed-inline.js with top-right and medium, but only
+// if no `script[data-jovylle-embed]` exists. The plugin at plugins/widget-embed.client.ts
+// is the other loader. See the comments there for the race between the two.
+//
+// The empty `beforeDestroy` hook below is a Vue 2 lifecycle name. Vue 3 never calls it.
 
 export default {
   components: { },
@@ -155,7 +181,8 @@ export default {
 <style scoped>
 .site-header {
   padding: 1rem 0 0.75rem;
-  /* leave room for the fixed top-right widget (~80px wide + 20px right offset) */
+  /* Room for the fixed top-right widget launcher: a 60px button at right: 20px (= 80px),
+     plus 16px of spacing. Only visible when the header is shown (not on the home route). */
   padding-right: 96px;
   border-bottom: 2px dashed var(--divider);
   margin-bottom: 1.25rem;

@@ -42,5 +42,7 @@ To trigger a full build from a specific branch:
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/jovylle-com/deploy" \
   -H "Authorization: Bearer {api_token}" \
   -H "Content-Type: application/json" \
-  -d '{"branch": "main"}'
+  -d '{"branch": "master"}'
 ```
+
+Confirm this matches the production branch in the Cloudflare Pages project settings.

@@ -25,7 +25,7 @@ This document explains the purpose, UI rules, and high-level architecture for th
 - Widget: embeddable HTML file and JS embed script under `public/widget/`.
 - AI Chat: Nuxt server route `/api/chatbot` for dev and Cloudflare Pages prod.
 - Game: external reaction game with top 3 leaderboard display.
-- Theming: light/dark toggle; preference stored in localStorage.
+- Theming: the site has a light/dark toggle in the layout. It is not saved, so it resets on reload. The widget has its own theme, saved in localStorage as `jovylle-widget-theme`.
 
 ## References
 - Widget overview: `docs/widget_overview.md`

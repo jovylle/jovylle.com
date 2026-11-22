@@ -1,4 +1,39 @@
 // Jovylle Quick Menu Widget - Inline (no iframe). Uses Shadow DOM for style isolation.
+//
+// Configuration is read from the attributes of THIS script tag (document.currentScript).
+// Loaded by layouts/default.vue and plugins/widget-embed.client.ts; see those for values.
+// The script guards against double loads (window.jovylleInlineWidgetLoaded), so the
+// first copy that runs wins and later tags are ignored.
+//
+// data-* attribute API (defaults in brackets):
+//   data-position                  bottom-right | bottom-left | top-right | top-left [bottom-right]
+//   data-size                      small (280x380) | medium (320x420) | large (360x520) [medium]
+//   data-density                   comfortable | compact [comfortable]
+//   data-theme                     light | dark. Otherwise the saved localStorage
+//                                  'jovylle-widget-theme', then prefers-color-scheme.
+//   data-open                      "true" to open on load
+//   data-title                     header title [Widget]
+//   data-feedback-url              URL for the feedback link in Quick Links
+//   data-hide-portfolio            "true" hides the portfolio link
+//   data-hide-chat                 READ BUT NOT USED. Setting it has no effect.
+//   data-show-only                 READ BUT NOT USED. Setting it has no effect.
+//   data-show-leaderboard          "true" shows the top-3 reaction scores, fetched from
+//                                  fast.jovylle.com/api/scores (not from /api/leaderboard).
+//   data-ai-context                system context sent as `context` to the chat endpoint.
+//                                  Empty uses a generic prompt built from skills/projects.
+//   data-chatbot-endpoint          override chat URL [https://jovylle.com/api/chatbot]
+//   data-full-page                 "false" disables the full-page toggle [enabled]
+//   data-start-full-page           "true" starts in full-page mode
+//   data-notifications-index       notifications JSON URL. If unset, it defaults to
+//                                  content.jovylle.com/data/notifications.json only when the
+//                                  page host is jovylle.com or a subdomain. Otherwise no notifications.
+//   data-notifications-limit       max notifications [10]
+//   data-notification-tags         comma-separated tag filter (lowercased)
+//   data-notification-tab-title    title of the notifications tab [Alerts]
+//   data-auto-open-on-notifications "true" opens the widget once when notifications arrive
+//
+// Gotcha: loadAISolutions (~line 559) fetches highlights from the hard-coded host
+// pocket.uft1.com, not from content.jovylle.com. There is no attribute to change it.
 (function() {
   'use strict';
 

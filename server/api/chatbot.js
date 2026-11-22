@@ -1,6 +1,20 @@
+// OpenAI-backed chat endpoint. Served at /api/chatbot in dev and on Cloudflare Pages.
+// The client is public/widget/embed-inline.js (default URL https://jovylle.com/api/chatbot).
+//
+// WARNING (known issue, intentionally NOT fixed here):
+// - This endpoint is open. No auth, no origin check, no rate limit, and no cap on
+//   input size. Any website or script can call it and spend the OpenAI key.
+// - The handler (line 18) sets Access-Control-Allow-Origin to '*'. This is why any origin can
+//   call it from a browser. Restricting it is a behavior change, so do it deliberately.
+// - The request body's `context` field is prepended to the system prompt (see
+//   systemMessage below). Any caller can therefore replace the assistant's instructions.
+// - The OpenAI key is read from process.env first, then from the Cloudflare
+//   binding at event.context._platform.cloudflare.env (the Pages deployment path).
+//   The same fallback applies to OPENAI_MODEL.
 import { defineEventHandler, readBody, createError, setHeader } from 'h3';
 
 export default defineEventHandler(async (event) => {
+  // WARNING: wildcard CORS, see the file header. Any origin is allowed.
   setHeader(event, 'Access-Control-Allow-Origin', '*');
   setHeader(event, 'Access-Control-Allow-Headers', 'Content-Type');
   setHeader(event, 'Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -85,6 +99,10 @@ Personality & Communication:
 
 Keep responses concise (under 150 words), friendly, and helpful. If asked about specific projects, provide details about technologies used and challenges solved. For work inquiries, direct visitors to the contact page.`;
 
+    // WARNING (do not fix here): `customContext` comes straight from the request body
+    // (the widget's data-ai-context). It is prepended to the system prompt, so any
+    // caller can override the assistant's behavior and spend the OpenAI key.
+    // Limiting or removing this is a product decision.
     const systemMessage = `${customContext ? customContext.trim() + '\n\n' : ''}${defaultSystemContent}`; 
     
     console.log('🤖 Local API received context:', customContext ? 'Custom (' + customContext.substring(0, 50) + '...)' : 'Using default');
