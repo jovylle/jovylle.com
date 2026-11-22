@@ -2,8 +2,9 @@
 // The client is public/widget/embed-inline.js (default URL https://jovylle.com/api/chatbot).
 //
 // WARNING (known issue, intentionally NOT fixed here):
-// - This endpoint is open. No auth, no origin check, no rate limit, and no cap on
-//   input size. Any website or script can call it and spend the OpenAI key.
+// - This endpoint has no auth. Limits: body 32 KB (413), message 2000 chars (400), and a
+//   best-effort per-IP rate limit of 20 per 10 min (429, per isolate on Cloudflare). A caller
+//   without a browser can still spend the OpenAI key within those limits.
 // - CORS is an allowlist (CHATBOT_ALLOWED_ORIGINS, see the handler). Other browser origins get 403.
 //   Third-party sites that embed the widget are blocked unless their origin is added to that env var.
 // - The request body's `context` field is NOT in the system prompt. It is sent as a delimited
@@ -11,7 +12,35 @@
 // - The OpenAI key is read from process.env first, then from the Cloudflare
 //   binding at event.context._platform.cloudflare.env (the Pages deployment path).
 //   The same fallback applies to OPENAI_MODEL.
-import { defineEventHandler, readBody, createError, setHeader, getRequestHeader } from 'h3';
+import { defineEventHandler, createError, setHeader, getRequestHeader, getRequestIP, readRawBody } from 'h3';
+
+// Request limits. The widget's real requests are far below these (message plus a persona of about 3 KB).
+const MAX_BODY_BYTES = 32 * 1024;
+const MAX_MESSAGE_CHARS = 2000;
+
+// Best-effort per-IP rate limit: 20 requests per 10 minutes. The Map lives in memory.
+// WARNING: on Cloudflare Workers/Pages each isolate has its own Map, so the limit is per isolate
+// and only best effort. A real limit needs Cloudflare rate limiting rules (WAF) or a shared
+// counter in KV or a Durable Object. Neither is added here: no new dependencies or config.
+const RATE_LIMIT_MAX = 20;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const rateBuckets = new Map();
+
+function withinRateLimit(ip) {
+  const now = Date.now();
+  if (rateBuckets.size > 5000) {
+    for (const [key, bucket] of rateBuckets) {
+      if (bucket.resetAt <= now) rateBuckets.delete(key);
+    }
+  }
+  let bucket = rateBuckets.get(ip);
+  if (!bucket || bucket.resetAt <= now) {
+    bucket = { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+    rateBuckets.set(ip, bucket);
+  }
+  bucket.count += 1;
+  return bucket.count <= RATE_LIMIT_MAX;
+}
 
 // CORS allowlist. CHATBOT_ALLOWED_ORIGINS (comma-separated) replaces this default list when set.
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -54,17 +83,53 @@ export default defineEventHandler(async (event) => {
     return '';
   }
 
+  // Rate limit before reading the body, so abusive clients are rejected cheaply.
+  // cf-connecting-ip is set by Cloudflare and overwritten at its edge. Elsewhere, getRequestIP
+  // is the socket address, and a client could forge cf-connecting-ip there.
+  const ip = getRequestHeader(event, 'cf-connecting-ip') || getRequestIP(event) || 'unknown';
+  if (!withinRateLimit(ip)) {
+    throw createError({ statusCode: 429, message: 'Too many requests. Try again later.' });
+  }
+
+  const declaredLength = Number(getRequestHeader(event, 'content-length') || 0);
+  if (declaredLength > MAX_BODY_BYTES) {
+    throw createError({ statusCode: 413, message: 'Request body too large' });
+  }
+
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY
     || event.context?._platform?.cloudflare?.env?.OPENAI_API_KEY;
 
   try {
-    const body = await readBody(event);
+    const rawBody = (await readRawBody(event, 'utf8')) || '';
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      throw createError({ statusCode: 413, message: 'Request body too large' });
+    }
+
+    let body;
+    try {
+      body = JSON.parse(rawBody);
+    } catch {
+      throw createError({ statusCode: 400, message: 'Body must be valid JSON' });
+    }
+    if (!body || typeof body !== 'object') {
+      throw createError({ statusCode: 400, message: 'Body must be a JSON object' });
+    }
+
     const { message, context: customContext, skills, projects, aiSolutions, profile } = body;
 
     if (!message) {
       throw createError({
         statusCode: 400,
         message: 'Message is required'
+      });
+    }
+
+    // The client sends one `message` string (no message history). Limit its length.
+    // Total content is bounded by construction: 2000 (message) + 4000 (context) = 6000 characters.
+    if (typeof message !== 'string' || message.length > MAX_MESSAGE_CHARS) {
+      throw createError({
+        statusCode: 400,
+        message: `Message must be a string of at most ${MAX_MESSAGE_CHARS} characters`
       });
     }
 
