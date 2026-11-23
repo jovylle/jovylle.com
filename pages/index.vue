@@ -14,9 +14,9 @@
           <h1 class="text-3xl sm:text-4xl font-semibold uppercase my_hover">
             It's me, Jovylle
           </h1>
-          <p class="text-xl dark:text-ternary-light py-3 max-w-[300px]">A Full-Stack Web Developer</p>
+          <p class="text-xl dark:text-ternary-light py-3 max-w-[300px]">AI Engineer — Agent Systems &amp; Automation</p>
           <p class="text-sm text-gray-600 dark:text-gray-400 max-w-[400px]">
-            Building modern web experiences with clean code and thoughtful design
+            I build LLM agents, MCP servers and the pipelines that keep them running in production
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
             Check out

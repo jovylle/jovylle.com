@@ -3,26 +3,26 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: "Cebu Web Developer & AI Solutionist | Jovylle Bermudez",
+      title: "AI Engineer — Agent Systems & Automation | Jovylle Bermudez, Cebu",
       meta: [
         {
           name: "description",
           content:
-            "Jovylle Bermudez is a Cebu-based full-stack web developer and AI solutionist building modern websites, apps, and AI-powered tools for businesses in Cebu and beyond.",
+            "AI engineer in Cebu, Philippines. I build and operate LLM agent systems in production: agent orchestration, MCP servers, RAG, and autonomous delivery pipelines — plus the full-stack work underneath them.",
         },
         {
           name: "keywords",
           content:
-            "Cebu web developer, Cebu software engineer, Cebu full stack developer, freelance web developer Cebu, AI developer Cebu, Jovylle Bermudez",
+            "AI engineer Philippines, AI agent developer Cebu, LLM engineer Philippines, agent orchestration, MCP server developer, RAG engineer, AI automation engineer Cebu, full stack developer Cebu, Jovylle Bermudez",
         },
         {
           property: "og:title",
-          content: "Cebu Web Developer & AI Solutionist | Jovylle Bermudez",
+          content: "AI Engineer — Agent Systems & Automation | Jovylle Bermudez, Cebu",
         },
         {
           property: "og:description",
           content:
-            "Cebu-based full-stack web developer and AI solutionist helping businesses ship modern, fast, and AI-powered web applications.",
+            "AI engineer in Cebu building LLM agent systems in production: orchestration, MCP servers, RAG, and autonomous delivery pipelines.",
         },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Jovylle Bermudez" },
@@ -41,14 +41,14 @@ export default defineNuxtConfig({
         },
         {
           property: "og:image:alt",
-          content: "Jovylle Bermudez — Cebu Web Developer & AI Solutionist",
+          content: "Jovylle Bermudez — AI Engineer, Agent Systems & Automation, Cebu",
         },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: "Cebu Web Developer & AI Solutionist | Jovylle Bermudez" },
+        { name: "twitter:title", content: "AI Engineer — Agent Systems & Automation | Jovylle Bermudez, Cebu" },
         {
           name: "twitter:description",
           content:
-            "Cebu-based full-stack web developer and AI solutionist building modern, fast, AI-powered web applications.",
+            "AI engineer in Cebu building LLM agent systems in production: orchestration, MCP servers, RAG, and autonomous delivery pipelines.",
         },
         { name: "twitter:image", content: "https://jovylle.com/og-default.png" },
       ],
@@ -65,16 +65,20 @@ export default defineNuxtConfig({
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Jovylle Bermudez",
-            jobTitle: "Full-Stack Web Developer & AI Solutionist",
+            jobTitle: "AI Engineer — Agent Systems & Automation",
             description:
-              "Cebu-based software engineer specializing in modern web development and AI-powered solutions.",
+              "AI engineer in Cebu, Philippines, building and operating LLM agent systems in production: agent orchestration, MCP servers, retrieval-augmented generation, and autonomous delivery pipelines, on a nine-year full-stack foundation.",
             url: "https://jovylle.com",
             image: "https://jovylle.com/og-default.png",
             knowsAbout: [
+              "AI agents and agent orchestration",
+              "LLM integration (Claude, OpenAI)",
+              "Model Context Protocol (MCP) servers",
+              "Retrieval-augmented generation",
+              "Autonomous delivery pipelines",
+              "TypeScript, Node.js, React, Next.js",
+              "AWS serverless (Lambda, DynamoDB, Bedrock)",
               "Full-stack web development",
-              "AI agents and automation",
-              "Cloudflare Workers",
-              "Developer tools",
             ],
             worksFor: {
               "@type": "Organization",

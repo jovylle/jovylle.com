@@ -1,16 +1,16 @@
 {
   "personal": {
     "name": "Jovylle B.",
-    "title": "Full-Stack Web Developer",
+    "title": "AI Engineer — Agent Systems & Automation",
     "location": "Philippines",
     "website": "https://jovylle.com",
     "linkedin": "https://linkedin.com/in/jovylle",
     "projectsArchive": "https://jovylle.com/personal-projects/"
   },
   "summary": [
-    "Full-stack developer with 9+ years shipping production web apps, admin portals, and client-facing systems.",
-    "Strong background in Laravel, React, Vue, Node, and delivery across contract, in-house, and private remote work.",
-    "Remote-friendly and independent, with experience mentoring developers and building with cloud services, automation, and AI-assisted workflows."
+    "AI engineer with 9+ years shipping production software, now building and operating LLM agent systems in production: agent orchestration, MCP servers, retrieval-augmented generation, and autonomous delivery pipelines.",
+    "Working stack: TypeScript, Node.js, React/Next.js, Vue/Nuxt, Laravel, and AWS serverless (Lambda, DynamoDB, Bedrock, Cognito).",
+    "Remote-first across contract, in-house and private enterprise work; mentors developers through code review and ships daily with coding agents."
   ],
   "skills": {
     "languages": ["PHP", "JavaScript (ES6+)", "Java", "TypeScript", "Python", "HTML", "CSS"],

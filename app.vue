@@ -5,7 +5,7 @@ const personSchema = {
   name: 'Jovylle Bermudez',
   alternateName: 'Jo Bermudez',
   url: 'https://jovylle.com',
-  jobTitle: 'Full-Stack Web Developer',
+  jobTitle: 'AI Engineer — Agent Systems & Automation',
   addressCountry: 'PH',
   sameAs: ['https://facebook.com/twero'],
 }
@@ -25,7 +25,7 @@ useHead({
     {
       name: 'description',
       content:
-        'Portfolio site for Jovylle Bermudez (Jo Bermudez), showcasing modern full-stack web development work across AI, writing, and consulting.',
+        'AI engineer in Cebu, Philippines — building LLM agent systems, MCP servers and autonomous delivery pipelines in production.',
     },
     () => ({ property: 'og:url', content: canonical.value }),
   ],

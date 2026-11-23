@@ -1,30 +1,35 @@
-# Cebu Web Developer & AI Solutionist – Jovylle Bermudez
+# AI Engineer — Agent Systems & Automation — Jovylle Bermudez
 
-Hi, I’m **Jovylle Bermudez**, a **Cebu-based full‑stack web developer and software engineer** focused on building fast, modern, and reliable web applications — from landing pages and business sites to AI-powered tools and internal dashboards.
+I'm **Jovylle Bermudez**, an **AI engineer in Cebu, Philippines**, building LLM agent systems that run in production rather than in demos — agent orchestration, MCP servers, retrieval-augmented generation, and autonomous delivery pipelines — on top of **nine years of full-stack engineering**.
 
-I help **clients in Cebu and around the world** turn ideas into working products using **Vue/Nuxt, React/Next.js, Node.js, Python, Laravel, and modern cloud platforms**.
+I work with **TypeScript, Node.js, React/Next.js, Vue/Nuxt, Laravel and AWS**, which is what the agents are wired into.
 
 ## What I build
 
-- **Business & portfolio websites** – mobile‑first, SEO‑friendly, and easy to update  
-- **Web applications & dashboards** – custom tools for operations, analytics, and automation  
-- **AI integrations & chatbots** – OpenAI‑powered assistants, tools, and workflows  
-- **APIs & backends** – secure, scalable REST and serverless backends  
+- **Agent systems & orchestration** – multi-agent workflows, MCP servers, tool calling, and the state, retries and guardrails that make them survive real use
+- **RAG and knowledge systems** – retrieval over your own documents on AWS Bedrock + S3, so answers stay grounded in what you actually know
+- **Autonomous delivery pipelines** – the Project Factory has shipped **478 apps from 501 specs** with no human-written app code, each gated on a real build and a boot smoke test
+- **Full-stack products** – web apps, dashboards and APIs, from the interface down to the database
 
 ## Why work with me
 
-- **Based in Cebu, Philippines** – easy communication if you’re local, fully remote‑ready if you’re international  
-- **Full‑stack experience** – from UX and frontend to backend, databases, and deployment  
-- **AI solutionist mindset** – I look for ways to automate, simplify, and speed up your workflows  
-- **Production experience** – I’ve shipped real projects like games, utility hubs, and client sites
+- **AI in production, not prototypes** – agent orchestration, MCP, and a RAG stack running daily, plus an eval dashboard that benchmarks the agents instead of guessing
+- **Based in Cebu, Philippines** – local hours for local teams, fully remote-ready for international ones
+- **Full-stack range** – from UX and frontend to backend, databases, deployment and the ops around them
+- **Production habits** – gated builds, smoke tests, root-cause debugging, and runbooks for the systems I hand over
 
-## Let’s build something
+## Selected work
 
-If you’re looking for a **Cebu web developer or software engineer** to help with your website, app, or AI idea, I’d love to hear about it.
+- **Project Factory** – autonomous AI pipeline that builds, verifies and publishes small web apps: [factory.uft1.com](https://factory.uft1.com)
+- **Agent demos** – RAG PDF chat, a tool-calling agent, and an eval dashboard that scores both: [lab.uft1.com](https://lab.uft1.com)
+- **Ecosystem architecture** – how the production projects connect as one platform: [jovylle.com/ecosystem](https://jovylle.com/ecosystem)
 
-- Email: **me@jovylle.com**  
-- GitHub: **github.com/jovylle**  
-- LinkedIn: **linkedin.com/in/jovylle**  
-- Portfolio: **jovylle.com**  
+## Let's build something
 
-Tell me what you want to build, and I’ll suggest a practical approach and timeline.
+If you're looking for an **AI engineer or agent developer in the Philippines** to take an idea from prototype to something that runs reliably, I'd like to hear about it.
+
+- Email: **me@jovylle.com**
+- GitHub: **github.com/jovylle**
+- LinkedIn: **linkedin.com/in/jovylle**
+
+Tell me what you want to build and I'll suggest a practical approach and a timeline.
