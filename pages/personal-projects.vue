@@ -16,10 +16,12 @@
 //   - Inclusion: JSON is_published must be true (status === 'published' also counts, via
 //     normalizeContentProject). The repo must not be a fork or
 //     private, checked against JSON flags and, when available, the GitHub record.
-//   - description: GitHub description wins over the JSON description.
+//   - description: GitHub description wins over the JSON description. Both are
+//     cleaned by cleanDescription (HTML and markdown stripped, cut at ~220 chars).
 //   - created_at: JSON created_at, then JSON github_raw.created_at, then GitHub.
 //   - updated_at: JSON, then GitHub.
-//   - thumbnail: JSON thumbnail, then the first non-badge README image.
+//   - thumbnail: JSON thumbnail, then the first non-badge README image. With
+//     neither, a generated tile is drawn (fallbackTileStyle), as on a load error.
 //   - links: the repo URL first, then JSON links. Only the repo URL is de-duplicated.
 //
 // Build-time, not runtime: /personal-projects is listed in nitro.prerender.routes
@@ -164,6 +166,27 @@ function normalizeContentProject(project) {
   }
 }
 
+const DESCRIPTION_MAX_CHARS = 220
+
+/** Plain-text description for cards: strips HTML, markdown images, links and line-start headings; cuts at a word boundary. */
+function cleanDescription(raw) {
+  if (!raw || typeof raw !== 'string') return ''
+  const text = raw
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\ufffd/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (text.length <= DESCRIPTION_MAX_CHARS) return text
+  const cut = text.slice(0, DESCRIPTION_MAX_CHARS + 1)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : DESCRIPTION_MAX_CHARS).trimEnd()}…`
+}
+
 async function fetchPersonalProjects() {
   console.log('personal-projects: fetchPersonalProjects start')
 
@@ -210,7 +233,7 @@ async function fetchPersonalProjects() {
         const fullName = repoUrlToFullName(repoUrl)
         const ghRepo = fullName ? githubByFullName.get(fullName) : null
         const descriptionFromGitHub = ghRepo?.description?.trim() || ''
-        const description = descriptionFromGitHub || (project?.description || '').trim() || ''
+        const description = cleanDescription(descriptionFromGitHub) || cleanDescription(project?.description)
 
         const rawLinks = Array.isArray(project?.links) ? project.links : []
         const links = []
@@ -525,9 +548,24 @@ const projectLinks = (project) => {
     }))
 }
 
-const onImgError = (e) => {
-  e.target.src = '/placeholder-project.svg'
-  e.target.onerror = null // prevent infinite loop
+const failedThumbs = ref({})
+const thumbKey = (project) => project.slug || project.title || ''
+const markThumbFailed = (project) => {
+  failedThumbs.value[thumbKey(project)] = true
+}
+
+/** Deterministic gradient (hash of the slug) for projects with no usable thumbnail. */
+const fallbackTileStyle = (project) => {
+  let hash = 0
+  for (const ch of thumbKey(project)) hash = (hash * 31 + ch.codePointAt(0)) >>> 0
+  const hue = hash % 360
+  return {
+    backgroundImage: `linear-gradient(135deg, hsl(${hue} 65% 42%), hsl(${(hue + 50) % 360} 60% 28%))`
+  }
+}
+const fallbackTileInitials = (project) => {
+  const words = (project.displayTitle || project.title || '').trim().split(/[\s\-_.]+/).filter(Boolean)
+  return words.slice(0, 2).map((w) => w[0]).join('').toUpperCase() || '?'
 }
 
 const onIconError = (e) => {
@@ -635,15 +673,25 @@ useHead({
               ? 'bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl border-gray-200 dark:border-gray-700'
               : 'bg-gray-100 dark:bg-gray-950 border-gray-300 dark:border-gray-800 shadow-md'"
           >
-            <!-- Thumbnail -->
-            <div v-if="project.thumbnail" class="mb-4">
+            <!-- Thumbnail: the image, or a generated tile when there is none or it fails to load -->
+            <div class="mb-4">
               <img
+                v-if="project.thumbnail && !failedThumbs[thumbKey(project)]"
                 :src="resolveThumbnail(project.thumbnail)"
                 :alt="project.title || project.name"
                 class="w-full h-40 object-cover rounded-md border dark:border-gray-700"
                 loading="lazy"
-                @error="onImgError"
+                @error="markThumbFailed(project)"
               />
+              <div
+                v-else
+                role="img"
+                :aria-label="`${project.displayTitle} (no preview image)`"
+                class="flex h-40 w-full items-center justify-center rounded-md border border-black/10 dark:border-white/10 text-3xl font-semibold tracking-wider text-white/90"
+                :style="fallbackTileStyle(project)"
+              >
+                {{ fallbackTileInitials(project) }}
+              </div>
             </div>
 
             <!-- Project Header -->
@@ -690,7 +738,7 @@ useHead({
                 v-else
                 class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[2.75rem]"
               >
-                No description available
+                No description yet
               </p>
             </div>
 
@@ -736,7 +784,7 @@ useHead({
             </div>
 
             <!-- Project Links: label only inside each button -->
-            <div class="flex min-w-0 w-full flex-wrap gap-2">
+            <div class="mt-auto flex min-w-0 w-full flex-wrap gap-2">
               <!-- Live / Demo -->
               <a
                 v-for="link in projectLinks(project).filter((l) => l.type === 'live')"
