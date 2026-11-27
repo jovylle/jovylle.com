@@ -18,7 +18,8 @@
 //     private, checked against JSON flags and, when available, the GitHub record.
 //   - description: GitHub description wins over the JSON description. Both are
 //     cleaned by cleanDescription (HTML and markdown stripped, cut at ~220 chars).
-//   - created_at: JSON created_at, then JSON github_raw.created_at, then GitHub.
+//   - created_at: the oldest of JSON created_at, JSON github_raw.created_at and GitHub
+//     created_at (oldestDate). The card shows it as "Mon YYYY" (formatStarted, UTC).
 //   - updated_at: JSON, then GitHub.
 //   - thumbnail: JSON thumbnail, then the first non-badge README image. With
 //     neither, a generated tile is drawn (fallbackTileStyle), as on a load error.
@@ -166,6 +167,26 @@ function normalizeContentProject(project) {
   }
 }
 
+/** Earliest valid date among the arguments, as an ISO string, or null. The oldest date is the best guess for when a project started. */
+function oldestDate(...candidates) {
+  let best = null
+  for (const value of candidates) {
+    if (!value) continue
+    const time = new Date(value).getTime()
+    if (Number.isNaN(time)) continue
+    if (best === null || time < best) best = time
+  }
+  return best === null ? null : new Date(best).toISOString()
+}
+
+/** "Sep 2026" for a start date. UTC, so a date stored as midnight UTC does not slip to the previous month. */
+function formatStarted(dateStr) {
+  if (!dateStr) return null
+  const date = new Date(dateStr)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+}
+
 const DESCRIPTION_MAX_CHARS = 220
 
 /** Plain-text description for cards: strips HTML, markdown images, links and line-start headings; cuts at a word boundary. */
@@ -260,12 +281,13 @@ async function fetchPersonalProjects() {
           }
         }
 
-        const createdAt =
-          project?.created_at ||
-          project?.github_raw?.created_at ||
-          ghRepo?.created_at ||
-          null
-        const startedYear = createdAt ? new Date(createdAt).getFullYear() : null
+        const createdAt = oldestDate(
+          project?.created_at,
+          project?.github_raw?.created_at,
+          ghRepo?.created_at
+        )
+        const startedYear = createdAt ? new Date(createdAt).getUTCFullYear() : null
+        const startedLabel = formatStarted(createdAt)
 
         return {
           slug: project?.slug || project?.project_key || project?.external_id || project?.title,
@@ -277,6 +299,7 @@ async function fetchPersonalProjects() {
           thumbnail,
           created_at: createdAt,
           started_year: startedYear,
+          started_label: startedLabel,
           updated_at: project?.updated_at || ghRepo?.updated_at || null,
           tech: Array.isArray(project?.tech) ? project.tech : [],
           priority_score: project?.priority_score ?? 100
@@ -776,10 +799,11 @@ useHead({
               </span>
 
               <span
-                v-if="project.started_year"
+                v-if="project.started_label || project.started_year"
                 class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
+                :title="project.started_label ? `Started ${project.started_label}` : undefined"
               >
-                {{ project.started_year }}
+                {{ project.started_label || project.started_year }}
               </span>
             </div>
 
